@@ -8,7 +8,7 @@ namespace LDH.LDH_Script
     {
         private void Start()
         {
-            Manager.Test.Test();
+            
         }
     }
 }
