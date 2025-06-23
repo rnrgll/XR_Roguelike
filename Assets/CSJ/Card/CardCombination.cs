@@ -13,11 +13,7 @@ public class CardCombination : MonoBehaviour
         int UsedJoker = 0;
         int JokerFiveNum = 14;
         int StraightNum = 0;
-        int StartStraightNum;
-        int pairNum2;
-        int tripleNum;
-        int FourCardNum;
-        int FiveCardNum;
+        int StartStraightNum = 0;
         bool IsFlush = false;
         bool IsStraight = false;
         bool IsFullHouse = false;
@@ -28,9 +24,9 @@ public class CardCombination : MonoBehaviour
         bool IsFiveCard = false;
         bool IsFiveJoker = false;
         bool JokerUsedTriple = false;
-        cardNums = new List<int>();
+        cardNums = new List<int>(5);
 
-        //TODO : 플레이어 스탯과의 연계
+        //TODO : 플레이어 스탯과의 연계?
         int nowFlushNum = 5;
         int nowStraightNum = 5;
 
@@ -83,13 +79,31 @@ public class CardCombination : MonoBehaviour
                 // 연속되는 숫자를 나타내는 straightNum을 +해준다.
                 StraightNum++;
                 // 만일 straightNum이 현재 스트레이트의 수치를 만족하면 스트레이트로 판별하고 다음으로 이동
-                if (StraightNum >= nowStraightNum)
+                // 만약 10,J,Q,K,A가 있을 경우에도 Straight 반환
+                if (StraightNum >= nowStraightNum || (i == 13 && StraightNum == nowStraightNum - 1 && numbers[0] == 1))
                 {
                     IsStraight = true;
+
+                    if (i == 13 && StraightNum == nowStraightNum - 1 && numbers[0] == 1)
+                    {
+                        for (int sNum = StartStraightNum; sNum < StartStraightNum + nowStraightNum - 1; sNum++)
+                        {
+                            cardNums.Add(sNum);
+                        }
+                        cardNums.Add(1);
+                    }
+                    else
+                    {
+                        for (int sNum = StartStraightNum; sNum < StartStraightNum + nowStraightNum; sNum++)
+                        {
+                            cardNums.Add(sNum);
+                        }
+                    }
                     break;
                 }
                 continue;
             }
+            // 스트레이트에 사용할 수 있는 조커가 있는 경우
             else if (JokerNum > UsedJoker)
             {
                 UsedJoker += 1;
@@ -122,12 +136,15 @@ public class CardCombination : MonoBehaviour
                     {
                         // 해당 페어 항목에 채워넣고 일단 OnePair를 true로 만든다.
                         IsOnePair = true;
-                        cardNums.AddRange(new List<int> { i, i });
+                        for (int re = 0; re < 2; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         // 트리플을 이미 판별한 경우 풀하우스 이므로 풀하우스로 체크한 후 나간다.
                         if (IsTriple)
                         {
-                            // 뒤에 나오는 조커를 사용한 트리플일 경우
-                            // 현재의 페어가 이전 페어보다 숫자가 높으므로
+                            // 조커를 사용한 트리플일 경우
+                            // 현재의 숫자가 이전 페어의 숫자보다 크므로
                             // 현재 페어의 숫자로 조커를 대체해 준다.
                             if (JokerUsedTriple)
                             {
@@ -143,23 +160,29 @@ public class CardCombination : MonoBehaviour
                     {
                         //트리플을 체크한다.
                         IsTriple = true;
-                        tripleNum = i;
                         JokerUsedTriple = true;
-                        cardNums.AddRange(new List<int> { i, i, i });
+                        for (int re = 0; re < 3; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                     }
                     else if (JokerNum == 2)
                     {
                         //포카드를 체크하고 탈출한다.
-                        FourCardNum = i;
                         IsFourCard = true;
-                        cardNums.AddRange(new List<int> { i, i, i, i });
+                        for (int re = 0; re < 4; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         break;
                     }
                     else if (JokerNum == 3)
                     {
-                        FiveCardNum = i;
                         IsFiveCard = true;
-                        cardNums.AddRange(new List<int> { i, i, i, i, i });
+                        for (int re = 0; re < 5; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         break;
                     }
                 }
@@ -170,18 +193,22 @@ public class CardCombination : MonoBehaviour
                     // ※ 조커가 0개이고 투페어 일 경우 다른 경우의 수가 없기 때문
                     if (JokerNum < 1)
                     {
-                        pairNum2 = i;
                         IsTwoPair = true;
-                        cardNums.AddRange(new List<int> { i, i });
+                        for (int re = 0; re < 2; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         break;
                     }
                     else
                     {
                         //트리플을 체크한다.
                         IsTriple = true;
-                        tripleNum = i;
                         JokerUsedTriple = true;
-                        cardNums.AddRange(new List<int> { i, i, i });
+                        for (int re = 0; re < 3; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         IsFullHouse = true;
                     }
 
@@ -198,8 +225,10 @@ public class CardCombination : MonoBehaviour
                 {
                     // 트리플을 true로 하고 해당 숫자를 기록한다.
                     IsTriple = true;
-                    tripleNum = i;
-                    cardNums.AddRange(new List<int> { i, i, i });
+                    for (int re = 0; re < 3; re++)
+                    {
+                        cardNums.Add(i);
+                    }
                     // OnePair가 이미 판별된 경우 풀하우스이므로 이를 체크하고 탈출한다.
                     if (IsOnePair)
                     {
@@ -213,18 +242,22 @@ public class CardCombination : MonoBehaviour
                     if (JokerNum == 1)
                     {
                         // 포카드를 체크한다.
-                        FourCardNum = i;
                         IsFourCard = true;
-                        cardNums.AddRange(new List<int> { i, i, i, i });
+                        for (int re = 0; re < 4; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         break;
                     }
                     // 조커가 2개라면 
                     else if (JokerNum == 2)
                     {
                         //파이브 카드를 체크한다.
-                        FiveCardNum = i;
                         IsFiveCard = true;
-                        cardNums.AddRange(new List<int> { i, i, i, i, i });
+                        for (int re = 0; re < 5; re++)
+                        {
+                            cardNums.Add(i);
+                        }
                         break;
                     }
                 }
@@ -238,15 +271,19 @@ public class CardCombination : MonoBehaviour
                 //조커가 있을 경우 파이브 카드를 체크한다
                 if (JokerNum == 1)
                 {
-                    FiveCardNum = i;
                     IsFiveCard = true;
-                    cardNums.AddRange(new List<int> { i, i, i, i, i });
+                    for (int re = 0; re < 5; re++)
+                    {
+                        cardNums.Add(i);
+                    }
                     break;
                 }
                 //포카드를 체크하고 탈출한다.
-                FourCardNum = i;
                 IsFourCard = true;
-                cardNums.AddRange(new List<int> { i, i, i, i });
+                for (int re = 0; re < 4; re++)
+                {
+                    cardNums.Add(i);
+                }
                 break;
             }
             #endregion
@@ -292,6 +329,36 @@ public class CardCombination : MonoBehaviour
         }
         cardNums.Add(Max);
 
-        return CardCombinationEnum.HighCard;
+        // 마지막으로 조커가 있는지 체크
+        if (JokerNum == 1)
+        {
+            cardNums.Add(Max);
+            return CardCombinationEnum.OnePair;
+        }
+        else if (JokerNum == 2)
+        {
+            for (int re = 0; re < 2; re++)
+            {
+                cardNums.Add(i);
+            }
+            return CardCombinationEnum.Triple;
+        }
+        else if (JokerNum == 3)
+        {
+            for (int re = 0; re < 3; re++)
+            {
+                cardNums.Add(i);
+            }
+            return CardCombinationEnum.FourCard;
+        }
+        else if (JokerNum == 4)
+        {
+            for (int re = 0; re < 4; re++)
+            {
+                cardNums.Add(i);
+            }
+            return CardCombinationEnum.FiveCard;
+        }
+        else return CardCombinationEnum.HighCard;
     }
 }
