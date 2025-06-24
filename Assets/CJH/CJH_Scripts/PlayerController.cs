@@ -8,24 +8,24 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private void Start()
     {
-        Managers.Manager.Turn.RegisterPlayer(this);
+        //Managers.Manager.Turn.RegisterPlayer(this);
     }
 
     public void StartTurn()
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÅÏ ½ÃÀÛ!");
+        Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
         turnEnded = false;
 
-        // ¿¡³ÊÁö È¸º¹ µî ½ÃÀÛ ÁØºñ
-        // Ä«µå UI È°¼ºÈ­ µî
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½
+        // Ä«ï¿½ï¿½ UI È°ï¿½ï¿½È­ ï¿½ï¿½
     }
 
     public void EndTurn()
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÅÏ Á¾·á!");
+        Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
         turnEnded = true;
 
-        // Ä«µå UI ºñÈ°¼ºÈ­ µî
+        // Ä«ï¿½ï¿½ UI ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½ï¿½
     }
 
     public bool IsTurnFinished()

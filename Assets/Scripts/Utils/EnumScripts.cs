@@ -28,3 +28,22 @@ public enum CardCombinationEnum
     FiveCard,
     FiveJoker
 }
+
+namespace Map
+{
+    public enum NodeType
+    {
+        NotAssgined,
+        Battle, // 전투
+        Shop, // 상점
+        Event, // 이벤트
+        Boss, // 보스
+    }
+    
+    public enum NodeState
+    {
+        Locked,
+        Visited,
+        Attainable
+    }
+}

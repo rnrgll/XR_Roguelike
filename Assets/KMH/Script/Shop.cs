@@ -10,6 +10,6 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        아우터 상점과 인게임 상점이 다름
+        //아우터 상점과 인게임 상점이 다름
     }
 }

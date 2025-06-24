@@ -12,18 +12,18 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ExecuteAttack(List<Card> cards, Enemy target)
-    {
-        int powerSum = 0;
-        float multiplier = 1.0f;
-
-        foreach (var card in cards)
-        {
-            powerSum += card.power;
-            multiplier *= card.GetAttributeMultiplier(target); // 속성 상성
-        }
-
-        int finalDamage = Mathf.FloorToInt(powerSum * multiplier);
-        target.ApplyDamage(finalDamage);
-    }
+    // public void ExecuteAttack(List<Card> cards, Enemy target)
+    // {
+    //     int powerSum = 0;
+    //     float multiplier = 1.0f;
+    //
+    //     foreach (var card in cards)
+    //     {
+    //         powerSum += card.power;
+    //         multiplier *= card.GetAttributeMultiplier(target); // 속성 상성
+    //     }
+    //
+    //     int finalDamage = Mathf.FloorToInt(powerSum * multiplier);
+    //     target.ApplyDamage(finalDamage);
+    // }
 }
