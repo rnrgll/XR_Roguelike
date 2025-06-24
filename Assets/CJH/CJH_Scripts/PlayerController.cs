@@ -8,28 +8,41 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private void Start()
     {
-        //Managers.Manager.Turn.RegisterPlayer(this);
+        Managers.Manager.turnManager.RegisterPlayer(this);
+        CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
+    }
+
+    private void OnAttackTriggered(List<MinorArcana> cards)
+    {
+        List<int> comboCardNums;
+        var combo = CardCombination.CalCombination(cards, out comboCardNums);
+
+        Debug.Log($"족보: {combo}, 카드번호: {string.Join(", ", comboCardNums)}");
+
+        var target = FindAnyObjectByType<Enemy>();
+        if (target != null)
+        {
+            BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+        }
+        else
+        {
+            Debug.LogWarning("공격 대상이 없습니다.");
+        }
+
+        EndTurn();
     }
 
     public void StartTurn()
     {
-        Debug.Log("�÷��̾� �� ����!");
+        Debug.Log("플레이어 턴 시작!");
         turnEnded = false;
-
-        // ������ ȸ�� �� ���� �غ�
-        // ī�� UI Ȱ��ȭ ��
     }
 
     public void EndTurn()
     {
-        Debug.Log("�÷��̾� �� ����!");
+        Debug.Log("플레이어 턴 종료!");
         turnEnded = true;
-
-        // ī�� UI ��Ȱ��ȭ ��
     }
 
-    public bool IsTurnFinished()
-    {
-        return turnEnded;
-    }
+    public bool IsTurnFinished() => turnEnded;
 }
