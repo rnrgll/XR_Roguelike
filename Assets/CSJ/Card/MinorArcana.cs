@@ -14,5 +14,4 @@ public readonly struct MinorArcana : ICard
         CardSuit = _suit;
         CardNum = _num;
     }
-
 }
