@@ -8,28 +8,41 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private void Start()
     {
-        Managers.Manager.Turn.RegisterPlayer(this);
+        Managers.Manager.turnManager.RegisterPlayer(this);
+        CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
+    }
+
+    private void OnAttackTriggered(List<MinorArcana> cards)
+    {
+        List<int> comboCardNums;
+        var combo = CardCombination.CalCombination(cards, out comboCardNums);
+
+        Debug.Log($"ì¡±ë³´: {combo}, ì¹´ë“œë²ˆí˜¸: {string.Join(", ", comboCardNums)}");
+
+        var target = FindAnyObjectByType<Enemy>();
+        if (target != null)
+        {
+            BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+        }
+        else
+        {
+            Debug.LogWarning("ê³µê²© ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤.");
+        }
+
+        EndTurn();
     }
 
     public void StartTurn()
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÅÏ ½ÃÀÛ!");
+        Debug.Log("í”Œë ˆì´ì–´ í„´ ì‹œìž‘!");
         turnEnded = false;
-
-        // ¿¡³ÊÁö È¸º¹ µî ½ÃÀÛ ÁØºñ
-        // Ä«µå UI È°¼ºÈ­ µî
     }
 
     public void EndTurn()
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÅÏ Á¾·á!");
+        Debug.Log("í”Œë ˆì´ì–´ í„´ ì¢…ë£Œ!");
         turnEnded = true;
-
-        // Ä«µå UI ºñÈ°¼ºÈ­ µî
     }
 
-    public bool IsTurnFinished()
-    {
-        return turnEnded;
-    }
+    public bool IsTurnFinished() => turnEnded;
 }

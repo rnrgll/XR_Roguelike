@@ -67,12 +67,7 @@ public class CardController : MonoBehaviour
     private void OnCardAddedDeck(MinorArcana _card)
     {
         CardListDic[CardStatus.DeckList].Add(_card);
-        CardListDic[CardStatus.DeckList].Sort((a, b) =>
-        {
-            int result = a.CardSuit.CompareTo(b.CardSuit);
-            if (result != 0) return result;
-            return a.CardNum.CompareTo(b.CardNum);
-        });
+        SortBySuit(CardStatus.DeckList);
     }
 
     /// <summary>
@@ -102,6 +97,26 @@ public class CardController : MonoBehaviour
             DeckRefill();
             if (CardListDic[CardStatus.BattleDeck].Count == 0) break;
         }
+    }
+
+    public void SortBySuit(CardStatus _status)
+    {
+        CardListDic[_status].Sort((a, b) =>
+        {
+            int result = a.CardSuit.CompareTo(b.CardSuit);
+            if (result != 0) return result;
+            return a.CardNum.CompareTo(b.CardNum);
+        });
+    }
+
+    public void SortByNum(CardStatus _status)
+    {
+        CardListDic[_status].Sort((a, b) =>
+        {
+            int result = a.CardNum.CompareTo(b.CardNum);
+            if (result != 0) return result;
+            return a.CardSuit.CompareTo(b.CardSuit);
+        });
     }
 
     public List<MinorArcana> GetHand()

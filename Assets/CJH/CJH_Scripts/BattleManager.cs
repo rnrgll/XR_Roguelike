@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 public class BattleManager : MonoBehaviour
 {
@@ -12,18 +14,42 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ExecuteAttack(List<Card> cards, Enemy target)
+    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, Enemy target)
     {
-        int powerSum = 0;
-        float multiplier = 1.0f;
+        int basePower = nums.Sum();
+        float multiplier = GetMultiplierByCombo(combo);
+        int damage = Mathf.FloorToInt(basePower * multiplier);
 
-        foreach (var card in cards)
+        if (combo == CardCombinationEnum.FiveJoker)
         {
-            powerSum += card.power;
-            multiplier *= card.GetAttributeMultiplier(target); // 속성 상성
+            Debug.Log("파이브 조커! 즉사급 피해!");
+            damage = 9999;
+        }
+        else if (combo == CardCombinationEnum.HighCard)
+        {
+            Debug.Log("족보 없음. 데미지 0.");
+            damage = 0;
         }
 
-        int finalDamage = Mathf.FloorToInt(powerSum * multiplier);
-        target.ApplyDamage(finalDamage);
+        target.ApplyDamage(damage);
+        Debug.Log($"[{combo}] → {target.name}에게 {damage}의 피해!");
+    }
+
+    private float GetMultiplierByCombo(CardCombinationEnum combo)
+    {
+        return combo switch
+        {
+            CardCombinationEnum.OnePair => 1.0f,
+            CardCombinationEnum.TwoPair => 1.2f,
+            CardCombinationEnum.Triple => 1.5f,
+            CardCombinationEnum.Straight => 1.7f,
+            CardCombinationEnum.Flush => 1.8f,
+            CardCombinationEnum.FullHouse => 2.0f,
+            CardCombinationEnum.FourCard => 2.5f,
+            CardCombinationEnum.StraightFlush => 3.0f,
+            CardCombinationEnum.FiveCard => 3.5f,
+            CardCombinationEnum.FiveJoker => 10.0f,
+            _ => 0.0f
+        };
     }
 }
