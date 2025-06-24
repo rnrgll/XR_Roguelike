@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Managers;
 using System.Linq;
+using Unity.Mathematics;
 
 namespace Map
 {
@@ -21,8 +22,10 @@ namespace Map
         public float xSize;
         public float yOffset;
 
-        [Header("Line Settings")] public GameObject linePrefab;
-
+        [Header("Line Settings")] public LineRenderer linePrefab;
+        [Tooltip("Line point count should be > 2 to get smooth color gradients")]
+        [Range(3, 10)]
+        public int linePointsCount = 10;
         [Tooltip("Distance from the node till the line starting point")]
         public float offsetFromNodes = 0.5f;
 
@@ -54,10 +57,6 @@ namespace Map
 
         [Tooltip("Pixels per Unit multiplier for the background image")] [SerializeField]
         private float backgroundPPUMultiplier = 1;
-
-        [Tooltip("Prefab of the UI line between the nodes (uses scripts from Unity UI Extensions)")] [SerializeField]
-        private UILineRenderer uiLinePrefab;
-
         
         //-------------------------------
         //map parent
@@ -69,6 +68,10 @@ namespace Map
         
         //map nodes, path list
         public readonly List<MapNode> MapNodes = new List<MapNode>();
+        
+        private Dictionary<Node, MapNode> nodeToMapNode = new();
+
+        
         private List<List<Vector2Int>> paths;
 
         private Camera cam;
@@ -96,19 +99,15 @@ namespace Map
 
             CreateMapParent();
 
-            CreateNodes(m.Nodes);
+            CreateNodes();
 
             DrawLines();
-
-            SetOrientation();
-
-            ResetNodesRotation();
 
             SetAttainableNodes();
 
             SetLineColors();
 
-            CreateMapBackground(m);
+            CreateMapBackground();
         }
 
 
@@ -125,6 +124,7 @@ namespace Map
 
             MapNodes.Clear();
             lineConnections.Clear();
+            nodeToMapNode.Clear();
         }
 
         /// <summary>
@@ -166,6 +166,7 @@ namespace Map
             {
                 MapNode mapNode = CreateMapNode(node);
                 MapNodes.Add(mapNode);
+                nodeToMapNode[node] = mapNode;
                 
             }
         }
@@ -177,20 +178,107 @@ namespace Map
             {
                 foreach (Node nextNode in mapNode.Node.nextNodes)
                 {
-                    AddLine(mapNode, nextNode);
+                    MapNode nextMapNode = GetMapNode(nextNode);   
+                    AddLine(mapNode, nextMapNode);
                 }
             }
         }
 
-        private void SetOrientation();
+        private void SetAttainableNodes()
+        {
+            
+            foreach (MapNode node in MapNodes)
+                node.SetState(NodeState.Locked);
 
-        private void ResetNodesRotation();
+            //아직 방문한 경로가 없을 때
+            if (Manager.Map.CurrentMap.path.Count == 0)
+            {
+                foreach (Node node in Map.GetNodeListInFloor(0))
+                {
+                    nodeToMapNode[node].SetState(NodeState.Attainable);
+                }
+            }
+            else
+            {
+                foreach (Vector2Int point in Manager.Map.CurrentMap.path)
+                {
+                    Node node = Map.GetNodeByPoint(point.x, point.y);
+                    if (node == null)
+                    {
+                        Debug.LogError("Map View : SetAttainable Nodes - Point Error");
+                        return;
+                    }
+                    
+                    nodeToMapNode[node].SetState(NodeState.Visited);
+                    
+                }
 
-        private void SetAttainableNodes();
+                Vector2Int currentPoint = Manager.Map.CurrentMap.path[Manager.Map.CurrentMap.path.Count - 1];
 
-        private void SetLineColors();
+                Node currentNode = Manager.Map.CurrentMap.GetNodeByPoint(currentPoint.x, currentPoint.y);
 
-        private void CreateMapBackground(m);
+                foreach (Node nextNode in currentNode.nextNodes)
+                {
+                    nodeToMapNode[nextNode].SetState(NodeState.Attainable);
+                }
+            }
+        }
+
+        private void SetLineColors()
+        {
+            // 모든 라인을 회색으로 초기화
+            foreach (LineConnection connection in lineConnections)
+                connection.SetColor(lineLockedColor);
+            
+            //아직 방문한 경로가 없다면 return
+            if (Manager.Map.CurrentMap.path.Count == 0)
+                return;
+            
+            // 경로에 포함된 path 색상 변경
+            // 마지막 방문 노드
+            Vector2Int currentPoint = Manager.Map.CurrentMap.path[Manager.Map.CurrentMap.path.Count - 1];
+
+            Node currentNode = Manager.Map.CurrentMap.GetNodeByPoint(currentPoint.x, currentPoint.y);
+            foreach (Node nextNode in currentNode.nextNodes)
+            {
+                LineConnection line =
+                    lineConnections.FirstOrDefault(l => l.from.Node.Equals(currentNode) && l.to.Node.Equals(nextNode));
+                nodeToMapNode[nextNode].SetState(NodeState.Attainable);
+                
+                line?.SetColor(lineVisitedColor);
+            }
+            
+            if (Manager.Map.CurrentMap.path.Count <= 1) return;
+            
+            for (int i = 0; i < Manager.Map.CurrentMap.path.Count - 1; i++)
+            {
+                Vector2Int current = Manager.Map.CurrentMap.path[i];
+                Vector2Int next =Manager.Map.CurrentMap.path[i + 1];
+                
+                LineConnection line = lineConnections.FirstOrDefault(l => l.from.Node.row == current.x && l.from.Node.column == current.y && l.to.Node.row == current.x && l.to.Node.column == current.y
+                    );
+                line?.SetColor(lineVisitedColor);
+            }
+            
+        }
+
+        private void CreateMapBackground()
+        {
+            GameObject backgroundObject = new GameObject("Background");
+            backgroundObject.transform.SetParent(mapParent.transform);
+            backgroundObject.transform.localScale = Vector3.one;
+            RectTransform rt = backgroundObject.AddComponent<RectTransform>();
+            UILayout.Stretch(rt);
+            rt.SetAsFirstSibling();
+            rt.sizeDelta = backgroundPadding;
+            
+            Image image = backgroundObject.AddComponent<Image>();
+            image.color = backgroundColor;
+            image.type = Image.Type.Sliced;
+            image.sprite = background;
+            image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
+            
+        }
 
 
         #region UI Setting
@@ -220,6 +308,7 @@ namespace Map
         private MapNode CreateMapNode(Node node)
         {
             MapNode mapNodeObj = Instantiate(mapNodePrefab, mapParent.transform);
+            mapNodeObj.transform.rotation = Quaternion.identity;
             NodeTemplate template = GetTemplate(node.nodeType);
             mapNodeObj.SetUp(node, template);
 
@@ -231,7 +320,51 @@ namespace Map
         {
            return Manager.Map.config.NodeTemplates.FirstOrDefault(template => template.nodeType == nodeType);
         }
+
+
+        private MapNode GetMapNode(Node node)
+        {
+            return MapNodes.FirstOrDefault(mapnode => mapnode.Node.Equals(node));
+        }
         
+        private void AddLine(MapNode from, MapNode to)
+        {
+            if(linePrefab == null) return;
+
+            LineRenderer line = Instantiate(linePrefab, mapParent.transform);
+            
+            RectTransform fromRect = from.transform as RectTransform;
+            RectTransform toRect = to.transform as RectTransform;
+            
+            //from => to 방향 벡터를 구하고 거기에 offest을 곱해서 살짝 떨어진 위치를 구하기
+            Vector3 fromPoint = fromRect.anchoredPosition
+                                + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
+                                * offsetFromNodes;
+            //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
+            Vector3 toPoint = toRect.anchoredPosition
+                              + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
+                              * offsetFromNodes;
+            
+            //line 그리기
+            line.transform.position = from.transform.position +
+                                      (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
+                                      offsetFromNodes;
+
+            List<Vector3> pointList = new List<Vector3>();
+            for (int i = 0; i < linePointsCount; i++)
+            {
+                pointList.Add(Vector3.Lerp(
+                    Vector3.zero,
+                    toPoint - fromPoint,
+                    (float)i/linePointsCount-1
+                    ));
+            }
+            
+            line.positionCount = linePointsCount;
+            line.SetPositions(pointList.ToArray());
+            lineConnections.Add(new LineConnection(line, from, to));
+
+        }
         
         
 

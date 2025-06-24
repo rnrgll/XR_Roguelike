@@ -8,7 +8,7 @@ namespace Map
     {
         public readonly List<List<Node>> map;
         public readonly List<Node> Nodes;
-        public readonly List<Vector2Int> path;
+        public readonly List<Vector2Int> path; //플레이어가 선택한 경로
         public readonly Node bossNode;
         public readonly Node startNode;
 
@@ -21,6 +21,19 @@ namespace Map
             Nodes = map.SelectMany(floor => floor).Where(node => node.HasConnections()).ToList();
         }
 
+        public List<Node> GetNodeListInFloor(int floor)
+        {
+            if (floor < 0 || floor >= map.Count) return null;
+            return map[floor];
+        }
+
+        public Node GetNodeByPoint(int row, int column)
+        {
+            if (row < 0 || column < 0 || row >= map.Count || column >= map[0].Count) return null;
+            
+            return map[row][column];
+        }
+        
         public float GetMapLength()
         {
             if (bossNode == null || startNode == null)
