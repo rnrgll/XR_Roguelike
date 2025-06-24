@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Managers;
 using System.Linq;
 using Unity.Mathematics;
+using UnityEngine.UI.Extensions;
 
 namespace Map
 {
@@ -13,7 +14,6 @@ namespace Map
         public static MapView Instance; 
         
         [Header("Map Configuration")]
-        public MapConfig mapConfig;
         public MapNode mapNodePrefab;
         public float offset; //start node, end node와 화면 가장자리 offset
 
@@ -22,7 +22,7 @@ namespace Map
         public float xSize;
         public float yOffset;
 
-        [Header("Line Settings")] public LineRenderer linePrefab;
+        [Header("Line Settings")] public UILineRenderer linePrefab;
         [Tooltip("Line point count should be > 2 to get smooth color gradients")]
         [Range(3, 10)]
         public int linePointsCount = 10;
@@ -64,12 +64,12 @@ namespace Map
         private GameObject mapParent;
         
         //map data
-        public MapData Map { get; protected set; }
+        public MapData Map { get; private set; }
         
         //map nodes, path list
         public readonly List<MapNode> MapNodes = new List<MapNode>();
         
-        private Dictionary<Node, MapNode> nodeToMapNode = new();
+        //private Dictionary<Node, MapNode> nodeToMapNode = new();
 
         
         private List<List<Vector2Int>> paths;
@@ -78,10 +78,7 @@ namespace Map
         protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
 
         
-
         
-        
-      
         
         
         
@@ -124,7 +121,7 @@ namespace Map
 
             MapNodes.Clear();
             lineConnections.Clear();
-            nodeToMapNode.Clear();
+            // nodeToMapNode.Clear();
         }
 
         /// <summary>
@@ -166,9 +163,11 @@ namespace Map
             {
                 MapNode mapNode = CreateMapNode(node);
                 MapNodes.Add(mapNode);
-                nodeToMapNode[node] = mapNode;
+                // nodeToMapNode[node] = mapNode;
                 
             }
+            
+            Debug.Log(MapNodes.Count);
         }
 
         //path line 그리기
@@ -178,7 +177,7 @@ namespace Map
             {
                 foreach (Node nextNode in mapNode.Node.nextNodes)
                 {
-                    MapNode nextMapNode = GetMapNode(nextNode);   
+                    MapNode nextMapNode = nodeToMapNode[nextNode];
                     AddLine(mapNode, nextMapNode);
                 }
             }
@@ -320,28 +319,24 @@ namespace Map
         {
            return Manager.Map.config.NodeTemplates.FirstOrDefault(template => template.nodeType == nodeType);
         }
-
-
-        private MapNode GetMapNode(Node node)
-        {
-            return MapNodes.FirstOrDefault(mapnode => mapnode.Node.Equals(node));
-        }
+        
         
         private void AddLine(MapNode from, MapNode to)
         {
             if(linePrefab == null) return;
-
-            LineRenderer line = Instantiate(linePrefab, mapParent.transform);
             
+            UILineRenderer line = Instantiate(linePrefab, mapParent.transform);
+            
+            line.transform.SetAsFirstSibling();
             RectTransform fromRect = from.transform as RectTransform;
             RectTransform toRect = to.transform as RectTransform;
             
             //from => to 방향 벡터를 구하고 거기에 offest을 곱해서 살짝 떨어진 위치를 구하기
-            Vector3 fromPoint = fromRect.anchoredPosition
+            Vector2 fromPoint = fromRect.anchoredPosition
                                 + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
                                 * offsetFromNodes;
             //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
-            Vector3 toPoint = toRect.anchoredPosition
+            Vector2 toPoint = toRect.anchoredPosition
                               + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
                               * offsetFromNodes;
             
@@ -350,7 +345,7 @@ namespace Map
                                       (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
                                       offsetFromNodes;
 
-            List<Vector3> pointList = new List<Vector3>();
+            List<Vector2> pointList = new ();
             for (int i = 0; i < linePointsCount; i++)
             {
                 pointList.Add(Vector3.Lerp(
@@ -359,15 +354,20 @@ namespace Map
                     (float)i/linePointsCount-1
                     ));
             }
-            
-            line.positionCount = linePointsCount;
-            line.SetPositions(pointList.ToArray());
+
+            line.Points = pointList.ToArray();
             lineConnections.Add(new LineConnection(line, from, to));
 
         }
         
-        
+        protected MapNode GetNode(Vector2Int p)
+        {
+            return MapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
+        }
+
 
         #endregion
+        
+        
     }
 }
