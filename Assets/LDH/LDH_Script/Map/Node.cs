@@ -5,14 +5,13 @@ using UnityEngine;
 namespace Map
 {
 
-    public class Room
+    public class Node
     {
         public enum Type
         {
             NotAssgined,
             Battle, // 전투
             Shop, // 상점
-            Rest, // 휴식
             Event, // 이벤트
             Boss, // 보스
         }
@@ -20,14 +19,14 @@ namespace Map
         public Type type;
         public int row, column;
         public Vector2 position;
-        public List<Room> nextRooms;
+        public List<Node> nextRooms;
         public bool selected;
 
 
         //기본 생성자
-        public Room() { }
+        public Node() { }
 
-        public Room(int row, int column, Vector2 position)
+        public Node(int row, int column, Vector2 position)
         {
             //this.type = type;
             this.row = row;
