@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Map
 {
-    public static class MapGenerator
+    public class MapGenerator
     {
         //config
         private static MapConfig _config;
@@ -26,7 +26,7 @@ namespace Map
         [Header("Weights")]
         [SerializeField] private float _BattleRoomWeight = 10.0f;
         [SerializeField] private float _ShopRoomWeight = 2.5f;
-        [SerializeField] private float _RestRoomWeight = 4.0f;
+        [SerializeField] private float _EventRoomWeight = 4.0f;
         //[SerializeField] private float _EventRoomWeight = 2.0f;
         
         private List<float> _randomRoomTypeWeights = new()
@@ -34,43 +34,47 @@ namespace Map
             0.0f, //(Room.Type.NotAssgined
             0.0f, //Room.Type.Battle, 
             0.0f, //Room.Type.Shop,
-            0.0f, //Room.Type.Rest, 
             0.0f, //Room.Type.Event, 
             0.0f, //Room.Type.Boss, 
         };
 
         private float _randomRoomTypeTotalWeight = 0.0f;
 
-        private List<List<Node>> _mapData;
+        private List<List<Node>> _map;
         
 
         //맵 생성
-        public static List<List<Node>> GenerateMap(MapConfig config)
+        public MapData GenerateMap(MapConfig config)
         {
             _config = config;
             
             //1. Grid 생성
-            _mapData = GenerateInitialGrid();
-            //2. start point 랜덤으로 지정
+            _map = GenerateInitialGrid();
+            
+            //2. floor0는 1개의 노드에서 시작 & floor1 부터 시작 - startPoint 랜덤으로 뽑기
             List<int> startingPoints = GetRandomStartingPoints();
             
             //3. Path 생성
             for (int j = 0; j < startingPoints.Count; j++)
             {
                 int currentJ = j;
-                for (int i = 0; i < _floors - 1; i++)
+                for (int i = 1; i < _floors - 1; i++)
                 {
                     currentJ = SetUpConnection(i, currentJ);
                 }
             }
             
             //4. Room type 지정
-            SetUpBossRoom();
+            Node startNode = SetUpStartRoom();
+            Node bossNode = SetUpBossRoom();
             SetUpRandomRoomWeights();
             SetUpRoomType();
             
             
-            return _mapData;
+            //5. MapData 생성
+            MapData mapData = new MapData(_map,startNode, bossNode );
+
+            return mapData;
         }
         
         
@@ -90,6 +94,9 @@ namespace Map
                     
                     Node currentNode = new Node(i,j,position);
                     
+                    //start room position.y 값 고정
+                    if (i == 0)
+                        currentNode.position.y = i * _yDist;
                     //boss room 일 경우 position.y 값을 고정시킨다. (마지막 floor)
                     if (i == _mapWidth - 1)
                         currentNode.position.y = (i + 1) * _yDist;
@@ -129,15 +136,15 @@ namespace Map
         private int SetUpConnection(int i, int j)
         {
             Node nextNode = null;
-            Node currentNode = _mapData[i][j];
+            Node currentNode = _map[i][j];
             
             //교차 가능성 확인, next room이 null이 아닐 때까지 다음 방 후보 찾기 
             while (nextNode == null || IsCrossingPath(i, j, nextNode))
             {
                 int randomJ = Mathf.Clamp(Random.Range(j - 1, j + 2), 0, _mapWidth - 1);
-                nextNode = _mapData[i + 1][randomJ];
+                nextNode = _map[i + 1][randomJ];
             }
-            currentNode.nextRooms.Add(nextNode);
+            currentNode.nextNodes.Add(nextNode);
 
             return nextNode.column;
         }
@@ -149,16 +156,16 @@ namespace Map
             
             //j = 0 이면, left neighbor 없음
             if (j > 0)
-                leftNeighbor = _mapData[i][j - 1];
+                leftNeighbor = _map[i][j - 1];
             //j = mapWidth -1 이면, right neighbor 없음
             if (j < _mapWidth - 1)
-                rightNeighbor = _mapData[i][j + 1];
+                rightNeighbor = _map[i][j + 1];
             
             //cross 여부 판단
             //1) 오른쪽 이웃이 왼쪽으로 진행하는 path가 있으면 현재 room에서 오른쪽 방향으로 진행 불가
             if (rightNeighbor != null && node.column > j)
             {
-                foreach (var nextRoom in rightNeighbor.nextRooms)
+                foreach (var nextRoom in rightNeighbor.nextNodes)
                 {
                     if (nextRoom.column < node.column)
                         return true;
@@ -167,7 +174,7 @@ namespace Map
             //2) 왼쪽 이웃이 오른쪽으로 진행하는 path가 있으면 현재 room에서 왼쪽 방향으로 진행 불가
             if (leftNeighbor != null && node.column < j)
             {
-                foreach (Node nextRoom in leftNeighbor.nextRooms)
+                foreach (Node nextRoom in leftNeighbor.nextNodes)
                 {
                     if (nextRoom.column > node.column)
                         return true;
@@ -178,74 +185,82 @@ namespace Map
         }
 
         
-        //- 보스룸 이전 floor와 보스 룸 connection 설정
-        //- room type 설정
-        private void SetUpBossRoom()
+        // - 시작 노드와 그 다음 floor와의 connection 설정
+        // - room type 설정
+        private Node SetUpStartRoom()
         {
-            int middle = Mathf.FloorToInt(_mapWidth * 0.5F);
-            Node bossNode = _mapData[_floors - 1][middle];
+            int middle = Mathf.FloorToInt(_mapWidth * 0.5f);
+            Node startNode = _map[0][middle];
 
             for (int j = 0; j < _mapWidth; j++)
             {
-                Node currentNode = _mapData[_floors - 2][j];
-                if (currentNode.nextRooms != null)
+                Node currentNode = _map[1][j];
+                if (currentNode.HasConnections())
                 {
-                    currentNode.nextRooms.Add(bossNode);
+                    startNode.nextNodes.Add(currentNode);
                 }
             }
 
-            bossNode.type = Node.Type.Boss;
+            startNode.nodeType = NodeType.Battle;
+            return startNode;
+        }
+        
+        //- 보스룸 이전 floor와 보스 룸 connection 설정
+        //- room type 설정
+        private Node SetUpBossRoom()
+        {
+            int middle = Mathf.FloorToInt(_mapWidth * 0.5F);
+            Node bossNode = _map[_floors - 1][middle];
+
+            for (int j = 0; j < _mapWidth; j++)
+            {
+                Node currentNode = _map[_floors - 2][j];
+                if (currentNode.HasConnections())
+                {
+                    currentNode.nextNodes.Add(bossNode);
+                }
+            }
+
+            bossNode.nodeType = NodeType.Boss;
+
+            return bossNode;
         }
 
         private void SetUpRandomRoomWeights()
         {
-            _randomRoomTypeWeights[(int)Node.Type.Battle] = _BattleRoomWeight;
-            _randomRoomTypeWeights[(int)Node.Type.Rest] = _BattleRoomWeight + _RestRoomWeight;
-            _randomRoomTypeWeights[(int)Node.Type.Shop] = _BattleRoomWeight + _RestRoomWeight + _ShopRoomWeight;
-            //_randomRoomTypeWeights[Room.Type.Event] = _BattleRoomWeight + _RestRoomWeight + _ShopRoomWeight + _EventRoomWeight;
-            _randomRoomTypeTotalWeight = _randomRoomTypeWeights[(int)Node.Type.Shop];
+            _randomRoomTypeWeights[(int)NodeType.Battle] = _BattleRoomWeight;
+            _randomRoomTypeWeights[(int)NodeType.Shop] = _BattleRoomWeight + _ShopRoomWeight;
+            _randomRoomTypeWeights[(int)NodeType.Event] = _BattleRoomWeight + _ShopRoomWeight + _EventRoomWeight;
+            _randomRoomTypeTotalWeight = _randomRoomTypeWeights[(int)NodeType.Event];
             
         }
 
 
         private void SetUpRoomType()
         {
-            //규칙에 맞게 설정
-            //1. 첫 번째 방은 무조건 battle room
-            foreach (Node room in _mapData[0])
-            {
-                if (room.nextRooms.Count > 0)
-                    room.type = Node.Type.Battle;
-            }
             
             //2. 커스텀 규칙
             //예) 9th floor(floors / 2)는 항상 shop
-            foreach (Node room in _mapData[_floors/2])
+            foreach (Node room in _map[_floors/2])
             {
-                if (room.nextRooms.Count > 0)
-                    room.type = Node.Type.Shop;
+                if (room.HasConnections())
+                    room.nodeType = NodeType.Shop;
             }
             //예) 4th floor는 항상 Event 발생
-            foreach (Node room in _mapData[3])
+            foreach (Node room in _map[3])
             {
-                if (room.nextRooms.Count > 0)
-                    room.type = Node.Type.Event;
+                if (room.HasConnections())
+                    room.nodeType = NodeType.Event;
             }
             
-            //예) 보스 룸 이전 마지막 floor는 항상 rest room
-            foreach (Node room in _mapData[_floors-2])
-            {
-                if (room.nextRooms.Count > 0)
-                    room.type = Node.Type.Rest;
-            }
             
             //3. 나머지 랜덤
-            foreach (List<Node> currentFloor in _mapData)
+            foreach (List<Node> currentFloor in _map)
             {
                 foreach (Node room in currentFloor)
                 {
                     //사용하는 방인데 타입이 정해지지 않은 경우
-                    if (room.nextRooms.Count > 0 && room.type == Node.Type.NotAssgined)
+                    if (room.HasConnections() && room.nodeType == NodeType.NotAssgined)
                         SetRoomRandomly(room);
                 }
             }
@@ -255,67 +270,66 @@ namespace Map
         private void SetRoomRandomly(Node nodeToSet)
         {
             //룰 기반으로 한 플래그 설정
-            //예) 4층 이내에 rest room이 있으면 안된다, 연속으로 rest room 배치 불가능, 연속으로 shop room 배치 불가능, 보스룸 이전에 rest room을 강제로 배치해서 floors-3는 rest room이면 안됨
+            //예) 4층 이내에 event room이 있으면 안된다, 연속으로 rest room 배치 불가능, 연속으로 shop room 배치 불가능, 보스룸 이전에 rest room을 강제로 배치해서 floors-3는 rest room이면 안됨
 
-            bool restBelow4 = true;
-            bool consecutiveRest = true;
+            bool eventBelow4 = true;
+            // bool consecutiveEvent = true;
             bool consecutiveShop = true;
             //bool consecutiveEvent = true;
-            bool restOn13 = true;
+            bool eventOn13 = true;
 
-            Node.Type typeCandidate = Node.Type.NotAssgined;
-            while (restBelow4 || consecutiveRest || consecutiveShop || restOn13)
+            NodeType typeCandidate = NodeType.NotAssgined;
+            while (eventBelow4 || consecutiveShop || eventOn13)
             {
                 typeCandidate = GetRandomRoomTypeByWeight();
                 
                 //--------------flag 체크-------------
-                bool isRestRoom = typeCandidate == Node.Type.Rest;
-                bool hasRestRoomParent = HasParentOfType(nodeToSet, Node.Type.Rest);
-                bool isShop = typeCandidate == Node.Type.Shop;
+                bool isEventRoom = typeCandidate == NodeType.Event;
+                bool hasEventRoomParent = HasParentOfType(nodeToSet, NodeType.Event);
+                bool isShop = typeCandidate == NodeType.Shop;
                 //bool isEvent = typeCandidate
-                bool haseShopRoomParent = HasParentOfType(nodeToSet, Node.Type.Shop);
+                bool haseShopRoomParent = HasParentOfType(nodeToSet, NodeType.Shop);
                 
                 //rule을 어기지 않으면 아래 플래그들은 모두 false로 설정됨
-                restBelow4 = isRestRoom && nodeToSet.row < 3;
-                consecutiveRest = isRestRoom && hasRestRoomParent;
+                eventBelow4 = isEventRoom && nodeToSet.row < 3;
                 consecutiveShop = isShop && haseShopRoomParent;
-                restOn13 = isRestRoom && nodeToSet.row == 12;
+                eventOn13 = isEventRoom && nodeToSet.row == 12;
 
             }
             
             //rule을 어기지 않는 type candidate 획득
-            nodeToSet.type = typeCandidate;
+            nodeToSet.nodeType = typeCandidate;
 
         }
 
-        private bool HasParentOfType(Node node, Node.Type roomType)
+        private bool HasParentOfType(Node node, NodeType roomType)
         {
             List<Node> parent = new();
             //left parent
             if (node.column > 0 && node.row > 0)
             {
-                Node parentCandidate = _mapData[node.row - 1][node.column - 1];
-                if(parentCandidate.nextRooms.Contains(node))
+                Node parentCandidate = _map[node.row - 1][node.column - 1];
+                if(parentCandidate.nextNodes.Contains(node))
                     parent.Add(parentCandidate);
             }
             //below parent
             if (node.column > 0)
             {
-                Node parentCandidate = _mapData[node.row - 1][node.column];
-                if(parentCandidate.nextRooms.Contains(node))
+                Node parentCandidate = _map[node.row - 1][node.column];
+                if(parentCandidate.nextNodes.Contains(node))
                     parent.Add(parentCandidate);
             }
             //right parent
             if (node.column < _mapWidth-1 && node.row > 0)
             {
-                Node parentCandidate = _mapData[node.row - 1][node.column + 1];
-                if(parentCandidate.nextRooms.Contains(node))
+                Node parentCandidate = _map[node.row - 1][node.column + 1];
+                if(parentCandidate.nextNodes.Contains(node))
                     parent.Add(parentCandidate);
             }
             
             foreach (Node pRoom in parent)
             {
-                if (pRoom.type == roomType) 
+                if (pRoom.nodeType == roomType) 
                     return true;
             }
 
@@ -323,7 +337,7 @@ namespace Map
 
         }
 
-        private Node.Type GetRandomRoomTypeByWeight()
+        private NodeType GetRandomRoomTypeByWeight()
         {
             float roll = Random.Range(0f, _randomRoomTypeTotalWeight);
 
@@ -331,10 +345,10 @@ namespace Map
             {
                 float typeWeight = _randomRoomTypeWeights[i];
                 if (typeWeight > roll)
-                    return (Node.Type)i;
+                    return (NodeType)i;
             }
             
-            return Node.Type.Battle;
+            return NodeType.Battle;
         }
 
 
@@ -344,10 +358,10 @@ namespace Map
             for (int i = 0; i < _floors; i++)
             {
                 printStr.Add($"floor {i} : ");
-                for (int j = 0; j < _mapData[i].Count; j++)
+                for (int j = 0; j < _map[i].Count; j++)
                 {
-                    printStr.Add(_mapData[i][j].ToString());
-                    if(j!=_mapData.Count-1)
+                    printStr.Add(_map[i][j].ToString());
+                    if(j!=_map.Count-1)
                         printStr.Add(", ");
                     
                 }

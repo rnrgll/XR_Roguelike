@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Map
 {
-    [CreateAssetMenu(fileName = "FILENAME", menuName = "MENUNAME", order = 0)]
+    [CreateAssetMenu(menuName = "MapConfig")]
     public class MapConfig : ScriptableObject
     {
-        
+        public List<NodeTemplate> NodeTemplates;
     }
 }

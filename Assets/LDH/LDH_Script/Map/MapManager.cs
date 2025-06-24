@@ -7,8 +7,9 @@ namespace Map
 {
     public class MapManager : Singleton<MapManager>
     {
+        public MapGenerator mapGenerator = new();
         public MapConfig config; //맵 config data
-        public List<List<Node>> CurrentMap { get; private set; }
+        public MapData CurrentMap { get; private set; }
         
         public void Awake()
         {
@@ -27,7 +28,7 @@ namespace Map
         public void GenerateMap()
         {
             //맵 생성
-            CurrentMap = MapGenerator.GenerateMap(config);
+            CurrentMap = mapGenerator.GenerateMap(config);
         }
         
     }
