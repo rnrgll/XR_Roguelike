@@ -10,10 +10,7 @@ public class CardCombination : MonoBehaviour
         int[] SuitNum = new int[4];
         int[] numbers = new int[13];
         int JokerNum = 0;
-        int UsedJoker = 0;
         int JokerFiveNum = 14;
-        int StraightNum = 0;
-        int StartStraightNum = 0;
         bool IsFlush = false;
         bool IsStraight = false;
         bool IsFullHouse = false;
@@ -54,74 +51,19 @@ public class CardCombination : MonoBehaviour
         }
         #endregion
 
+        #region 파이브조커 확인
+        CheckFiveJoker(JokerNum, JokerFiveNum, cardNums, out IsFiveJoker);
+        #endregion
+
         int i = 1;
         // card들의 숫자를 확인
         #region 숫자 족보 확인
         foreach (int _num in numbers)
         {
-            #region 파이브조커 확인
-            if (JokerNum == 5)
-            {
-                IsFiveJoker = true;
-                int s = JokerFiveNum;
-                // TODO : 현재 조커의 값을 14로 설정
-                cardNums.AddRange(new List<int> { s, s, s, s, s });
-                break;
-            }
-            #endregion
+
 
             #region 스트레이트 확인
-            // 해당 숫자가 1개일 경우
-            if (_num == 1)
-            {
-                // 만약 스트레이트의 시작일 경우 스트레이트의 시작 넘버를 기록한다.
-                if (StraightNum == 0) StartStraightNum = i;
-                // 연속되는 숫자를 나타내는 straightNum을 +해준다.
-                StraightNum++;
-                // 만일 straightNum이 현재 스트레이트의 수치를 만족하면 스트레이트로 판별하고 다음으로 이동
-                // 만약 10,J,Q,K,A가 있을 경우에도 Straight 반환
-                if (StraightNum >= nowStraightNum || (i == 13 && StraightNum == nowStraightNum - 1 && numbers[0] == 1))
-                {
-                    IsStraight = true;
-
-                    if (i == 13 && StraightNum == nowStraightNum - 1 && numbers[0] == 1)
-                    {
-                        for (int sNum = StartStraightNum; sNum < StartStraightNum + nowStraightNum - 1; sNum++)
-                        {
-                            cardNums.Add(sNum);
-                        }
-                        cardNums.Add(1);
-                    }
-                    else
-                    {
-                        for (int sNum = StartStraightNum; sNum < StartStraightNum + nowStraightNum; sNum++)
-                        {
-                            cardNums.Add(sNum);
-                        }
-                    }
-                    break;
-                }
-                continue;
-            }
-            // 스트레이트에 사용할 수 있는 조커가 있는 경우
-            else if (JokerNum > UsedJoker)
-            {
-                UsedJoker += 1;
-                StraightNum++;
-                if (StraightNum >= nowStraightNum)
-                {
-                    IsStraight = true;
-                    break;
-                }
-                continue;
-            }
-            else
-            {
-                // 1개가 아닐경우 스트레이트에 관한 항목을 초기화한다.
-                StartStraightNum = 0;
-                StraightNum = 0;
-                UsedJoker = 0;
-            }
+            CheckStraight(JokerNum, nowStraightNum, cardNums, numbers, out IsStraight);
             #endregion
 
             #region 페어 확인
@@ -292,6 +234,7 @@ public class CardCombination : MonoBehaviour
         }
         #endregion
 
+        #region return region
         if (IsFiveJoker) return CardCombinationEnum.FiveJoker;
         if (IsFiveCard) return CardCombinationEnum.FiveCard;
         if (IsStraight && IsFlush) return CardCombinationEnum.StraightFlush;
@@ -360,5 +303,96 @@ public class CardCombination : MonoBehaviour
             return CardCombinationEnum.FiveCard;
         }
         else return CardCombinationEnum.HighCard;
+        #endregion
+    }
+
+    private static bool CheckFiveJoker(int Joker, int JokerFiveNum, List<int> cardNum, out bool IsFiveJoker)
+    {
+        if (Joker == 5)
+        {
+            IsFiveJoker = true;
+            int s = JokerFiveNum;
+            // TODO : 현재 조커의 값을 14로 설정
+            cardNum.AddRange(new List<int> { s, s, s, s, s });
+        }
+        else IsFiveJoker = false;
+
+        return IsFiveJoker;
+    }
+
+    // TODO: 현재 straightCrit값만 넘으면 작은거부터 기준값만큼의 값을 반환해서 만약 더커도 작은 배열로 반환한다.
+    // 이부분을 수정해야함
+    private static bool CheckStraight(int Joker, int straightCrit, List<int> cardNum, int[] numbers, out bool IsStraight)
+    {
+        int StraightNum = 0;
+        int StartStraightNum = 0;
+        int UsedJoker = 0;
+        int i = 1;
+        IsStraight = false;
+        foreach (int _num in numbers)
+        {
+            if (_num > 1)
+            {
+                break;
+                //TODO: 순서 조정으로 페어 이상이 존재할 경우 CheckStraight로 들어오지 않도록 조정
+            }
+
+            // 해당 숫자가 1개일 경우
+            if (_num == 1)
+            {
+                // 만약 스트레이트의 시작일 경우 스트레이트의 시작 넘버를 기록한다.
+                if (StraightNum == 0) StartStraightNum = i;
+                // 연속되는 숫자를 나타내는 straightNum을 +해준다.
+                StraightNum++;
+                // 만일 straightNum이 현재 스트레이트의 수치를 만족하면 스트레이트로 판별하고 다음으로 이동
+                // 만약 10,J,Q,K,A가 있을 경우에도 Straight 반환
+                if (StraightNum >= straightCrit || (i == 13 && StraightNum == straightCrit - 1 && numbers[0] == 1))
+                {
+
+                    IsStraight = true;
+
+                    if (i == 13 && StraightNum == straightCrit - 1 && numbers[0] == 1)
+                    {
+                        for (int sNum = StartStraightNum; sNum < StartStraightNum + straightCrit - 1; sNum++)
+                        {
+                            cardNum.Add(sNum);
+                        }
+                        cardNum.Add(1);
+                    }
+                    else
+                    {
+                        for (int sNum = StartStraightNum; sNum < StartStraightNum + straightCrit; sNum++)
+                        {
+                            cardNum.Add(sNum);
+                        }
+                    }
+                    break;
+                }
+            }
+            // 스트레이트에 사용할 수 있는 조커가 있는 경우
+            else if (Joker > UsedJoker)
+            {
+                UsedJoker += 1;
+                StraightNum++;
+                if (StraightNum >= straightCrit)
+                {
+                    IsStraight = true;
+                    break;
+                }
+            }
+            else
+            {
+                // 1개가 아닐경우 스트레이트에 관한 항목을 초기화한다.
+                StartStraightNum = 0;
+                StraightNum = 0;
+                UsedJoker = 0;
+                IsStraight = false;
+                break;
+            }
+        }
+
+        return IsStraight;
+
+
     }
 }

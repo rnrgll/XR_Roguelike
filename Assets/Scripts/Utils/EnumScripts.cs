@@ -12,6 +12,8 @@ public enum MajorPosition
     Normal, Reverse
 }
 
+public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
+
 public enum CardCombinationEnum
 {
     HighCard,
