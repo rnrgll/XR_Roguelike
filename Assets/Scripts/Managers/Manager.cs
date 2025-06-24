@@ -1,3 +1,4 @@
+using Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace Managers
         public static TestManager Test => TestManager.Instance;
         public static RandomManager randomManager => RandomManager.Instance;
 
+        public static TurnManager turnManager => TurnManager.Instance;
+
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
@@ -39,6 +42,7 @@ namespace Managers
             //각각의 매니저 스크립트를 프리팹에 스크립트를 직접 추가해두거나 아래와 같이 AddComponent로 동적으로 추가한다.
             manager.AddComponent<TestManager>();
             manager.AddComponent<RandomManager>();
+            manager.AddComponent<TurnManager>();
 
         }
     }
