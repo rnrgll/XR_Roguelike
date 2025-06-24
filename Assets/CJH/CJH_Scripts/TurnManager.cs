@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using DesignPattern;
 using UnityEngine;
 
-namespace Manager
+namespace Managers
 {
     public class TurnManager : Singleton<TurnManager>
     {
@@ -22,17 +22,17 @@ namespace Manager
             while (true)
             {
                 // 1. 턴 시작: 아르카나 적용
-                ArcanaManager.Instance.ApplyArcana();
+                //ArcanaManager.Instance.ApplyArcana();
 
                 // 2. 핸드 보충
-                DeckManager.Instance.DrawUntilHandLimit();
+                //DeckManager.Instance.DrawUntilHandLimit();
 
                 // 3. 플레이어 턴
                 player.StartTurn();
                 yield return new WaitUntil(() => player.IsTurnFinished());
 
                 // 4. 핸드 정리
-                DeckManager.Instance.CleanHandAfterTurn();
+                //DeckManager.Instance.CleanHandAfterTurn();
 
                 // 5. 적 턴
                 foreach (var enemy in enemies)
@@ -41,7 +41,7 @@ namespace Manager
                     yield return new WaitForSeconds(0.5f);
                 }
 
-                ArcanaManager.Instance.PrepareNextArcana();
+                //ArcanaManager.Instance.PrepareNextArcana();
             }
         }
     }

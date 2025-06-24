@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour, IEnemyActor
 {
     private void Start()
     {
-        Managers.Manager.Turn.RegisterEnemy(this);
+        //Managers.Manager.Turn.RegisterEnemy(this);
     }
 
     public void TakeTurn()
