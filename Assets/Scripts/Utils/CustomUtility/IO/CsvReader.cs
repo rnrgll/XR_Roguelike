@@ -44,8 +44,12 @@ namespace CustomUtility
                 {
 #if UNITY_EDITOR
                     return Application.dataPath + Path.DirectorySeparatorChar;
+// #else
+//                     return Application.persistentDataPath + Path.DirectorySeparatorChar;
+#elif UNITY_ANDROID
+        return Application.streamingAssetsPath + "/"; // Android는 슬래시
 #else
-                    return Application.persistentDataPath + Path.DirectorySeparatorChar;
+        return Application.streamingAssetsPath + Path.DirectorySeparatorChar;
 #endif
                 }
             }
@@ -71,6 +75,7 @@ namespace CustomUtility
                     case CsvDictionary dictionary:
                         isReadSuccessful = ReadToDictionary(dictionary, lines);
                         break;
+                    
                     default:
                         isReadSuccessful = false;
                         break;
