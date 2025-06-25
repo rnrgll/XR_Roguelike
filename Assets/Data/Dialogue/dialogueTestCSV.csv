@@ -1,0 +1,12 @@
+﻿index,speakerName,position,portraitKey,dialogueText
+0,Alice,left,idle,"dialogue Text [0] left, Alice, idle"
+1,Bob,right,idle,"dialogue Text [1] right, Bob, idle"
+2,Alice,middle,idle,"dialogue Text [2] middle, Alice, idle"
+3,Alice,left,smile,"dialogue Text [3] left, Alice, smile"
+4,Alice,middle,smile,"dialogue Text [4] middle, Alice, smile"
+5,Bob,middle,idle,"dialogue Text [5] middle, Bob, idle"
+6,Bob,right,idle,"dialogue Text [6] right, Bob, idle"
+7,Alice,middle,idle,"dialogue Text [7] middle, Alice, idle"
+8,Alice,left,smile,"dialogue Text [8] left, Alice, smile"
+9,Bob,left,smile,"dialogue Text [9] left, Bob, smile"
+10,Alice,right,idle,"dialogue Text [10] right, Alice, idle"
