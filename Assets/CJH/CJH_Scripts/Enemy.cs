@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         currentHP = maxHP;
+        GameStatusUI.Instance.Init(maxHP);
     }
 
     public void ApplyDamage(int damage)
@@ -27,4 +28,5 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }
