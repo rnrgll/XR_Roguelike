@@ -27,6 +27,11 @@ public class TurnManager : Singleton<TurnManager>
     {
         while (true)
         {
+            if (player is PlayerController pc && pc.IsDead)
+            {
+                Debug.Log("게임 오버! 플레이어가 죽었습니다.");
+                yield break;
+            }
             ArcanaManager.Instance.ApplyArcana();
             DeckManager.Instance.DrawUntilHandLimit();
 
