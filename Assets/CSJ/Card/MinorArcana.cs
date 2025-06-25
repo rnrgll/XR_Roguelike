@@ -5,12 +5,14 @@ using UnityEngine;
 
 public readonly struct MinorArcana : ICard
 {
+    public string CardName { get; }
     public MinorSuit CardSuit { get; }
     public int CardNum { get; }
 
 
-    public MinorArcana(MinorSuit _suit, int _num)
+    public MinorArcana(string _name, MinorSuit _suit, int _num)
     {
+        CardName = _name;
         CardSuit = _suit;
         CardNum = _num;
     }

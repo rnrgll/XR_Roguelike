@@ -12,8 +12,8 @@ using manager = Managers.Manager;
 public class CardController : MonoBehaviour
 {
     public CardDeck Deck;
-    public List<MinorArcana> Hand;
-    public Dictionary<CardStatus, List<MinorArcana>> CardListDic;
+    public List<ICard> Hand;
+    public Dictionary<CardStatus, List<ICard>> CardListDic;
     public int drawNum = 8;
 
     // public BattleStat stat; TODO: 플레이어 스탯과 연계
@@ -39,10 +39,10 @@ public class CardController : MonoBehaviour
     /// </summary>
     private void CardDicInit()
     {
-        CardListDic = new Dictionary<CardStatus, List<MinorArcana>>();
+        CardListDic = new Dictionary<CardStatus, List<ICard>>();
         foreach (CardStatus _status in Enum.GetValues(typeof(CardStatus)))
         {
-            CardListDic[_status] = new List<MinorArcana>();
+            CardListDic[_status] = new List<ICard>();
         }
     }
 
@@ -101,8 +101,10 @@ public class CardController : MonoBehaviour
 
     public void SortBySuit(CardStatus _status)
     {
+
         CardListDic[_status].Sort((a, b) =>
         {
+
             int result = a.CardSuit.CompareTo(b.CardSuit);
             if (result != 0) return result;
             return a.CardNum.CompareTo(b.CardNum);
@@ -119,7 +121,7 @@ public class CardController : MonoBehaviour
         });
     }
 
-    public List<MinorArcana> GetHand()
+    public List<ICard> GetHand()
     {
         return Hand;
     }
@@ -137,8 +139,7 @@ public class CardController : MonoBehaviour
         int _num = 0;
         foreach (MinorArcana _card in cards)
         {
-            CardListDic[CardStatus.Graveyard] =
-            CardListDic[CardStatus.Hand].ToList();
+            CardListDic[CardStatus.Graveyard].Add(_card);
 
             CardListDic[CardStatus.Hand].Remove(_card);
             _num++;
@@ -175,6 +176,8 @@ public class CardController : MonoBehaviour
     {
         CardListDic[CardStatus.BattleDeck] =
         CardListDic[CardStatus.Graveyard].ToList();
+
+        CardListDic[CardStatus.Graveyard].Clear();
 
         Shuffle(CardListDic[CardStatus.BattleDeck]);
     }

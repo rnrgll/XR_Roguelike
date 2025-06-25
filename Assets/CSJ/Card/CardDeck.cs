@@ -1,10 +1,11 @@
 
+using CustomUtility.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardDeck : MonoBehaviour
+public class CardDeck
 {
     public MinorArcana[,] Deck;
     public int[,] numOfCard { private set; get; }
@@ -12,10 +13,19 @@ public class CardDeck : MonoBehaviour
     [SerializeField] int arcanaLength = 14;
     public Action<MinorArcana> OnCardAdded;
     public Action<MinorArcana> OnCardRemoved;
+    private string ArcanaTableLink =
+    "https://docs.google.com/spreadsheets/d/1epFe-PfQ0mA9D7wl7_ByiZhfj-A5pPPO/export?format=csv&range=A4:I59&ouid=106241391175336675849&rtpof=true&sd=true";
+    private CsvTable filePath;
 
     public CardDeck()
     {
+        CsvLoad();
         Init();
+    }
+
+    private void CsvLoad()
+    {
+        CardCsvDownLoader.Start(ArcanaTableLink, "ArcanaCsv");
     }
 
     private void Init()
@@ -29,7 +39,7 @@ public class CardDeck : MonoBehaviour
             for (int j = 0; j < 14; j++)
             {
                 numOfCard[i, j] = 1;
-                Deck[i, j] = new MinorArcana((MinorSuit)i, j + 1);
+                Deck[i, j] = GetCardData((MinorSuit)i, j);
             }
         }
     }
@@ -42,7 +52,7 @@ public class CardDeck : MonoBehaviour
     public void AddCard(MinorSuit _suit, int _cardNum)
     {
         numOfCard[(int)_suit, _cardNum]++;
-        OnCardAdded?.Invoke(new MinorArcana(_suit, _cardNum));
+        OnCardAdded?.Invoke(GetCardData(_suit, _cardNum));
     }
 
     public void RemoveCard(int _cardNum, int _order) => RemoveCard((MinorSuit)(_cardNum / arcanaLength), _cardNum % arcanaLength, _order);
@@ -58,7 +68,7 @@ public class CardDeck : MonoBehaviour
         {
             EnchantDic.Remove((Deck[(int)_suit, _cardNum], _order));
         }
-        OnCardRemoved?.Invoke(new MinorArcana(_suit, _cardNum));
+        OnCardRemoved?.Invoke(GetCardData(_suit, _cardNum));
     }
     #endregion
 
@@ -70,6 +80,12 @@ public class CardDeck : MonoBehaviour
         {
             EnchantDic[(Deck[(int)_suit, _cardNum], _order)] = (CardEnchant)((int)nowEnchant + 1);
         }
+    }
+
+    public MinorArcana GetCardData(MinorSuit _suit, int _cardNum)
+    {
+        string[] cardData = filePath.GetLine((int)_suit * 14 + _cardNum);
+        return new MinorArcana(cardData[0], (MinorSuit)Enum.Parse(typeof(MinorSuit), cardData[4]), int.Parse(cardData[5]));
     }
 
 }
