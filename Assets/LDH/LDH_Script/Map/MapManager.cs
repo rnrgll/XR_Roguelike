@@ -13,7 +13,7 @@ public class MapManager : Singleton<MapManager>
     
     public void Awake()
     {
-        SingletonInit();
+        _instance = this;
     }
     public void GenerateMap()
     {

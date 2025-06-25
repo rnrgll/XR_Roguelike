@@ -33,4 +33,15 @@ public class RandomManager : Singleton<RandomManager>
         return Random.Range(min, max);
     }
 
+    /// <summary>
+    /// min 이상, max 이하 범위의 랜덤한 float을 반환
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public float RandFloat(float min, float max)
+    {
+        return Random.Range(min, max);
+    }
+
 }

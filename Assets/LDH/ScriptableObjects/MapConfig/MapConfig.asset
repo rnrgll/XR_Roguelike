@@ -19,11 +19,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d38280013f428484c8c445a2c1405f39, type: 2}
   randomNodes: 010000000200000003000000
   xDist: 30
-  yDist: 25
-  placementRandomness: 5
-  floors: 16
-  mapWidth: 7
-  paths: 6
+  yGap: 350
+  placementRandomness: 50
+  floors: 9
+  mapWidth: 5
+  paths: 4
   BattleRoomWeight: 10
   ShopRoomWeight: 2.5
   EventRoomWeight: 4
