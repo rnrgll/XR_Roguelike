@@ -27,24 +27,29 @@ public class TurnManager : Singleton<TurnManager>
     {
         while (true)
         {
-            // ArcanaManager.Instance.ApplyArcana();
-            // DeckManager.Instance.DrawUntilHandLimit();
-            //
-            // player.StartTurn();
-            // yield return new WaitUntil(() => player.IsTurnFinished());
-            //
-            // DeckManager.Instance.CleanHandAfterTurn();
-            //
-            // foreach (var enemy in enemies)
-            // {
-            //     if (enemy is MonoBehaviour mb && mb != null && (enemy as Enemy)?.IsDead == false)
-            //     {
-            //         enemy.TakeTurn();
-            //         yield return new WaitForSeconds(0.5f);
-            //     }
-            // }
-            //
-            // ArcanaManager.Instance.PrepareNextArcana();
+            if (player is PlayerController pc && pc.IsDead)
+            {
+                Debug.Log("게임 오버! 플레이어가 죽었습니다.");
+                yield break;
+            }
+            ArcanaManager.Instance.ApplyArcana();
+            DeckManager.Instance.DrawUntilHandLimit();
+
+            player.StartTurn();
+            yield return new WaitUntil(() => player.IsTurnFinished());
+
+            DeckManager.Instance.CleanHandAfterTurn();
+
+            foreach (var enemy in enemies)
+            {
+                if (enemy is MonoBehaviour mb && mb != null && (enemy as Enemy)?.IsDead == false)
+                {
+                    enemy.TakeTurn();
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
+
+            ArcanaManager.Instance.PrepareNextArcana();
         }
     }
 }

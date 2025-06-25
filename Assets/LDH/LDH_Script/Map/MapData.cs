@@ -6,41 +6,35 @@ namespace Map
 {
     public class MapData
     {
-        public readonly List<List<Node>> map;
+        public readonly List<List<Node>> Map;
         public readonly List<Node> Nodes;
-        public readonly List<Vector2Int> path; //플레이어가 선택한 경로
-        public readonly Node bossNode;
-        public readonly Node startNode;
+        public readonly List<Vector2Int> Path; //플레이어가 선택한 경로
+        public readonly Node BossNode;
+        public readonly Node StartNode;
 
         public MapData(List<List<Node>> map, Node startNode, Node bossNode)
         {
-            this.map = map;
-            this.startNode = startNode;
-            this.bossNode = bossNode;
+            this.Map = map;
+            this.StartNode = startNode;
+            this.BossNode = bossNode;
 
-            Nodes = map.SelectMany(floor => floor).Where(node => node.HasConnections()).ToList();
+            Nodes = map.SelectMany(floor => floor).Where(node => node.nodeType!=NodeType.NotAssgined).ToList();
+
+            Path = new();
         }
 
         public List<Node> GetNodeListInFloor(int floor)
         {
-            if (floor < 0 || floor >= map.Count) return null;
-            return map[floor];
+            if (floor < 0 || floor >= Map.Count) return null;
+            return Map[floor];
         }
 
         public Node GetNodeByPoint(int row, int column)
         {
-            if (row < 0 || column < 0 || row >= map.Count || column >= map[0].Count) return null;
+            if (row < 0 || column < 0 || row >= Map.Count || column >= Map[0].Count) return null;
             
-            return map[row][column];
+            return Map[row][column];
         }
         
-        public float GetMapLength()
-        {
-            if (bossNode == null || startNode == null)
-                return 0f;
-
-            return bossNode.position.y - startNode.position.y;
-        }
-
     }
 }

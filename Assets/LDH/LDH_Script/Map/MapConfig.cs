@@ -13,7 +13,7 @@ namespace Map
         
         [Header("Node Position Setting")]
         public int xDist = 30;
-        public int yDist = 25;
+        public int yGap = 25;
         public int placementRandomness = 5;
         
         [Header("Map Setting")]
@@ -26,6 +26,17 @@ namespace Map
         public float BattleRoomWeight = 10.0f;
         public float ShopRoomWeight = 2.5f;
         public float EventRoomWeight = 4.0f;
+        
+        
+        
+        // public int GridWidth => Mathf.Max(BossNodeMax, StartNodeMax);
+        //
+        // public int BossNodesMin;
+        // public int BossNodeMax;
+        // public int StartNodeMin;
+        // public int StartNodeMax;
+        //
+        // public List<MapLayer> layers;
 
     }
 }
