@@ -32,13 +32,13 @@ public class TurnManager : Singleton<TurnManager>
                 Debug.Log("게임 오버! 플레이어가 죽었습니다.");
                 yield break;
             }
-            ArcanaManager.Instance.ApplyArcana();
-            DeckManager.Instance.DrawUntilHandLimit();
+            //ArcanaManager.Instance.ApplyArcana();
+            //DeckManager.Instance.DrawUntilHandLimit();
 
             player.StartTurn();
             yield return new WaitUntil(() => player.IsTurnFinished());
 
-            DeckManager.Instance.CleanHandAfterTurn();
+            //DeckManager.Instance.CleanHandAfterTurn();
 
             foreach (var enemy in enemies)
             {
@@ -49,7 +49,7 @@ public class TurnManager : Singleton<TurnManager>
                 }
             }
 
-            ArcanaManager.Instance.PrepareNextArcana();
+            //ArcanaManager.Instance.PrepareNextArcana();
         }
     }
 }
