@@ -18,7 +18,7 @@ namespace Dialogue
 
         public Sprite GetSprite(string key)
         {
-            return portraits.FirstOrDefault(p => p.key == key).sprite;
+            return portraits.FirstOrDefault(p => p.key.ToLower() == key.ToLower()).sprite;
         }
     }
 }

@@ -3,21 +3,14 @@ using DesignPattern;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Dialogue;
 
-namespace Dialogue
+namespace Managers
 {
     public class DialogueManager : Singleton<DialogueManager>
     {
         private void Awake() => SingletonInit();
-
-        //debug------------------------
-        public string fileName;
         
-        private void Start()
-        {
-            LoadDialogueData(fileName);
-        }
-
         public DialougeData DialogueData { get; private set; } = new();
         
         /// <summary>

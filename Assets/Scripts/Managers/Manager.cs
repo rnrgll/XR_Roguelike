@@ -1,3 +1,4 @@
+using Dialogue;
 using Map;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Managers
             public static RandomManager randomManager => RandomManager.Instance;
 
             public static TurnManager turnManager => TurnManager.Instance;
-
+            public static DialogueManager Dialogue => DialogueManager.Instance;
 
             [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
             private static void Initialize()
@@ -44,8 +45,9 @@ namespace Managers
                 manager.AddComponent<TestManager>();
                 manager.AddComponent<RandomManager>();
                 manager.AddComponent<TurnManager>();
-            
-            //Map Manager는 프리팹으로 추가
+                manager.AddComponent<DialogueManager>();
+
+                //Map Manager는 프리팹으로 추가
             }
     }
 }

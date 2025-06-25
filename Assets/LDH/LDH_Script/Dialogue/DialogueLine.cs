@@ -12,7 +12,7 @@ namespace Dialogue
 
         public Speaker GetSpeaker()
         {
-            return Resources.Load<Speaker>($"Speaker/{speakerName}");
+            return Resources.Load<Speaker>($"ScriptableObjects/Speakers/{speakerName}");
         }
     }
 }

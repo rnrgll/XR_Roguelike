@@ -1,4 +1,4 @@
-index,speakerName,position,portraitKey,dialogueText
+﻿index,speakerName,position,portraitKey,dialogueText
 0,Alice,left,idle,"dialogue Text [0] left, Alice, idle"
 1,Bob,right,idle,"dialogue Text [1] right, Bob, idle"
 2,Alice,left,idle,"dialogue Text [2] left, Alice, idle"
