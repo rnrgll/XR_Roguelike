@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
+    [SerializeField] private int maxHP = 100;
+    private int currentHP;
+    public bool IsDead => currentHP <= 0;
     private bool turnEnded;
 
     private void Start()
     {
+        currentHP = maxHP;
         Managers.Manager.turnManager.RegisterPlayer(this);
         CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
     }
@@ -30,6 +34,18 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
 
         EndTurn();
+    }
+
+    public void TakeDamage(int dmg)
+    {
+        currentHP -= dmg;
+        Debug.Log($"플레이어 피해: {dmg}, 남은 체력: {currentHP}");
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("플레이어 사망!");
+            // TODO: 게임 오버 처리
+        }
     }
 
     public void StartTurn()
