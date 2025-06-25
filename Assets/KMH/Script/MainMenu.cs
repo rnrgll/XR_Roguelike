@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickOption()
     {
-        Debug.Log("설정");
+        SceneManager.LoadScene("Option");
     }
 
     public void OnClickQuit()
