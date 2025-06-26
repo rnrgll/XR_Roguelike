@@ -395,9 +395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04429389a36544b9b0116be1e1f74d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSpeaker: {fileID: 1383279412}
-  middleSpeaker: {fileID: 2118625118}
-  rightSpeaker: {fileID: 818357921}
+  leftContainer: {fileID: 1383279412}
+  middleContainer: {fileID: 2118625118}
+  rightContainer: {fileID: 818357921}
   _rootUI: {fileID: 2050265809}
 --- !u!1 &380563797
 GameObject:
@@ -850,6 +850,10 @@ MonoBehaviour:
   portrait: {fileID: 1868101945}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
+  moveDurtDuration: 0.5
+  moveDelay: 0.1
+  typingSpeed: 0.03
+  portraitOriginAnchorPos: {x: 0, y: 0}
 --- !u!4 &818357922
 Transform:
   m_ObjectHideFlags: 0
@@ -1385,6 +1389,10 @@ MonoBehaviour:
   portrait: {fileID: 768005427}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
+  moveDurtDuration: 0.5
+  moveDelay: 0.1
+  typingSpeed: 0.03
+  portraitOriginAnchorPos: {x: 0, y: 0}
 --- !u!4 &1383279413
 Transform:
   m_ObjectHideFlags: 0
@@ -2378,6 +2386,10 @@ MonoBehaviour:
   portrait: {fileID: 1402625307}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
+  moveDurtDuration: 0.5
+  moveDelay: 0.1
+  typingSpeed: 0.03
+  portraitOriginAnchorPos: {x: 0, y: 0}
 --- !u!4 &2118625119
 Transform:
   m_ObjectHideFlags: 0
