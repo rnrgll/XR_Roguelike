@@ -48,6 +48,12 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
     }
 
+    public void RestoreHP()
+    {
+        currentHP = maxHP;
+        Debug.Log("플레이어 HP 완전 회복!");
+    }
+
     public void StartTurn()
     {
         Debug.Log("플레이어 턴 시작!");
