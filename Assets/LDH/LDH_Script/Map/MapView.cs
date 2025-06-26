@@ -11,61 +11,50 @@ namespace Map
 {
     public class MapView : MonoBehaviour
     {
-        public static MapView Instance; 
-        
+   
         [Header("Map Configuration")]
         public MapNode mapNodePrefab;
         
-        [Header("Background Settings")] public Sprite background;
+        [Header("Background Settings")] 
+        public Sprite background;
         public Color32 backgroundColor = Color.white;
        
-        [Header("Line Settings")] public UILineRenderer uiLinePrefab;
-        [Tooltip("Line point count should be > 2 to get smooth color gradients")]
-        [Range(3, 10)]
-        public int linePointsCount = 10;
-        [Tooltip("Distance from the node till the line starting point")]
-        public float offsetFromNodes = 0.5f;
-
         [Header("Colors")] 
-        [Tooltip("Node Visited or Attainable color")] public Color32 visitedColor = Color.white;
-        [Tooltip("Locked node color")] public Color32 lockedColor = Color.gray;
-        [Tooltip("Visited or available path color")] public Color32 lineVisitedColor = Color.white;
-        [Tooltip("Unavailable path color")] public Color32 lineLockedColor = Color.gray;
+        public static Color32 visitedColor = Color.white; //방문 or 도달 가능한 노드 색상
+        public static Color32 lockedColor = Color.gray; // 잠긴 노드 색상
+        public static Color32 lineVisitedColor = Color.white; // 방문 or 도달 가능한 경로 색상
+        public static Color32 lineLockedColor = Color.gray; // 잠긴 경로 색상
 
+        
+        [Header("Line Settings")] 
+        public UILineRenderer uiLinePrefab;
+        [Range(3, 10)] public int linePointsCount = 10; //부드러운 라인 그라데이션을 위해선 3개 이상의 point 권장
+        public float offsetFromNodes = 0.5f; // 노드에서 라인 시작점 사이의 offest
+        
 
         [Header("UI Map Settings")]
         [SerializeField] private ScrollRect scrollRectVertical;
-       
-        [Tooltip("Padding of the first and last rows of nodes from the sides of the scroll rect")] 
-        [SerializeField]
-        private float padding;
-
-        [Tooltip("Padding of the background from the sides of the scroll rect")] 
-        [SerializeField]
-        private Vector2 backgroundPadding;
-
-        [Tooltip("Pixels per Unit multiplier for the background image")] [SerializeField]
-        private float backgroundPPUMultiplier = 1;
+        [SerializeField] private float padding; // 맵 전체 좌+우/위+아래 여백
+        [SerializeField] private Vector2 backgroundPadding; // 배경 이미지 좌우 여백
+        [SerializeField] private float backgroundPPUMultiplier = 1; // 배경 이미지 Pixels Per Unit 배율
         
-        //-------------------------------
+        // 내부 상태 필드
         //map parent
         private GameObject firstParent;
         private GameObject mapParent;
         
         //map data
-        public MapData Map { get; private set; }
-        
+        public MapData Map { get; private set; } = null;
         //map nodes, path list
         public readonly List<MapNode> MapNodes = new ();
         
-        private List<List<Vector2Int>> paths;
-
+        // 유틸
         private Camera cam;
         protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
 
+        //======================================//
         
-        
-        public virtual void ShowMap(MapData m)
+        public void ShowMap(MapData m)
         {
             if (m == null)
             {
@@ -165,12 +154,11 @@ namespace Map
             }
         }
 
-        private void SetAttainableNodes()
+        public void SetAttainableNodes()
         {
-            
             foreach (MapNode node in MapNodes)
                 node.SetState(NodeState.Locked);
-
+            
             //아직 방문한 경로가 없을 때
             if (Manager.Map.CurrentMap.Path.Count == 0)
             {
@@ -202,7 +190,7 @@ namespace Map
             }
         }
 
-        private void SetLineColors()
+        public void SetLineColors()
         {
             // 모든 라인을 회색으로 초기화
             foreach (LineConnection connection in lineConnections)
@@ -213,7 +201,7 @@ namespace Map
                 return;
             
             // 경로에 포함된 path 색상 변경
-            // 마지막 방문 노드
+            // 마지막 방문 노드 = 현재 노드 이후의 attainable 한 경로 설정
             Vector2Int currentPoint = Manager.Map.CurrentMap.Path[Manager.Map.CurrentMap.Path.Count - 1];
             Node currentNode = Manager.Map.CurrentMap.GetNodeByPoint(currentPoint.x, currentPoint.y);
             
@@ -228,15 +216,16 @@ namespace Map
             
             if (Manager.Map.CurrentMap.Path.Count <= 1) return;
             
+            //이전 경로 path 색깔 설정
             for (int i = 0; i < Manager.Map.CurrentMap.Path.Count - 1; i++)
             {
                 Vector2Int current = Manager.Map.CurrentMap.Path[i];
                 Vector2Int next =Manager.Map.CurrentMap.Path[i + 1];
                 
-                LineConnection line = lineConnections.FirstOrDefault(l => l.from.Node.row == current.x && l.from.Node.column == current.y && l.to.Node.row == current.x && l.to.Node.column == current.y
+                LineConnection line = lineConnections.FirstOrDefault(l => l.from.Node.row == current.x && l.from.Node.column == current.y && l.to.Node.row == next.x && l.to.Node.column == next.y
                     );
                 line?.SetColor(lineVisitedColor);
-            }
+            }   
             
         }
 

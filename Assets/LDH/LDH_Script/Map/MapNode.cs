@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
+using Managers;
 
 namespace Map
 {
-
-    
     public class MapNode : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
     {
         public Image image;
@@ -14,17 +14,32 @@ namespace Map
         
         public Node Node { get; private set; }
         public NodeTemplate Template { get; private set; }
-
+        public NodeState NodeState { get; private set; }
+        
+        
         private float initialScale;
-        private const float HOVERSCALEFACTOR = 1.2f;
+        private const float hoverScaleFactor = 1.5f; // hover시 scale 증가값
+        private const float maxClickDuration = 0.5f; //
+        private const float scaleChangeDuration = 0.3f;
+        private const float circleFillDuration = 0.8f;
         private float mouseDownTime;
 
-        private const float MAXCLICKDURATION = 0.5f;
+        
+        private void OnDestroy()
+        {
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.DOKill();
+            }
 
+        }
+        
         public void SetUp(Node node, NodeTemplate template)
         {
             Node = node;
             Template = template;
+            NodeState = NodeState.Locked;
             
             if (image != null) image.sprite = template.sprite;
             if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
@@ -32,8 +47,7 @@ namespace Map
 
             if (visitedImage != null)
             {
-                //todo: color
-                //visitedImage.color = MapView.Instance.visitedColor;
+                visitedImage.color = MapView.visitedColor;
                 visitedImage.gameObject.SetActive(false);    
             }
             
@@ -43,90 +57,84 @@ namespace Map
 
         public void SetState(NodeState state)
         {
-            
             if (visitedImage!= null) visitedImage.gameObject.SetActive(false);
             
-              switch (state)
+            switch (state)
             {
                 case NodeState.Locked:
                     if (image != null)
                     {
-                        //image.color = MapView.Instance.lockedColor;
+                        image.DOKill();
+                        image.color = MapView.lockedColor;
                     }
-
                     break;
                 case NodeState.Visited:
                     if (image != null)
                     {
-                        //image.color = MapView.Instance.visitedColor;
+                        image.DOKill();
+                        image.color = MapView.visitedColor;
                     }
-                    
                     if (visitedImage != null) visitedImage.gameObject.SetActive(true);
                     break;
                 case NodeState.Attainable:
-                    // start pulsating from visited to locked color:
                     if (image != null)
                     {
-                        // image.color = MapView.Instance.lockedColor;
-                        // image.DOKill();
-                        // image.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                        image.color = MapView.lockedColor;
+                        image.DOKill();
+                        image.DOColor(MapView.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
                     }
-                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+            
+            NodeState = state;
         }
-        
-        
-        
+
+
+        #region Event / Animation
+
         public void OnPointerEnter(PointerEventData eventData)
         {
            
             if (image != null)
             {
-                //image.transform.DOKill();
-                //image.transform.DOScale(initialScale * HoverScaleFactor, 0.3f);
+                image.transform.DOKill();
+                image.transform.DOScale(initialScale * hoverScaleFactor, scaleChangeDuration);
             }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // if (sr != null)
-            // {
-            //     sr.transform.DOKill();
-            //     sr.transform.DOScale(initialScale, 0.3f);
-            // }
-            //
-            // if (image != null)
-            // {
-            //     image.transform.DOKill();
-            //     image.transform.DOScale(initialScale, 0.3f);
-            // }
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.transform.DOScale(initialScale, scaleChangeDuration);
+            }
         }
         public void OnPointerDown(PointerEventData eventData)
         {
-            mouseDownTime = Time.time;
+            mouseDownTime = Time.time; //마우스 long click, drag를 무시하기 위해 time 측정
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            // if (Time.time - mouseDownTime < MaxClickDuration)
-            // {
-            //     // user clicked on this node:
-            //     MapPlayerTracker.Instance.SelectNode(this);
-            // }
-        }
-        
-        private void OnDestroy()
-        {
-            if (image != null)
+            if (Time.time - mouseDownTime < maxClickDuration)
             {
-                // image.transform.DOKill();
-                // image.DOKill();
+                Manager.Map.Tracker.SelectNode(this);
             }
-
         }
 
+        public void ShowVisitedCircle()
+        {
+            if (visitedImage == null) return;
+            visitedImage.fillAmount = 0f;
+            visitedImage.DOFillAmount(1f, circleFillDuration);
+        }
+    
+
+
+        #endregion
+       
     }
 }

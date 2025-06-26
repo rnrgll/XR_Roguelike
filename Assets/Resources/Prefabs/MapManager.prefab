@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7206898132781194380}
   - component: {fileID: 1962420546608418037}
   - component: {fileID: 5939981633375130217}
+  - component: {fileID: 5785903751494116985}
   - component: {fileID: 1151548767457730250}
   m_Layer: 0
   m_Name: MapManager
@@ -49,7 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 1151548767457730250}
   config: {fileID: 11400000, guid: c525debbe4534405bab26e748860119f, type: 2}
-  View: {fileID: 5939981633375130217}
+  <View>k__BackingField: {fileID: 5939981633375130217}
+  <Tracker>k__BackingField: {fileID: 5785903751494116985}
+  <MapCanvas>k__BackingField: {fileID: 2226666351336165191}
 --- !u!114 &5939981633375130217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,22 +73,23 @@ MonoBehaviour:
   uiLinePrefab: {fileID: 4000391269635208699, guid: aa98db00b55c443d88a6783d6f2aa529, type: 3}
   linePointsCount: 10
   offsetFromNodes: 50
-  visitedColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  lockedColor:
-    serializedVersion: 2
-    rgba: 4282795590
-  lineVisitedColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  lineLockedColor:
-    serializedVersion: 2
-    rgba: 4281216558
   scrollRectVertical: {fileID: 2384409123853657601}
   padding: 400
   backgroundPadding: {x: 0, y: 0}
   backgroundPPUMultiplier: 1
+--- !u!114 &5785903751494116985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c0bd041afe4eeba45667863c624b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterNodeDelay: 1
 --- !u!114 &1151548767457730250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +113,10 @@ PrefabInstance:
     - target: {fileID: 2347176856415668879, guid: e87217871def34e3188c5414e17707e1, type: 3}
       propertyPath: m_Name
       value: MapCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347176856415668879, guid: e87217871def34e3188c5414e17707e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5386537985389451735, guid: e87217871def34e3188c5414e17707e1, type: 3}
       propertyPath: m_Pivot.x
@@ -195,6 +203,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87217871def34e3188c5414e17707e1, type: 3}
+--- !u!223 &2226666351336165191 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 192109131967600660, guid: e87217871def34e3188c5414e17707e1, type: 3}
+  m_PrefabInstance: {fileID: 2039065217613993811}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2384409123853657601 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4421171938341417298, guid: e87217871def34e3188c5414e17707e1, type: 3}

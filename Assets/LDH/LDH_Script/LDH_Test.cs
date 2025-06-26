@@ -7,17 +7,19 @@ namespace LDH.LDH_Script
 {
     public class LDH_Test : MonoBehaviour
     {
-        private Button button;
-
-        private void Start()
+        
+        public void GenerateMap()
         {
-            button = GetComponent<Button>();
-            button.onClick.AddListener(Manager.Map.GenerateMap);
+            Manager.Map.GenerateMap();
+            Manager.Map.ShowMap();
         }
 
-        private void OnDestroy()
+        public void ShowHideMap()
         {
-            button.onClick.RemoveAllListeners();
+            if(Manager.Map.MapCanvas.gameObject.activeSelf)
+                Manager.Map.HideMap();
+            else
+                Manager.Map.ShowMap();
         }
     }
 }

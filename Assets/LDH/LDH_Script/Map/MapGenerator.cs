@@ -285,7 +285,6 @@ namespace Map
                 {
                     if (battleCount < 3) //시작 battle 포함해서 3개까지
                     {
-                        Debug.Log("배틀 배정");
                         node.nodeType = NodeType.Battle;
                         battleCount++;
                     }
@@ -293,18 +292,21 @@ namespace Map
                     {
                         if (node.row == _floors - 3)
                             node.nodeType = NodeType.Event;
-
-                        NodeType candidateType = NodeType.NotAssgined;
-                        // 상점은 부모가 상점이면 안 됨 (연속 상점 방지)
-                        bool isConsecutiveShop = true;
-                        while (isConsecutiveShop)
+                        else
                         {
-                            candidateType = GetRandomRoomTypeByWeight();
-                            bool isShop = candidateType == NodeType.Shop;
-                            isConsecutiveShop = isShop & HasParentOfType(node, NodeType.Shop);
-                        }
+                            NodeType candidateType = NodeType.NotAssgined;
+                            // 상점은 부모가 상점이면 안 됨 (연속 상점 방지)
+                            bool isConsecutiveShop = true;
+                            while (isConsecutiveShop)
+                            {
+                                candidateType = GetRandomRoomTypeByWeight();
+                                bool isShop = candidateType == NodeType.Shop;
+                                isConsecutiveShop = isShop & HasParentOfType(node, NodeType.Shop);
+                            }
 
-                        node.nodeType = candidateType;
+                            node.nodeType = candidateType;
+                        }
+                       
                     }
                 }
             }
