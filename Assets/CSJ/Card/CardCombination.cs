@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardCombination : MonoBehaviour
+public static class CardCombination
 {
     public static CardCombinationEnum CalCombination(List<MinorArcana> cards, out List<int> cardNums)
     {
@@ -55,17 +55,15 @@ public class CardCombination : MonoBehaviour
         CheckFiveJoker(JokerNum, JokerFiveNum, cardNums, out IsFiveJoker);
         #endregion
 
+        #region 스트레이트 확인
+        CheckStraight(JokerNum, nowStraightNum, cardNums, numbers, out IsStraight);
+        #endregion
+
         int i = 1;
         // card들의 숫자를 확인
         #region 숫자 족보 확인
         foreach (int _num in numbers)
         {
-
-
-            #region 스트레이트 확인
-            CheckStraight(JokerNum, nowStraightNum, cardNums, numbers, out IsStraight);
-            #endregion
-
             #region 페어 확인
             // 해당 숫자가 2개일 경우 = 페어
             if (_num == 2)
