@@ -32,7 +32,6 @@ namespace Managers
             DialogueData.lines = ParseDialogueLine(table);
             
             Debug.Log($"{DialogueData.dialogueID} file 읽어오기 성공");
-            Debug.Log($"{DialogueData.lines[0].speakerName} : {DialogueData.lines[0].dialogueText}");
 
             //파싱 완료
             return true;
@@ -72,7 +71,6 @@ namespace Managers
             DialogueData.dialogueID = string.Empty;
             DialogueData.lines?.Clear(); // 리스트 클리어
             DialogueData.lines = null;   // 참조 해제
-            Debug.Log("Dialogue Data 정리");
         }
     }
 }

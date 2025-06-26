@@ -1,9 +1,9 @@
-﻿index,speakerName,position,portraitKey,dialogueText
+index,speakerName,position,portraitKey,dialogueText
 0,Alice,left,idle,left example
 1,Bob,right,idle,right example
 2,Jack,middle,idle,middle example
-3,Alice,lefttomiddle,smile,<color=red>left to middle</color> example
-4,Alice,lefttoright,smile,<color=red>left to right</color> example ddfslfjaslfjsalf;jdsal;fjsdalf;sdjfl;sajflsdakfjsal;fjsadl;kfjsalk;fjasfkl;sajflk;sajfkl;sajfls;afjslakfjslkfjasld;fjsadl;fjsal;fjsaklf;jsadlk;fjdsalk;fjsakl;fjsadkl;fj;adsfj;lsaddfj;lksaf
+3,Alice,lefttomiddle,smile,"left to middle example If you want to change text color. """" endline test."
+4,Alice,lefttoright,smile,<color=red>left to right</color> example
 5,Bob,righttoleft,idle,<color=blue>right to left</color> example
 6,Bob,righttomiddle,idle,<color=blue>right to middle</color> example
 7,Jack,middletoright,idle,<color=green>middle to right</color> example

@@ -850,7 +850,7 @@ MonoBehaviour:
   portrait: {fileID: 1868101945}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
-  moveDurtDuration: 0.5
+  moveDuration: 0.5
   moveDelay: 0.1
   typingSpeed: 0.03
   portraitOriginAnchorPos: {x: 0, y: 0}
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   portrait: {fileID: 768005427}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
-  moveDurtDuration: 0.5
+  moveDuration: 0.5
   moveDelay: 0.1
   typingSpeed: 0.03
   portraitOriginAnchorPos: {x: 0, y: 0}
@@ -2220,8 +2220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.0863, y: -41}
-  m_SizeDelta: {x: 1352.1365, y: 162.6696}
+  m_AnchoredPosition: {x: 94.47644, y: -41}
+  m_SizeDelta: {x: 1559.2617, y: 162.6696}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1975260898
 MonoBehaviour:
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   portrait: {fileID: 1402625307}
   nameText: {fileID: 823250813}
   dialogueText: {fileID: 1975260898}
-  moveDurtDuration: 0.5
+  moveDuration: 0.5
   moveDelay: 0.1
   typingSpeed: 0.03
   portraitOriginAnchorPos: {x: 0, y: 0}

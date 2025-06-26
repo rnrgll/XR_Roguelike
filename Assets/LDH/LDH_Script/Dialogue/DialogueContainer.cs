@@ -10,18 +10,18 @@ namespace Dialogue
     [System.Serializable]
     public class DialogueContainer : MonoBehaviour
     {
-        [Header("UI Elements")]
-        public Image portrait;
+        [Header("UI Elements")] public Image portrait;
         public TMP_Text nameText;
         public TMP_Text dialogueText;
-        
-        [Header("Animation Control")] 
-        [Range(0f, 2f)] [SerializeField] private float moveDuration = 0.5f;
+
+        [Header("Animation Control")] [Range(0f, 2f)] [SerializeField]
+        private float moveDuration = 0.5f;
+
         [Range(0f, 1f)] [SerializeField] private float moveDelay = 0.1f;
         [Range(0f, 0.5f)] [SerializeField] private float typingSpeed = 0.03f;
-        
+
         public Vector2 portraitOriginAnchorPos;
-        
+
         public event Action OnTypingEnd;
         private Coroutine typingCoroutine;
 
@@ -41,7 +41,6 @@ namespace Dialogue
         {
             OnTypingEnd -= StopDOTween;
         }
-
 
         #endregion
 
@@ -63,7 +62,7 @@ namespace Dialogue
             return typingCoroutine;
         }
 
-        
+
         private void UpdateData(string speakerName, Sprite portraitSprite)
         {
             nameText.text = speakerName;
@@ -71,7 +70,7 @@ namespace Dialogue
             dialogueText.text = "";
         }
 
-        
+
         public void ShowFullText(string fullText)
         {
             if (typingCoroutine != null)
@@ -79,40 +78,54 @@ namespace Dialogue
                 StopCoroutine(typingCoroutine);
                 typingCoroutine = null;
             }
+
             dialogueText.text = fullText;
             OnTypingEnd?.Invoke();
         }
-        
-           
+
+
         private IEnumerator TypeText(string text, float typingSpeed)
         {
+            Debug.Log(text);
             dialogueText.text = "";
+            string current = "";
+            bool insideTag = false;
+
             for (int i = 0; i < text.Length; i++)
             {
-                dialogueText.text = text.Substring(0, i+1);
-                yield return new WaitForSeconds(typingSpeed);
+                char c = text[i];
+                if (c == '<')
+                    insideTag = true;
+                current += c;
+
+                if (c == '>')
+                {
+                    insideTag = false;
+                    continue;
+                }
+
+                if (!insideTag)
+                {
+                    dialogueText.text = current;
+                    yield return new WaitForSeconds(typingSpeed);
+                }
             }
-            
+
             OnTypingEnd?.Invoke();
         }
-
-
-
-        
 
         #endregion
 
 
         #region UI 활성 / 비활성
 
-        
         public void ActiveUI()
         {
             portrait.enabled = true;
             nameText.enabled = true;
             dialogueText.enabled = true;
         }
-        
+
         public void DeactiveUI()
         {
             portrait.enabled = false;
@@ -120,7 +133,7 @@ namespace Dialogue
             dialogueText.enabled = false;
             ResetPortraitPos();
         }
-        
+
         #endregion
 
 
@@ -134,7 +147,6 @@ namespace Dialogue
 
         public void StopDOTween()
         {
-            Debug.Log("dotween을 kill 합니다.");
             DOTween.Kill(this);
         }
 
@@ -143,9 +155,6 @@ namespace Dialogue
             portrait.rectTransform.anchoredPosition = portraitOriginAnchorPos;
         }
 
-
         #endregion
-        
-      
     }
 }
