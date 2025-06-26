@@ -2,6 +2,7 @@ using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardEnum;
 
 [CreateAssetMenu(menuName = "Tarot/MajorArcana", fileName = "NewMajorArcana")]
 public class MajorArcanaSO : ScriptableObject

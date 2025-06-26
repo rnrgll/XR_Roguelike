@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using manager = Managers.Manager;
+using CardEnum;
 
 /// <summary>
 /// 카드를 컨트롤하는 메서드

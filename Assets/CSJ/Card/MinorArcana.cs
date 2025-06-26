@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardEnum;
 
 public readonly struct MinorArcana : ICard
 {
     public string CardName { get; }
     public MinorSuit CardSuit { get; }
     public int CardNum { get; }
+    public Enchant Enchant { get; }
 
 
     public MinorArcana(string _name, MinorSuit _suit, int _num)
@@ -15,5 +17,6 @@ public readonly struct MinorArcana : ICard
         CardName = _name;
         CardSuit = _suit;
         CardNum = _num;
+        Enchant = new();
     }
 }

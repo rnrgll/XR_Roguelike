@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardEnum;
 
 public static class CardCombination
 {
     public static CardCombinationEnum CalCombination(List<MinorArcana> cards, out List<int> cardNums)
     {
         int[] SuitNum = new int[4];
+        int wildCount = 0;
         int[] numbers = new int[13];
         int JokerNum = 0;
         int JokerFiveNum = 14;
@@ -30,7 +32,9 @@ public static class CardCombination
         #region card의 숫자와 문양을 개별 저장
         foreach (MinorArcana card in cards)
         {
-            SuitNum[(int)card.CardSuit]++;
+            if (card.Enchant.enchantInfo == CardEnchant.Wild) wildCount++;
+            else SuitNum[(int)card.CardSuit]++;
+
             if (card.CardNum == 14)
             {
                 JokerNum++;
@@ -43,7 +47,7 @@ public static class CardCombination
         #region flush 체크
         foreach (int _StNum in SuitNum)
         {
-            if (_StNum >= nowFlushNum)
+            if (_StNum + wildCount >= nowFlushNum)
             {
                 IsFlush = true;
                 break;

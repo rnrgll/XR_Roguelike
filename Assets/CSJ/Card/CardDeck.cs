@@ -4,12 +4,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardEnum;
 
 public class CardDeck
 {
     public MinorArcana[,] Deck;
     public int[,] numOfCard { private set; get; }
-    public Dictionary<(MinorArcana card, int order), CardEnchant> EnchantDic;
+    public Dictionary<MinorArcana, CardEnchant> EnchantDic;
     [SerializeField] int arcanaLength = 14;
     public Action<MinorArcana> OnCardAdded;
     public Action<MinorArcana> OnCardRemoved;
@@ -32,7 +33,7 @@ public class CardDeck
     {
         Deck = new MinorArcana[4, 14];
         numOfCard = new int[4, 14];
-        EnchantDic = new Dictionary<(MinorArcana card, int order), CardEnchant>();
+        EnchantDic = new Dictionary<MinorArcana, CardEnchant>();
 
         for (int i = 0; i < 4; i++)
         {
@@ -64,29 +65,71 @@ public class CardDeck
         if (numOfCard[(int)_suit, _cardNum] == 0) return;
         numOfCard[(int)_suit, _cardNum]--;
 
-        if (EnchantDic.ContainsKey((Deck[(int)_suit, _cardNum], _order)))
+        if (EnchantDic.ContainsKey(Deck[(int)_suit, _cardNum]))
         {
-            EnchantDic.Remove((Deck[(int)_suit, _cardNum], _order));
+            EnchantDic.Remove(Deck[(int)_suit, _cardNum]);
         }
         OnCardRemoved?.Invoke(GetCardData(_suit, _cardNum));
     }
     #endregion
 
-    public void Enchant(MinorSuit _suit, int _cardNum, int _order)
+    public List<MinorArcana> GetEnchantableCard()
     {
-        CardEnchant nowEnchant = EnchantDic[(Deck[(int)_suit, _cardNum], _order)];
-
-        if (nowEnchant != CardEnchant.Maximum)
+        List<MinorArcana> EnchantedCardList = GetEnchantedCard();
+        List<MinorArcana> EnchantableCard = new();
+        for (int i = 0; i < 4; i++)
         {
-            EnchantDic[(Deck[(int)_suit, _cardNum], _order)] = (CardEnchant)((int)nowEnchant + 1);
+            for (int j = 0; j < 14; j++)
+            {
+                if (EnchantedCardList.Contains(Deck[i, j])) continue;
+                EnchantableCard.Add(Deck[i, j]);
+            }
         }
+        return EnchantableCard;
     }
+
+    private List<int> GetEnchantedCardNum()
+    {
+        ICollection<MinorArcana> keys = EnchantDic.Keys;
+        List<int> keynum = new();
+        foreach (var key in keys)
+        {
+            keynum.Add((int)key.CardSuit * 14 + key.CardNum);
+        }
+        return keynum;
+    }
+
+    public List<MinorArcana> GetEnchantedCard()
+    {
+        List<int> keyNum = GetEnchantedCardNum();
+        List<MinorArcana> EnchantedCardList = new();
+        foreach (int _num in keyNum)
+        {
+            EnchantedCardList.Add(Deck[_num / 14, _num % 14]);
+        }
+        return EnchantedCardList;
+    }
+
+    public void Enchant(MinorArcana _card, CardEnchant _enchant)
+    {
+        List<MinorArcana> Enchantable = GetEnchantableCard();
+
+        if (!Enchantable.Contains(_card))
+        {
+            throw new ArgumentException($"카드({_card})가 이미 강화되어 있습니다.");
+        }
+        EnchantDic[_card] = _enchant;
+        _card.Enchant.EnchantToCard(_enchant);
+    }
+
 
     public MinorArcana GetCardData(MinorSuit _suit, int _cardNum)
     {
         string[] cardData = filePath.GetLine((int)_suit * 14 + _cardNum);
         return new MinorArcana(cardData[0], (MinorSuit)Enum.Parse(typeof(MinorSuit), cardData[4]), int.Parse(cardData[5]));
     }
+
+
 
 }
 
