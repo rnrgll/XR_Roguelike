@@ -2,37 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MinorSuit
+namespace CardEnum
 {
-    Wands, Cups, Swords, Pentacles
-}
+    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30 }
 
-public enum MajorPosition
-{
-    Upright, Reversed
-}
+    public enum MajorPosition { Upright, Reversed }
 
-// TODO : 추후 기획에 맞춰 조정
-public enum CardEnchant
-{
-    normal, Upgraded, Maximum
-}
+    // TODO : 추후 기획에 맞춰 조정
+    public enum CardEnchant { none, Bonus, Mult, Wild, Glass, Steel, Gold, Lucky }
 
-public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
+    public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
 
-public enum CardCombinationEnum
-{
-    HighCard,
-    OnePair,
-    TwoPair,
-    Triple,
-    Straight,
-    Flush,
-    FullHouse,
-    FourCard,
-    StraightFlush,
-    FiveCard,
-    FiveJoker
+    public enum CardCombinationEnum
+    {
+        HighCard,
+        OnePair,
+        TwoPair,
+        Triple,
+        Straight,
+        Flush,
+        FullHouse,
+        FourCard,
+        StraightFlush,
+        FiveCard,
+        FiveJoker
+    }
 }
 
 namespace Map
