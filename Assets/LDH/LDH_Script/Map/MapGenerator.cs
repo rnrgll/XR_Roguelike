@@ -25,12 +25,12 @@ namespace Map
         private int _mapWidth;
         private int _paths;
 
-        private float _BattleRoomWeight;
-        private float _ShopRoomWeight;
-        private float _EventRoomWeight;
+        private float _BattleNodeWeight;
+        private float _ShopNodeWeight;
+        private float _EventNodeWeight;
 
 
-        private List<float> _randomRoomTypeWeights = new()
+        private List<float> _randomWeightList = new()
         {
             0.0f, //(Room.Type.NotAssgined
             0.0f, //Room.Type.Battle, 
@@ -39,7 +39,7 @@ namespace Map
             0.0f, //Room.Type.Boss, 
         };
 
-        private float _randomRoomTypeTotalWeight = 0.0f;
+        private float _totalWeight = 0.0f;
 
         private List<List<Node>> _map;
         private List<List<Node>> _allPath;
@@ -74,8 +74,8 @@ namespace Map
             _allPath = GetAllPaths(startNode, bossNode);
             
             //6. RoomType 지정
-            SetUpRandomRoomWeights();
-            SetUpRoomType();
+            SetUpRandomNodeWeights();
+            SetUpNodeType();
             
             //5. MapData 생성
             MapData mapData = new MapData(_map, _allPath, startNode, bossNode);
@@ -94,9 +94,9 @@ namespace Map
             _mapWidth = config.mapWidth;
             _paths = config.paths;
         
-            _BattleRoomWeight = config.BattleRoomWeight;
-            _ShopRoomWeight = config.ShopRoomWeight;
-            _EventRoomWeight = config.EventRoomWeight;
+            _BattleNodeWeight = config.BattleNodeWeight;
+            _ShopNodeWeight = config.ShopNodeWeight;
+            _EventNodeWeight = config.EventNodeWeight;
         }
 
         //Grid 생성
@@ -243,16 +243,16 @@ namespace Map
             return bossNode;
         }
         
-        private void SetUpRandomRoomWeights()
+        private void SetUpRandomNodeWeights()
         {
-            _randomRoomTypeWeights[(int)NodeType.Battle] = _BattleRoomWeight;
-            _randomRoomTypeWeights[(int)NodeType.Shop] = _BattleRoomWeight + _ShopRoomWeight;
-            _randomRoomTypeWeights[(int)NodeType.Event] = _BattleRoomWeight + _ShopRoomWeight + _EventRoomWeight;
-            _randomRoomTypeTotalWeight = _randomRoomTypeWeights[(int)NodeType.Event];
+            _randomWeightList[(int)NodeType.Battle] = _BattleNodeWeight;
+            _randomWeightList[(int)NodeType.Shop] = _BattleNodeWeight + _ShopNodeWeight;
+            _randomWeightList[(int)NodeType.Event] = _BattleNodeWeight + _ShopNodeWeight + _EventNodeWeight;
+            _totalWeight = _randomWeightList[(int)NodeType.Event];
         }
 
 
-        private void SetUpRoomType()
+        private void SetUpNodeType()
         {
             //===== 커스텀 규칙 ====
             //규칙 2. 2층은 상점
@@ -375,11 +375,11 @@ namespace Map
 
         private NodeType GetRandomRoomTypeByWeight()
         {
-            float roll = Random.Range(0f, _randomRoomTypeTotalWeight);
+            float roll = Random.Range(0f, _totalWeight);
 
-            for (int i = 0; i < _randomRoomTypeWeights.Count; i++)
+            for (int i = 0; i < _randomWeightList.Count; i++)
             {
-                float typeWeight = _randomRoomTypeWeights[i];
+                float typeWeight = _randomWeightList[i];
                 if (typeWeight > roll)
                     return (NodeType)i;
             }
