@@ -12,8 +12,8 @@ using manager = Managers.Manager;
 public class CardController : MonoBehaviour
 {
     public CardDeck Deck;
-    public List<ICard> Hand;
-    public Dictionary<CardStatus, List<ICard>> CardListDic;
+    public List<MinorArcana> Hand;
+    public Dictionary<CardStatus, List<MinorArcana>> CardListDic;
     public int drawNum = 8;
 
     // public BattleStat stat; TODO: 플레이어 스탯과 연계
@@ -39,10 +39,10 @@ public class CardController : MonoBehaviour
     /// </summary>
     private void CardDicInit()
     {
-        CardListDic = new Dictionary<CardStatus, List<ICard>>();
+        CardListDic = new Dictionary<CardStatus, List<MinorArcana>>();
         foreach (CardStatus _status in Enum.GetValues(typeof(CardStatus)))
         {
-            CardListDic[_status] = new List<ICard>();
+            CardListDic[_status] = new List<MinorArcana>();
         }
     }
 
@@ -101,10 +101,8 @@ public class CardController : MonoBehaviour
 
     public void SortBySuit(CardStatus _status)
     {
-
         CardListDic[_status].Sort((a, b) =>
         {
-
             int result = a.CardSuit.CompareTo(b.CardSuit);
             if (result != 0) return result;
             return a.CardNum.CompareTo(b.CardNum);
@@ -121,7 +119,7 @@ public class CardController : MonoBehaviour
         });
     }
 
-    public List<ICard> GetHand()
+    public List<MinorArcana> GetHand()
     {
         return Hand;
     }

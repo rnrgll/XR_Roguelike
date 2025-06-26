@@ -18,8 +18,8 @@ public class RandomManager : Singleton<RandomManager>
     public MajorPosition RandomPosition()
     {
         int posDecNum = Random.Range(0, 2);
-        if (posDecNum == 0) return MajorPosition.Normal;
-        else return MajorPosition.Reverse;
+        if (posDecNum == 0) return MajorPosition.Upright;
+        else return MajorPosition.Reversed;
     }
 
     /// <summary>

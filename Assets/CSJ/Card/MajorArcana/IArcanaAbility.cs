@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IArcanaAbility
+public interface IArcanaAbility
 {
-    public void Active(ArcanaContext ctx) { }
+    void Excute(ArcanaContext ctx);
 }
