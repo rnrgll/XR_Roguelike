@@ -13,5 +13,12 @@ public class EnemyController : MonoBehaviour, IEnemyActor
     {
         Debug.Log($"{gameObject.name}의 적 행동 발동!");
         // 적의 스킬이나 상태 처리 등 추가 가능
+
+        var player = FindAnyObjectByType<PlayerController>();
+        if (player != null && !player.IsDead)
+        {
+            int damage = Random.Range(5, 15);
+            player.TakeDamage(damage);
+        }
     }
 }

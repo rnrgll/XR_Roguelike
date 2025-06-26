@@ -20,6 +20,9 @@ public class BattleManager : MonoBehaviour
         float multiplier = GetMultiplierByCombo(combo);
         int damage = Mathf.FloorToInt(basePower * multiplier);
 
+        // GameStatusUI에 반영되도록 함.
+        GameStatusUI.Instance.SetComboInfo(combo.ToString(), multiplier);
+
         if (combo == CardCombinationEnum.FiveJoker)
         {
             Debug.Log("파이브 조커! 즉사급 피해!");
