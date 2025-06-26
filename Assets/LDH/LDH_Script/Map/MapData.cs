@@ -11,10 +11,12 @@ namespace Map
         public readonly List<Vector2Int> Path; //플레이어가 선택한 경로
         public readonly Node BossNode;
         public readonly Node StartNode;
+        public readonly List<List<Node>> AllPath;
 
-        public MapData(List<List<Node>> map, Node startNode, Node bossNode)
+        public MapData(List<List<Node>> map, List<List<Node>> allPath, Node startNode, Node bossNode)
         {
             this.Map = map;
+            this.AllPath = allPath;
             this.StartNode = startNode;
             this.BossNode = bossNode;
 
