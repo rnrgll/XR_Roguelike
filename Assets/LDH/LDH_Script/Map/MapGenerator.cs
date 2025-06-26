@@ -1,3 +1,4 @@
+using Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Map
     public class MapGenerator : MonoBehaviour
     {
         private int _xDist;
-        private int _yDist;
+        private int _yGap;
         private int _placementRandomness;
 
         private int _floors;
@@ -42,6 +43,8 @@ namespace Map
             // setting 초기화
             InitSetting(config);
 
+            //this.config = config;
+
             //1. Grid 생성
             _map = GenerateInitialGrid();
 
@@ -51,7 +54,7 @@ namespace Map
             //3. Path 생성
             for (int j = 0; j < startingPoints.Count; j++)
             {
-                int currentJ = j;
+                int currentJ = startingPoints[j];
                 for (int i = 1; i < _floors - 1; i++)
                 {
                     currentJ = SetUpConnection(i, currentJ);
@@ -75,13 +78,13 @@ namespace Map
         private void InitSetting(MapConfig config)
         {
             _xDist = config.xDist;
-            _yDist = config.yDist;
+            _yGap = config.yGap;
             _placementRandomness = config.placementRandomness;
-
+        
             _floors = config.floors;
             _mapWidth = config.mapWidth;
             _paths = config.paths;
-
+        
             _BattleRoomWeight = config.BattleRoomWeight;
             _ShopRoomWeight = config.ShopRoomWeight;
             _EventRoomWeight = config.EventRoomWeight;
@@ -90,34 +93,60 @@ namespace Map
         //Grid 생성
         private List<List<Node>> GenerateInitialGrid()
         {
+            // GenerateLayerDistances();
+            //
+            // for (int i = 0; i < config.layers.Count; i++)
+            //     PlaceLayer(i);
             List<List<Node>> grid = new(_floors);
-
+            
             for (int i = 0; i < _floors; i++)
             {
                 List<Node> floorRooms = new List<Node>(_mapWidth);
                 for (int j = 0; j < _mapWidth; j++)
                 {
-                    Vector2 offset = new Vector2(Random.Range(0, 1), Random.Range(0, 1)) * _placementRandomness;
-
-                    Vector2 position = new Vector2(j * _xDist, i * _yDist) + offset;
-
-                    Node currentNode = new Node(i, j, position);
-
-                    //start room position.y 값 고정
-                    if (i == 0)
-                        currentNode.position.y = i * _yDist;
-                    //boss room 일 경우 position.y 값을 고정시킨다. (마지막 floor)
-                    if (i == _mapWidth - 1)
-                        currentNode.position.y = (i + 1) * _yDist;
+                    Node currentNode = new Node(i, j);
+                    
+                    currentNode.nextNodes.Clear();
                     floorRooms.Add(currentNode);
                 }
-
+            
                 grid.Add(floorRooms);
             }
-
+            
             return grid;
         }
 
+
+        #region Init
+
+        // private void GenerateLayerDistances()
+        // {
+        //     layerDistances = new List<float>();
+        //     foreach (MapLayer layer in config.layers)
+        //     {
+        //         float ranDist = Manager.randomManager.RandFloat(layer.minDistanceFromPrevisousLayer,
+        //             layer.maxDistanceFromPreviousLayer);
+        //         
+        //         layerDistances.Add(ranDist);
+        //     }
+        //         
+        // }
+        //
+        // private float GetDistanceToLayer(int layerIndex)
+        // {
+        //     if (layerIndex < 0 || layerIndex > layerDistances.Count) return 0f;
+        //
+        //     return layerDistances.Take(layerIndex + 1).Sum();
+        // }
+        //
+        // private void PlaceLayer(int index)
+        // {
+        //     MapLayer layer = config.layers[index];
+        //     List<Node> nodesOnLayer = new();
+        //     
+        //     float offset = layer.nodesApartDistance 
+        // }
+        #endregion
 
         //시작 포인트 랜덤으로 지정하기
         //최소 2개 이상의 unique 포인트를 지정해야한다.
@@ -230,6 +259,7 @@ namespace Map
                 Node currentNode = _map[_floors - 2][j];
                 if (currentNode.HasConnections())
                 {
+                    currentNode.nextNodes.Clear();
                     currentNode.nextNodes.Add(bossNode);
                 }
             }

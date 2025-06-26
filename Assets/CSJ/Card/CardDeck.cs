@@ -8,6 +8,7 @@ public class CardDeck : MonoBehaviour
 {
     public MinorArcana[,] Deck;
     public int[,] numOfCard { private set; get; }
+    public Dictionary<(MinorArcana card, int order), CardEnchant> EnchantDic;
     [SerializeField] int arcanaLength = 14;
     public Action<MinorArcana> OnCardAdded;
     public Action<MinorArcana> OnCardRemoved;
@@ -21,6 +22,7 @@ public class CardDeck : MonoBehaviour
     {
         Deck = new MinorArcana[4, 14];
         numOfCard = new int[4, 14];
+        EnchantDic = new Dictionary<(MinorArcana card, int order), CardEnchant>();
 
         for (int i = 0; i < 4; i++)
         {
@@ -39,7 +41,7 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void AddCard(MinorSuit _suit, int _cardNum)
     {
-        int _order = numOfCard[(int)_suit, _cardNum]++;
+        numOfCard[(int)_suit, _cardNum]++;
         OnCardAdded?.Invoke(new MinorArcana(_suit, _cardNum));
     }
 
@@ -52,9 +54,23 @@ public class CardDeck : MonoBehaviour
         if (numOfCard[(int)_suit, _cardNum] == 0) return;
         numOfCard[(int)_suit, _cardNum]--;
 
+        if (EnchantDic.ContainsKey((Deck[(int)_suit, _cardNum], _order)))
+        {
+            EnchantDic.Remove((Deck[(int)_suit, _cardNum], _order));
+        }
         OnCardRemoved?.Invoke(new MinorArcana(_suit, _cardNum));
     }
     #endregion
+
+    public void Enchant(MinorSuit _suit, int _cardNum, int _order)
+    {
+        CardEnchant nowEnchant = EnchantDic[(Deck[(int)_suit, _cardNum], _order)];
+
+        if (nowEnchant != CardEnchant.Maximum)
+        {
+            EnchantDic[(Deck[(int)_suit, _cardNum], _order)] = (CardEnchant)((int)nowEnchant + 1);
+        }
+    }
 
 }
 
