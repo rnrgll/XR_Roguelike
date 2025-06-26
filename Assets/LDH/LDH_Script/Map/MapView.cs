@@ -314,8 +314,6 @@ namespace Map
             float y = (Manager.Map.config.yGap) * ((float)node.row - (Manager.Map.config.floors) / 2f + 0.5f);
 
             Vector2 localPos = new Vector2(x, y) + offset;
-            Debug.Log($"{node.row}, {node.column} : {offset}, {localPos}");
-            
             return localPos;
         }
         
