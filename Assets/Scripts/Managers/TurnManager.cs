@@ -35,7 +35,7 @@ public class TurnManager : Singleton<TurnManager>
         while (true)
         {
             // 1. 플레이어 사망 시
-            if (player !=null && pc.IsDead)
+            if (player != null && pc.IsDead)
             {
                 Debug.Log("게임 오버!");
                 //GameOverUI.Instance.Show();
@@ -46,7 +46,7 @@ public class TurnManager : Singleton<TurnManager>
             if (currentEnemy == null || currentEnemy.IsDead)
             {
                 Debug.Log("스테이지 클리어! 다음 스테이지로...");
-                BattleManager.Instance.GiveReward(); //  보상 지급
+                //BattleManager.Instance.GiveReward(); //  보상 지급
                 pc.RestoreHP();
                 yield return new WaitForSeconds(1f);
 

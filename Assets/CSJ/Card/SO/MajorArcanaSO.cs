@@ -9,7 +9,7 @@ public class MajorArcanaSO : ScriptableObject
 {
     [Header("기본 정보")]
     [Tooltip("카드의 이름")]
-    public int cardName;
+    public string cardName;
 
     [Tooltip("카드의 설명")]
     [TextArea]
@@ -27,6 +27,8 @@ public class MajorArcanaSO : ScriptableObject
 
     public MajorPosition cardPos { get; private set; }
     private MajorPosition PrevPos;
+    private bool IsUsed;
+
 
     public void Activate(GameObject _go)
     {

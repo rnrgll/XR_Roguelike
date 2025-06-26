@@ -32,8 +32,10 @@ public static class CardCombination
         #region card의 숫자와 문양을 개별 저장
         foreach (MinorArcana card in cards)
         {
-            if (card.Enchant.enchantInfo == CardEnchant.Wild) wildCount++;
-            else SuitNum[(int)card.CardSuit]++;
+            if (card.Enchant.enchantInfo == CardEnchant.Wild ||
+            card.CardSuit == MinorSuit.wildCard) wildCount++;
+            else
+                SuitNum[(int)card.CardSuit]++;
 
             if (card.CardNum == 14)
             {

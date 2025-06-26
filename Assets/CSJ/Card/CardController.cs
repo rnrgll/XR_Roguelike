@@ -14,6 +14,7 @@ public class CardController : MonoBehaviour
 {
     public CardDeck Deck;
     public List<MinorArcana> Hand;
+    private List<MinorArcana> disposableCardList;
     public Dictionary<CardStatus, List<MinorArcana>> CardListDic;
     public int drawNum = 8;
 
@@ -29,7 +30,7 @@ public class CardController : MonoBehaviour
         // stat = new BattleStat();
         // stat.Init();
         Hand = CardListDic[CardStatus.Hand];
-
+        disposableCardList = new();
         Deck.OnCardAdded += OnCardAddedDeck;
         Deck.OnCardRemoved += OnCardRemoveDeck;
     }
@@ -100,6 +101,17 @@ public class CardController : MonoBehaviour
         }
     }
 
+    public void AddDisposableCard(MinorArcana _disposCard)
+    {
+        Hand.Add(_disposCard);
+        disposableCardList.Add(_disposCard);
+    }
+
+    public void UseDisposCard()
+    {
+
+    }
+
     public void SortBySuit(CardStatus _status)
     {
         CardListDic[_status].Sort((a, b) =>
@@ -138,6 +150,10 @@ public class CardController : MonoBehaviour
         int _num = 0;
         foreach (MinorArcana _card in cards)
         {
+            if (disposableCardList.Remove(_card))
+            {
+                CardListDic[CardStatus.Hand].Remove(_card);
+            }
             CardListDic[CardStatus.Graveyard].Add(_card);
 
             CardListDic[CardStatus.Hand].Remove(_card);
