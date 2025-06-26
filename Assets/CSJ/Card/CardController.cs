@@ -137,8 +137,7 @@ public class CardController : MonoBehaviour
         int _num = 0;
         foreach (MinorArcana _card in cards)
         {
-            CardListDic[CardStatus.Graveyard] =
-            CardListDic[CardStatus.Hand].ToList();
+            CardListDic[CardStatus.Graveyard].Add(_card);
 
             CardListDic[CardStatus.Hand].Remove(_card);
             _num++;
@@ -175,6 +174,8 @@ public class CardController : MonoBehaviour
     {
         CardListDic[CardStatus.BattleDeck] =
         CardListDic[CardStatus.Graveyard].ToList();
+
+        CardListDic[CardStatus.Graveyard].Clear();
 
         Shuffle(CardListDic[CardStatus.BattleDeck]);
     }

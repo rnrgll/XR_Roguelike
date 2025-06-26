@@ -9,7 +9,7 @@ public enum MinorSuit
 
 public enum MajorPosition
 {
-    Normal, Reverse
+    Upright, Reversed
 }
 
 // TODO : 추후 기획에 맞춰 조정
@@ -45,7 +45,7 @@ namespace Map
         Event, // 이벤트
         Boss, // 보스
     }
-    
+
     public enum NodeState
     {
         Locked,
