@@ -23,20 +23,9 @@ namespace Map
 
         
         [Header("Weights")]
-        public float BattleRoomWeight = 10.0f;
-        public float ShopRoomWeight = 2.5f;
-        public float EventRoomWeight = 4.0f;
-        
-        
-        
-        // public int GridWidth => Mathf.Max(BossNodeMax, StartNodeMax);
-        //
-        // public int BossNodesMin;
-        // public int BossNodeMax;
-        // public int StartNodeMin;
-        // public int StartNodeMax;
-        //
-        // public List<MapLayer> layers;
+        public float BattleNodeWeight = 10.0f;
+        public float ShopNodeWeight = 2.5f;
+        public float EventNodeWeight = 4.0f;
 
     }
 }
