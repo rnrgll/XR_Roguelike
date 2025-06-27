@@ -86,7 +86,6 @@ namespace Dialogue
 
         private IEnumerator TypeText(string text, float typingSpeed)
         {
-            Debug.Log(text);
             dialogueText.text = "";
             string current = "";
             bool insideTag = false;

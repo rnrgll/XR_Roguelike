@@ -26,13 +26,13 @@ namespace Managers
             
             //2. Reader로 파일 읽기
             CsvReader.Read(table);
- 
+            
             //3. 다이얼로그 파싱
             DialogueData.dialogueID = fileName;
             DialogueData.lines = ParseDialogueLine(table);
             
             Debug.Log($"{DialogueData.dialogueID} file 읽어오기 성공");
-
+            
             //파싱 완료
             return true;
         }
