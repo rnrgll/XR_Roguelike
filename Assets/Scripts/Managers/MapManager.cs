@@ -27,7 +27,7 @@ public class MapManager : Singleton<MapManager>
 
     public void ShowMap()
     {
-        if(CurrentMap == null) return;
+        if (CurrentMap == null) return;
         
         MapCanvas.gameObject.SetActive(true);
         if (View.Map == null || View.Map != CurrentMap)
