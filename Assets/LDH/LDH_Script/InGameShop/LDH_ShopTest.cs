@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGameShop
 {
-    public class ShopTest : MonoBehaviour
+    public class LDH_ShopTest : MonoBehaviour
     {
         private void Awake()
         {

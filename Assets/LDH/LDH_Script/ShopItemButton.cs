@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class ShopItemButton : MonoBehaviour
 {
-    //어떤 버튼인지
-    public Button itemButton;
     public TMP_Text itemNameText;
     public TMP_Text itemDescText;
-
+    private Button itemButton;
     private ShopTest data;
     
     // Start is called before the first frame update
     void Start()
     {
+        itemButton = GetComponent<Button>();
+        
         data = GetComponent<ShopTest>();
     }
 
