@@ -8,8 +8,10 @@ public class GameStateManager : MonoBehaviour
 
     public int Wins { get; private set; }
     public bool BossDefeated { get; private set; }
-
     public int ExternalCurrency { get; private set; }
+    public int Gold { get; private set; }
+    public int Exp { get; private set; }
+    public int Item { get; private set; }
 
     private void Awake()
     {
@@ -17,10 +19,11 @@ public class GameStateManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void AddWin()
-    {
-        Wins++;
-    }
+    public void AddWin() => Wins++;
+    public void AddGold(int amount) => Gold += amount;
+    public void AddExp(int amount) => Exp += amount;
+
+    public void AddItem(int amount) => Item += amount;
 
     public void SetBossDefeated()
     {

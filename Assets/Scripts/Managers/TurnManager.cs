@@ -37,70 +37,66 @@ public class TurnManager : Singleton<TurnManager>
     private IEnumerator BattleLoop()
     {
         PlayerController pc = player as PlayerController;
-
-        if (pc.IsDead)
+        while (true)
         {
-            Debug.Log("게임 오버!");
+            if (isGameEnded) yield break;
 
-            if (GameOverUI.Instance == null)
+            // 1. 플레이어 사망 시
+            if (player != null && pc.IsDead)
             {
-
-
+                Debug.Log("게임 오버!");
                 GameOverUI.Instance.Show();
                 isGameEnded = true;
                 yield break;
             }
 
-            while (true)
+            // 2. 몬스터 사망 시 → 보상 UI 또는 게임 클리어
+            if (currentEnemy == null || currentEnemy.IsDead)
             {
-                // 1. 플레이어 사망 시
-                if (player != null && pc.IsDead)
+                Debug.Log("전투 승리!");
+                GameStateManager.Instance.AddWin();
+
+                if (currentEnemy != null && currentEnemy.IsBoss)
                 {
-                    Debug.Log("게임 오버!");
-                    GameOverUI.Instance.Show();
+                    GameStateManager.Instance.SetBossDefeated();
+                    GameClearUI.Instance.Show();
                     isGameEnded = true;
-                    yield break;
+                }
+                else
+                {
+                    pc.RestoreHP();
+                    RewardPopupUI.Instance.Show();
+
                 }
 
-                // 2. 몬스터 사망 시 → 다음 스테이지
-                if (currentEnemy == null || currentEnemy.IsDead)
+                yield break; // 보상 이후 진행은 ContinueAfterReward()에서
+            }
+
+            // 플레이어 턴
+            player.StartTurn();
+            yield return new WaitUntil(() => player.IsTurnFinished());
+
+            // 적 턴
+            foreach (var enemy in enemies)
+            {
+                if (enemy is MonoBehaviour mb && mb != null && (enemy as Enemy)?.IsDead == false)
                 {
-                    Debug.Log("전투 승리!");
-                    GameStateManager.Instance.AddWin();
-
-                    if (currentEnemy != null && currentEnemy.IsBoss)
-                    {
-                        GameStateManager.Instance.SetBossDefeated();
-                        GameClearUI.Instance.Show();
-                        isGameEnded = true;
-                    }
-                    else
-                    {
-                        pc.RestoreHP();
-                        // SceneManager.LoadScene("");
-                    }
-
-                    // 턴 시작
-                    //ArcanaManager.Instance.ApplyArcana();
-                    //DeckManager.Instance.DrawUntilHandLimit();
-
-                    player.StartTurn();
-                    yield return new WaitUntil(() => player.IsTurnFinished());
-
-                    //DeckManager.Instance.CleanHandAfterTurn();
-
-                    foreach (var enemy in enemies)
-                    {
-                        if (enemy is MonoBehaviour mb && mb != null && (enemy as Enemy)?.IsDead == false)
-                        {
-                            enemy.TakeTurn();
-                            yield return new WaitForSeconds(0.5f);
-                        }
-                    }
-
-                    //ArcanaManager.Instance.PrepareNextArcana();
+                    enemy.TakeTurn();
+                    yield return new WaitForSeconds(0.5f);
                 }
             }
         }
+    }
+
+    //  보상 선택 완료 후 호출
+    public void ContinueAfterReward()
+    {
+        Debug.Log("보상 선택 완료 → 다음 노드로 이동 or 씬 전환");
+
+        // 맵 씬으로 전환
+        SceneManager.LoadScene("MapScene");
+
+        // 또는 MapManager에서 다음 노드로 이동하도록 처리할 수도 있음:
+        // Manager.Map.GoToNextNode();
     }
 }
