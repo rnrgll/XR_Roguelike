@@ -8,9 +8,9 @@ namespace Dialogue
 {
     public class DialogueSystem : MonoBehaviour
     {
-        [SerializeField] private DialogueContainer leftSpeaker;
-        [SerializeField] private DialogueContainer middleSpeaker;
-        [SerializeField] private DialogueContainer rightSpeaker;
+        [SerializeField] private DialogueContainer leftContainer;
+        [SerializeField] private DialogueContainer middleContainer;
+        [SerializeField] private DialogueContainer rightContainer;
         [SerializeField] private GameObject _rootUI;
         
         
@@ -20,10 +20,8 @@ namespace Dialogue
         private int index;
         private bool isTyping = false;
         private Coroutine typingCoroutine = null;
-        private DialogueContainer currentSpeaker;
+        private DialogueContainer currentContainer;
 
-      
-        
         
         public void PlayDialogue(List<DialogueLine> lines)
         {
@@ -35,9 +33,48 @@ namespace Dialogue
             Speak();
         }
         
+        private void Speak()
+        {
+            DialogueLine line = currentLines[index];
+            Speaker speaker = line.GetSpeaker();
+            Sprite sprite = speaker.GetSprite(line.portraitKey);
+            
+            //모든 말풍선 끄기
+            HideAllSpeaker();
+            
+            //Container 선택
+            (DialogueContainer from, DialogueContainer to) = SelectContainer(line.position);
+           
+            // 이전 이벤트 연결 제거
+            if (currentContainer != null)
+            {
+                currentContainer.OnTypingEnd -= HandleTypingEnd;
+            }
+            
+            //Container 교체
+            currentContainer = from;
+            
+            // 새로운 이벤트 연결
+            currentContainer.OnTypingEnd += HandleTypingEnd;
+            
+            isTyping = true;
+            
+            // 이동 여부에 따라 target position 전달
+            Vector2? moveTo = from == to ? null : to.portraitOriginAnchorPos;
+
+            typingCoroutine = from.Show(
+                speaker.speakerName,
+                sprite,
+                line.dialogueText,
+                moveTo
+            );
+            
+        }
+
+        
         public void Next()
         {
-            if (currentLines == null || currentSpeaker == null) return;
+            if (currentLines == null || currentContainer == null) return;
             if (isTyping)
             {
                 SkipTyping();
@@ -52,47 +89,43 @@ namespace Dialogue
                 Speak();
             }
         }
-
-        private void Speak()
-        {
-            DialogueLine line = currentLines[index];
-            Speaker speaker = line.GetSpeaker();
-            Sprite sprite = speaker.GetSprite(line.portraitKey);
-            
-            //모든 말풍선 끄기
-            HideAllSpeaker();
-            
-            //위치에 해당하는 말풍선 활성화
-           currentSpeaker = line.position switch
-            {
-                "left" => leftSpeaker,
-                "middle" => middleSpeaker,
-                "right" => rightSpeaker,
-                _ => middleSpeaker
-            };
-           
-            // 이전 이벤트 연결 제거
-            currentSpeaker.OnTypingEnd -= HandlieTypingEnd;
-
-            // 새로운 이벤트 연결
-            currentSpeaker.OnTypingEnd += HandlieTypingEnd;
-            
-            isTyping = true;
-            typingCoroutine = currentSpeaker.Show(speaker.speakerName, sprite, line.dialogueText);
-        }
-
+        
         private void SkipTyping()
         {
-            if (typingCoroutine != null && currentSpeaker != null)
+            if (typingCoroutine != null && currentContainer != null)
             {
                 StopCoroutine(typingCoroutine);
-                currentSpeaker.ShowFullText(currentLines[index].dialogueText); // 전체 텍스트 즉시 출력
+                currentContainer.ShowFullText(currentLines[index].dialogueText); // 전체 텍스트 즉시 출력
                 isTyping = false;
                 typingCoroutine = null;
                 //모든 라인을 출력해야하는데... currentspeaker를 캐싱해서 해야하나..? 어쩌지
             }
         }
 
+
+      
+       private  (DialogueContainer, DialogueContainer)  SelectContainer(string position)
+        {
+            string[] pos = position.ToLower().Split("to");
+            string from = pos[0];
+            string to = pos.Length > 1 ? pos[1] : pos[0];
+
+            return (GetContainer(from), GetContainer(to));
+        }
+
+        DialogueContainer GetContainer(string pos) => pos switch
+        {
+            "left" => leftContainer,
+            "middle" => middleContainer,
+            "right" => rightContainer,
+            _ => middleContainer
+        };
+      
+        private void HandleTypingEnd()
+        {
+            isTyping = false;
+        }
+        
         private void EndDialogue()
         {
             HideAllSpeaker();
@@ -102,26 +135,23 @@ namespace Dialogue
             OnEndDialogue?.Invoke();
         }
 
-        private void Clear()
-        {
-            index = 0;
-            currentLines = null;
-            currentSpeaker = null;
-            typingCoroutine = null;
-            isTyping = false;
-        }
+     
 
         private void HideAllSpeaker()
         {
             //모든 UI 끄기
-            leftSpeaker.InActive();
-            rightSpeaker.InActive();
-            middleSpeaker.InActive();
+            leftContainer.DeactiveUI();
+            rightContainer.DeactiveUI();
+            middleContainer.DeactiveUI();
         }
-
-        private void HandlieTypingEnd()
+        private void Clear()
         {
+            index = 0;
+            currentLines = null;
+            currentContainer = null;
+            typingCoroutine = null;
             isTyping = false;
         }
+      
     }
 }

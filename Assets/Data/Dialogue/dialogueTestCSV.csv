@@ -1,12 +1,10 @@
-﻿index,speakerName,position,portraitKey,dialogueText
-0,Alice,left,idle,dialogue[0] left -  Alice - idle
-1,Bob,right,idle,dialogue[1] right -  Bob - idle
-2,Alice,left,idle,dialogue[2] left -  Alice - idle
-3,Jack,middle,smile,dialogue[3] middle -  Jack - smile
-4,Alice,left,smile,dialogue[4] left -  Alice - smile
-5,Jack,middle,idle,dialogue[5] middle -  Jack - idle
-6,Bob,right,idle,dialogue[6] right -  Bob - idle
-7,Jack,middle,idle,dialogue[7] middle -  Jack - idle
-8,Alice,left,smile,dialogue[8] left -  Alice - smile
-9,Alice,left,smile,dialogue[9] left -  Alice - smile
-10,Bob,right,idle,dialogue[10] right -  Bob - idle
+index,speakerName,position,portraitKey,dialogueText
+0,Alice,left,idle,"left positon (print , test)"
+1,Bob,right,idle,"right position (print "" test)"
+2,Jack,middle,idle,middle position
+3,Alice,lefttomiddle,smile,<color=red>left to middle</color> position moving
+4,Alice,lefttoright,smile,<color=red>left to right</color> position moving
+5,Bob,righttoleft,idle,<color=blue>right to left</color> position moving
+6,Bob,righttomiddle,idle,<color=blue>right to middle</color> position moving
+7,Jack,middletoright,idle,<color=green>middle to right</color> position moving
+8,Jack,middletoleft,smile,<color=green>middle to left</color> position moving
