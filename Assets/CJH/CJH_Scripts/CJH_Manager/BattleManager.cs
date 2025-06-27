@@ -9,15 +9,13 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
 
-
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
-    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, Enemy target)
+    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyController target)
     {
         int basePower = nums.Sum();
         float multiplier = GetMultiplierByCombo(combo);
@@ -38,8 +36,9 @@ public class BattleManager : MonoBehaviour
         }
 
         target.ApplyDamage(damage);
-        //실제 피해 반영 후 UI 업데이트
-        GameStatusUI.Instance.AddDamage(damage); 
+
+        // 피해량 UI에 반영
+        GameStatusUI.Instance.AddDamage(damage);
         Debug.Log($"[{combo}] → {target.name}에게 {damage}의 피해!");
 
         if (target.IsDead)
