@@ -58,12 +58,12 @@ namespace InGameShop
             Quaternion targetWorldRot = _targetTransform.rotation;
             Vector3 targetWorldScale = _originWorldScale * 1.5f;
             
-            //현재 오브젝트의 부모 기준 위치로 변환
-            Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(targetWorldPos);
+            // //현재 오브젝트의 부모 기준 위치로 변환
+            // Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(targetWorldPos);
             
             //위치 이동, 회전, 스케일 변화 적용
             Sequence seq = DOTween.Sequence();
-            seq.Join(_buttonRec.DOAnchorPos(localTargetPos, _duration)).SetEase(_easeType)
+            seq.Join(_buttonRec.DOMove(targetWorldPos, _duration)).SetEase(_easeType)
                 .Join(_buttonRec.DORotateQuaternion(targetWorldRot, _duration)).SetEase(_easeType)
                 .Join(_buttonRec.DOScale(targetWorldScale, _duration)).SetEase(_easeType);
 
@@ -85,15 +85,15 @@ namespace InGameShop
             _itemButton.transform.SetParent(_originParent,true);
            
               
-            //현재 오브젝트의 부모 기준 위치로 변환
-            Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(_originWorldPos);
+            // //현재 오브젝트의 부모 기준 위치로 변환
+            // Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(_originWorldPos);
 
             //팝업 패널 비활성화
             _popUpPanel.SetActive(false);
             
             //복귀 애니메이션
             Sequence seq = DOTween.Sequence();
-            seq.Join(_buttonRec.DOAnchorPos(localTargetPos, _duration)).SetEase(_easeType)
+            seq.Join(_buttonRec.DOMove(_originWorldPos, _duration)).SetEase(_easeType)
                 .Join(_buttonRec.DORotateQuaternion(_originWorldRot, _duration)).SetEase(_easeType)
                 .Join(_buttonRec.DOScale(_originWorldScale, _duration)).SetEase(_easeType);
             
