@@ -14,14 +14,14 @@ public static class CardCombination
         int JokerNum = 0;
         int JokerFiveNum = 14;
         bool IsFlush = false;
-        bool IsStraight = false;
+        bool IsStraight;
         bool IsFullHouse = false;
         bool IsOnePair = false;
         bool IsTwoPair = false;
         bool IsTriple = false;
         bool IsFourCard = false;
         bool IsFiveCard = false;
-        bool IsFiveJoker = false;
+        bool IsFiveJoker;
         bool JokerUsedTriple = false;
         cardNums = new List<int>(5);
 
@@ -34,6 +34,7 @@ public static class CardCombination
         {
             if (card.Enchant.enchantInfo == CardEnchant.Wild ||
             card.CardSuit == MinorSuit.wildCard) wildCount++;
+            else if (card.CardSuit == MinorSuit.Special) continue;
             else
                 SuitNum[(int)card.CardSuit]++;
 

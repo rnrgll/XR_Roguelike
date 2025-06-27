@@ -8,7 +8,7 @@ using CardEnum;
 
 /// <summary>
 /// 카드를 컨트롤하는 메서드
-/// 시작할 때 CardDeck을 생성하고 일단 카드의 추가와 삭제와 같은 부분도 처리가 되어있다.
+/// 시작할 때 CardDeck을 생성한다.
 /// </summary>
 public class CardController : MonoBehaviour
 {
@@ -107,11 +107,6 @@ public class CardController : MonoBehaviour
         disposableCardList.Add(_disposCard);
     }
 
-    public void UseDisposCard()
-    {
-
-    }
-
     public void SortBySuit(CardStatus _status)
     {
         CardListDic[_status].Sort((a, b) =>
@@ -137,6 +132,16 @@ public class CardController : MonoBehaviour
         return Hand;
     }
 
+    public void SwapCards(MinorArcana deckCard, MinorArcana handCard)
+    {
+        var battleDeck = CardListDic[CardStatus.BattleDeck];
+        List<MinorArcana> tempCards = new();
+        battleDeck.Remove(handCard);
+        Hand[Hand.IndexOf(handCard)] = deckCard;
+        Shuffle(battleDeck);
+    }
+
+
 
     /// <summary>
     /// 카드 버리기, 8장이 넘었을 때 카드를 선택하여 버린다.
@@ -153,6 +158,8 @@ public class CardController : MonoBehaviour
             if (disposableCardList.Remove(_card))
             {
                 CardListDic[CardStatus.Hand].Remove(_card);
+                _num++;
+                continue;
             }
             CardListDic[CardStatus.Graveyard].Add(_card);
 
@@ -171,7 +178,6 @@ public class CardController : MonoBehaviour
 
         for (int i = n - 1; i > 0; i--)
         {
-            // int j = UnityEngine.Random.Range(0, i + 1);
             int j = manager.randomManager.RandInt(0, i + 1);
             T temp = list[i];
             list[i] = list[j];

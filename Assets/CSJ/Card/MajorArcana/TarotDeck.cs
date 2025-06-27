@@ -1,21 +1,54 @@
+using CardEnum;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TarotDeck : MonoBehaviour
 {
-    [SerializeField] List<MajorArcanaSO> majorCards;
+    [SerializeField] List<MajorArcanaSO> majorCardCandidates;
+    [SerializeField] GameObject cardCon;
+    List<MajorArcanaSO> deckMajorCards;
     MajorArcanaSO curCard;
+    private int prevIndex;
 
-
-    public void Draw()
+    public List<MajorArcanaSO> GetMajorCardCandidates()
     {
-        curCard = majorCards[manager.randomManager.randInt(0, majorCards.Count)];
+        return majorCardCandidates;
     }
-    public void Activate(GameObject player)
+
+    public void AddMajorCards(MajorArcanaSO majorCard)
     {
-        player.CardRotation();
-        var _positiong = player.cardPos;
-        card.Activate(player, ori);
+        deckMajorCards.Add(majorCard);
+        majorCardCandidates.Remove(majorCard);
+    }
+
+    public List<MajorArcanaSO> GetMajorCards()
+    {
+        return deckMajorCards;
+    }
+
+    public MajorArcanaSO Draw()
+    {
+        prevIndex = deckMajorCards.IndexOf(curCard);
+        int CardNum;
+
+        do
+        {
+            CardNum = Manager.randomManager.RandInt(0, deckMajorCards.Count);
+        } while (deckMajorCards.Count > 1 && CardNum == prevIndex);
+
+        curCard = deckMajorCards[CardNum];
+        bool IsChanged = curCard.CardRotation();
+        if (deckMajorCards.Count <= 1 && !IsChanged)
+        {
+            curCard.Rotate();
+        }
+        return curCard;
+    }
+
+    public void Activate()
+    {
+        curCard.Activate(cardCon);
     }
 }
