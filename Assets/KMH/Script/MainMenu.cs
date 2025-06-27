@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public void OnClickStart()
     {
-        Debug.Log("게임시작");
+        SceneManager.LoadScene("Intro");
     }
 
     public void OnClickShop()
     {
-        Debug.Log("상점");
+        SceneManager.LoadScene("Shop");
     }
 
     public void OnClickOption()

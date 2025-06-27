@@ -12,8 +12,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private void Start()
     {
         currentHP = maxHP;
+
+
         Managers.Manager.turnManager.RegisterPlayer(this);
-        CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
+        //CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
     }
 
     private void OnAttackTriggered(List<MinorArcana> cards)

@@ -9,6 +9,8 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
 
+
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -36,7 +38,15 @@ public class BattleManager : MonoBehaviour
         }
 
         target.ApplyDamage(damage);
+        //실제 피해 반영 후 UI 업데이트
+        GameStatusUI.Instance.AddDamage(damage); 
         Debug.Log($"[{combo}] → {target.name}에게 {damage}의 피해!");
+
+        if (target.IsDead)
+        {
+            GameStateManager.Instance.AddWin();
+            Debug.Log("승리 카운트 +1 (BattleManager)");
+        }
     }
 
     private float GetMultiplierByCombo(CardCombinationEnum combo)
