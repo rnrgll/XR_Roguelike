@@ -28,13 +28,13 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         Debug.Log($"족보: {combo}, 카드번호: {string.Join(", ", comboCardNums)}");
 
         // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
-        TurnManager.Instance.SetCurrentEnemyByType(EnemyType.Orc);
+        TurnManager.Instance.SetCurrentEnemyByType(EnemyType.Boss);
 
         // 3. 타겟 찾기
         var target = TurnManager.Instance
             .GetEnemies()
             .OfType<EnemyController>()
-            .FirstOrDefault(e => e.Type == EnemyType.Orc && !e.IsDead);
+            .FirstOrDefault(e => e.Type == EnemyType.Boss && !e.IsDead);
 
         // 4. 공격 수행
         if (target != null)
