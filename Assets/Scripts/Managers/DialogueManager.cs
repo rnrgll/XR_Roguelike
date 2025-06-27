@@ -26,14 +26,13 @@ namespace Managers
             
             //2. Reader로 파일 읽기
             CsvReader.Read(table);
- 
+            
             //3. 다이얼로그 파싱
             DialogueData.dialogueID = fileName;
             DialogueData.lines = ParseDialogueLine(table);
             
             Debug.Log($"{DialogueData.dialogueID} file 읽어오기 성공");
-            Debug.Log($"{DialogueData.lines[0].speakerName} : {DialogueData.lines[0].dialogueText}");
-
+            
             //파싱 완료
             return true;
         }
@@ -72,7 +71,6 @@ namespace Managers
             DialogueData.dialogueID = string.Empty;
             DialogueData.lines?.Clear(); // 리스트 클리어
             DialogueData.lines = null;   // 참조 해제
-            Debug.Log("Dialogue Data 정리");
         }
     }
 }

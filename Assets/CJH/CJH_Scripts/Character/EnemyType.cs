@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyActor
+public enum EnemyType
 {
-    bool IsDead { get; }
-    void TakeTurn();
+    Boss
 }
