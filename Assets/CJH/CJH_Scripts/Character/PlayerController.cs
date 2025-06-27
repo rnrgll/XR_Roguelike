@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         else
         {
-            Debug.LogWarning("[PlayerController] 대상 Orc가 없습니다!");
+            Debug.LogWarning("[PlayerController] 대상 Boss가 없습니다!");
         }
 
         // 5. 턴 종료
