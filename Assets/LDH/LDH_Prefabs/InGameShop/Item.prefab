@@ -215,6 +215,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 686327006742397529, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
   m_PrefabInstance: {fileID: 851700527688034893}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1976486373916224776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205903656708638533, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
+  m_PrefabInstance: {fileID: 851700527688034893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1466850652698423724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,17 +228,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4964920173848014824}
     m_Modifications:
+    - target: {fileID: 4641219183624768138, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
+      propertyPath: _priceLabel
+      value: 
+      objectReference: {fileID: 1976486373916224776}
     - target: {fileID: 7239251034564577952, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
       propertyPath: m_Name
       value: Item Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 7898167504520606754, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8364270388955002456, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
-      propertyPath: m_text
-      value: Item 1
       objectReference: {fileID: 0}
     - target: {fileID: 9106723205197593268, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
       propertyPath: m_Pivot.x

@@ -16,10 +16,14 @@ namespace InGameShop
         [SerializeField] private float _duration = 0.5f;
         [SerializeField] private Ease _easeType = Ease.OutQuint;
         
+        [Header("Item UI")] 
+        [SerializeField] private GameObject _priceLabel;
+
+        
         
         private Button _itemButton;
+        private Canvas _canvas;
         private RectTransform _buttonRec;
-        private Transform _originParent;
         private Vector3 _originWorldPos;
         private Vector3 _originWorldScale;
         private Quaternion _originWorldRot;
@@ -40,8 +44,8 @@ namespace InGameShop
         private void Init()
         {
             _itemButton = GetComponent<Button>();
+            _canvas = GetComponent<Canvas>();
             _buttonRec = _itemButton.GetComponent<RectTransform>();
-            _originParent = _itemButton.transform.parent;
             _originWorldPos = _itemButton.transform.position;
             _originWorldScale = _itemButton.transform.lossyScale;
             _originWorldRot = _itemButton.transform.rotation;
@@ -50,17 +54,21 @@ namespace InGameShop
 
         public void MoveToPopUp()
         {
+            //canvas sorting order 변경
+            _canvas.sortingOrder = (int)SortOrder.PopUp + 1;
+            
             //버튼 비활성화
             _itemButton.enabled = false;
+            
+            //pirce tag 비활성화
+            _priceLabel.SetActive(false);
             
             //target의 월드 기준 위치 가져오기
             Vector3 targetWorldPos = _targetTransform.position;
             Quaternion targetWorldRot = _targetTransform.rotation;
             Vector3 targetWorldScale = _originWorldScale * 1.5f;
             
-            // //현재 오브젝트의 부모 기준 위치로 변환
-            // Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(targetWorldPos);
-            
+
             //위치 이동, 회전, 스케일 변화 적용
             Sequence seq = DOTween.Sequence();
             seq.Join(_buttonRec.DOMove(targetWorldPos, _duration)).SetEase(_easeType)
@@ -71,8 +79,7 @@ namespace InGameShop
             {
                 //pop up panel 활성화
                 _popUpPanel.SetActive(true);
-                //pop up panel로 계층 옮기기
-                _itemButton.transform.SetParent(_popUpPanel.transform, true);
+
                 //Return Button onclick 이벤트 구독처리
                 _returnButton.onClick.AddListener(ReturnToOrigin);
             });
@@ -81,11 +88,10 @@ namespace InGameShop
 
         public void ReturnToOrigin()
         {
-            // 계층 구조 원래대로 복귀
-            _itemButton.transform.SetParent(_originParent,true);
-           
+            // canvas sorting order 원래대로
+            _canvas.sortingOrder = (int)SortOrder.Item;
               
-            // //현재 오브젝트의 부모 기준 위치로 변환
+            // 현재 오브젝트의 부모 기준 위치로 변환
             // Vector3 localTargetPos = _itemButton.transform.parent.InverseTransformPoint(_originWorldPos);
 
             //팝업 패널 비활성화
@@ -103,6 +109,8 @@ namespace InGameShop
                 _returnButton.onClick.RemoveListener(ReturnToOrigin);
                 //버튼 활성화
                 _itemButton.enabled = true;
+                //price label 활성화
+                _priceLabel.SetActive(true);
             });
 
         }

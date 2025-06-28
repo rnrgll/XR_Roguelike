@@ -47,3 +47,14 @@ namespace Map
         Attainable
     }
 }
+
+namespace InGameShop
+{
+    public enum SortOrder
+    {
+        Item= 3,
+        PopUp = 5,
+        
+    }
+    
+}
