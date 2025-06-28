@@ -23,7 +23,7 @@ namespace Map
 
         
         [Header("Weights")]
-        public float BattleNodeWeight = 10.0f;
+        public float BattleNodeWeight = 0f;
         public float ShopNodeWeight = 2.5f;
         public float EventNodeWeight = 4.0f;
 

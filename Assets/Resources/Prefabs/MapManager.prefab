@@ -74,7 +74,8 @@ MonoBehaviour:
   linePointsCount: 10
   offsetFromNodes: 50
   scrollRectVertical: {fileID: 2384409123853657601}
-  padding: 400
+  widthPadding: 800
+  heightPadding: 400
   backgroundPadding: {x: 0, y: 0}
   backgroundPPUMultiplier: 1
 --- !u!114 &5785903751494116985

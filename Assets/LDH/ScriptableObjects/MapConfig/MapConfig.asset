@@ -24,6 +24,6 @@ MonoBehaviour:
   floors: 9
   mapWidth: 5
   paths: 4
-  BattleRoomWeight: 0
-  ShopRoomWeight: 2.5
-  EventRoomWeight: 4
+  BattleNodeWeight: 0
+  ShopNodeWeight: 2.5
+  EventNodeWeight: 4

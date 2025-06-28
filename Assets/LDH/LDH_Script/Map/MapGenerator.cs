@@ -60,15 +60,15 @@ namespace Map
             for (int j = 0; j < startingPoints.Count; j++)
             {
                 int currentJ = startingPoints[j];
-                for (int i = 1; i < _floors - 1; i++)
+                for (int i = 2; i < _floors - 2; i++) //3층부터 path 선정, 1~2층과 보스 이전층 ~ 보스층은 노드 1개로 고정처리
                 {
                     currentJ = SetUpConnection(i, currentJ);
                 }
             }
 
             //4. start Room, boss room setting
-            Node startNode = SetUpStartRoom();
-            Node bossNode = SetUpBossRoom();
+            Node startNode = SetUpStartAndFloorOne();
+            Node bossNode = SetUpBeforBossAndBoss();
             
             //5. 모든 path 탐색
             _allPath = GetAllPaths(startNode, bossNode);
@@ -202,43 +202,61 @@ namespace Map
 
 
         // - 시작 노드와 그 다음 floor와의 connection 설정
-        // - room type 설정
-        private Node SetUpStartRoom()
+        // - node type 설정
+        private Node SetUpStartAndFloorOne()
         {
             int middle = Mathf.FloorToInt(_mapWidth * 0.5f);
             Node startNode = _map[0][middle];
+            Node floorOneNode = _map[1][middle];
+            
+            //타입 배정
+            startNode.nodeType = NodeType.Battle;
+            floorOneNode.nodeType = NodeType.Shop;
+            
+            //startNode와 Floor 1 노드 연결
+            startNode.nextNodes.Add(floorOneNode);
 
+            //floor 1 과 floor 2 연결
             for (int j = 0; j < _mapWidth; j++)
             {
-                Node currentNode = _map[1][j];
+                Node currentNode = _map[2][j];
                 if (currentNode.HasConnections())
                 {
-                    startNode.nextNodes.Add(currentNode);
+                    floorOneNode.nextNodes.Add(currentNode);
                 }
             }
-
-            startNode.nodeType = NodeType.Battle;
+            
             return startNode;
         }
 
         //- 보스룸 이전 floor와 보스 룸 connection 설정
-        //- room type 설정
-        private Node SetUpBossRoom()
+        //- node type 설정
+        private Node SetUpBeforBossAndBoss()
         {
             int middle = Mathf.FloorToInt(_mapWidth * 0.5F);
             Node bossNode = _map[_floors - 1][middle];
-
+            Node beforeBossNode = _map[_floors - 2][middle];
+            
+            //타입 배정
+            bossNode.nodeType = NodeType.Boss;
+            beforeBossNode.nodeType = NodeType.Shop;
+            
+            //보스 이전 방과 보스 방 연결
+            beforeBossNode.nextNodes.Add(bossNode);
+            
+            
+            //floors - 3과 floors - 2 층 연결
             for (int j = 0; j < _mapWidth; j++)
             {
-                Node currentNode = _map[_floors - 2][j];
+                Node currentNode = _map[_floors - 3][j];
                 if (currentNode.HasConnections())
                 {
                     currentNode.nextNodes.Clear();
-                    currentNode.nextNodes.Add(bossNode);
+                    currentNode.nextNodes.Add(beforeBossNode);
                 }
             }
 
-            bossNode.nodeType = NodeType.Boss;
+         
 
             return bossNode;
         }
