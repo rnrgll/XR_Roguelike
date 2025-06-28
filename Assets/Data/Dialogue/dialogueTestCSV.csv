@@ -1,8 +1,8 @@
 index,speakerName,position,portraitKey,dialogueText
-0,Alice,left,idle,"left positon (print , test)"
-1,Bob,right,idle,"right position (print "" test)"
-2,Jack,middle,idle,middle position
-3,Alice,lefttomiddle,smile,<color=red>left to middle</color> position moving
+0,Alice,left,idle,한글 테스트 한글 테스트입니다. 영어랑 한글 둘 다 잘 나올까? al;fjasl;fjas;fkjlasf;lsjaf;l
+1,Bob,right,idle,"<color="red">this is red, <color="blue">blue,</color> and red again.</color>"
+2,Jack,middle,idle,This is <b>important</b> information.
+3,Alice,lefttomiddle,smile,<b><color="red">Important</color></b>
 4,Alice,lefttoright,smile,<color=red>left to right</color> position moving
 5,Bob,righttoleft,idle,<color=blue>right to left</color> position moving
 6,Bob,righttomiddle,idle,<color=blue>right to middle</color> position moving

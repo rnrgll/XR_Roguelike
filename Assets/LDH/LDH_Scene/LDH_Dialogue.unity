@@ -1060,8 +1060,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7ed7654601eed44888a901daa16f24ea, type: 2}
+  m_sharedMaterial: {fileID: -1544428866232180007, guid: 7ed7654601eed44888a901daa16f24ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2005,12 +2005,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Dialogue
-
-    Sample Texts.'
+  m_text: "\uD55C\uAE00 \uC601\uC5B4 \uB2E4 \uC798 \uB098\uC624\uB294\uC9C0 \uD14C\uC2A4\uD2B8\uD569\uB2C8\uB2E4.
+    \uD14C\uC2A4\uD2B8 \uD569\uB2C8\uB2E4.\nthis is test dialogue."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 26da5de6a19034914a14608577ff7d7e, type: 2}
+  m_sharedMaterial: {fileID: -3713498083792382175, guid: 26da5de6a19034914a14608577ff7d7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
