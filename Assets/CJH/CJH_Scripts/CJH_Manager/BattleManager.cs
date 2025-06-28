@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using CardEnum;
+using Unity.Burst.Intrinsics;
 
 
 public class BattleManager : MonoBehaviour
@@ -65,4 +66,40 @@ public class BattleManager : MonoBehaviour
             _ => 0.0f
         };
     }
+
+  //public float GetBonusMultiplierByMajorArcana(List<MajorArcana> majors, PlayerController playerController, CardCombinationEnum combo)
+  //{
+  //    float multiplier = 1f;
+  //
+  //    foreach (var major in majors)
+  //    {
+  //        switch (major.ArcanaType)
+  //        {
+  //            case MajorArcanaType.TheDevil:
+  //                
+  //                break;
+  //
+  //            case MajorArcanaType.TheWorld:
+  //                if (major.IsReversed)
+  //                {
+  //                    if(combo == CardCombinationEnum.FiveCard)
+  //                    {
+  //                        multiplier *= 10f;
+  //                        playerController.EndTurn();
+  //                    }
+  //                }
+  //                else
+  //                {
+  //                    multiplier *= 10f; // 세계의 힘, 데미지 10배
+  //                    //Todo 받는 데미지 10배 구현해야함.
+  //                }
+  //                break;
+  //
+  //            default:
+  //                break;
+  //        }
+  //    }
+  //
+  //    return multiplier;
+  //}
 }
