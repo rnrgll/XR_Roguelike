@@ -56,5 +56,11 @@ namespace InGameShop
         PopUp = 5,
         
     }
+
+    public enum ButtonState
+    {
+        Active,
+        Deactive,
+    }
     
 }
