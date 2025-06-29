@@ -22,9 +22,6 @@ public class GameStateManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
-        //todo:testcode
-        Gold = 500;
     }
 
     public void AddWin() => Wins++;

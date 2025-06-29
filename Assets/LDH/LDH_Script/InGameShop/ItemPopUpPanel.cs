@@ -32,7 +32,6 @@ namespace InGameShop
 
         private void UpdateUI(TempItemClass itemData)
         {
-            Debug.Log("update ui 호출");
             _itemInfo.text = $"{itemData.name}\n{itemData.description}";
 
             _itemPrice.text = itemData.price.ToString();

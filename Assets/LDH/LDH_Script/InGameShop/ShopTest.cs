@@ -20,10 +20,10 @@ namespace InGameShop
     {
         public List<TempItemClass> itemDB;
         
-        
         private void Start()
         {
-            
+            //todo:testcode
+            GameStateManager.Instance.AddGold(500);
         }
 
         public int PickIndexRandomByWeight(List<TempItemClass> tempList)

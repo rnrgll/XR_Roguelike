@@ -22,10 +22,7 @@ namespace InGameShop
         //아이템 드로우
         public void Reroll()
         {
-            //todo: 랜덤으로 아이템을 가져온다.
-            //가중치 기반으로
-            
-            //var newItems = _itemDatabase.GetRandomItems(4);
+            //가중치 기반으로 랜덤으로 아이템을 가져온다.
             var newItems = _itemDatabase.PickUniqeItemRandom(4);
             _model.SetItems(newItems);
             
