@@ -48,12 +48,5 @@ namespace InGameShop
             //popup 닫고, 비활성화 처리하기
             
         }
-        
-        
-        //나가기 
-        public void ExitShop()
-        {
-            Manager.Map.ShowMap();
-        }
     }
 }

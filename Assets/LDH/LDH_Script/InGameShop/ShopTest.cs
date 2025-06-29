@@ -23,8 +23,6 @@ namespace InGameShop
         
         private void Start()
         {
-            Manager.Map.GenerateMap();
-            Manager.Map.HideMap();
             
         }
 

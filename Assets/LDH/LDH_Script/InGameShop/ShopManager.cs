@@ -1,3 +1,4 @@
+using Managers;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -50,8 +51,6 @@ namespace InGameShop
             //아이템 리롤
             Reroll();
         }
-
-
         
 
         //버튼과 모델 바인딩 해제
@@ -82,8 +81,13 @@ namespace InGameShop
             
             controller.Reroll();
         }
-
-
+        
         public int GetItemId(int slotIndex) => model.GetItemID(slotIndex);
+        
+        //나가기 
+        public void ExitShop()
+        {
+            Manager.Map.ShowMap();
+        }
     }
 }
