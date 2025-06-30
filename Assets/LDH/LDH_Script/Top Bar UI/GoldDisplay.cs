@@ -10,12 +10,12 @@ namespace UI
 
         private void OnEnable()
         {
-            GameStateManager.Instance.OnGetGold.AddListener(UpdateUI);
+            GameStateManager.Instance.OnGoldChanged.AddListener(UpdateUI);
         }
 
         private void OnDisable()
         {
-            GameStateManager.Instance.OnGetGold.RemoveListener(UpdateUI);
+            GameStateManager.Instance.OnGoldChanged.RemoveListener(UpdateUI);
         }
 
         private void UpdateUI(int gold)

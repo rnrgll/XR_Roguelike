@@ -32,6 +32,9 @@ namespace Managers
             public static TurnManager turnManager => TurnManager.Instance;              // 턴 매니저
             public static MapManager Map => MapManager.Instance;                        // 맵 매니저
             
+            // data
+            public static DataManager Data => DataManager.Instance;                     // 데이터 매니저
+            
             // UI, 스토리
             public static UIManager UI => UIManager.Instance;                           // UI 매니저
             public static DialogueManager Dialogue => DialogueManager.Instance;         // 다이얼로그 매니저
@@ -55,6 +58,7 @@ namespace Managers
                 manager.AddComponent<DialogueManager>();
                 manager.AddComponent<GameStateManager>();
                 manager.AddComponent<UIManager>();
+                manager.AddComponent<DataManager>();
 
                 //Map Manager는 프리팹으로 추가
             }

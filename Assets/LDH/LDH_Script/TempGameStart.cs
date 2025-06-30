@@ -1,0 +1,23 @@
+using Managers;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace LDH.LDH_Script
+{
+    public class TempGameStart : MonoBehaviour
+    {
+        public void GameStart()
+        {
+            Manager.Map.GenerateMap();
+            Manager.UI.TopBarUI.SetActive(true);
+            Manager.GameState.Init();
+            Manager.GameState.AddGold(1000);
+            
+            // //랜덤으로 아이템 하나 획득 처리
+            // List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
+            // Manager.GameState.AddItem(items[0]);
+        }
+
+        
+    }
+}

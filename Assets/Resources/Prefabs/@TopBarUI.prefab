@@ -118,10 +118,6 @@ MonoBehaviour:
   _mapButton: {fileID: 5551819560395101910}
   _cardDeckButton: {fileID: 3293996182947112274}
   _settingButton: {fileID: 7096905302274471850}
-  _itemSlots:
-  - {fileID: 377627707192136698}
-  - {fileID: 2380400216932367362}
-  - {fileID: 8694103135689058841}
 --- !u!1 &2651226631358450516
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,17 +451,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
---- !u!114 &377627707192136698 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 690680642648670547, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
-  m_PrefabInstance: {fileID: 912066905720246953}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5786220375604058170 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6693642908775058067, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
@@ -596,6 +581,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3186408948081979723}
     m_Modifications:
+    - target: {fileID: 3638632812926253277, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
+      propertyPath: slotIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6693642908775058067, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -685,17 +674,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
---- !u!114 &2380400216932367362 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 690680642648670547, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
-  m_PrefabInstance: {fileID: 2926542612931558737}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8392937030296647618 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6693642908775058067, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
@@ -1146,6 +1124,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3186408948081979723}
     m_Modifications:
+    - target: {fileID: 3638632812926253277, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
+      propertyPath: itemId
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638632812926253277, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
+      propertyPath: slotIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6693642908775058067, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1240,14 +1226,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6693642908775058067, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
   m_PrefabInstance: {fileID: 8156690587270720330}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8694103135689058841 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 690680642648670547, guid: a1f6ef7565e7f4114831ad74600c0456, type: 3}
-  m_PrefabInstance: {fileID: 8156690587270720330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

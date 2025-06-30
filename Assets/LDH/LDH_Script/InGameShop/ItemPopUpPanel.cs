@@ -1,3 +1,4 @@
+using Managers;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,10 +16,9 @@ namespace InGameShop
         {
             gameObject.SetActive(true);
             
-            int itemId = ShopManager.Instance.GetItemId(slotIndex);
+            string itemId = ShopManager.Instance.GetItemId(slotIndex);
             
-            //todo : db에서 조회로 변경하기
-            var item = ShopManager.Instance.testitemDB.GetItemById(itemId);
+            var item = Manager.Data.ItemDB.GetItemById(itemId);
             
             UpdateUI(item);
             _purchaseButton.SetButton( slotIndex, item);
@@ -30,7 +30,7 @@ namespace InGameShop
             gameObject.SetActive(false);
         }
 
-        private void UpdateUI(TempItemClass itemData)
+        private void UpdateUI(TempItem itemData)
         {
             _itemInfo.text = $"{itemData.name}\n{itemData.description}";
 

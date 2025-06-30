@@ -1,5 +1,6 @@
 using Managers;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,15 @@ namespace LDH.LDH_Script
         {
             Manager.Map.GenerateMap();
             Manager.UI.TopBarUI.SetActive(true);
+            Manager.GameState.Init();
             Manager.GameState.AddGold(1000);
+            
+        }
+
+        public void GetItems()
+        {
+            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
+            Manager.GameState.AddItem(items[0]);
         }
     }
 }

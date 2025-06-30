@@ -11,8 +11,6 @@ namespace InGameShop
     public class ShopController
     {
         private ShopModel _model;
-        public ShopTest _itemDatabase; //디버깅 용
-        
         //생성자
         public ShopController(ShopModel model)
         {
@@ -23,15 +21,15 @@ namespace InGameShop
         public void Reroll()
         {
             //가중치 기반으로 랜덤으로 아이템을 가져온다.
-            var newItems = _itemDatabase.PickUniqeItemRandom(4);
+            var newItems = Manager.Data.ItemDB.PickUniqeItemRandom(4);
             _model.SetItems(newItems);
             
         }
 
-        public void Purchase(int itemID)
+        public void Purchase(string itemID)
         {
 
-            var item = _itemDatabase.GetItemById(itemID);
+            var item = Manager.Data.ItemDB.GetItemById(itemID);
             
             if (GameStateManager.Instance.Gold < item.price)
                 return;
