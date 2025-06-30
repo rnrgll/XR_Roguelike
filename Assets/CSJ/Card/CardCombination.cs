@@ -13,27 +13,26 @@ public static class CardCombination
         int[] numbers = new int[13];
         int JokerNum = 0;
         int JokerFiveNum = 14;
-        bool IsFlush = false;
-        bool IsStraight = false;
-        bool IsFullHouse = false;
-        bool IsOnePair = false;
-        bool IsTwoPair = false;
-        bool IsTriple = false;
-        bool IsFourCard = false;
-        bool IsFiveCard = false;
-        bool IsFiveJoker = false;
+        bool IsEnd = false;
         bool JokerUsedTriple = false;
+        Dictionary<CardCombinationEnum, bool> IsComb = new Dictionary<CardCombinationEnum, bool>();
         cardNums = new List<int>(5);
 
         //TODO : 플레이어 스탯과의 연계?
         int nowFlushNum = 5;
         int nowStraightNum = 5;
+        foreach (CardCombinationEnum comb in Enum.GetValues(typeof(CardCombinationEnum)))
+        {
+            IsComb[comb] = false;
+        }
+
 
         #region card의 숫자와 문양을 개별 저장
         foreach (MinorArcana card in cards)
         {
             if (card.Enchant.enchantInfo == CardEnchant.Wild ||
             card.CardSuit == MinorSuit.wildCard) wildCount++;
+            else if (card.CardSuit == MinorSuit.Special) continue;
             else
                 SuitNum[(int)card.CardSuit]++;
 
@@ -51,113 +50,37 @@ public static class CardCombination
         {
             if (_StNum + wildCount >= nowFlushNum)
             {
-                IsFlush = true;
+                IsComb[CardCombinationEnum.Flush] = true;
                 break;
             }
         }
         #endregion
 
         #region 파이브조커 확인
-        CheckFiveJoker(JokerNum, JokerFiveNum, cardNums, out IsFiveJoker);
+        CheckFiveJoker(JokerNum, JokerFiveNum, cardNums, IsComb, ref IsEnd);
         #endregion
 
         #region 스트레이트 확인
-        CheckStraight(JokerNum, nowStraightNum, cardNums, numbers, out IsStraight);
+        CheckStraight(JokerNum, nowStraightNum, cardNums, numbers, IsComb, ref IsEnd);
         #endregion
+
 
         int i = 1;
         // card들의 숫자를 확인
         #region 숫자 족보 확인
         foreach (int _num in numbers)
         {
+            if (IsEnd) break;
             #region 페어 확인
-            // 해당 숫자가 2개일 경우 = 페어
             if (_num == 2)
             {
-                // 원페어가 성립되지 않았던 경우 
-                if (!IsOnePair)
+                if (!IsComb[CardCombinationEnum.OnePair])
                 {
-                    // 만약 조커가 없을 경우
-                    if (JokerNum < 1)
-                    {
-                        // 해당 페어 항목에 채워넣고 일단 OnePair를 true로 만든다.
-                        IsOnePair = true;
-                        for (int re = 0; re < 2; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        // 트리플을 이미 판별한 경우 풀하우스 이므로 풀하우스로 체크한 후 나간다.
-                        if (IsTriple)
-                        {
-                            // 조커를 사용한 트리플일 경우
-                            // 현재의 숫자가 이전 페어의 숫자보다 크므로
-                            // 현재 페어의 숫자로 조커를 대체해 준다.
-                            if (JokerUsedTriple)
-                            {
-                                cardNums[2] = i;
-                            }
-                            // 풀하우스를 판별한다.
-                            IsFullHouse = true;
-                            break;
-                        }
-                    }
-
-                    else if (JokerNum == 1)
-                    {
-                        //트리플을 체크한다.
-                        IsTriple = true;
-                        JokerUsedTriple = true;
-                        for (int re = 0; re < 3; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                    }
-                    else if (JokerNum == 2)
-                    {
-                        //포카드를 체크하고 탈출한다.
-                        IsFourCard = true;
-                        for (int re = 0; re < 4; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        break;
-                    }
-                    else if (JokerNum == 3)
-                    {
-                        IsFiveCard = true;
-                        for (int re = 0; re < 5; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        break;
-                    }
+                    CheckOnePair(JokerNum, _num, ref JokerUsedTriple, cardNums, IsComb, ref IsEnd);
                 }
-                // 첫번째 페어 항목이 차있을 경우
                 else
                 {
-                    // 투페어의 숫자를 기록하고 투페어로 판별한 후 탈출한다
-                    // ※ 조커가 0개이고 투페어 일 경우 다른 경우의 수가 없기 때문
-                    if (JokerNum < 1)
-                    {
-                        IsTwoPair = true;
-                        for (int re = 0; re < 2; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        //트리플을 체크한다.
-                        IsTriple = true;
-                        JokerUsedTriple = true;
-                        for (int re = 0; re < 3; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        IsFullHouse = true;
-                    }
-
+                    CheckTwoPair(JokerNum, _num, ref JokerUsedTriple, cardNums, IsComb, ref IsEnd);
                 }
             }
             #endregion
@@ -166,47 +89,7 @@ public static class CardCombination
             // 해당 숫자가 3개일 경우 = 트리플
             else if (_num == 3)
             {
-                // 조커가 없을 경우
-                if (JokerNum < 1)
-                {
-                    // 트리플을 true로 하고 해당 숫자를 기록한다.
-                    IsTriple = true;
-                    for (int re = 0; re < 3; re++)
-                    {
-                        cardNums.Add(i);
-                    }
-                    // OnePair가 이미 판별된 경우 풀하우스이므로 이를 체크하고 탈출한다.
-                    if (IsOnePair)
-                    {
-                        IsFullHouse = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    // 조커가 1개라면
-                    if (JokerNum == 1)
-                    {
-                        // 포카드를 체크한다.
-                        IsFourCard = true;
-                        for (int re = 0; re < 4; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        break;
-                    }
-                    // 조커가 2개라면 
-                    else if (JokerNum == 2)
-                    {
-                        //파이브 카드를 체크한다.
-                        IsFiveCard = true;
-                        for (int re = 0; re < 5; re++)
-                        {
-                            cardNums.Add(i);
-                        }
-                        break;
-                    }
-                }
+                CheckTriple(JokerNum, _num, cardNums, IsComb, ref IsEnd);
             }
             #endregion
 
@@ -214,23 +97,7 @@ public static class CardCombination
             // 해당 숫자가 4개인 경우 = 포카드
             else if (_num == 4)
             {
-                //조커가 있을 경우 파이브 카드를 체크한다
-                if (JokerNum == 1)
-                {
-                    IsFiveCard = true;
-                    for (int re = 0; re < 5; re++)
-                    {
-                        cardNums.Add(i);
-                    }
-                    break;
-                }
-                //포카드를 체크하고 탈출한다.
-                IsFourCard = true;
-                for (int re = 0; re < 4; re++)
-                {
-                    cardNums.Add(i);
-                }
-                break;
+                CheckFourCard(JokerNum, _num, cardNums, IsComb, ref IsEnd);
             }
             #endregion
             // 다음 숫자 배열에 대한 검사를 진행한다.
@@ -239,14 +106,23 @@ public static class CardCombination
         #endregion
 
         #region return region
-        if (IsFiveJoker) return CardCombinationEnum.FiveJoker;
-        if (IsFiveCard) return CardCombinationEnum.FiveCard;
-        if (IsStraight && IsFlush) return CardCombinationEnum.StraightFlush;
-        if (IsFourCard) return CardCombinationEnum.FourCard;
-        if (IsFullHouse) return CardCombinationEnum.FullHouse;
-        if (IsFlush)
+        if (IsComb[CardCombinationEnum.FiveJoker]) return CardCombinationEnum.FiveJoker;
+
+        if (IsComb[CardCombinationEnum.FiveCard]) return CardCombinationEnum.FiveCard;
+
+        if (IsComb[CardCombinationEnum.Straight] && IsComb[CardCombinationEnum.Flush])
+            return CardCombinationEnum.StraightFlush;
+
+        if (IsComb[CardCombinationEnum.FourCard])
+            return CardCombinationEnum.FourCard;
+
+        if (IsComb[CardCombinationEnum.FullHouse])
+            return CardCombinationEnum.FullHouse;
+
+        if (IsComb[CardCombinationEnum.Flush])
         {
             int j = 0;
+            cardNums.Clear();
             foreach (int _num in numbers)
             {
                 if (_num == 0) continue;
@@ -259,10 +135,17 @@ public static class CardCombination
             }
             return CardCombinationEnum.Flush;
         }
-        if (IsStraight) return CardCombinationEnum.Straight;
-        if (IsTriple) return CardCombinationEnum.Triple;
-        if (IsTwoPair) return CardCombinationEnum.TwoPair;
-        if (IsOnePair) return CardCombinationEnum.OnePair;
+        if (IsComb[CardCombinationEnum.Straight])
+            return CardCombinationEnum.Straight;
+
+        if (IsComb[CardCombinationEnum.Triple])
+            return CardCombinationEnum.Triple;
+
+        if (IsComb[CardCombinationEnum.TwoPair])
+            return CardCombinationEnum.TwoPair;
+
+        if (IsComb[CardCombinationEnum.OnePair])
+            return CardCombinationEnum.OnePair;
 
         int k = 0;
         int Max = 0;
@@ -286,7 +169,7 @@ public static class CardCombination
         {
             for (int re = 0; re < 2; re++)
             {
-                cardNums.Add(i);
+                cardNums.Add(Max);
             }
             return CardCombinationEnum.Triple;
         }
@@ -294,7 +177,7 @@ public static class CardCombination
         {
             for (int re = 0; re < 3; re++)
             {
-                cardNums.Add(i);
+                cardNums.Add(Max);
             }
             return CardCombinationEnum.FourCard;
         }
@@ -302,7 +185,7 @@ public static class CardCombination
         {
             for (int re = 0; re < 4; re++)
             {
-                cardNums.Add(i);
+                cardNums.Add(Max);
             }
             return CardCombinationEnum.FiveCard;
         }
@@ -310,29 +193,28 @@ public static class CardCombination
         #endregion
     }
 
-    private static bool CheckFiveJoker(int Joker, int JokerFiveNum, List<int> cardNum, out bool IsFiveJoker)
+    private static void CheckFiveJoker(int Joker, int JokerFiveNum, List<int> cardNum, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
     {
         if (Joker == 5)
         {
-            IsFiveJoker = true;
+            IsComb[CardCombinationEnum.FiveJoker] = true;
             int s = JokerFiveNum;
             // TODO : 현재 조커의 값을 14로 설정
             cardNum.AddRange(new List<int> { s, s, s, s, s });
+            IsEnd = true;
         }
-        else IsFiveJoker = false;
+        else IsComb[CardCombinationEnum.FiveJoker] = false;
 
-        return IsFiveJoker;
     }
 
     // TODO: 현재 straightCrit값만 넘으면 작은거부터 기준값만큼의 값을 반환해서 만약 더커도 작은 배열로 반환한다.
     // 이부분을 수정해야함
-    private static bool CheckStraight(int Joker, int straightCrit, List<int> cardNum, int[] numbers, out bool IsStraight)
+    private static void CheckStraight(int Joker, int straightCrit, List<int> cardNum, int[] numbers, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
     {
         int StraightNum = 0;
         int StartStraightNum = 0;
         int UsedJoker = 0;
         int i = 1;
-        IsStraight = false;
         foreach (int _num in numbers)
         {
             if (_num > 1)
@@ -353,7 +235,7 @@ public static class CardCombination
                 if (StraightNum >= straightCrit || (i == 13 && StraightNum == straightCrit - 1 && numbers[0] == 1))
                 {
 
-                    IsStraight = true;
+                    IsComb[CardCombinationEnum.Straight] = true;
 
                     if (i == 13 && StraightNum == straightCrit - 1 && numbers[0] == 1)
                     {
@@ -380,7 +262,8 @@ public static class CardCombination
                 StraightNum++;
                 if (StraightNum >= straightCrit)
                 {
-                    IsStraight = true;
+                    IsComb[CardCombinationEnum.Straight] = true;
+                    IsEnd = true;
                     break;
                 }
             }
@@ -390,13 +273,164 @@ public static class CardCombination
                 StartStraightNum = 0;
                 StraightNum = 0;
                 UsedJoker = 0;
-                IsStraight = false;
+                IsComb[CardCombinationEnum.Straight] = false;
                 break;
             }
         }
+    }
 
-        return IsStraight;
+
+    private static void CheckOnePair(int Joker, int _cardNum, ref bool JokerUsedTriple, List<int> cardNums, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
+    {
+        IsEnd = false;
+        // 만약 조커가 없을 경우
+        if (Joker < 1)
+        {
+            // 해당 페어 항목에 채워넣고 일단 OnePair를 true로 만든다.
+            IsComb[CardCombinationEnum.OnePair] = true;
+            for (int re = 0; re < 2; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+
+            // 트리플을 이미 판별한 경우 풀하우스 이므로 풀하우스로 체크한 후 나간다.
+            if (!IsComb[CardCombinationEnum.Triple])
+            {
+                // 조커를 사용한 트리플일 경우
+                // 현재의 숫자가 이전 페어의 숫자보다 크므로
+                // 현재 페어의 숫자로 조커를 대체해 준다.
+                if (JokerUsedTriple)
+                {
+                    cardNums[2] = _cardNum;
+                }
+                // 풀하우스를 판별한다.
+                IsComb[CardCombinationEnum.FullHouse] = true;
+                IsEnd = true;
+            }
+        }
+
+        else if (Joker == 1)
+        {
+            //트리플을 체크한다.
+            IsComb[CardCombinationEnum.Triple] = true;
+            JokerUsedTriple = true;
+            for (int re = 0; re < 3; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+        }
+        else if (Joker == 2)
+        {
+            //포카드를 체크하고 탈출한다.
+            IsComb[CardCombinationEnum.FourCard] = true;
+            for (int re = 0; re < 4; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+            IsEnd = true;
+        }
+        else if (Joker == 3)
+        {
+            IsComb[CardCombinationEnum.FiveCard] = true;
+            for (int re = 0; re < 5; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+            IsEnd = true;
+        }
+    }
 
 
+    private static void CheckTwoPair(int Joker, int _cardNum, ref bool JokerUsedTriple, List<int> cardNums, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
+    {
+        // 투페어의 숫자를 기록하고 투페어로 판별한 후 탈출한다
+        // ※ 조커가 0개이고 투페어 일 경우 다른 경우의 수가 없기 때문
+        if (Joker < 1)
+        {
+            IsComb[CardCombinationEnum.TwoPair] = true;
+            for (int re = 0; re < 2; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+        }
+        else
+        {
+            //트리플을 체크한다.
+            IsComb[CardCombinationEnum.Triple] = true;
+            JokerUsedTriple = true;
+            for (int re = 0; re < 3; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+            IsComb[CardCombinationEnum.FullHouse] = true;
+        }
+        IsEnd = true;
+    }
+
+    private static void CheckTriple(int Joker, int _cardNum, List<int> cardNums, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
+    {
+        // 조커가 없을 경우
+        if (Joker < 1)
+        {
+            // 트리플을 true로 하고 해당 숫자를 기록한다.
+            IsComb[CardCombinationEnum.Triple] = true;
+            for (int re = 0; re < 3; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+            // OnePair가 이미 판별된 경우 풀하우스이므로 이를 체크하고 탈출한다.
+            if (IsComb[CardCombinationEnum.OnePair])
+            {
+                IsComb[CardCombinationEnum.FullHouse] = true;
+                IsEnd = true;
+            }
+        }
+        else
+        {
+            // 조커가 1개라면
+            if (Joker == 1)
+            {
+                // 포카드를 체크한다.
+                IsComb[CardCombinationEnum.FourCard] = true;
+                for (int re = 0; re < 4; re++)
+                {
+                    cardNums.Add(_cardNum);
+                }
+            }
+            // 조커가 2개라면 
+            else if (Joker == 2)
+            {
+                //파이브 카드를 체크한다.
+                IsComb[CardCombinationEnum.FiveCard] = true;
+                for (int re = 0; re < 5; re++)
+                {
+                    cardNums.Add(_cardNum);
+                }
+            }
+            IsEnd = true;
+        }
+    }
+
+    private static void CheckFourCard(int Joker, int _cardNum, List<int> cardNums, Dictionary<CardCombinationEnum, bool> IsComb, ref bool IsEnd)
+    {
+        //조커가 있을 경우 파이브 카드를 체크한다
+        if (Joker == 1)
+        {
+            IsComb[CardCombinationEnum.FiveCard] = true;
+            for (int re = 0; re < 5; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+        }
+        else
+        {
+            // 없을 경우 포카드를 체크하고 탈출한다.
+            IsComb[CardCombinationEnum.FourCard] = true;
+            for (int re = 0; re < 4; re++)
+            {
+                cardNums.Add(_cardNum);
+            }
+        }
+        IsEnd = true;
     }
 }

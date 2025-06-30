@@ -1,4 +1,5 @@
 using CustomUtility.IO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using UnityEngine.Networking;
 public static class CardCsvDownLoader
 {
 
-    public static IEnumerator Start(string url, string fileName)
+    public static IEnumerator Start(string url, Action<CsvTable> onCompleted)
     {
         using (UnityWebRequest wrq = UnityWebRequest.Get(url))
         {
@@ -17,7 +18,10 @@ public static class CardCsvDownLoader
             if (wrq.result == UnityWebRequest.Result.Success)
             {
                 string csv = wrq.downloadHandler.text;
+
                 CsvTable csvFile = new CsvTable(csv, ',');
+
+                onCompleted?.Invoke(csvFile);
             }
             else
             {
