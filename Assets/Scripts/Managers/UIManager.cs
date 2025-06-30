@@ -52,6 +52,11 @@ namespace Managers
             var deckPrefab = Resources.Load<GameObject>("Prefabs/@DeckUI");
             DeckUI = GameObject.Instantiate(deckPrefab, container.transform);
             DeckUI.SetActive(false);
+            
+            // 4) Item Canvas
+            var itemPrefab = Resources.Load<GameObject>("Prefabs/@ItemUI");
+            ItemUI = Instantiate(itemPrefab, container.transform);
+            ItemUI.SetActive(false);
         }
 
         public void ToggleUI(GlobalUI uiType)
