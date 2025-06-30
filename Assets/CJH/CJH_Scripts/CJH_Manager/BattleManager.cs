@@ -16,37 +16,38 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyController target)
+    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, PatternMonster target)
     {
         int basePower = nums.Sum();
         float multiplier = GetMultiplierByCombo(combo);
         int damage = Mathf.FloorToInt(basePower * multiplier);
 
-        // GameStatusUI에 반영되도록 함.
         GameStatusUI.Instance.SetComboInfo(combo.ToString(), multiplier);
 
-        if (combo == CardCombinationEnum.FiveJoker)
+        //  특수판정 처리
+        if (target.IsAwaitingPrideJudgement)
         {
-            Debug.Log("파이브 조커! 즉사급 피해!");
-            damage = 9999;
-        }
-        else if (combo == CardCombinationEnum.HighCard)
-        {
-            Debug.Log("족보 없음. 데미지 0.");
-            damage = 0;
+            if (damage <= 100)
+            {
+                Debug.Log("[프라이드 판단] 성공 → 몬스터 체력 30%로 감소");
+                target.ForceSetHpToRate(0.3f);
+            }
+            else
+            {
+                Debug.Log("[프라이드 판단] 실패 → 플레이어 체력 35%로 감소");
+                var player = FindAnyObjectByType<PlayerController>();
+                if (player != null)
+                    player.ForceSetHpToRate(0.35f);
+            }
+
+            target.EndPrideJudgement();
         }
 
+        // 기본 데미지 적용
         target.ApplyDamage(damage);
 
-        // 피해량 UI에 반영
         GameStatusUI.Instance.AddDamage(damage);
         Debug.Log($"[{combo}] → {target.name}에게 {damage}의 피해!");
-
-        if (target.IsDead)
-        {
-            GameStateManager.Instance.AddWin();
-            Debug.Log("승리 카운트 +1 (BattleManager)");
-        }
     }
 
     private float GetMultiplierByCombo(CardCombinationEnum combo)

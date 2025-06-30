@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 public class TurnManager : Singleton<TurnManager>
 {
     private IPlayerActor player;
-    private List<IEnemyActor> enemies = new List<IEnemyActor>();
-    private EnemyController currentEnemy;
+    private List<IEnemyActor> enemies = new();
+    private PatternMonster currentEnemy;
+
     private bool battleStarted = false;
     private bool isGameEnded = false;
 
@@ -22,12 +22,34 @@ public class TurnManager : Singleton<TurnManager>
 
     public void RegisterEnemy(IEnemyActor e)
     {
-        enemies.Add(e);
-
-        // 기본 타겟은 가장 먼저 등록된 EnemyController (또는 Slime 등)
-        if (currentEnemy == null && e is EnemyController ec)
+        if (!enemies.Contains(e))
         {
-            currentEnemy = ec;
+            enemies.Add(e);
+
+            // 첫 등록된 PatternMonster를 기본 타겟으로 설정
+            if (currentEnemy == null && e is PatternMonster monster)
+            {
+                currentEnemy = monster;
+            }
+        }
+    }
+
+    public List<IEnemyActor> GetEnemies() => enemies;
+
+    public void SetCurrentEnemyByType(EnemyType type)
+    {
+        var match = enemies
+            .OfType<PatternMonster>()
+            .FirstOrDefault(e => e.Type == type && !e.IsDead);
+
+        if (match != null)
+        {
+            currentEnemy = match;
+            Debug.Log($"[타겟] {type} 타입의 적이 타겟으로 설정됨");
+        }
+        else
+        {
+            Debug.LogWarning($"[타겟] {type} 타입의 살아 있는 적이 없음");
         }
     }
 
@@ -35,7 +57,13 @@ public class TurnManager : Singleton<TurnManager>
     {
         if (battleStarted) return;
         battleStarted = true;
-        StartCoroutine(BattleLoop());
+        StartCoroutine(WaitForRegistrationAndStart());
+    }
+
+    private IEnumerator WaitForRegistrationAndStart()
+    {
+        yield return new WaitUntil(() => player != null && enemies.Count > 0);
+        yield return StartCoroutine(BattleLoop());
     }
 
     public void NotifyPlayerDeath()
@@ -82,7 +110,7 @@ public class TurnManager : Singleton<TurnManager>
             // 3. 적 턴
             foreach (var enemy in enemies)
             {
-                if (enemy is EnemyController ec && !ec.IsDead)
+                if (enemy is PatternMonster ec && !ec.IsDead)
                 {
                     ec.TakeTurn();
                     yield return new WaitForSeconds(0.5f);
@@ -97,20 +125,5 @@ public class TurnManager : Singleton<TurnManager>
         SceneManager.LoadScene("MapScene");
     }
 
-    // 특정 타입의 적을 현재 타겟으로 설정
-    public void SetCurrentEnemyByType(EnemyType type)
-    {
-        var match = enemies.OfType<EnemyController>().FirstOrDefault(e => e.Type == type && !e.IsDead);
-        if (match != null)
-        {
-            currentEnemy = match;
-            Debug.Log($"타겟 변경: {type} 선택됨");
-        }
-        else
-        {
-            Debug.LogWarning($"타입 {type}에 해당하는 살아있는 적이 없습니다.");
-        }
-    }
 
-    public List<IEnemyActor> GetEnemies() => enemies;
 }
