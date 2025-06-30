@@ -18,17 +18,15 @@ namespace UI
         private void Awake()
         {
             _slotButton = GetComponent<Button>();
-         
         }
 
-        private void Start()
+        private void OnEnable()
         {
             Manager.GameState.OnItemChanged.AddListener(UpdateSlot);
             _slotButton.onClick.AddListener(ShowItem);
-            
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             Manager.GameState.OnItemChanged.RemoveListener(UpdateSlot);
             _slotButton.onClick.RemoveListener(ShowItem);

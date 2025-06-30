@@ -46,8 +46,7 @@ namespace UI
 
         private void ShowSetting()
         {
-            //todo : 게임 진입시 인게임 일시정지 필요
-            SceneManager.LoadSceneAsync("Option", LoadSceneMode.Additive);
+            //todo : Setting UI 연결
         }
     }
 }

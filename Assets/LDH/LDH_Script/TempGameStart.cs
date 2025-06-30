@@ -2,7 +2,7 @@ using Managers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LDH.LDH_Script
+namespace Test
 {
     public class TempGameStart : MonoBehaviour
     {
@@ -14,8 +14,8 @@ namespace LDH.LDH_Script
             Manager.GameState.AddGold(1000);
             
             // //랜덤으로 아이템 하나 획득 처리
-            // List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
-            // Manager.GameState.AddItem(items[0]);
+            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
+            Manager.GameState.AddItem(items[0]);
         }
 
         
