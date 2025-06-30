@@ -10,10 +10,12 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image CardImage;
     [SerializeField] private GameObject border;
+    [SerializeField] private float liftAmount = 100f;
 
     bool _isSelected;
     public MinorArcana CardData { get; private set; }
     public Action<MinorArcana> OnClick = delegate { };
+
 
 
     public void Setup(MinorArcana card)

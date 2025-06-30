@@ -315,8 +315,15 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        Discard(cards);
-        Draw(drawNum - Hand.Count);
+        int n = Hand.Count;
+        int discNum = Discard(cards);
+        if (n >= drawNum)
+        {
+            Draw(drawNum - Hand.Count);
+        }
+        else
+            Draw(discNum);
+
     }
 
     #endregion

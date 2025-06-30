@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7333790254172184818}
   - component: {fileID: 7934622523914198121}
   - component: {fileID: 2101479506789218097}
+  - component: {fileID: -4807447249404963595}
   m_Layer: 5
   m_Name: CardUI
   m_TagString: Untagged
@@ -91,6 +92,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardImage: {fileID: 7934622523914198121}
   border: {fileID: 8707716370084625029}
+  liftAmount: 100
+--- !u!114 &-4807447249404963595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4946283185403926165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &8707716370084625029
 GameObject:
   m_ObjectHideFlags: 0
