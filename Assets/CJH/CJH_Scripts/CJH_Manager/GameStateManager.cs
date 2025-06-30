@@ -1,12 +1,11 @@
+using DesignPattern;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : Singleton<GameStateManager>
 {
-    public static GameStateManager Instance;
-
     public int Wins { get; private set; }
     public bool BossDefeated { get; private set; }
     public int ExternalCurrency { get; private set; }
@@ -16,12 +15,12 @@ public class GameStateManager : MonoBehaviour
     
     
     // 이벤트 추가
-    public UnityEvent<int> OnGetGold;
+    public UnityEvent<int> OnGetGold = new();
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        SingletonInit();
+        Debug.Log($"{GetType().Name} singleton 초기화 완료");
     }
 
     public void AddWin() => Wins++;

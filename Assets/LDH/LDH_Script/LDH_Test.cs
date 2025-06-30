@@ -21,5 +21,12 @@ namespace LDH.LDH_Script
             else
                 Manager.Map.ShowMap();
         }
+
+        public void GameStart()
+        {
+            Manager.Map.GenerateMap();
+            Manager.UI.TopBarUI.SetActive(true);
+            Manager.GameState.AddGold(1000);
+        }
     }
 }

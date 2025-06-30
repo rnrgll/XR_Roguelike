@@ -26,12 +26,21 @@ namespace Managers
         public static class Manager
         {
             //접근용 프로퍼티 등록
-            public static MapManager Map => MapManager.Instance;
-            public static RandomManager randomManager => RandomManager.Instance;
+            
+            // 게임 메인 매니저
+            public static GameStateManager GameState => GameStateManager.Instance;      // 게임 상태 매니저
+            public static TurnManager turnManager => TurnManager.Instance;              // 턴 매니저
+            public static MapManager Map => MapManager.Instance;                        // 맵 매니저
+            
+            // UI, 스토리
+            public static UIManager UI => UIManager.Instance;                           // UI 매니저
+            public static DialogueManager Dialogue => DialogueManager.Instance;         // 다이얼로그 매니저
+            
+            
+            // 유틸
+            public static RandomManager randomManager => RandomManager.Instance;        // 랜덤 매니저
 
-            public static TurnManager turnManager => TurnManager.Instance;
-            public static DialogueManager Dialogue => DialogueManager.Instance;
-
+            
             [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
             private static void Initialize()
             {
@@ -44,6 +53,8 @@ namespace Managers
                 manager.AddComponent<RandomManager>();
                 manager.AddComponent<TurnManager>();
                 manager.AddComponent<DialogueManager>();
+                manager.AddComponent<GameStateManager>();
+                manager.AddComponent<UIManager>();
 
                 //Map Manager는 프리팹으로 추가
             }

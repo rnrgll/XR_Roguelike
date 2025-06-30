@@ -46,6 +46,12 @@ namespace Map
         Visited,
         Attainable
     }
+
+    public enum ShowType
+    {
+        Select,
+        View,
+    }
 }
 
 namespace InGameShop
