@@ -46,6 +46,12 @@ namespace Map
         Visited,
         Attainable
     }
+
+    public enum ShowType
+    {
+        Select,
+        View,
+    }
 }
 
 namespace InGameShop
@@ -63,4 +69,16 @@ namespace InGameShop
         Deactive,
     }
     
+}
+
+
+namespace UI
+{
+    public enum GlobalUI
+    {
+        TopBar,
+        Map,
+        Deck,
+        Item,
+    }
 }

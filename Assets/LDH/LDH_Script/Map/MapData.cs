@@ -25,12 +25,6 @@ namespace Map
             Path = new();
         }
 
-        public List<Node> GetNodeListInFloor(int floor)
-        {
-            if (floor < 0 || floor >= Map.Count) return null;
-            return Map[floor];
-        }
-
         public Node GetNodeByPoint(int row, int column)
         {
             if (row < 0 || column < 0 || row >= Map.Count || column >= Map[0].Count) return null;

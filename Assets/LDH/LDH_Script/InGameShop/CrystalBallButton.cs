@@ -19,7 +19,7 @@ namespace InGameShop
         private void Awake() => Init();
         private void Start()
         {
-            GameStateManager.Instance.OnGetGold.AddListener(SetButton);
+            GameStateManager.Instance.OnGoldChanged.AddListener(SetButton);
             SetButton(GameStateManager.Instance.Gold);
         }
 

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -70,10 +71,9 @@ namespace InGameShop
 
         #region Item Data 연동
 
-        public void OnItemUpdated(int itemID)
+        public void OnItemUpdated(string itemID)
         {
-            //todo: db 조회로 수정할 예정
-            var itemData = ShopManager.Instance.testitemDB.GetItemById(itemID);
+            var itemData = Manager.Data.ItemDB.GetItemById(itemID);
             //이미지 설정
             SetImage(itemData.image);
             
