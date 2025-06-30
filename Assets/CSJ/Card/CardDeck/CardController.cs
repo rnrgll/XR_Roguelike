@@ -271,6 +271,8 @@ public class CardController : MonoBehaviour
         sumofNums = 0;
         foreach (int i in _selectedNums)
         {
+            Debug.Log(i);
+            Debug.Log("i의 값");
             if (i == 1)
             {
                 sumofNums += 10;
