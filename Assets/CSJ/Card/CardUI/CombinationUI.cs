@@ -35,6 +35,7 @@ public class CombinationUI : MonoBehaviour
         comboText.text = _comb.ToString();
         sumText.text = cardController.sumofNums.ToString();
     }
+
     private void RefreshUI()
     {
         comboText.text = "";

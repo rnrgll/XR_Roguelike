@@ -30,6 +30,7 @@ public class HandUIController : MonoBehaviour
         }
         spawnedCards.Clear();
 
+        cardController.SortByStand();
         var hand = cardController.GetHand();
 
         foreach (var card in hand)

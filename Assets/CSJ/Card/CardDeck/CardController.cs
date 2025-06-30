@@ -13,39 +13,58 @@ using CustomUtility.IO;
 /// </summary>
 public class CardController : MonoBehaviour
 {
-    // 마이너 아르카나들의 정보를 받아오는 링크로 구글스프레드 시트와 연결되어 있다.
-    private readonly string ArcanaTableLink =
-    "https://docs.google.com/spreadsheets/d/1epFe-PfQ0mA9D7wl7_ByiZhfj-A5pPPO/export?format=csv&range=A4:I59&ouid=106241391175336675849&rtpof=true&sd=true";
-    // 위에서 받아온 정보가 저장된 경로이다.
-    private CsvTable _csvTable;
-    public DeckPile<MinorArcana> DeckPile;
-    public HandPile<MinorArcana> Hand;
-    public GraveyardPile<MinorArcana> Graveyard;
-    public BattlePile<MinorArcana> BattleDeck;
-    public List<int> _selectedNums;
-    public int sumofNums;
-    private List<MinorArcana> disposableCardList;
-    private List<MinorArcana> SelectedCard;
-    private CardCombinationEnum cardComb;
-
-    public CardDeck Deck;
-
-    public int drawNum = 8;
-    public Action OnChangedHands = delegate { };
-    public Action<MinorArcana> OnCardSelected = delegate { };
-    public Action<MinorArcana> OnCardDeSelected = delegate { };
-    public Action<CardCombinationEnum> OnSelectionChanged;
-
+    #region 미사용 코드
     // public BattleStat stat; TODO: 플레이어 스탯과 연계
 
-    #region 미사용 코드
+
     // public Dictionary<CardStatus, List<MinorArcana>> CardListDic;
 
     // public List<MinorArcana> Hand;
     #endregion
 
+    #region csv 관련 모음
+    // 마이너 아르카나들의 정보를 받아오는 링크로 구글스프레드 시트와 연결되어 있다.
+    private readonly string ArcanaTableLink =
+    "https://docs.google.com/spreadsheets/d/1epFe-PfQ0mA9D7wl7_ByiZhfj-A5pPPO/export?format=csv&range=A4:I59&ouid=106241391175336675849&rtpof=true&sd=true";
+    // 위에서 받아온 정보가 저장된 경로이다.
+    private CsvTable _csvTable;
+    #endregion
+
+    #region 각종 외부 참조에 사용되는 모음
+    public List<int> _selectedNums;
+    public CardDeck Deck { get; private set; }
+    public int sumofNums { get; private set; }
+    public List<MinorArcana> SelectedCard { get; private set; }
+    public CardCombinationEnum cardComb { get; private set; }
+    #endregion
+
+    #region  설정 모음 
+    public int drawNum = 8;
+    private List<MinorArcana> disposableCardList;
+    public CardSortEnum sortStand = CardSortEnum.Suit;
+
+    #endregion
+
+    #region  카드 상태 선언 모음
+    public DeckPile<MinorArcana> DeckPile { get; private set; }
+    public HandPile<MinorArcana> Hand { get; private set; }
+    public GraveyardPile<MinorArcana> Graveyard { get; private set; }
+    public BattlePile<MinorArcana> BattleDeck { get; private set; }
+    #endregion
 
 
+
+    #region 이벤트 함수들 선언 모음
+    public Action OnChangedHands = delegate { };
+    public Action<MinorArcana> OnCardSelected = delegate { };
+    public Action<MinorArcana> OnCardDeSelected = delegate { };
+    public Action<CardCombinationEnum> OnSelectionChanged;
+    public Action<List<MinorArcana>> OnSubmit;
+    #endregion
+
+
+
+    #region 각종 초기화용 함수들
     private void Start()
     {
 
@@ -79,13 +98,17 @@ public class CardController : MonoBehaviour
     public void Init()
     {
         Debug.Log("init");
+
         DeckPile = new DeckPile<MinorArcana>();
         Hand = new HandPile<MinorArcana>();
         Graveyard = new GraveyardPile<MinorArcana>();
         BattleDeck = new BattlePile<MinorArcana>();
+
         SelectedCard = new();
         ResetDeck();
         disposableCardList = new();
+
+        // 테스트용 임시로 Start에서 실행
         BattleInit();
 
 
@@ -100,14 +123,6 @@ public class CardController : MonoBehaviour
         #endregion
     }
 
-    public void ResetDeck()
-    {
-        foreach (MinorArcana card in Deck.GetAllCards())
-        {
-            DeckPile.Add(card);
-        }
-    }
-
     public void BattleInit()
     {
         Debug.Log("Battle");
@@ -119,6 +134,16 @@ public class CardController : MonoBehaviour
         BattleDeck.Shuffle();
         Draw(8);
     }
+    #endregion
+
+    #region 덱 관련 함수들
+    public void ResetDeck()
+    {
+        foreach (MinorArcana card in Deck.GetAllCards())
+        {
+            DeckPile.Add(card);
+        }
+    }
 
     public void ClearDeck()
     {
@@ -126,9 +151,38 @@ public class CardController : MonoBehaviour
         BattleDeck.Clear();
         Graveyard.Clear();
     }
+    #endregion
 
+    #region 반환용 함수 모음
+    public List<MinorArcana> GetSelection()
+    {
+        return SelectedCard;
+    }
+
+    public void Submit()
+    {
+        OnSubmit?.Invoke(Hand.GetCardList());
+        foreach (MinorArcana card in SelectedCard)
+        {
+            Debug.Log(card.CardName);
+        }
+        Debug.Log($"조합 :{cardComb}, 카드 합 : {sumofNums}");
+    }
+
+    public List<MinorArcana> GetHand()
+    {
+        IEnumerable<MinorArcana> MinorArcanas = Hand.Cards;
+        List<MinorArcana> cards = new();
+        foreach (MinorArcana card in MinorArcanas)
+        {
+            cards.Add(card);
+        }
+        return cards;
+    }
+    #endregion
+
+    #region 카드를 직접 컨트롤하는 함수 모음
     public void Draw() => Draw(drawNum - Hand.Count);
-
 
     // TODO : 추후 만약 드로우와 관계된 스탯이 생긴다면 해당 값을 지정해주어야 한다.
     // 현재는 8장 고정이므로 Draw를 8장 뽑는다.
@@ -187,19 +241,9 @@ public class CardController : MonoBehaviour
         OnChangedHands?.Invoke();
     }
 
-    public List<MinorArcana> GetHand()
-    {
-        IEnumerable<MinorArcana> MinorArcanas = Hand.Cards;
-        List<MinorArcana> cards = new();
-        foreach (MinorArcana card in MinorArcanas)
-        {
-            cards.Add(card);
-        }
-        return cards;
-    }
-
     public void SortBySuit()
     {
+        ClearSelect();
         var temp = new List<MinorArcana>();
         foreach (MinorArcana card in Hand.Cards)
         {
@@ -219,11 +263,11 @@ public class CardController : MonoBehaviour
         {
             Hand.Add(card);
         }
-        OnChangedHands?.Invoke();
     }
 
     public void SortByNum()
     {
+        ClearSelect();
         var temp = new List<MinorArcana>();
         foreach (MinorArcana card in Hand.Cards)
         {
@@ -243,8 +287,40 @@ public class CardController : MonoBehaviour
         {
             Hand.Add(card);
         }
+    }
+
+    public void SortByStand()
+    {
+        if (sortStand == CardEnum.CardSortEnum.Number)
+            SortByNum();
+        else
+            SortBySuit();
+    }
+
+    public void ChangeSortStand()
+    {
+        sortStand ^= CardSortEnum.Suit;
         OnChangedHands?.Invoke();
     }
+    public void ChangeStandBySuit()
+    {
+        sortStand = CardSortEnum.Suit;
+        OnChangedHands?.Invoke();
+    }
+    public void ChangeStandByNum()
+    {
+        sortStand = CardSortEnum.Number;
+        OnChangedHands?.Invoke();
+    }
+
+    public void exchangeHand(List<MinorArcana> cards)
+    {
+        Discard(cards);
+        Draw(drawNum - Hand.Count);
+    }
+
+    #endregion
+
 
     public void AddDisposableCard(MinorArcana _disposCard)
     {
@@ -253,6 +329,7 @@ public class CardController : MonoBehaviour
         OnChangedHands?.Invoke();
     }
 
+    #region 이벤트 관련 함수들
     public void AddSelect(MinorArcana card)
     {
         SelectedCard.Add(card);
@@ -264,6 +341,11 @@ public class CardController : MonoBehaviour
         SelectedCard.Remove(card);
         CardCombCal();
     }
+    public void ClearSelect()
+    {
+        SelectedCard.Clear();
+        CardCombCal();
+    }
 
     public void CardCombCal()
     {
@@ -271,8 +353,6 @@ public class CardController : MonoBehaviour
         sumofNums = 0;
         foreach (int i in _selectedNums)
         {
-            Debug.Log(i);
-            Debug.Log("i의 값");
             if (i == 1)
             {
                 sumofNums += 10;
@@ -281,18 +361,7 @@ public class CardController : MonoBehaviour
         }
         OnSelectionChanged?.Invoke(cardComb);
     }
-
-
-    public List<MinorArcana> GetSelection()
-    {
-        return SelectedCard;
-    }
-
-    public int GetSumOfNums()
-    {
-        return sumofNums;
-    }
-
+    #endregion
 
 
 

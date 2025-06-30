@@ -202,7 +202,6 @@ public static class CardCombination
             if (_num == 0) continue;
             cardNums.Clear();
             InsertCardNum(1, x, cardNums);
-            Debug.Log(cardNums[0]);
         }
 
         // 마지막으로 조커만 있는지 체크
