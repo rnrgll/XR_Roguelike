@@ -10,8 +10,6 @@ namespace InGameShop
     {
         //로컬 싱글톤
         public static ShopManager Instance { get; private set; }
-
-        public ShopTest testitemDB;
         
         [SerializeField] private List<ItemButton> itemButtons;
         private ShopModel model;
@@ -40,7 +38,6 @@ namespace InGameShop
             //모델, 컨트롤러 생성
             model = new();
             controller = new(model);
-            controller._itemDatabase = testitemDB;
             
             //버튼과 모델 바인딩
             for (int i = 0; i < 4; i++)
@@ -62,7 +59,7 @@ namespace InGameShop
             }
         }
         
-        public void Purchase(int slotIndex, int itemId)
+        public void Purchase(int slotIndex, string itemId)
         {
             var button = itemButtons.Find(button => button.slotIndex == slotIndex);
             
@@ -82,7 +79,7 @@ namespace InGameShop
             controller.Reroll();
         }
         
-        public int GetItemId(int slotIndex) => model.GetItemID(slotIndex);
+        public string GetItemId(int slotIndex) => model.GetItemID(slotIndex);
         
         //나가기 
         public void ExitShop()

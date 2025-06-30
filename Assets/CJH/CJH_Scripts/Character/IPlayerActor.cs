@@ -6,4 +6,5 @@ public interface IPlayerActor
 {
     void StartTurn();
     bool IsTurnFinished();
+    void RestoreHP(); // ← 추가
 }

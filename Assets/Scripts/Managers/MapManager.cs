@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Map;
 using System.Runtime.CompilerServices;
+using UnityEngine.UI;
 
 public class MapManager : Singleton<MapManager>
 {
@@ -18,23 +19,34 @@ public class MapManager : Singleton<MapManager>
     {
         _instance = this;
     }
+
+    public void SetUp(Canvas mapCanvas)
+    {
+        MapCanvas = mapCanvas;
+        View.scrollRect = mapCanvas.GetComponentInChildren<ScrollRect>(true);
+        View.closeButton = mapCanvas.transform.GetChild(1).GetComponent<Button>();
+    }
+    
     public void GenerateMap()
     {
         //맵 생성
         CurrentMap = mapGenerator.GenerateMap(config);
-        ShowMap();
+        View.CreateMapView(CurrentMap);
     }
 
-    public void ShowMap()
+    public void ShowMap(ShowType type = ShowType.Select)
     {
         if (CurrentMap == null) return;
         
+        //맵 캔버스 활성화 및 맵 뷰 생성
         MapCanvas.gameObject.SetActive(true);
         if (View.Map == null || View.Map != CurrentMap)
         {
-            View.ShowMap(CurrentMap);
+            View.CreateMapView(CurrentMap);
         }
         
+        //맵 뷰 셋팅
+        View.SetShowType(type);
     }
 
     public void HideMap()

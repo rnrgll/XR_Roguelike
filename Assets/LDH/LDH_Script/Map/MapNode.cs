@@ -17,6 +17,11 @@ namespace Map
         public NodeState NodeState { get; private set; }
         
         
+        //lock 여부
+        public bool IsLocked { get; set; }
+        
+        
+        //애니메이션 효과
         private float initialScale;
         private const float hoverScaleFactor = 1.5f; // hover시 scale 증가값
         private const float maxClickDuration = 0.5f; //
@@ -40,6 +45,8 @@ namespace Map
             Node = node;
             Template = template;
             NodeState = NodeState.Locked;
+
+            IsLocked = false;
             
             if (image != null) image.sprite = template.sprite;
             if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
@@ -114,11 +121,14 @@ namespace Map
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (IsLocked) return;
             mouseDownTime = Time.time; //마우스 long click, drag를 무시하기 위해 time 측정
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (IsLocked) return;
+            
             if (Time.time - mouseDownTime < maxClickDuration)
             {
                 Manager.Map.Tracker.SelectNode(this);

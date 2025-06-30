@@ -26,12 +26,12 @@ public class GameOverUI : MonoBehaviour
         // 필드 유효성 검사
         if (panel == null)
         {
-            Debug.LogError("⚠️ GameOverUI: panel 오브젝트가 할당되지 않았습니다!");
+            Debug.LogError(" GameOverUI: panel 오브젝트가 할당되지 않았습니다!");
         }
 
         if (message == null)
         {
-            Debug.LogError("⚠️ GameOverUI: message(TextMeshProUGUI)가 비어 있습니다!");
+            Debug.LogError(" GameOverUI: message(TextMeshProUGUI)가 비어 있습니다!");
         }
 
         // 시작 시 패널 숨김
@@ -51,19 +51,18 @@ public class GameOverUI : MonoBehaviour
 
         GameStateManager.Instance.CalculateReward();
 
-        message.text = $"<size=150%><b>Game Over</b></size>\n\n" +
+        message.text = $"<size=150%><b>Game Over</size>\n\n" +
                        $"당신은 세상을 구하기에는 아직 부족했습니다.\n\n" +
-                       $"<b>제거한 죄악의 수:</b> {GameStateManager.Instance.Wins}\n" +
-                       $"<b>획득 재화:</b> {GameStateManager.Instance.ExternalCurrency}";
+                       $"제거한 죄악의 수: {GameStateManager.Instance.Wins}\n" +
+                       $"획득 재화: {GameStateManager.Instance.ExternalCurrency}";
 
         Invoke(nameof(ReturnToTitle), 5f); // 5초 뒤 타이틀로
     }
 
     private void ReturnToTitle()
     {
-        //메인 메뉴 씬이랑 연결
-        // 추후 메인 메뉴 씬 이름이 변경된다면 수정.
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 
     }
 }

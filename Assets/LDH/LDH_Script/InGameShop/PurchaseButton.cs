@@ -8,7 +8,7 @@ namespace InGameShop
     {
         [SerializeField] private GameObject _alarmPopUp;
         
-        private int _itemIndex;
+        private string _itemId;
         private ButtonCondition _condition;
         
         private void Awake() => Init();
@@ -20,7 +20,7 @@ namespace InGameShop
 
         }
 
-        public void SetButton(int slotIndex, TempItemClass item)
+        public void SetButton(int slotIndex, TempItem item)
         {
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();
@@ -33,14 +33,14 @@ namespace InGameShop
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, _itemIndex);
+                    Purchase(slotIndex, _itemId);
                     
                 });
             }
             
         }
 
-        private void Purchase(int slotIndex, int itemID)
+        private void Purchase(int slotIndex, string itemID)
         {
             ShopManager.Instance.Purchase(slotIndex, itemID);
         }
