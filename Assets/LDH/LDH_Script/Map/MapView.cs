@@ -34,7 +34,8 @@ namespace Map
 
         [Header("UI Map Settings")]
         [SerializeField] private ScrollRect scrollRectVertical;
-        [SerializeField] private float padding; // 맵 전체 좌+우/위+아래 여백
+        [SerializeField] private float widthPadding; // 맵 전체의 좌우 여백
+        [SerializeField] private float heightPadding; // 맵 전체의 상하 여백
         [SerializeField] private Vector2 backgroundPadding; // 배경 이미지 좌우 여백
         [SerializeField] private float backgroundPPUMultiplier = 1; // 배경 이미지 Pixels Per Unit 배율
         
@@ -116,7 +117,7 @@ namespace Map
             mapParent.transform.SetParent(firstParent.transform);
             mapParent.transform.localScale = Vector3.one;
             RectTransform mprt = mapParent.AddComponent<RectTransform>();
-            UILayout.Stretch(mprt, new Vector4(200,0,200,0));
+            UILayout.Stretch(mprt);
 
             
             //맵 전체 길이 계산해서 스크롤 영역(Content) 크기 설정하기
@@ -255,7 +256,7 @@ namespace Map
             RectTransform content = scrollRectVertical.content;
             Vector2 sizeDelta = content.sizeDelta;
 
-            float length = padding + Manager.Map.config.yGap * (Manager.Map.config.floors - 1);
+            float length = heightPadding + Manager.Map.config.yGap * (Manager.Map.config.floors - 1);
 
             sizeDelta.y = length;
 
@@ -299,7 +300,7 @@ namespace Map
             Vector2 offset = new Vector2(Manager.randomManager.RandFloat(0, 1), Manager.randomManager.RandFloat(0, 1)) *
                              Manager.Map.config.placementRandomness;
             
-            float x = (mapParentSize.x - padding) * ( (float)node.column / (Manager.Map.config.mapWidth - 1) - 0.5f);
+            float x = (mapParentSize.x - widthPadding) * ( (float)node.column / (Manager.Map.config.mapWidth - 1) - 0.5f);
             float y = (Manager.Map.config.yGap) * ((float)node.row - (Manager.Map.config.floors) / 2f + 0.5f);
 
             Vector2 localPos = new Vector2(x, y) + offset;
