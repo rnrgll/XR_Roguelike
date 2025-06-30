@@ -61,9 +61,8 @@ public class GameOverUI : MonoBehaviour
 
     private void ReturnToTitle()
     {
-        //메인 메뉴 씬이랑 연결
-        // 추후 메인 메뉴 씬 이름이 변경된다면 수정.
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 
     }
 }
