@@ -31,6 +31,7 @@ public class MapManager : Singleton<MapManager>
     {
         //맵 생성
         CurrentMap = mapGenerator.GenerateMap(config);
+        View.CreateMapView(CurrentMap);
     }
 
     public void ShowMap(ShowType type = ShowType.Select)

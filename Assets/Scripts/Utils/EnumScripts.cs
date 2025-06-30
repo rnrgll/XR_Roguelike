@@ -70,3 +70,15 @@ namespace InGameShop
     }
     
 }
+
+
+namespace UI
+{
+    public enum GlobalUI
+    {
+        TopBar,
+        Map,
+        Deck,
+        Item,
+    }
+}

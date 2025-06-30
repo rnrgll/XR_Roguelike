@@ -16,9 +16,9 @@ namespace LDH.LDH_Script
 
         public void ShowHideMap()
         {
-            if(Manager.Map.MapCanvas.gameObject.activeSelf)
+            //if(Manager.Map.MapCanvas.gameObject.activeSelf)
                 Manager.Map.HideMap();
-            else
+            //else
                 Manager.Map.ShowMap();
         }
 

@@ -196,8 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapButton: {fileID: 5551819560395101910}
-  _cardDeckButton: {fileID: 0}
-  _settingButton: {fileID: 0}
+  _cardDeckButton: {fileID: 3293996182947112274}
+  _settingButton: {fileID: 7096905302274471850}
 --- !u!1 &6176672593232457429
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +382,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4880236432065270963, guid: 94ffb0c94f0474fa2ac92c562d5f216d, type: 3}
   m_PrefabInstance: {fileID: 1192480076537963320}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7096905302274471850 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8282629384433652882, guid: 94ffb0c94f0474fa2ac92c562d5f216d, type: 3}
+  m_PrefabInstance: {fileID: 1192480076537963320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2719669262589244178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -959,7 +970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8927315319364885133, guid: 94ffb0c94f0474fa2ac92c562d5f216d, type: 3}
       propertyPath: m_Name
-      value: Card Button
+      value: Card Deck Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -971,3 +982,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4880236432065270963, guid: 94ffb0c94f0474fa2ac92c562d5f216d, type: 3}
   m_PrefabInstance: {fileID: 6865578863115596224}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3293996182947112274 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8282629384433652882, guid: 94ffb0c94f0474fa2ac92c562d5f216d, type: 3}
+  m_PrefabInstance: {fileID: 6865578863115596224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

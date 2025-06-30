@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace LDH.LDH_Script.Top_Bar_UI
+namespace UI
 {
     public class GoldDisplay : MonoBehaviour
     {
