@@ -9,12 +9,17 @@ using CardEnum;
 // 카드 이름, 카드 문양, 카드 숫자, 인챈트로 구성되어 있다.
 public readonly struct MinorArcana : ICard
 {
+    // 카드 이름
     public string CardName { get; }
+    // 카드 문양
     public MinorSuit CardSuit { get; }
+    // 카드 숫자
     public int CardNum { get; }
+    // 카드 인챈트
     public Enchant Enchant { get; }
 
 
+    // 마이너 아르카나 생성자, 인챈트는 자동으로 none으로 생성된다.
     public MinorArcana(string _name, MinorSuit _suit, int _num)
     {
         CardName = _name;

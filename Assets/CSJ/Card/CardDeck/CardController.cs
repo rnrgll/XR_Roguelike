@@ -22,11 +22,19 @@ public class CardController : MonoBehaviour
     public HandPile<MinorArcana> Hand;
     public GraveyardPile<MinorArcana> Graveyard;
     public BattlePile<MinorArcana> BattleDeck;
+    public List<int> _selectedNums;
+    public int sumofNums;
     private List<MinorArcana> disposableCardList;
+    private List<MinorArcana> SelectedCard;
+    private CardCombinationEnum cardComb;
 
     public CardDeck Deck;
 
     public int drawNum = 8;
+    public Action OnChangedHands = delegate { };
+    public Action<MinorArcana> OnCardSelected = delegate { };
+    public Action<MinorArcana> OnCardDeSelected = delegate { };
+    public Action<CardCombinationEnum> OnSelectionChanged;
 
     // public BattleStat stat; TODO: 플레이어 스탯과 연계
 
@@ -49,19 +57,37 @@ public class CardController : MonoBehaviour
                     _csvTable = table;
                     Deck = new CardDeck(_csvTable);
                     Init();
+
+                    OnChangedHands.Invoke();
                 }
             )
         );
     }
 
+    public void OnEnable()
+    {
+        OnCardSelected += AddSelect;
+        OnCardDeSelected += RemoveSelect;
+    }
+
+    public void OnDisable()
+    {
+        OnCardSelected -= AddSelect;
+        OnCardDeSelected -= RemoveSelect;
+    }
+
     public void Init()
     {
+        Debug.Log("init");
         DeckPile = new DeckPile<MinorArcana>();
         Hand = new HandPile<MinorArcana>();
         Graveyard = new GraveyardPile<MinorArcana>();
         BattleDeck = new BattlePile<MinorArcana>();
+        SelectedCard = new();
         ResetDeck();
         disposableCardList = new();
+        BattleInit();
+
 
 
         #region 미사용 코드
@@ -84,12 +110,14 @@ public class CardController : MonoBehaviour
 
     public void BattleInit()
     {
+        Debug.Log("Battle");
         ClearDeck();
         foreach (var card in DeckPile.Cards)
         {
             BattleDeck.Add(card);
         }
         BattleDeck.Shuffle();
+        Draw(8);
     }
 
     public void ClearDeck()
@@ -119,6 +147,7 @@ public class CardController : MonoBehaviour
                 break;
             }
         }
+        OnChangedHands?.Invoke();
     }
 
     public void DeckRefill()
@@ -147,6 +176,7 @@ public class CardController : MonoBehaviour
             Hand.Remove(_card);
             _num++;
         }
+        OnChangedHands?.Invoke();
         return _num;
     }
 
@@ -154,6 +184,7 @@ public class CardController : MonoBehaviour
     {
         BattleDeck.Swap(deckCard, HandCard);
         Hand.Swap(HandCard, deckCard);
+        OnChangedHands?.Invoke();
     }
 
     public List<MinorArcana> GetHand()
@@ -188,6 +219,7 @@ public class CardController : MonoBehaviour
         {
             Hand.Add(card);
         }
+        OnChangedHands?.Invoke();
     }
 
     public void SortByNum()
@@ -211,12 +243,52 @@ public class CardController : MonoBehaviour
         {
             Hand.Add(card);
         }
+        OnChangedHands?.Invoke();
     }
 
     public void AddDisposableCard(MinorArcana _disposCard)
     {
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
+        OnChangedHands?.Invoke();
+    }
+
+    public void AddSelect(MinorArcana card)
+    {
+        SelectedCard.Add(card);
+        CardCombCal();
+    }
+
+    public void RemoveSelect(MinorArcana card)
+    {
+        SelectedCard.Remove(card);
+        CardCombCal();
+    }
+
+    public void CardCombCal()
+    {
+        cardComb = CardCombination.CalCombination(SelectedCard, out _selectedNums);
+        sumofNums = 0;
+        foreach (int i in _selectedNums)
+        {
+            if (i == 1)
+            {
+                sumofNums += 10;
+            }
+            else sumofNums += i;
+        }
+        OnSelectionChanged?.Invoke(cardComb);
+    }
+
+
+    public List<MinorArcana> GetSelection()
+    {
+        return SelectedCard;
+    }
+
+    public int GetSumOfNums()
+    {
+        return sumofNums;
     }
 
 
