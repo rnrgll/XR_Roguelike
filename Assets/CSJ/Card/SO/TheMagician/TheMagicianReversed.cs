@@ -21,10 +21,10 @@ public class TheMagicianReversed : MonoBehaviour
             {
                 tempCards.Remove(HandCard);
             }
-            controller.SwapCards(DeckCard, HandCard);
+            controller.SwapCard(DeckCard, HandCard);
         }
         var discardList = new List<MinorArcana>();
-        foreach (MinorArcana _card in controller.CardListDic[CardEnum.CardStatus.Hand])
+        foreach (MinorArcana _card in controller.GetHand())
         {
             if (!tempCards.Contains(_card))
             {
@@ -38,7 +38,7 @@ public class TheMagicianReversed : MonoBehaviour
     // TODO: UI 연계 카드 뽑기
     private void PickCards(CardController con)
     {
-        DeckCard = con.CardListDic[CardEnum.CardStatus.BattleDeck][0];
-        HandCard = con.CardListDic[CardEnum.CardStatus.Hand][0];
+        DeckCard = con.BattleDeck.GetCard(0);
+        HandCard = con.Hand.GetCard(0);
     }
 }

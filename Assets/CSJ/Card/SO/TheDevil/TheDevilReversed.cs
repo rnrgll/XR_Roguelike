@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheDevil/Upright")]
-public class TheDevilUprightAbility : ScriptableObject, IArcanaAbility
+[CreateAssetMenu(menuName = "Tarot/Abilities/TheDevil/Reversed")]
+public class TheDevilReversedAbility : ScriptableObject, IArcanaAbility
 {
     public void Excute(ArcanaContext ctx)
     {

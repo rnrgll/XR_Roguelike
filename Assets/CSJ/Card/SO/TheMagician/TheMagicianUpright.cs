@@ -12,13 +12,13 @@ public class TheMagicianUpright : ScriptableObject, IArcanaAbility
         var controller = ctx.Owner.GetComponent<CardController>();
         PickCards(controller);
 
-        controller.SwapCards(DeckCard, HandCard);
+        controller.SwapCard(DeckCard, HandCard);
     }
 
     // TODO: UI 연계 카드 뽑기
     private void PickCards(CardController con)
     {
-        DeckCard = con.CardListDic[CardEnum.CardStatus.BattleDeck][0];
-        HandCard = con.CardListDic[CardEnum.CardStatus.Hand][0];
+        DeckCard = con.BattleDeck.GetCard(0);
+        HandCard = con.Hand.GetCard(0);
     }
 }

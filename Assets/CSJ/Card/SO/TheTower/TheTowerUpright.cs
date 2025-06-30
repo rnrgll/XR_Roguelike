@@ -11,7 +11,7 @@ public class TheTowerUprightAbility : ScriptableObject, IArcanaAbility
 
         var controller = ctx.Owner.GetComponent<CardController>();
 
-        controller.Discard(controller.CardListDic[CardEnum.CardStatus.Hand]);
+        controller.Discard(controller.Hand.GetCardList());
         controller.Draw(8);
     }
 }
