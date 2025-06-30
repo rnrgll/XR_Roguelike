@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 namespace CustomUtility
@@ -93,13 +94,15 @@ namespace CustomUtility
             /// <returns>True if reading was successful, otherwise false. 읽기가 성공하면 true, 그렇지 않으면 false.</returns>
             private static bool ReadToDictionary(CsvDictionary csv, string[] lines)
             {
-                string[] fieldsIndex = lines[0].Split(csv.SplitSymbol);
+                //string[] fieldsIndex = lines[0].Split(csv.SplitSymbol);
+                string[] fieldsIndex = ParseCsvLine(lines[0], csv.SplitSymbol).ToArray();
+
                 int columns = fieldsIndex.Length;
                 csv.Dict = new Dictionary<string, Dictionary<string, string>>();
 
                 for (int r = 1; r < lines.Length; r++)
                 {
-                    string[] fields = lines[r].Split(csv.SplitSymbol);
+                    string[] fields = ParseCsvLine(lines[r], csv.SplitSymbol).ToArray();
 
                     if (fields.Length < columns)
                     {
@@ -127,7 +130,9 @@ namespace CustomUtility
             /// <returns>True if reading was successful, otherwise false. 읽기가 성공하면 true, 그렇지 않으면 false.</returns>
             private static bool ReadToTable(CsvTable csv, string[] lines)
             {
-                string[] firstLineFields = lines[0].Split(csv.SplitSymbol);
+                // string[] firstLineFields = lines[0].Split(csv.SplitSymbol);
+                string[] firstLineFields = ParseCsvLine(lines[0], csv.SplitSymbol).ToArray();
+
                 int rows = lines.Length;
                 int columns = firstLineFields.Length;
 
@@ -135,7 +140,9 @@ namespace CustomUtility
 
                 for (int r = 0; r < rows; r++)
                 {
-                    string[] fields = lines[r].Split(csv.SplitSymbol);
+                    // string[] fields = lines[r].Split(csv.SplitSymbol);
+                    string[] fields = ParseCsvLine(lines[r], csv.SplitSymbol).ToArray();
+
                     if (fields.Length < columns)
                     {
                         return false;
@@ -207,6 +214,44 @@ namespace CustomUtility
                     Debug.LogError($"Error: CSV file at path {csv.FilePath} has inconsistent column lengths.");
                 }
 #endif
+            }
+            
+            //커스텀 Parser로 수정
+            private static List<string> ParseCsvLine(string line, char delimiter)
+            {
+                List<string> result = new();
+                StringBuilder field = new();
+                bool insideQuotes = false;
+
+                for (int i = 0; i < line.Length; i++)
+                {
+                    char current = line[i];
+
+                    if (current == '"')
+                    {
+                        if (insideQuotes && i + 1 < line.Length && line[i + 1] == '"') //""인 경우 -> " 로 처리
+                        {
+                            field.Append('"');
+                            i++;
+                        }
+                        else
+                        {
+                            insideQuotes = !insideQuotes;
+                        }
+                    }
+                    else if (current == delimiter && !insideQuotes) //,가 구분자인 경우
+                    {
+                        result.Add(field.ToString());
+                        field.Clear();
+                    }
+                    else
+                    {
+                        //,가 구분자가 아니라 문자 데이터인 경우, 다른 모든 문자에 대해
+                        field.Append(current);
+                    }
+                }
+                result.Add(field.ToString());
+                return result;
             }
         }
     }

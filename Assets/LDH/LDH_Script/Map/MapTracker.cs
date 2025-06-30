@@ -9,7 +9,7 @@ namespace Map
 {
     public class MapTracker : MonoBehaviour
     {
-        public float enterNodeDelay = 1f;
+        public float enterNodeDelay = 1.5f;
         
         private void OnDestroy()
         {
@@ -52,6 +52,7 @@ namespace Map
                     break;
                 case NodeType.Shop:
                     //todo : 인게임 상점 씬으로 전환
+                    SceneManager.LoadScene("InGameShop");
                     break;
                 case NodeType.Event:
                     //todo : 이벤트 씬으로 전환
@@ -64,7 +65,7 @@ namespace Map
                     throw new ArgumentOutOfRangeException();
             }
             
-            //Manager.Map.HideMap();
+            Manager.Map.HideMap();
         }
         
         

@@ -34,5 +34,6 @@ namespace DesignPattern
             _instance = this as T;
             DontDestroyOnLoad(_instance);
         }
+        
     }
 }
