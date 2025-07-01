@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ShopItemButton : MonoBehaviour
 {
     public TMP_Text itemNameText;
-    public TMP_Text itemDescText;
+    public TMP_Text itemInfoText;
     private Button itemButton;
     private ShopTest data;
     
@@ -22,13 +22,13 @@ public class ShopItemButton : MonoBehaviour
     public void ShowData()
     {
         itemNameText.text = data.itemName;
-        itemDescText.text = data.itemDescription;
+        itemInfoText.text = data.itemDescription;
     }
 
     public void ClearData()
     {
         itemNameText.text = "";
-        itemDescText.text = "";
+        itemInfoText.text = "";
     }
 
     // Update is called once per frame
