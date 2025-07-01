@@ -24,6 +24,8 @@ namespace InGameShop
         {
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();
+
+            _itemId = item.id;
             
             if (GameStateManager.Instance.Gold < item.price)
             {

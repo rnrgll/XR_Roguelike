@@ -30,16 +30,15 @@ namespace InGameShop
         {
 
             var item = Manager.Data.ItemDB.GetItemById(itemID);
-            
             if (GameStateManager.Instance.Gold < item.price)
                 return;
 
             GameStateManager.Instance.AddGold(-item.price);
-            //InventoryManager.Instance.AddItem(item);
+            
+            Manager.GameState.AddItem(itemID);
+            
             Debug.Log($"현재 보유 재화 : {GameStateManager.Instance.Gold}");
-            
             Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
-            
             //popup 닫고, 비활성화 처리하기
             
         }
