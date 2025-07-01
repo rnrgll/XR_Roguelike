@@ -1525,6 +1525,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 87822055}
     m_Modifications:
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemInfoText
+      value: 
+      objectReference: {fileID: 1198285010}
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemNameText
+      value: 
+      objectReference: {fileID: 585031202}
     - target: {fileID: 1880367624024535312, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
       propertyPath: m_text
       value: "\uBAAC\uC2A4\uD130 \uAC15\uD654"
@@ -1777,8 +1785,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 87822055}
     m_Modifications:
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemInfoText
+      value: 
+      objectReference: {fileID: 1198285010}
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemNameText
+      value: 
+      objectReference: {fileID: 585031202}
     - target: {fileID: 1880367624024535312, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
       propertyPath: m_text
+      value: "\uC544\uC774\uD15C \uD76D\uB4DD"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549898933755589647, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemInfo
+      value: "\uAC8C\uC784 \uC2DC\uC791\uC2DC \uC544\uC774\uD15C\uC744 \uD76D\uB4DD\uD558\uACE0
+        \uC2DC\uC791\uD569\uB2C8\uB2E4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549898933755589647, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemName
       value: "\uC544\uC774\uD15C \uD76D\uB4DD"
       objectReference: {fileID: 0}
     - target: {fileID: 6234621458314274504, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
@@ -2059,6 +2084,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 87822055}
     m_Modifications:
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemInfoText
+      value: 
+      objectReference: {fileID: 1198285010}
+    - target: {fileID: 1747330975289359781, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: itemNameText
+      value: 
+      objectReference: {fileID: 585031202}
     - target: {fileID: 1880367624024535312, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
       propertyPath: m_text
       value: "\uC2DC\uC791 \uC544\uB974\uCE74\uB098 \uBCC0\uACBD"
@@ -2072,6 +2105,10 @@ PrefabInstance:
     - target: {fileID: 4549898933755589647, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
       propertyPath: itemName
       value: "\uC2DC\uC791 \uC544\uB974\uCE74\uB098"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543310748935253556, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6234621458314274504, guid: 11ece8f48b7f54348a57dbb14176c509, type: 3}
       propertyPath: m_text
