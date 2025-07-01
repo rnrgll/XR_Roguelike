@@ -28,8 +28,6 @@ namespace Managers
 
         private void Start()
         {
-            
-            Debug.Log("UI 생성합니다.");
             //Global UI 생성하기
             //1. container 생성
             GameObject container = new GameObject("Global UI");

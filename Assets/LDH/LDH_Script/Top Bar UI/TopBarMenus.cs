@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace UI
+namespace TopBarUI
 {
 
     public class TopBarMenus : MonoBehaviour

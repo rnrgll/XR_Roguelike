@@ -4,8 +4,9 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UI;
 
-namespace UI
+namespace TopBarUI
 {
     public class InventorySlot : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace TopBarUI
 {
     public class InventoryItemPopUp : MonoBehaviour
     {
