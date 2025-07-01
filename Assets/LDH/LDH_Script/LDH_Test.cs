@@ -8,8 +8,6 @@ namespace LDH.LDH_Script
 {
     public class LDH_Test : MonoBehaviour
     {
-        
-
         public void GenerateMap()
         {
             Manager.Map.GenerateMap();

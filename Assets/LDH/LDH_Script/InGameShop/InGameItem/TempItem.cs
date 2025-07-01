@@ -10,7 +10,7 @@ namespace InGameShop
         public string name;
         public string description;
         public int price;
-        public Sprite image;
+        public Sprite sprite;
         public float weight;
     }
 }

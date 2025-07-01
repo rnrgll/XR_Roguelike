@@ -75,7 +75,7 @@ namespace InGameShop
         {
             var itemData = Manager.Data.ItemDB.GetItemById(itemID);
             //이미지 설정
-            SetImage(itemData.image);
+            SetImage(itemData.sprite);
             
             //price 설정
             _priceText.text = itemData.price.ToString();

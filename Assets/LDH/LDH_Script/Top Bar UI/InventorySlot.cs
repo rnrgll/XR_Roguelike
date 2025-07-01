@@ -36,7 +36,7 @@ namespace TopBarUI
 
         private void UpdateSlot(string itemId)
         {
-            this.itemId = Manager.GameState.Inventory[slotIndex];
+            this.itemId = Manager.GameState.ItemInventory[slotIndex];
             if (string.IsNullOrEmpty(this.itemId))
             {
                 _itemImage.sprite = null;
@@ -44,7 +44,7 @@ namespace TopBarUI
             else
             {
                 TempItem item = Manager.Data.ItemDB.GetItemById(this.itemId);
-                _itemImage.sprite = item.image;
+                _itemImage.sprite = item.sprite;
             }
             
         }

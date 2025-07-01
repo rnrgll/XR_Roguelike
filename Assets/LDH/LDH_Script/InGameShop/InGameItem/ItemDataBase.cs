@@ -20,8 +20,9 @@ namespace InGameShop
         public ItemDataBase()
         {
             //todo: itemDB 초기화 및 데이터 셋팅 수정 필요
+            ItemDB = new();
             LoadItemData("TestItemData.csv");
-            
+            LoadItemData("TestCardItemData.csv");
 
         }
         
@@ -33,8 +34,8 @@ namespace InGameShop
             //2. Reader로 파일 읽기
             CsvReader.Read(table);
             
-            //3. 다이얼로그 파싱
-            ItemDB = ParseItemData(table);
+            //3. 아이템 데이터 파싱
+            ParseItemData(table);
             
             Debug.Log($"Item DB - 총 아이템 수 : {ItemDB.Count}");
             
@@ -42,34 +43,53 @@ namespace InGameShop
             return true;
         }
 
-        public List<TempItem> ParseItemData(CsvTable table)
+        public void ParseItemData(CsvTable table)
         {
-            List<TempItem> result = new();
-            
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
                 columnMap[table.Table[0, c]] = c;
-
+            
             for (int r = 1; r < rowCnt; r++)
             {
-                TempItem item = new TempItem()
+                TempItem item = new CardItem()
                 {
                     id = table.Table[r,columnMap["id"]],
                     name = table.Table[r,columnMap["name"]],
                     description = table.Table[r,columnMap["description"]],
                     price = int.Parse(table.Table[r, columnMap["price"]]),
-                    image = Resources.Load<Sprite>(Path.Combine(spriteFolder, table.Table[r,columnMap["image"]])),
+                    sprite = Resources.Load<Sprite>(Path.Combine(spriteFolder, table.Table[r,columnMap["image"]])),
                     weight = float.Parse(table.Table[r,columnMap["weight"]]),
                 };
-                result.Add(item);
+                ItemDB.Add(item);
             }
-
-            return result;
         }
 
+        public void ParseCardItemData(CsvTable table)
+        {
+            int rowCnt = table.Table.GetLength(0);
+            int columnCnt = table.Table.GetLength(1);
+
+            Dictionary<string, int> columnMap = new();
+            for (int c = 0; c < columnCnt; c++)
+                columnMap[table.Table[0, c]] = c;
+            
+            for (int r = 1; r < rowCnt; r++)
+            {
+                TempItem item = new CardItem()
+                {
+                    id = table.Table[r,columnMap["id"]],
+                    name = table.Table[r,columnMap["name"]],
+                    description = table.Table[r,columnMap["description"]],
+                    price = int.Parse(table.Table[r, columnMap["price"]]),
+                    sprite = Resources.Load<Sprite>(Path.Combine(spriteFolder, table.Table[r,columnMap["image"]])),
+                    weight = float.Parse(table.Table[r,columnMap["weight"]]),
+                };
+                ItemDB.Add(item);
+            }
+        }
         
         public int PickIndexRandomByWeight(List<TempItem> tempList)
         {

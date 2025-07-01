@@ -1,5 +1,6 @@
 using CardEnum;
 using DesignPattern;
+using InGameShop;
 using System;
 using TMPro;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace TopBarUI
         {
             cardName = major.cardName;
             
-            //마이너 아르카나 이미지
+            //메이저 아르카나 이미지
             cardImg.sprite = major.sprite;
             
             //인챈트 이미지
@@ -62,6 +63,18 @@ namespace TopBarUI
         public void PrintCardName()
         {
             Debug.Log(cardName);
+        }
+
+        public void SetData(CardItem cardItem)
+        {
+            //메이저 아르카나 이미지
+            cardImg.sprite = cardItem.sprite;
+            
+            //인챈트 이미지
+            enchantImg.enabled = false;
+            
+            //todo : 카드 효과부분 고치기
+            effectText.text = cardItem.description;
         }
         
     }

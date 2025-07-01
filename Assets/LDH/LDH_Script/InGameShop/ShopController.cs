@@ -28,14 +28,17 @@ namespace InGameShop
 
         public void Purchase(string itemID)
         {
-
             var item = Manager.Data.ItemDB.GetItemById(itemID);
+            
             if (GameStateManager.Instance.Gold < item.price)
                 return;
 
             GameStateManager.Instance.AddGold(-item.price);
-            
-            Manager.GameState.AddItem(itemID);
+
+            if (item is GameItem)
+                Manager.GameState.AddItem(itemID);
+            else
+                Manager.GameState.AddCardItem(itemID);
             
             Debug.Log($"현재 보유 재화 : {GameStateManager.Instance.Gold}");
             Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
