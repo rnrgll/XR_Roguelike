@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KMH/Scene/Shop.unity
     guid: 95a8535a8b8ed884f9266bc82e9ba0db
+  - enabled: 1
+    path: Assets/LDH/LDH_Scene/InGameShop.unity
+    guid: 51f50dd5edaf3450791cc049bf2897a3
+  - enabled: 1
+    path: Assets/LDH/LDH_Scene/LDH_TestMap.unity
+    guid: eab93f591815b4213ab37a5ce91a4fe4
   m_configObjects: {}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CardEnum
 {
-    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30 }
+    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30, Special = 99 }
 
     public enum MajorPosition { Upright, Reversed }
 
@@ -27,6 +27,10 @@ namespace CardEnum
         FiveCard,
         FiveJoker
     }
+    public enum CardSortEnum
+    {
+        Number, Suit
+    }
 }
 
 namespace Map
@@ -45,5 +49,40 @@ namespace Map
         Locked,
         Visited,
         Attainable
+    }
+
+    public enum ShowType
+    {
+        Select,
+        View,
+    }
+}
+
+namespace InGameShop
+{
+    public enum SortOrder
+    {
+        Item = 3,
+        PopUp = 5,
+
+    }
+
+    public enum ButtonState
+    {
+        Active,
+        Deactive,
+    }
+
+}
+
+
+namespace UI
+{
+    public enum GlobalUI
+    {
+        TopBar,
+        Map,
+        Deck,
+        Item,
     }
 }

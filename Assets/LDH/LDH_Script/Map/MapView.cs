@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using Managers;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine.UI.Extensions;
 
 namespace Map
 {
     public class MapView : MonoBehaviour
     {
-   
         [Header("Map Configuration")]
         public MapNode mapNodePrefab;
         
@@ -33,28 +33,36 @@ namespace Map
         
 
         [Header("UI Map Settings")]
-        [SerializeField] private ScrollRect scrollRectVertical;
-        [SerializeField] private float padding; // 맵 전체 좌+우/위+아래 여백
+        public ScrollRect scrollRect;
+        [SerializeField] private float widthPadding; // 맵 전체의 좌우 여백
+        [SerializeField] private float heightPadding; // 맵 전체의 상하 여백
         [SerializeField] private Vector2 backgroundPadding; // 배경 이미지 좌우 여백
         [SerializeField] private float backgroundPPUMultiplier = 1; // 배경 이미지 Pixels Per Unit 배율
         
-        // 내부 상태 필드
-        //map parent
-        private GameObject firstParent;
-        private GameObject mapParent;
+        [Header("Map UI")] 
+        public Button closeButton;
         
-        //map data
+        //Map Data
         public MapData Map { get; private set; } = null;
         //map nodes, path list
         public readonly List<MapNode> MapNodes = new ();
         
+        
+        //============= 내부 상태 필드================//
+        //map parent
+        private GameObject firstParent;
+        private GameObject mapParent;
+        
         // 유틸
         private Camera cam;
-        protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
+        private readonly List<LineConnection> lineConnections = new List<LineConnection>();
 
         //======================================//
+
+
+        #region Map Generator Main Logic
         
-        public void ShowMap(MapData m)
+        public void CreateMapView(MapData m)
         {
             if (m == null)
             {
@@ -78,15 +86,17 @@ namespace Map
 
             CreateMapBackground();
         }
+        #endregion
 
+        #region Clear Map - 맵 초기화
 
         /// <summary>
         /// 맵 초기화
         /// </summary>
         private void ClearMap()
         {
-            scrollRectVertical.gameObject.SetActive(false);
-            foreach (Transform child in scrollRectVertical.content)
+            scrollRect.gameObject.SetActive(false);
+            foreach (Transform child in scrollRect.content)
             {
                 Destroy(child.gameObject);
             }
@@ -96,18 +106,22 @@ namespace Map
             // nodeToMapNode.Clear();
         }
 
+        #endregion
+
+        #region Map Container, Background 설정
+
         /// <summary>
         /// Map Parent 생성
         /// </summary>
         private void CreateMapParent()
         {
-            scrollRectVertical.gameObject.SetActive(true);
+            scrollRect.gameObject.SetActive(true);
 
             //ScrollRect Content 아래 맵을 담을 부모 생성
             
             //1. 
             firstParent = new GameObject("OuterMapParent");
-            firstParent.transform.SetParent(scrollRectVertical.content);
+            firstParent.transform.SetParent(scrollRect.content);
             firstParent.transform.localScale = Vector3.one;
             RectTransform fprt = firstParent.AddComponent<RectTransform>();
             UILayout.Stretch(fprt);
@@ -116,7 +130,7 @@ namespace Map
             mapParent.transform.SetParent(firstParent.transform);
             mapParent.transform.localScale = Vector3.one;
             RectTransform mprt = mapParent.AddComponent<RectTransform>();
-            UILayout.Stretch(mprt, new Vector4(200,0,200,0));
+            UILayout.Stretch(mprt);
 
             
             //맵 전체 길이 계산해서 스크롤 영역(Content) 크기 설정하기
@@ -125,6 +139,33 @@ namespace Map
             //맵 스트롤 위치 초기화
             ScrollReset();
         }
+        
+        
+                
+        private void CreateMapBackground()
+        {
+            GameObject backgroundObject = new GameObject("Background");
+            backgroundObject.transform.SetParent(mapParent.transform);
+            backgroundObject.transform.localScale = Vector3.one;
+            RectTransform rt = backgroundObject.AddComponent<RectTransform>();
+            UILayout.Stretch(rt);
+            rt.SetAsFirstSibling();
+            rt.sizeDelta = backgroundPadding;
+            
+            Image image = backgroundObject.AddComponent<Image>();
+            image.color = backgroundColor;
+            image.type = Image.Type.Sliced;
+            image.sprite = background;
+            image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
+            
+        }
+
+
+        #endregion
+
+        #region Node, Line 생성
+
+        #region Node
         
         /// <summary>
         /// Map에 들어갈 Node (Map Node instance) 생성
@@ -139,6 +180,41 @@ namespace Map
                 
             }
         }
+        private MapNode CreateMapNode(Node node)
+        {
+            MapNode mapNodeObj = Instantiate(mapNodePrefab, mapParent.transform);
+            mapNodeObj.transform.rotation = Quaternion.identity;
+            NodeTemplate template = GetTemplate(node.nodeType);
+
+            mapNodeObj.SetUp(node, template);
+            
+            mapNodeObj.transform.localPosition = SetNodePosition(node);
+
+            return mapNodeObj;
+        }
+        
+        private NodeTemplate GetTemplate(NodeType nodeType)
+        {
+            return Manager.Map.config.NodeTemplates.FirstOrDefault(template => template.nodeType == nodeType);
+        }
+        
+        private Vector2 SetNodePosition(Node node)
+        {
+            Vector2 mapParentSize = mapParent.GetComponent<RectTransform>().rect.size;
+            
+            Vector2 offset = new Vector2(Manager.randomManager.RandFloat(0, 1), Manager.randomManager.RandFloat(0, 1)) *
+                             Manager.Map.config.placementRandomness;
+            
+            float x = (mapParentSize.x - widthPadding) * ( (float)node.column / (Manager.Map.config.mapWidth - 1) - 0.5f);
+            float y = (Manager.Map.config.yGap) * ((float)node.row - (Manager.Map.config.floors) / 2f + 0.5f);
+
+            Vector2 localPos = new Vector2(x, y) + offset;
+            return localPos;
+        }
+
+        #endregion
+
+        #region Line
 
         //path line 그리기
         private void DrawLines()
@@ -153,6 +229,54 @@ namespace Map
                 }
             }
         }
+        
+        private void AddLine(MapNode from, MapNode to)
+        {
+            if(uiLinePrefab == null) return;
+            
+            UILineRenderer line = Instantiate(uiLinePrefab);
+            line.transform.SetParent(mapParent.transform);
+            line.transform.SetAsFirstSibling();
+            
+            RectTransform fromRect = from.transform as RectTransform;
+            RectTransform toRect = to.transform as RectTransform;
+            
+            //from => to 방향 벡터를 구하고 거기에 offest을 곱해서 살짝 떨어진 위치를 구하기
+            Vector2 fromPoint = fromRect.anchoredPosition
+                                + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
+                                * offsetFromNodes;
+            //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
+            Vector2 toPoint = toRect.anchoredPosition
+                              + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
+                              * offsetFromNodes;
+            
+            //line 그리기
+            line.transform.position = from.transform.position +
+                                      (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
+                                      offsetFromNodes;
+
+            List<Vector2> pointList = new ();
+            for (int i = 0; i < linePointsCount; i++)
+            {
+                pointList.Add(Vector3.Lerp(
+                    Vector3.zero,
+                    toPoint - fromPoint,
+                    (float)i/(linePointsCount-1)
+                ));
+            }
+
+            line.Points = pointList.ToArray();
+            lineConnections.Add(new LineConnection(line, from, to));
+
+        }
+
+
+        #endregion
+        
+        #endregion
+
+
+        #region Node, Line 설정
 
         public void SetAttainableNodes()
         {
@@ -189,7 +313,8 @@ namespace Map
                 }
             }
         }
-
+        
+        
         public void SetLineColors()
         {
             // 모든 라인을 회색으로 초기화
@@ -223,39 +348,24 @@ namespace Map
                 Vector2Int next =Manager.Map.CurrentMap.Path[i + 1];
                 
                 LineConnection line = lineConnections.FirstOrDefault(l => l.from.Node.row == current.x && l.from.Node.column == current.y && l.to.Node.row == next.x && l.to.Node.column == next.y
-                    );
+                );
                 line?.SetColor(lineVisitedColor);
             }   
             
         }
 
-        private void CreateMapBackground()
-        {
-            GameObject backgroundObject = new GameObject("Background");
-            backgroundObject.transform.SetParent(mapParent.transform);
-            backgroundObject.transform.localScale = Vector3.one;
-            RectTransform rt = backgroundObject.AddComponent<RectTransform>();
-            UILayout.Stretch(rt);
-            rt.SetAsFirstSibling();
-            rt.sizeDelta = backgroundPadding;
-            
-            Image image = backgroundObject.AddComponent<Image>();
-            image.color = backgroundColor;
-            image.type = Image.Type.Sliced;
-            image.sprite = background;
-            image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
-            
-        }
+        #endregion
+     
 
 
         #region UI Setting
 
         private void SetMapLength()
         {
-            RectTransform content = scrollRectVertical.content;
+            RectTransform content = scrollRect.content;
             Vector2 sizeDelta = content.sizeDelta;
 
-            float length = padding + Manager.Map.config.yGap * (Manager.Map.config.floors - 1);
+            float length = heightPadding + Manager.Map.config.yGap * (Manager.Map.config.floors - 1);
 
             sizeDelta.y = length;
 
@@ -265,93 +375,27 @@ namespace Map
 
         private void ScrollReset()
         {
-            scrollRectVertical.normalizedPosition = Vector2.zero;
+            scrollRect.normalizedPosition = Vector2.zero;
+        }
+
+
+        public void SetShowType(ShowType type)
+        {
+            closeButton.gameObject.SetActive(type==ShowType.View);
+            foreach (MapNode mapNode in MapNodes)
+            {
+                mapNode.IsLocked = type == ShowType.View;
+            }
+            
         }
 
         #endregion
 
-        #region Create Node / Line
-
-        private MapNode CreateMapNode(Node node)
-        {
-            MapNode mapNodeObj = Instantiate(mapNodePrefab, mapParent.transform);
-            mapNodeObj.transform.rotation = Quaternion.identity;
-            NodeTemplate template = GetTemplate(node.nodeType);
-
-            mapNodeObj.SetUp(node, template);
-            
-            mapNodeObj.transform.localPosition = SetNodePosition(node);
-
-            return mapNodeObj;
-        }
-        
-        
-        private NodeTemplate GetTemplate(NodeType nodeType)
-        {
-           return Manager.Map.config.NodeTemplates.FirstOrDefault(template => template.nodeType == nodeType);
-        }
-
-       
-        private Vector2 SetNodePosition(Node node)
-        {
-            Vector2 mapParentSize = mapParent.GetComponent<RectTransform>().rect.size;
-            
-            Vector2 offset = new Vector2(Manager.randomManager.RandFloat(0, 1), Manager.randomManager.RandFloat(0, 1)) *
-                             Manager.Map.config.placementRandomness;
-            
-            float x = (mapParentSize.x - padding) * ( (float)node.column / (Manager.Map.config.mapWidth - 1) - 0.5f);
-            float y = (Manager.Map.config.yGap) * ((float)node.row - (Manager.Map.config.floors) / 2f + 0.5f);
-
-            Vector2 localPos = new Vector2(x, y) + offset;
-            return localPos;
-        }
-        
-        private void AddLine(MapNode from, MapNode to)
-        {
-            if(uiLinePrefab == null) return;
-            
-            UILineRenderer line = Instantiate(uiLinePrefab);
-            line.transform.SetParent(mapParent.transform);
-            line.transform.SetAsFirstSibling();
-            
-            RectTransform fromRect = from.transform as RectTransform;
-            RectTransform toRect = to.transform as RectTransform;
-            
-            //from => to 방향 벡터를 구하고 거기에 offest을 곱해서 살짝 떨어진 위치를 구하기
-            Vector2 fromPoint = fromRect.anchoredPosition
-                                + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
-                                * offsetFromNodes;
-            //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
-            Vector2 toPoint = toRect.anchoredPosition
-                              + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
-                              * offsetFromNodes;
-            
-            //line 그리기
-            line.transform.position = from.transform.position +
-                                      (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
-                                      offsetFromNodes;
-
-            List<Vector2> pointList = new ();
-            for (int i = 0; i < linePointsCount; i++)
-            {
-                pointList.Add(Vector3.Lerp(
-                    Vector3.zero,
-                    toPoint - fromPoint,
-                    (float)i/(linePointsCount-1)
-                    ));
-            }
-
-            line.Points = pointList.ToArray();
-            lineConnections.Add(new LineConnection(line, from, to));
-
-        }
-        
-        protected MapNode GetMapNode(Vector2Int p)
+        #region Util
+        public MapNode GetMapNode(Vector2Int p)
         {
             return MapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
         }
-
-
         #endregion
         
         

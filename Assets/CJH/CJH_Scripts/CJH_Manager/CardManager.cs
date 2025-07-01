@@ -30,5 +30,22 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private List<MinorArcana> handCards = new();
+
+    public int GetAvailableCardCount()
+    {
+        return handCards.Count;
+    }
+
+    public void AddCard(MinorArcana card)
+    {
+        handCards.Add(card);
+    }
+
+    public void RemoveCard(MinorArcana card)
+    {
+        handCards.Remove(card);
+    }
+
     public void Reset() => selectedCards.Clear();
 }

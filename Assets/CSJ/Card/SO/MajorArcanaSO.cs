@@ -7,13 +7,10 @@ using CardEnum;
 [CreateAssetMenu(menuName = "Tarot/MajorArcana", fileName = "NewMajorArcana")]
 public class MajorArcanaSO : ScriptableObject
 {
+
     [Header("기본 정보")]
     [Tooltip("카드의 이름")]
     public string cardName;
-
-    [Tooltip("카드의 설명")]
-    [TextArea]
-    public string desctiption;
 
     [Header("스프라이트")]
     public Sprite sprite;
@@ -48,5 +45,12 @@ public class MajorArcanaSO : ScriptableObject
 
         cardPos = nowPos;
         return true;
+    }
+
+    //TODO : 애니메이터와 연계, 추후 스프라이트를 뒤집는 기능 추가
+    public void Rotate()
+    {
+        PrevPos = cardPos;
+        cardPos ^= MajorPosition.Reversed;
     }
 }
