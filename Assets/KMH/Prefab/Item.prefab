@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69.8, y: -40}
+  m_AnchoredPosition: {x: 69.8, y: -38}
   m_SizeDelta: {x: 200, y: 37.233}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2270955414666742761
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 5543310748935253556}
   - component: {fileID: 1747330975289359781}
   - component: {fileID: 412599719438652815}
-  - component: {fileID: 6443195185517926655}
+  - component: {fileID: 4549898933755589647}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemNameText: {fileID: 0}
-  itemDescText: {fileID: 0}
+  itemInfoText: {fileID: 0}
 --- !u!114 &412599719438652815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6443195185517926655
+--- !u!114 &4549898933755589647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,11 +403,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7306559736893668599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 202d6fb885ceb40c8970ea81e22d1cff, type: 3}
+  m_Script: {fileID: 11500000, guid: 8570118b198e1a74881c4c40ab5cad2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: test item
-  itemDescription: this is test item.
+  itemName: 
+  itemInfo: 
 --- !u!1 &8852957303832060865
 GameObject:
   m_ObjectHideFlags: 0

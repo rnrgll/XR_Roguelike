@@ -9,20 +9,20 @@ public class ShopItemButton : MonoBehaviour
     public TMP_Text itemNameText;
     public TMP_Text itemInfoText;
     private Button itemButton;
-    private ShopTest data;
+    private ItemData data;
     
     // Start is called before the first frame update
     void Start()
     {
         itemButton = GetComponent<Button>();
         
-        data = GetComponent<ShopTest>();
+        data = GetComponent<ItemData>();
     }
 
     public void ShowData()
     {
         itemNameText.text = data.itemName;
-        itemInfoText.text = data.itemDescription;
+        itemInfoText.text = data.itemInfo;
     }
 
     public void ClearData()
