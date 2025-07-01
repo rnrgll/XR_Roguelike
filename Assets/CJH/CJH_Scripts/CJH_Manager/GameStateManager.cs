@@ -17,7 +17,9 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     public readonly List<string> Inventory = new(); //아이템 id만 들고 있는다
     public int Item { get; private set; }
-    
+
+    public MonsterID SelectedMonster { get; set; }
+
     // 이벤트 추가
     public UnityEvent<int> OnGoldChanged = new();
     public UnityEvent<string> OnItemChanged = new();
