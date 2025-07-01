@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckPile<T> : IReadPile<T>, IAddRemovePile<T>
+public class DeckPile<T> : IReadPile<T>, IAddRemovePile<T>, IReturnPile<T>
 {
     private readonly List<T> _cards = new();
 
@@ -18,6 +18,15 @@ public class DeckPile<T> : IReadPile<T>, IAddRemovePile<T>
 
     public bool Remove(T card) => _cards.Remove(card);
 
+    public T GetCard(int idx)
+    {
+        return _cards[idx];
+    }
+
+    public List<T> GetCardList()
+    {
+        return _cards;
+    }
 }
 
 public class HandPile<T> : IReadPile<T>, IAddRemovePile<T>, ISwappablePile<T>, IClearPile<T>, IReturnPile<T>
@@ -55,7 +64,7 @@ public class HandPile<T> : IReadPile<T>, IAddRemovePile<T>, ISwappablePile<T>, I
     }
 }
 
-public class GraveyardPile<T> : IReadPile<T>, IAddRemovePile<T>, IClearPile<T>
+public class GraveyardPile<T> : IReadPile<T>, IAddRemovePile<T>, IClearPile<T>, IReturnPile<T>
 {
     private readonly List<T> _cards = new();
 
@@ -69,6 +78,16 @@ public class GraveyardPile<T> : IReadPile<T>, IAddRemovePile<T>, IClearPile<T>
     public bool Remove(T card) => _cards.Remove(card);
 
     public void Clear() => _cards.Clear();
+
+    public T GetCard(int idx)
+    {
+        return _cards[idx];
+    }
+
+    public List<T> GetCardList()
+    {
+        return _cards;
+    }
 }
 
 
