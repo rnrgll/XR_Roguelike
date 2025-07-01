@@ -50,7 +50,7 @@ public class CardDeck
     public MinorArcana GetCardData(int _suitIdx, int _num)
     {
         string[] data = _csvTable.GetLine(_suitIdx * arcanaLength + _num);
-        string name = data[0];
+        string name = data[1];
         var suit = (MinorSuit)Enum.Parse(typeof(MinorSuit), data[4]);
         int numVal = int.Parse(data[5]);
         return new MinorArcana(name, suit, numVal);

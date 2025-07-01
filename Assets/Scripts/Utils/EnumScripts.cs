@@ -27,6 +27,10 @@ namespace CardEnum
         FiveCard,
         FiveJoker
     }
+    public enum CardSortEnum
+    {
+        Number, Suit
+    }
 }
 
 namespace Map
@@ -58,9 +62,9 @@ namespace InGameShop
 {
     public enum SortOrder
     {
-        Item= 3,
+        Item = 3,
         PopUp = 5,
-        
+
     }
 
     public enum ButtonState
@@ -68,7 +72,7 @@ namespace InGameShop
         Active,
         Deactive,
     }
-    
+
 }
 
 
