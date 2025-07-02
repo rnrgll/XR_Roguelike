@@ -16,7 +16,7 @@ public class TurnButton : MonoBehaviour
 
     public void OnClickAttack()
     {
-        PatternMonster enemy = FindAnyObjectByType<PatternMonster>();
+        EnemyBase enemy = FindAnyObjectByType<EnemyBase>();
         if (enemy != null && !enemy.IsDead)
         {
             enemy.ApplyDamage(100);

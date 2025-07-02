@@ -16,39 +16,24 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, PatternMonster target)
+    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyBase target)
     {
-        int basePower = nums.Sum();
-        float multiplier = GetMultiplierByCombo(combo);
-        int damage = Mathf.FloorToInt(basePower * multiplier);
+        int baseDamage = nums.Sum();
+        float multiplier = TurnManager.Instance.GetPlayerController().GetAttackMultiplier();
+        int bonus = TurnManager.Instance.GetPlayerController().GetFlatAttackBonus();
+        int finalDamage = Mathf.RoundToInt(baseDamage * multiplier);
+
 
         GameStatusUI.Instance.SetComboInfo(combo.ToString(), multiplier);
 
-        //  특수판정 처리
-        if (target.IsAwaitingPrideJudgement)
-        {
-            if (damage <= 100)
-            {
-                Debug.Log("[프라이드 판단] 성공 → 몬스터 체력 30%로 감소");
-                target.ForceSetHpToRate(0.3f);
-            }
-            else
-            {
-                Debug.Log("[프라이드 판단] 실패 → 플레이어 체력 35%로 감소");
-                var player = FindAnyObjectByType<PlayerController>();
-                if (player != null)
-                    player.ForceSetHpToRate(0.35f);
-            }
-
-            target.EndPrideJudgement();
-        }
 
         // 기본 데미지 적용
-        target.ApplyDamage(damage);
+        target.ApplyDamage(finalDamage);
 
-        GameStatusUI.Instance.AddDamage(damage);
-        Debug.Log($"[{combo}] → {target.name}에게 {damage}의 피해!");
+        GameStatusUI.Instance.AddDamage(baseDamage);
+        Debug.Log($"[{combo}] → {target.name}에게 {baseDamage}의 피해!");
     }
+
 
     private float GetMultiplierByCombo(CardCombinationEnum combo)
     {

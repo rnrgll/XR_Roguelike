@@ -4,14 +4,16 @@ using UnityEngine;
 
 namespace CardEnum
 {
-    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30, Special = 99 }
+    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30, statusEffect = 50, Special = 99 }
 
     public enum MajorPosition { Upright, Reversed }
 
     // TODO : 추후 기획에 맞춰 조정
     public enum CardEnchant { none, Bonus, Mult, Wild, Glass, Steel, Gold, Lucky }
 
+    public enum CardDebuff { none, Charm, Corruption, Rust }
     public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
+
 
     public enum CardCombinationEnum
     {

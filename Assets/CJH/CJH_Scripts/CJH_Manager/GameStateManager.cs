@@ -22,37 +22,40 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public IReadOnlyList<string> CardInventory => _cardInventory;
     public int CurrentItemCount => _itemInventory.Count(id => !string.IsNullOrEmpty(id));
     public int CurrentCardItemCount => _itemInventory.Count;
-    
-    
+
+
     private const int maxItemInventorySize = 3;
     public int MaxItemInventorySize => maxItemInventorySize;
 
     #endregion
 
- 
-    
+
+
+
+    public MonsterID SelectedMonster { get; set; }
+
     // 이벤트 추가
     public UnityEvent<int> OnGoldChanged = new();
     public UnityEvent<string> OnItemChanged = new();
     public UnityEvent<string> OnCardItemChanged = new();
-    
+
     private void Awake()
     {
         SingletonInit();
     }
 
-    
+
     //게임 시작 버튼 누르면 값 초기화 및 셋팅 (골드 보유량, 인벤토리 등등)
     public void Init()
     {
         _itemInventory.Clear();
         _cardInventory.Clear();
-        
-        for(int i=0; i<MaxItemInventorySize; i++)
+
+        for (int i = 0; i < MaxItemInventorySize; i++)
             _itemInventory.Add(String.Empty);
     }
-    
-    
+
+
 
     public void AddWin() => Wins++;
     public void AddGold(int amount)
@@ -81,7 +84,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
             // 또는 UI 경고 처리
         }
     }
-    
+
     public void AddCardItem(string cardId)
     {
         _cardInventory.Add(cardId);
@@ -96,7 +99,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
             OnItemChanged?.Invoke(itemID);
         }
     }
-    
+
     public void RemoveCardItem(string cardId)
     {
         int idx = _cardInventory.FindIndex(id => id == cardId);
@@ -105,7 +108,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     }
 
     #endregion
-    
+
     public void SetBossDefeated()
     {
         BossDefeated = true;

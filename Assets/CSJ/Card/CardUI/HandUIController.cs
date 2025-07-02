@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HandUIController : MonoBehaviour
@@ -15,6 +17,7 @@ public class HandUIController : MonoBehaviour
     {
         cardController.OnChangedHands += RefreshHand;
     }
+
     private void OnDisable()
     {
         cardController.OnChangedHands -= RefreshHand;
@@ -41,6 +44,9 @@ public class HandUIController : MonoBehaviour
 
             ui.OnClick += c =>
             {
+                if (cardController.IsUsableDic.ContainsKey(c) &&
+                cardController.IsUsableDic[c] == false) return;
+
                 bool now = ui.ToggleSelect();
                 if (now) CardSelected(c);
                 else CardDeSelected(c);

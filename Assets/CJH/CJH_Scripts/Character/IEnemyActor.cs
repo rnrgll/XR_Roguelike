@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IEnemyActor
 {
-    bool IsDead { get; }
     void TakeTurn();
+    void ApplyDamage(int damage);
+    bool IsDead { get; }
+    EnemyType Type { get; }
 }

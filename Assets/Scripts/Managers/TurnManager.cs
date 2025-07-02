@@ -11,7 +11,7 @@ public class TurnManager : Singleton<TurnManager>
 {
     private IPlayerActor player;
     private List<IEnemyActor> enemies = new();
-    private PatternMonster currentEnemy;
+    private EnemyBase currentEnemy;
 
     private bool battleStarted = false;
     private bool isGameEnded = false;
@@ -26,8 +26,8 @@ public class TurnManager : Singleton<TurnManager>
         {
             enemies.Add(e);
 
-            // 첫 등록된 PatternMonster를 기본 타겟으로 설정
-            if (currentEnemy == null && e is PatternMonster monster)
+            // 첫 등록된 EnemyBase를 기본 타겟으로 설정
+            if (currentEnemy == null && e is EnemyBase monster)
             {
                 currentEnemy = monster;
             }
@@ -36,10 +36,12 @@ public class TurnManager : Singleton<TurnManager>
 
     public List<IEnemyActor> GetEnemies() => enemies;
 
+    public PlayerController GetPlayerController() => player as PlayerController;
+
     public void SetCurrentEnemyByType(EnemyType type)
     {
         var match = enemies
-            .OfType<PatternMonster>()
+            .OfType<EnemyBase>()
             .FirstOrDefault(e => e.Type == type && !e.IsDead);
 
         if (match != null)
@@ -110,7 +112,7 @@ public class TurnManager : Singleton<TurnManager>
             // 3. 적 턴
             foreach (var enemy in enemies)
             {
-                if (enemy is PatternMonster ec && !ec.IsDead)
+                if (enemy is EnemyBase ec && !ec.IsDead)
                 {
                     ec.TakeTurn();
                     yield return new WaitForSeconds(0.5f);
