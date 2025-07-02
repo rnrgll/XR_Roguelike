@@ -15,10 +15,13 @@ namespace UI
         private void OnEnable()
         {
             
-            for(int i =0; i<Manager.GameState.ItemInventory.Count; i++)
+            for(int i =0; i < Manager.GameState.MaxItemInventorySize; i++)
             {
-                UpdateSlot(i, Manager.GameState.ItemInventory[i]);
-                slots[i].onClick.AddListener(() => OnSlotClicked(i));
+                int slotIndex = i;
+                if (Manager.GameState.ItemInventory.Count < Manager.GameState.MaxItemInventorySize) return;
+                
+                UpdateSlot(i, Manager.GameState.ItemInventory[slotIndex]);
+                slots[slotIndex].onClick.AddListener(() => OnSlotClicked(slotIndex));
             }
         }
 
@@ -38,12 +41,15 @@ namespace UI
 
         private void UpdateSlot(int slotIndex, string itemId)
         {
+           
             TempItem item = Manager.Data.ItemDB.GetItemById(itemId);
-            slots[slotIndex].GetComponentInChildren<Image>().sprite = item.sprite;
+            slots[slotIndex].transform.GetChild(0).GetComponent<Image>().sprite = item.sprite;
         }
 
         private void OnSlotClicked(int slotIndex)
         {
+            Debug.Log($"slot index = {slotIndex}, ");
+            Debug.Log($"itemid = {Manager.GameState.ItemInventory[slotIndex]}");
             Manager.GameState.RemoveItem(Manager.GameState.ItemInventory[slotIndex]);
             Manager.UI.SetUIActive(GlobalUI.ItemRemove, false);
             

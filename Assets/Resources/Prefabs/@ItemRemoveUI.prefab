@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 9009704469604891910}
   - component: {fileID: 2586421889014871172}
   - component: {fileID: 1443328951317043139}
+  - component: {fileID: 3867831887325763678}
   m_Layer: 5
   m_Name: '@ItemRemoveUI'
   m_TagString: Untagged
@@ -179,6 +180,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3867831887325763678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873911474734036986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5ac20a39df47e5928af8c57f6ae128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots:
+  - {fileID: 9015652531644099444}
+  - {fileID: 6425355949542933644}
+  - {fileID: 37219494378869399}
 --- !u!1 &3959132091544869692
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +342,6 @@ GameObject:
   - component: {fileID: 4784747884663690647}
   - component: {fileID: 1985345817615124255}
   - component: {fileID: 7162160678128613414}
-  - component: {fileID: 6174523598943821033}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -434,35 +450,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1985345817615124255}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4045276669162460326}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6174523598943821033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4045276669162460326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db5ac20a39df47e5928af8c57f6ae128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots:
-  - {fileID: 9015652531644099444}
-  - {fileID: 6425355949542933644}
-  - {fileID: 37219494378869399}
+      m_Calls: []
 --- !u!1001 &8004250175317973857
 PrefabInstance:
   m_ObjectHideFlags: 0

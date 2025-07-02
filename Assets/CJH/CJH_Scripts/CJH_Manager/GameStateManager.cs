@@ -14,7 +14,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public int Gold { get; private set; }
     public int Exp { get; private set; }
 
-    #region Inventory
+    #region Inventory 변수, 프로퍼티
 
     private readonly List<string> _itemInventory = new();
     private readonly List<string> _cardInventory = new(); // 카드용
@@ -23,8 +23,8 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public int CurrentItemCount => _itemInventory.Count(id => !string.IsNullOrEmpty(id));
     
     
-    private const int MaxInventorySize = 3;
-    
+    private const int maxItemInventorySize = 3;
+    public int MaxItemInventorySize => maxItemInventorySize;
 
     #endregion
 
@@ -47,7 +47,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         _itemInventory.Clear();
         _cardInventory.Clear();
         
-        for(int i=0; i<MaxInventorySize; i++)
+        for(int i=0; i<MaxItemInventorySize; i++)
             _itemInventory.Add(String.Empty);
     }
     

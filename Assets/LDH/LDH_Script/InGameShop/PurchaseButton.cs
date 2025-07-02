@@ -8,7 +8,7 @@ namespace InGameShop
     public class PurchaseButton : MonoBehaviour
     {
         [SerializeField] private GameObject _goldAlarmPopUp;
-        [SerializeField] private GameObject _fullSlotAlarmPopUp;
+        [SerializeField] private FullSlotAlarmPanel _fullSlotAlarmPopUp;
         private string _itemId;
         private ButtonCondition _condition;
         
@@ -36,19 +36,18 @@ namespace InGameShop
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, _itemId);
+                    Purchase(slotIndex, (item is GameItem? ItemType.item: ItemType.card), _itemId);
                     
                 });
             }
             
         }
 
-        public void Purchase(int slotIndex, string itemID)
+        public void Purchase(int slotIndex, ItemType itemType, string itemID)
         {
-            if (Manager.GameState.CurrentItemCount == 3)
+            if (itemType == ItemType.item &&  Manager.GameState.CurrentItemCount == 3)
             {
-                _fullSlotAlarmPopUp.SetActive(true);
-                
+                _fullSlotAlarmPopUp.Show(this);
             }
             else
             {

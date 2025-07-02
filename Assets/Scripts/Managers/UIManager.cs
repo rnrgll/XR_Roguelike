@@ -58,6 +58,12 @@ namespace Managers
             var itemPrefab = Resources.Load<GameObject>("Prefabs/@ItemUI");
             ItemUI = Instantiate(itemPrefab, container.transform);
             ItemUI.SetActive(false);
+            
+            // 5) Item Remove Canvas
+            var itemRemovePrefab = Resources.Load<GameObject>("Prefabs/@ItemRemoveUI");
+            ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform);
+            ItemRemoveUI.SetActive(false);
+
         }
         
         public void ToggleUI(ToggleUI uiType)
