@@ -11,8 +11,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private int currentHP;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
+
+    private float attackMultiplier = 1f;
+    private int flatAttackBonus = 0;
+    private int attackBuffTurns = 0;
+
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
+    public float GetAttackMultiplier() => attackMultiplier;
+    public int GetFlatAttackBonus() => flatAttackBonus;
 
     private IEnumerator Start()
     {
@@ -40,7 +47,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         // 3. 타겟 찾기
         var target = TurnManager.Instance
             .GetEnemies()
-            .OfType<PatternMonster>()
+            .OfType<EnemyBase>()
             .FirstOrDefault(e => e.Type == EnemyType.Boss && !e.IsDead);
 
         // 4. 공격 수행
@@ -72,11 +79,31 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
     }
 
-    public void ApplyBuff_DamageMultiplier(float multiplier, int turns)
+
+    public void ApplyAttackBuff(float multiplier, int turns)
     {
-        // 데미지에 multiplier 곱하는 로직은
-        // 카드 계산 또는 공격 계산 쪽에 반영 필요
-        Debug.Log($"[플레이어] 데미지 버프 {multiplier * 100}% 적용, {turns}턴 지속");
+        attackMultiplier = multiplier;
+        attackBuffTurns = turns;
+        Debug.Log($"[플레이어] 공격력 {multiplier}배 버프 적용, {turns}턴 지속");
+    }
+
+    public void ApplyFlatAttackBuff(int amount, int turns)
+    {
+        flatAttackBonus = amount;
+        attackBuffTurns = turns;
+
+        Debug.Log($"[플레이어] 공격력 {(amount >= 0 ? "+" : "")}{amount} 고정 버프 적용, {turns}턴 지속");
+
+        if (attackBuffTurns > 0)
+        {
+            attackBuffTurns--;
+            if (attackBuffTurns <= 0)
+            {
+                attackMultiplier = 1f;
+                flatAttackBonus = 0;
+                Debug.Log("[플레이어] 모든 공격 버프 해제됨");
+            }
+        }
     }
 
     public void ForceSetHpToRate(float rate)
@@ -116,6 +143,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         Debug.Log("플레이어 턴 종료!");
         turnEnded = true;
+
+        if (attackBuffTurns > 0)
+        {
+            attackBuffTurns--;
+            if (attackBuffTurns <= 0)
+            {
+                attackMultiplier = 1f;
+                Debug.Log("[플레이어] 공격력 버프 해제");
+            }
+        }
     }
 
     public bool IsTurnFinished() => turnEnded;
