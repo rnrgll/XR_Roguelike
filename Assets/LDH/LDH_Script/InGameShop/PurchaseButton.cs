@@ -36,7 +36,7 @@ namespace InGameShop
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, (item is GameItem? ItemType.item: ItemType.card), _itemId);
+                    Purchase(slotIndex, (item is GameItem? ItemType.Item: ItemType.Card), _itemId);
                     
                 });
             }
@@ -45,7 +45,7 @@ namespace InGameShop
 
         public void Purchase(int slotIndex, ItemType itemType, string itemID)
         {
-            if (itemType == ItemType.item &&  Manager.GameState.CurrentItemCount == 3)
+            if (itemType == ItemType.Item &&  Manager.GameState.CurrentItemCount == 3)
             {
                 _fullSlotAlarmPopUp.Show(this);
             }

@@ -18,6 +18,7 @@ public static class CardCsvDownLoader
             if (wrq.result == UnityWebRequest.Result.Success)
             {
                 string csv = wrq.downloadHandler.text;
+                Debug.Log("[CSV 다운로드 성공]\n" + csv);
 
                 CsvTable csvFile = new CsvTable(csv, ',');
 

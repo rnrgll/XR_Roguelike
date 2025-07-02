@@ -156,6 +156,7 @@ namespace CustomUtility
 
                 return true;
             }
+            
 
             /// <summary>
             /// Validates whether a file exists at the specified path.
@@ -253,6 +254,7 @@ namespace CustomUtility
                 result.Add(field.ToString());
                 return result;
             }
+            
         }
     }
 }
