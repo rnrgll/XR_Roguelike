@@ -104,25 +104,35 @@ namespace UI
         Item,
         Setting,
     }
+    
+}
 
-    namespace Event
+
+
+namespace Event
+{
+    public enum EffectType
     {
-        public enum EffectType
-        {
-            Buff = 10,
-            Debuff,
-            CompoundEffect,
-            NoEffect,
-        }
+        Buff = 10,
+        Debuff,
+        CompoundEffect,
+        NoEffect,
+    }
 
-        public enum SubEffectType
-        {
-            AttackBoost = 20,
-            ResourceGain,
-            ObtainItem,
-            ObtainEnhancedCard,
-            ResourceLoss,
-            HPDrain,
-        }
+    public enum SubEffectType
+    {
+        AttackBoost = 20,
+        ResourceGain,
+        ObtainItem,
+        ObtainEnhancedCard,
+        ResourceLoss,
+        HPDrain,
+    }
+
+    public enum ItemRewardType
+    {
+        CardRandom = -10,
+        ItemRandom = -20,
+        ItemPotionRandom = -30,
     }
 }

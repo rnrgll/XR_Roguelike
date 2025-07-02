@@ -1,5 +1,5 @@
 using InGameShop;
-using UI.Event;
+using UnityEngine;
 
 namespace Event
 {
@@ -8,8 +8,17 @@ namespace Event
         public SubEffectType SubEffectType;
         public int Value;
         public int? DurationTurns;
-        public bool HasItemReward;
-        public ItemType? ItemType;
-        public int? ItemCount;
+
+        public SubEffect(SubEffectType subEffectType, int value, int? durationTurns)
+        {
+            SubEffectType = subEffectType;
+            Value = value;
+            DurationTurns = durationTurns;
+        }
+
+        public void ApplyEffect()
+        {
+            Debug.Log($"효과 적용 : {SubEffectType.ToString()}, {Value}, {DurationTurns??0}턴");
+        }
     }
 }

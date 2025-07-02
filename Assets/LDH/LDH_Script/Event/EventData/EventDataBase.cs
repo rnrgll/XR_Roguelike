@@ -2,27 +2,44 @@ using CustomUtility.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace Event
 {
     public class EventDataBase
     {
-        public List<GameEvent> EventDB { get; private set; }
-        public int TotalEventCount => EventDB.Count-1; //0번 인덱스는 비워둠
+        //DB
+        private List<GameEvent> EventDB;
+        private Dictionary<int, EventMainReward> MainRewardDB;
+        private Dictionary<int, EventRewardEffect> RewardEffectDB;
+        
+        //DB별 요소 개수
+        public int EventsCount => EventDB.Count-1; //0번 인덱스는 비워둠
+        public int MainRewardsCount => MainRewardDB.Count;
+        public int RewardEffectsCount => RewardEffectDB.Count;
+        
+        
+        
         public string eventSpirteFolder = "EventSprites"; //todo : 수정 필요
 
-        #region HardCoding 값...
+        #region HardCoding 값...?
 
         private int EventTable_OptionColumn = 'E' - 'A'; //이벤트 테이블의 option 데이터 시작 열 인덱스
-
         #endregion
         
         public EventDataBase()
         {
             EventDB = new();
+            MainRewardDB = new();
+            RewardEffectDB = new();
+            
             EventDB.Add(new GameEvent()); //0번은 빈 이벤트를 넣어서 비워두기. event id와 index를 맞추기 위함
         }
+
+
+        #region DB 데이터 로드
+        
         public void LoadEventData(CsvTable table)
         {
             int rowCnt = table.Table.GetLength(0);
@@ -59,10 +76,96 @@ namespace Event
                 EventDB.Add(gameEvent);
             }
             
-            Debug.Log(EventDB.Count.ToString() + "개 이벤트 데이터를 로드했습니다.");
+            Debug.Log(EventDB.Count + "개 이벤트 데이터를 로드했습니다.");
 
         }
 
+        public void LoadMainRewardData(CsvTable table)
+        {
+            int rowCnt = table.Table.GetLength(0);
+            int columnCnt = table.Table.GetLength(1);
+            
+            for (int r = 1; r < rowCnt; r++)
+            {
+                int key = int.Parse(table.Table[r, 0]);
+                //EventMainReward(메인 보상 테이블 파싱)
+                EventMainReward mainReward = new(
+                    key,
+                    table.Table[r,1],
+                    (EffectType)(int.Parse(table.Table[r,2].Substring(0,2))),
+                    int.Parse(table.Table[r, 3])
+                );
+                MainRewardDB.Add(key, mainReward);
+            }
+            Debug.Log(MainRewardDB.Count + "개 메인 보상 데이터를 로드했습니다.");
+        }
+        
+        public void LoadRewardEffectData(CsvTable table)
+        {
+            int rowCnt = table.Table.GetLength(0);
+            int columnCnt = table.Table.GetLength(1);
+            
+            for (int r = 1; r < rowCnt; r++)
+            {
+                int key = int.Parse(table.Table[r, 0]);
+                //EventRewardEffect(보상 효과 테이블 파싱)
+                EventRewardEffect rewardEffect = new();
+                
+                //id
+                rewardEffect.RewardEffectID = key;
+                
+                //subEffects
+                List<SubEffect> subEffects = new();
+                for (int c = 1; c < 10; c += 3)
+                {
+                    bool hasType = int.TryParse(table.Table[r, c], out int type);
+                    bool hasValue = int.TryParse(table.Table[r, c], out int value);
+                    bool hasDurtaion = int.TryParse(table.Table[r, c], out int duration);
+
+                    if (hasType)
+                    {
+                        SubEffect subEffect = new(
+                            (SubEffectType)type,
+                            value,
+                            hasDurtaion != null ? duration : null
+                        );
+                        subEffects.Add(subEffect);
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    //패널티 비용
+                    rewardEffect.PenaltyCost =
+                        int.TryParse(table.Table[r, columnCnt - 4], out int penalty) ? penalty : null;
+                    
+                    //패널티 대체 비용
+                    rewardEffect.SubstituteCost = int.TryParse(table.Table[r, columnCnt - 3], out int subCost) ? subCost : null;
+
+                    //아이템 보상
+                    List<ItemRewardType> itemRewards = new ();
+                    string[] items = table.Table[r, columnCnt - 1].Split(',');
+                    foreach (var item in items)
+                    {
+                        if(int.TryParse(table.Table[r,columnCnt-2], out int itemType))
+                            itemRewards.Add((ItemRewardType)itemType);
+                    }
+                    rewardEffect.ItemRewards = itemRewards;
+                }
+                
+                RewardEffectDB.Add(key, rewardEffect);
+                
+            }
+            Debug.Log(RewardEffectDB.Count + "개 보상 효과 데이터를 로드했습니다.");
+        }
+        
+        #endregion
+
+
+        #region DB API
+
+        
         /// <summary>
         /// Game Event의 아이디로 EventDB에서 데이터를 조회해서 반환한다.(EventDB의 인덱스와 아이템 아이디 동일)
         /// </summary>
@@ -70,9 +173,36 @@ namespace Event
         /// <returns></returns>
         public GameEvent GetGameEventById(int id )
         {
-            return EventDB[id];
+            return EventDB.FirstOrDefault(e => e.EventID == id);
+        }
+
+        public EventMainReward GetMainRewardById(int id)
+        {
+            return MainRewardDB.TryGetValue(id, out EventMainReward mainReward) ? mainReward : null;
+        }
+
+        public int GetRewardEffectId(int mainRewardID)
+        {
+            return MainRewardDB.TryGetValue(mainRewardID, out EventMainReward mainReward) ? mainReward.Id : -1;
+        }
+
+        public EventRewardEffect GetEventRewardEffectById(int id)
+        {
+            return RewardEffectDB.TryGetValue(id, out EventRewardEffect rewardEffect) ? rewardEffect : null;
+        }
+
+        public List<SubEffect> GetSubEffectsByRewardId(int rewardEffectId)
+        {
+            return RewardEffectDB.TryGetValue(rewardEffectId, out EventRewardEffect rewardEffect) ? rewardEffect.SubEffectList : null;
+        }
+
+        public List<SubEffect> GetSubEffectsByMainRewardId(int mainRewardId)
+        {
+            return GetSubEffectsByRewardId(GetRewardEffectId(mainRewardId));
         }
         
+        #endregion
+
     }
 
 }

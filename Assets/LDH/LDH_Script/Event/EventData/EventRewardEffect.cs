@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UI.Event;
+using System.Linq;
 
 namespace Event
 {
@@ -7,7 +7,11 @@ namespace Event
     public class EventRewardEffect
     {
         public int RewardEffectID;
-        public List<SubEffectType> SubEffectList;
-        
+        public List<SubEffect> SubEffectList;
+        public int? PenaltyCost;
+        public int? SubstituteCost;
+        public List<ItemRewardType> ItemRewards;
     }
+    
+    
 }

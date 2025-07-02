@@ -29,6 +29,14 @@ namespace Managers
                 CSVLink.CsvLinkDict["Event"],
                 EventDB.LoadEventData
             ));
+            StartCoroutine(CSVDownloader.Start(
+                CSVLink.CsvLinkDict["EventMainReward"],
+                EventDB.LoadMainRewardData
+            ));
+            StartCoroutine(CSVDownloader.Start(
+                CSVLink.CsvLinkDict["EventRewardEffect"],
+                EventDB.LoadRewardEffectData
+            ));
         }
     }
 }
