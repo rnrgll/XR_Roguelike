@@ -36,12 +36,15 @@ public class CardController : MonoBehaviour
     public int sumofNums { get; private set; }
     public List<MinorArcana> SelectedCard { get; private set; }
     public CardCombinationEnum cardComb { get; private set; }
+    public int paneltyAmonut { get; private set; }
     #endregion
 
     #region  설정 모음 
     public int drawNum = 8;
     private List<MinorArcana> disposableCardList;
     public CardSortEnum sortStand = CardSortEnum.Suit;
+    [SerializeField] private CardEnchantSO[] EnchantList;
+    [SerializeField] private CardDebuffSO[] DebuffList;
 
     #endregion
 
@@ -87,6 +90,17 @@ public class CardController : MonoBehaviour
     {
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
+        Deck.OnCardEnchanted += (card, enchant) =>
+        {
+            var so = Array.Find(EnchantList, e => e.EnchantType == enchant);
+            so?.OnApply(card, this);
+        };
+
+        Deck.OnCardDebuffed += (card, debuff) =>
+        {
+            var so = Array.Find(DebuffList, d => d.DebuffType == debuff);
+            so?.OnApply(card, this);
+        };
     }
 
     public void OnDisable()
@@ -94,6 +108,7 @@ public class CardController : MonoBehaviour
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
     }
+
 
     public void Init()
     {
@@ -161,7 +176,9 @@ public class CardController : MonoBehaviour
 
     public void Submit()
     {
-        OnSubmit?.Invoke(Hand.GetCardList());
+        paneltyAmonut = 0;
+        OnSubmit?.Invoke(SelectedCard);
+
         foreach (MinorArcana card in SelectedCard)
         {
             Debug.Log(card.CardName);
@@ -178,6 +195,11 @@ public class CardController : MonoBehaviour
             cards.Add(card);
         }
         return cards;
+    }
+
+    public int GetPenalty()
+    {
+        return paneltyAmonut;
     }
     #endregion
 
@@ -367,6 +389,11 @@ public class CardController : MonoBehaviour
             else sumofNums += i;
         }
         OnSelectionChanged?.Invoke(cardComb);
+    }
+
+    public void AddPanelty(int _paneltyAmount)
+    {
+        paneltyAmonut += _paneltyAmount;
     }
     #endregion
 

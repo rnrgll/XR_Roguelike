@@ -344,6 +344,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4687377856476261407, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+      propertyPath: DebuffList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687377856476261407, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+      propertyPath: DebuffList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 494befe971e106240ab4fa3dad0d8676, type: 2}
+    - target: {fileID: 4687377856476261407, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+      propertyPath: DebuffList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 70ca110aeaf789745a488dba96896f7c, type: 2}
+    - target: {fileID: 4687377856476261407, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+      propertyPath: DebuffList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b34298909bc2f24193b70027b4d299d, type: 2}
     - target: {fileID: 5936658913238072073, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1212.6298

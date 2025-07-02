@@ -264,12 +264,16 @@ public static class CardCombination
         {
             // 스트레이트가 비어있는 만큼 계산
             int missing = 0;
+            List<int> missingNum = new List<int>();
             for (int offset = 0; offset < straightLen; offset++)
             {
                 // AHigh의 값이 0인 경우
-                // 비어있으므로 missin을 +
+                // 비어있으므로 missing을 +
                 if (AHigh[start + offset] == 0)
+                {
                     missing++;
+                    missingNum.Add(start + offset);
+                }
                 // missing이 Joker보다 커질 경우
                 // 브레이크
                 if (missing > Joker)
@@ -285,6 +289,7 @@ public static class CardCombination
                 for (int offset = 0; offset < straightLen; offset++)
                 {
                     int idx = start + offset;
+                    if (missingNum.Contains(idx)) continue;
                     // index가 n이라면 (13이라면) 
                     // Ace이므로 1을 rank에 삽입
                     // 이외에는 index+1을 삽입 (배열은 0부터 시작하므로)

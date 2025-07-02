@@ -23,6 +23,8 @@ public class SubmitUI : MonoBehaviour
     {
         attackButton.onClick.RemoveListener(OnAttackButtonClicked);
         DiscardButton.onClick.RemoveListener(OnDiscardButtonClicked);
+        SuitSortButton.onClick.RemoveListener(OnSuitSortButtonClicked);
+        NumSortButton.onClick.RemoveListener(OnNumSortButtonClicked);
     }
 
     private void OnAttackButtonClicked()

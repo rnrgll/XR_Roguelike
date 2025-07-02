@@ -17,6 +17,7 @@ public readonly struct MinorArcana : ICard
     public int CardNum { get; }
     // 카드 인챈트
     public Enchant Enchant { get; }
+    public Debuff debuff { get; }
 
 
     // 마이너 아르카나 생성자, 인챈트는 자동으로 none으로 생성된다.
@@ -26,5 +27,6 @@ public readonly struct MinorArcana : ICard
         CardSuit = _suit;
         CardNum = _num;
         Enchant = new();
+        debuff = new();
     }
 }
