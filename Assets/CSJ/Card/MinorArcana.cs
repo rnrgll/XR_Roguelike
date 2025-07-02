@@ -29,4 +29,32 @@ public readonly struct MinorArcana : ICard
         Enchant = new();
         debuff = new();
     }
+
+    public static bool operator ==(MinorArcana _card1, MinorArcana _card2)
+    {
+        if (_card1.CardName != _card2.CardName) return false;
+        if (_card1.CardSuit != _card2.CardSuit) return false;
+        if (_card1.CardNum != _card2.CardNum) return false;
+        return true;
+    }
+
+    public static bool operator !=(MinorArcana _card1, MinorArcana _card2)
+    {
+        if (_card1.CardName == _card2.CardName) return false;
+        if (_card1.CardSuit == _card2.CardSuit) return false;
+        if (_card1.CardNum == _card2.CardNum) return false;
+        return true;
+    }
+    public override bool Equals(object _card)
+    {
+        if (_card == null || (_card is not MinorArcana))
+            return false;
+        else
+            return this == ((MinorArcana)_card);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

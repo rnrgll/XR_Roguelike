@@ -19,13 +19,6 @@ public abstract class CardEnchantSO : ScriptableObject
     /// </summary>
     public virtual void OnCardPlayed(MinorArcana card, CardController controller) { }
 
-    /// <summary>
-    /// 턴이 끝날 때 호출
-    /// </summary>
-    public virtual void OnTurnEnd(CardController controller) { }
+    public virtual void OnRemove(MinorArcana card, CardController controller) { }
 
-    /// <summary>
-    /// 최종 점수 계산 시 호출
-    /// </summary>
-    public virtual void GetBonus() { }
 }

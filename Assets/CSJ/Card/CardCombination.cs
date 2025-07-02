@@ -54,7 +54,8 @@ public static class CardCombination
                 wildCount++;
             }
             // 만약 카드의 문양이 Special일 경우 그 카드는 패스
-            else if (card.CardSuit == MinorSuit.Special) continue;
+            else if (card.CardSuit == MinorSuit.Special ||
+            card.CardSuit == MinorSuit.statusEffect) continue;
             // 아닐경우 (문양이 카드일 경우) 해당 문양에 1을 더해준다.
             else
                 SuitNum[(int)card.CardSuit]++;

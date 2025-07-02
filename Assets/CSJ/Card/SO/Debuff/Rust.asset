@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e38a0e16c895ae419a0db0ffc42206b, type: 3}
   m_Name: Rust
   m_EditorClassIdentifier: 
-  _type: 0
+  _type: 3
   description: "\uBD80\uC2DD \uC0C1\uD0DC\uC774\uC0C1"
-  panelty: 0
+  panelty: 50

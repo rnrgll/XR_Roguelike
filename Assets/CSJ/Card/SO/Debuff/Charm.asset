@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7a0a3bd63a28a4681953b1b9085463, type: 3}
   m_Name: Charm
   m_EditorClassIdentifier: 
-  _type: 0
+  _type: 1
   description: "\uB9E4\uD639 \uC0C1\uD0DC\uC774\uC0C1"
   charmAmount: 1

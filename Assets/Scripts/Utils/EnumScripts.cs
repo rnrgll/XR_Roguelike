@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CardEnum
 {
-    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30, Special = 99 }
+    public enum MinorSuit { Wands, Cups, Swords, Pentacles, wildCard = 30, statusEffect = 50, Special = 99 }
 
     public enum MajorPosition { Upright, Reversed }
 

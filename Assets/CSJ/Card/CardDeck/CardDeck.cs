@@ -13,8 +13,8 @@ public class CardDeck
     // 카드들을 직접 보관하는 딕셔너리 Deck이다.
     public Dictionary<MinorSuit, List<MinorArcana>> Deck;
     // 덱에 있는 카드들이 어떤 인챈트를 가지고 있는지 보관한다.
-    public Dictionary<MinorArcana, CardEnchant> EnchantDic;
-    public Dictionary<MinorArcana, CardDebuff> DebuffDic;
+    public Dictionary<MinorArcana, CardEnchantSO> EnchantDic;
+    public Dictionary<MinorArcana, CardDebuffSO> DebuffDic;
     // 아르카나의 최대 숫자를 정해준다.
     // 현재는 1~13까지의 카드와 시종 카드로 14장으로 이루어져 있다.
     [SerializeField] readonly int arcanaLength = 14;
@@ -29,8 +29,8 @@ public class CardDeck
     public CardDeck(CsvTable csvTable)
     {
         _csvTable = csvTable;
-        EnchantDic = new Dictionary<MinorArcana, CardEnchant>();
-        DebuffDic = new Dictionary<MinorArcana, CardDebuff>();
+        EnchantDic = new Dictionary<MinorArcana, CardEnchantSO>();
+        DebuffDic = new Dictionary<MinorArcana, CardDebuffSO>();
         DeckInit();
     }
 
@@ -140,7 +140,7 @@ public class CardDeck
         return EnchantedCardList;
     }
 
-    public void Enchant(MinorArcana _card, CardEnchant _enchant)
+    public void Enchant(MinorArcana _card, CardEnchantSO _enchant)
     {
         // List<MinorArcana> Enchantable = GetEnchantableCard();
 
@@ -149,21 +149,31 @@ public class CardDeck
         //     throw new ArgumentException($"카드({_card})가 이미 강화되어 있습니다.");
         // }
         EnchantDic[_card] = _enchant;
-        _card.Enchant.EnchantToCard(_enchant);
-        OnCardEnchanted?.Invoke(_card, _enchant);
+        _card.Enchant.EnchantToCard(_enchant.EnchantType);
+        OnCardEnchanted?.Invoke(_card, _enchant.EnchantType);
     }
 
-    public void Debuff(MinorArcana _card, CardDebuff _debuff)
+    public void Debuff(MinorArcana _card, CardDebuffSO _debuff)
     {
         DebuffDic[_card] = _debuff;
-        _card.debuff.DebuffToCard(_debuff);
-        OnCardDebuffed?.Invoke(_card, _debuff);
+        _card.debuff.DebuffToCard(_debuff.DebuffType);
+        OnCardDebuffed?.Invoke(_card, _debuff.DebuffType);
     }
 
     public void DebuffClear(MinorArcana _card)
     {
         DebuffDic.Remove(_card);
         _card.debuff.DebuffToCard(CardDebuff.none);
+    }
+
+    public CardDebuffSO GetDebuffSO(MinorArcana card)
+    {
+        return DebuffDic[card];
+    }
+
+    public CardEnchantSO GetEnchantSO(MinorArcana card)
+    {
+        return EnchantDic[card];
     }
 }
 

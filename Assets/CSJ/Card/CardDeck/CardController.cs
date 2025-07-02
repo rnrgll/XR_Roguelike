@@ -34,17 +34,17 @@ public class CardController : MonoBehaviour
     public List<int> _selectedNums;
     public CardDeck Deck { get; private set; }
     public int sumofNums { get; private set; }
+    public int paneltyAmonut { get; private set; }
     public List<MinorArcana> SelectedCard { get; private set; }
     public CardCombinationEnum cardComb { get; private set; }
-    public int paneltyAmonut { get; private set; }
+
     #endregion
 
     #region  설정 모음 
     public int drawNum = 8;
     private List<MinorArcana> disposableCardList;
+    public Dictionary<MinorArcana, bool> IsUsableDic;
     public CardSortEnum sortStand = CardSortEnum.Suit;
-    [SerializeField] private CardEnchantSO[] EnchantList;
-    [SerializeField] private CardDebuffSO[] DebuffList;
 
     #endregion
 
@@ -63,6 +63,17 @@ public class CardController : MonoBehaviour
     public Action<MinorArcana> OnCardDeSelected = delegate { };
     public Action<CardCombinationEnum> OnSelectionChanged;
     public Action<List<MinorArcana>> OnSubmit;
+    public Action<MinorArcana> OnCardDrawn;
+    public Action<MinorArcana> OnCardDiscarded;
+    public Action<MinorArcana> OnCardSubmited;
+    #endregion
+
+    #region SO관련 내용 모음
+    [SerializeField] private CardEnchantSO[] EnchantList;
+    [SerializeField] private CardDebuffSO[] DebuffList;
+    [SerializeField] private StatusEffectCardSO[] StatusEffectList;
+    private Action<MinorArcana, CardDebuff> DebuffAction;
+    private Action<MinorArcana, CardEnchant> EnchantAction;
     #endregion
 
 
@@ -90,23 +101,28 @@ public class CardController : MonoBehaviour
     {
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
-        Deck.OnCardEnchanted += (card, enchant) =>
+        EnchantAction = (card, enchant) =>
         {
             var so = Array.Find(EnchantList, e => e.EnchantType == enchant);
-            so?.OnApply(card, this);
+            so.OnApply(card, this);
         };
 
-        Deck.OnCardDebuffed += (card, debuff) =>
+        DebuffAction = (card, debuff) =>
         {
-            var so = Array.Find(DebuffList, d => d.DebuffType == debuff);
-            so?.OnApply(card, this);
+            var so = Deck.GetDebuffSO(card);
+            so.OnSubscribe(card, this);
         };
+
+        Deck.OnCardEnchanted += EnchantAction;
+        Deck.OnCardDebuffed += DebuffAction;
     }
 
     public void OnDisable()
     {
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
+        Deck.OnCardEnchanted -= EnchantAction;
+        Deck.OnCardDebuffed -= DebuffAction;
     }
 
 
@@ -177,6 +193,10 @@ public class CardController : MonoBehaviour
     public void Submit()
     {
         paneltyAmonut = 0;
+        foreach (var card in SelectedCard)
+        {
+            OnCardSubmited.Invoke(card);
+        }
         OnSubmit?.Invoke(SelectedCard);
 
         foreach (MinorArcana card in SelectedCard)
@@ -215,6 +235,12 @@ public class CardController : MonoBehaviour
         {
             var card = BattleDeck.Draw();
             Hand.Add(card);
+
+
+            Deck.GetDebuffSO(card).OnSubscribe(card, this);
+
+            OnCardDrawn?.Invoke(card);
+
             if (BattleDeck.Count != 0) continue;
             DeckRefill();
             if (BattleDeck.Count == 0)
@@ -250,6 +276,10 @@ public class CardController : MonoBehaviour
             }
             Graveyard.Add(_card);
             Hand.Remove(_card);
+
+            Deck.GetDebuffSO(_card).OnUnSubscribe(_card, this);
+
+            OnCardDiscarded?.Invoke(_card);
             _num++;
         }
         OnChangedHands?.Invoke();
@@ -350,13 +380,39 @@ public class CardController : MonoBehaviour
 
     #endregion
 
-
+    #region 임시 카드 추가 함수
+    /// <summary>
+    /// 일회성 카드를 패에 추가한다.
+    /// </summary>
+    /// <param name="_disposCard">
+    /// Card의 Suit는 특수 카드의 경우 Special 이외에는 해당 문양으로 지정한다.
+    /// </param>
     public void AddDisposableCard(MinorArcana _disposCard)
     {
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
         OnChangedHands?.Invoke();
     }
+
+    /// <summary>
+    /// 상태이상 카드를 패에 추가한다.
+    /// </summary>
+    /// <param name="_statusCard">
+    /// Card의 Suit는 StatusEffect로 지정한다. 숫자는 0으로 지정한다.
+    /// new MinorArcana로 생성해서 전달한다.
+    /// </param>
+    /// <param name="IsUsable">사용가능 여부를 인자로 받는다.</param>
+    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo)
+    {
+        MinorArcana statusCard = _statusCardInfo.CreateCard();
+        Hand.Add(statusCard);
+        IsUsableDic.Add(statusCard, _statusCardInfo.IsUsable);
+        OnChangedHands?.Invoke();
+    }
+
+
+
+    #endregion
 
     #region 이벤트 관련 함수들
     public void AddSelect(MinorArcana card)
