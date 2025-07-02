@@ -73,7 +73,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 7482667652216324306, guid: 382f6edea9903441eba4ccdff3eae69b, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dddabe6d46640b4b20b911e5779b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotIndex: 0
   _popUpPanel: {fileID: 0}
   _targetTransform: {fileID: 0}
   _returnButton: {fileID: 0}

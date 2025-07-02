@@ -8,7 +8,6 @@ namespace LDH.LDH_Script
 {
     public class LDH_Test : MonoBehaviour
     {
-        
         public void GenerateMap()
         {
             Manager.Map.GenerateMap();
@@ -29,12 +28,12 @@ namespace LDH.LDH_Script
             Manager.UI.TopBarUI.SetActive(true);
             Manager.GameState.Init();
             Manager.GameState.AddGold(1000);
-            
+          
         }
 
         public void GetItems()
         {
-            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
+            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1);
             Manager.GameState.AddItem(items[0]);
         }
     }

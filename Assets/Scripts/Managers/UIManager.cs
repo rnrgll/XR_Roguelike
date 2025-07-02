@@ -16,9 +16,12 @@ namespace Managers
         public GameObject DeckUI { get; private set; }
         public GameObject ItemUI { get; private set; }
         
-        private GlobalUI? _currentOpenUI = null;
+        public GameObject ItemRemoveUI { get; private set; }
+        
+        private ToggleUI? _currentOpenUI = null;
 
         #endregion
+        
         
         
         private void Awake()
@@ -28,8 +31,6 @@ namespace Managers
 
         private void Start()
         {
-            
-            Debug.Log("UI 생성합니다.");
             //Global UI 생성하기
             //1. container 생성
             GameObject container = new GameObject("Global UI");
@@ -57,24 +58,30 @@ namespace Managers
             var itemPrefab = Resources.Load<GameObject>("Prefabs/@ItemUI");
             ItemUI = Instantiate(itemPrefab, container.transform);
             ItemUI.SetActive(false);
-        }
+            
+            // 5) Item Remove Canvas
+            var itemRemovePrefab = Resources.Load<GameObject>("Prefabs/@ItemRemoveUI");
+            ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform);
+            ItemRemoveUI.SetActive(false);
 
-        public void ToggleUI(GlobalUI uiType)
+        }
+        
+        public void ToggleUI(ToggleUI uiType)
         {
             if (_currentOpenUI == uiType)
             {
                 // 이미 열려 있던 UI면 닫고 상태 초기화
-                SetUIActive(uiType, false);
+                SetUIActive((GlobalUI)uiType, false);
                 _currentOpenUI = null;
                 return;
             }
 
             // 다른 UI 열려있으면 닫기
             if (_currentOpenUI.HasValue)
-                SetUIActive(_currentOpenUI.Value, false);
+                SetUIActive((GlobalUI)_currentOpenUI.Value, false);
 
             // 새 UI 열기
-            SetUIActive(uiType, true);
+            SetUIActive((GlobalUI)uiType, true);
             _currentOpenUI = uiType;
         }
         
@@ -100,6 +107,9 @@ namespace Managers
                 case GlobalUI.Item:
                     ItemUI?.SetActive(isActive);
                     break;
+                case GlobalUI.ItemRemove:
+                    ItemRemoveUI?.SetActive(isActive);
+                    break;  
             }
         }
     }

@@ -1,0 +1,7 @@
+id,name,description,price,image,weight
+card0,card item 1,1번 카드 아이템 입니다.,50,Cups01,10
+card1,card item 2,2번 카드 아이템 입니다.,50,Cups02,20
+card2,card item 3,3번 카드 아이템 입니다.,100,Cups03,30
+card3,card item 4,4번 카드 아이템 입니다.,100,Cups04,20.8
+card4,card item 5,5번 카드 아이템 입니다.,150,Cups05,10
+card5,card item 6,6번 카드 아이템 입니다.,200,Cups06,5

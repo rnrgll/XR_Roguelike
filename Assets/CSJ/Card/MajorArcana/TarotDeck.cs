@@ -8,7 +8,7 @@ public class TarotDeck : MonoBehaviour
 {
     [SerializeField] List<MajorArcanaSO> majorCardCandidates;
     [SerializeField] GameObject cardCon;
-    List<MajorArcanaSO> deckMajorCards;
+    List<MajorArcanaSO> deckMajorCards = new();
     MajorArcanaSO curCard;
     private int prevIndex;
 

@@ -1,3 +1,4 @@
+using Managers;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,8 @@ namespace InGameShop
 {
     public class PurchaseButton : MonoBehaviour
     {
-        [SerializeField] private GameObject _alarmPopUp;
-        
+        [SerializeField] private GameObject _goldAlarmPopUp;
+        [SerializeField] private FullSlotAlarmPanel _fullSlotAlarmPopUp;
         private string _itemId;
         private ButtonCondition _condition;
         
@@ -24,25 +25,34 @@ namespace InGameShop
         {
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();
+
+            _itemId = item.id;
             
             if (GameStateManager.Instance.Gold < item.price)
             {
-                _condition.SetButtonState(ButtonState.Deactive, () => _alarmPopUp.SetActive(true) );
+                _condition.SetButtonState(ButtonState.Deactive, () => _goldAlarmPopUp.SetActive(true) );
             }
             else
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, _itemId);
+                    Purchase(slotIndex, (item is GameItem? ItemType.item: ItemType.card), _itemId);
                     
                 });
             }
             
         }
 
-        private void Purchase(int slotIndex, string itemID)
+        public void Purchase(int slotIndex, ItemType itemType, string itemID)
         {
-            ShopManager.Instance.Purchase(slotIndex, itemID);
+            if (itemType == ItemType.item &&  Manager.GameState.CurrentItemCount == 3)
+            {
+                _fullSlotAlarmPopUp.Show(this);
+            }
+            else
+            {
+                ShopManager.Instance.Purchase(slotIndex, itemID);
+            }
         }
         
         

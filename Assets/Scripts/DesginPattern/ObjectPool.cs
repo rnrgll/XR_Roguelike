@@ -44,7 +44,7 @@ namespace DesignPattern
 
         public void PushPool(PooledObject target)
         {
-            target.transform.parent = _poolObject.transform;
+            target.transform.SetParent(_poolObject.transform);
             target.gameObject.SetActive(false);
             _stack.Push(target);
         }

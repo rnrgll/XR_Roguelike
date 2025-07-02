@@ -4,8 +4,9 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UI;
 
-namespace UI
+namespace TopBarUI
 {
     public class InventorySlot : MonoBehaviour
     {
@@ -35,7 +36,7 @@ namespace UI
 
         private void UpdateSlot(string itemId)
         {
-            this.itemId = Manager.GameState.Inventory[slotIndex];
+            this.itemId = Manager.GameState.ItemInventory[slotIndex];
             if (string.IsNullOrEmpty(this.itemId))
             {
                 _itemImage.sprite = null;
@@ -43,7 +44,7 @@ namespace UI
             else
             {
                 TempItem item = Manager.Data.ItemDB.GetItemById(this.itemId);
-                _itemImage.sprite = item.image;
+                _itemImage.sprite = item.sprite;
             }
             
         }
@@ -52,7 +53,7 @@ namespace UI
         {
             if (string.IsNullOrEmpty(itemId)) return;
             SendData();
-            Manager.UI.ToggleUI(GlobalUI.Item);
+            Manager.UI.ToggleUI(ToggleUI.Item);
         }
         
         private void SendData()

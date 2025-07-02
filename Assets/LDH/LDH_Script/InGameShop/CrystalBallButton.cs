@@ -51,7 +51,6 @@ namespace InGameShop
         private void Reroll()
         {
             GameStateManager.Instance.AddGold(-_rerollPrice);
-            Debug.Log($"보유재화 : {GameStateManager.Instance.Gold}");
             
             ShopManager.Instance.Reroll();
             

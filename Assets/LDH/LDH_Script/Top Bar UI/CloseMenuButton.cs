@@ -1,16 +1,14 @@
 using Managers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UI;
 
 
-namespace UI
+namespace TopBarUI
 { 
     public class CloseMenuButton : MonoBehaviour
     {
-        [SerializeField] private GlobalUI _globalUIType;
+        [SerializeField] private ToggleUI _globalUIType;
         
         private Button _button;
         // Start is called before the first frame update

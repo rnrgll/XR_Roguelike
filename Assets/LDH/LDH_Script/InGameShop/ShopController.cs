@@ -21,25 +21,35 @@ namespace InGameShop
         public void Reroll()
         {
             //가중치 기반으로 랜덤으로 아이템을 가져온다.
-            var newItems = Manager.Data.ItemDB.PickUniqeItemRandom(4);
+            var newItems = Manager.Data.ItemDB.PickUniqeItemRandomByType(4);
             _model.SetItems(newItems);
             
         }
 
         public void Purchase(string itemID)
         {
-
             var item = Manager.Data.ItemDB.GetItemById(itemID);
             
             if (GameStateManager.Instance.Gold < item.price)
                 return;
 
             GameStateManager.Instance.AddGold(-item.price);
-            //InventoryManager.Instance.AddItem(item);
+
+            if (item is GameItem)
+            {
+                Manager.GameState.AddItem(itemID);
+                Debug.Log("item is game Item");
+            }
+
+            else
+            {
+                Manager.GameState.AddCardItem(itemID);
+                Debug.Log("item is card item");
+            }
+            
+            
             Debug.Log($"현재 보유 재화 : {GameStateManager.Instance.Gold}");
-            
             Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
-            
             //popup 닫고, 비활성화 처리하기
             
         }

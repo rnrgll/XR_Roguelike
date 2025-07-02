@@ -14,7 +14,8 @@ namespace InGameShop
         [SerializeField] private List<ItemButton> itemButtons;
         private ShopModel model;
         private ShopController controller;
-
+        
+        
         private void Awake()
         {
             if (Instance != null)

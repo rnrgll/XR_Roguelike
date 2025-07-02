@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace TopBarUI
 {
     public class InventoryItemPopUp : MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace UI
         public void SetData(string itemID)
         {
             var item = Manager.Data.ItemDB.GetItemById(itemID);
-            _itemImage.sprite = item.image;
+            _itemImage.sprite = item.sprite;
             _itemDescription.text = $"{item.name}\n{item.description}";
         }
         

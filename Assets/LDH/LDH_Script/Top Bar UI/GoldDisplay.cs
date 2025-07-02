@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace TopBarUI
 {
     public class GoldDisplay : MonoBehaviour
     {
