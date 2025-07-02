@@ -21,6 +21,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public IReadOnlyList<string> ItemInventory => _itemInventory;
     public IReadOnlyList<string> CardInventory => _cardInventory;
     public int CurrentItemCount => _itemInventory.Count(id => !string.IsNullOrEmpty(id));
+    public int CurrentCardItemCount => _itemInventory.Count;
     
     
     private const int maxItemInventorySize = 3;

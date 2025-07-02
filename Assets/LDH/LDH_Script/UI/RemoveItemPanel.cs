@@ -18,7 +18,7 @@ namespace UI
             for(int i =0; i < Manager.GameState.MaxItemInventorySize; i++)
             {
                 int slotIndex = i;
-                if (Manager.GameState.ItemInventory.Count < Manager.GameState.MaxItemInventorySize) return;
+                if (Manager.GameState.CurrentItemCount!=3) return;
                 
                 UpdateSlot(i, Manager.GameState.ItemInventory[slotIndex]);
                 slots[slotIndex].onClick.AddListener(() => OnSlotClicked(slotIndex));
