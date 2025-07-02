@@ -17,6 +17,7 @@ public readonly struct MinorArcana : ICard
     public int CardNum { get; }
     // 카드 인챈트
     public Enchant Enchant { get; }
+    public Debuff debuff { get; }
 
 
     // 마이너 아르카나 생성자, 인챈트는 자동으로 none으로 생성된다.
@@ -26,5 +27,34 @@ public readonly struct MinorArcana : ICard
         CardSuit = _suit;
         CardNum = _num;
         Enchant = new();
+        debuff = new();
+    }
+
+    public static bool operator ==(MinorArcana _card1, MinorArcana _card2)
+    {
+        if (_card1.CardName != _card2.CardName) return false;
+        if (_card1.CardSuit != _card2.CardSuit) return false;
+        if (_card1.CardNum != _card2.CardNum) return false;
+        return true;
+    }
+
+    public static bool operator !=(MinorArcana _card1, MinorArcana _card2)
+    {
+        if (_card1.CardName == _card2.CardName) return false;
+        if (_card1.CardSuit == _card2.CardSuit) return false;
+        if (_card1.CardNum == _card2.CardNum) return false;
+        return true;
+    }
+    public override bool Equals(object _card)
+    {
+        if (_card == null || (_card is not MinorArcana))
+            return false;
+        else
+            return this == ((MinorArcana)_card);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
     }
 }
