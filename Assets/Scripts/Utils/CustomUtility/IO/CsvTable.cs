@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace CustomUtility
@@ -18,11 +19,35 @@ namespace CustomUtility
         /// - 행과 열 인덱스를 지정하여 데이터에 접근할 수 있다.
         /// - 전체 행의 데이터를 검색하기 위한 메서드를 제공한다.
         /// </summary>
-        [System.Serializable] public class CsvTable : Csv
+        [System.Serializable]
+        public class CsvTable : Csv
         {
             public string[,] Table { get; set; }
 
-            public CsvTable(string path, char splitSymbol) : base(path, splitSymbol) { }
+            public CsvTable(string path, char splitSymbol) : base(path, splitSymbol)
+            {
+                // 1) 줄 단위로 분리 (윈도우 CRLF 처리)
+                var lines = path
+                    .Replace("\r\n", "\n")
+                    .Split('\n')
+                    .Where(l => !string.IsNullOrEmpty(l))
+                    .ToArray();
+
+                // 2) 열 개수 계산
+                int rowCount = lines.Length;
+                int colCount = lines[0].Split(splitSymbol).Length;
+
+                // 3) 2차원 배열 할당
+                Table = new string[rowCount, colCount];
+
+                // 4) 실제 데이터 채우기
+                for (int r = 0; r < rowCount; r++)
+                {
+                    var cols = lines[r].Split(splitSymbol);
+                    for (int c = 0; c < colCount; c++)
+                        Table[r, c] = cols[c];
+                }
+            }
 
             /// <summary>
             /// Retrieves data from a specific cell in the table.
