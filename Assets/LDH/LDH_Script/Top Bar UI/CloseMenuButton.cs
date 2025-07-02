@@ -8,7 +8,7 @@ namespace TopBarUI
 { 
     public class CloseMenuButton : MonoBehaviour
     {
-        [SerializeField] private GlobalUI _globalUIType;
+        [SerializeField] private ToggleUI _globalUIType;
         
         private Button _button;
         // Start is called before the first frame update

@@ -36,12 +36,12 @@ namespace TopBarUI
 
         private void ShowMap()
         {
-            Manager.UI.ToggleUI(GlobalUI.Map);
+            Manager.UI.ToggleUI(ToggleUI.Map);
         }
 
         private void ShowDeck()
         {
-            Manager.UI.ToggleUI(GlobalUI.Deck);
+            Manager.UI.ToggleUI(ToggleUI.Deck);
         }
 
         private void ShowSetting()

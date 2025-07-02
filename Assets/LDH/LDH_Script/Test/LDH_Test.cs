@@ -33,7 +33,7 @@ namespace LDH.LDH_Script
 
         public void GetItems()
         {
-            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandom(1);
+            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1);
             Manager.GameState.AddItem(items[0]);
         }
     }

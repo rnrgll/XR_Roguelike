@@ -4,6 +4,7 @@ using Managers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TopBarUI
 {
@@ -11,6 +12,8 @@ namespace TopBarUI
     {
         [SerializeField] private CardVeiw _cardPrefab;
         [SerializeField] private Transform _gridContainer;
+        [SerializeField] private ScrollRect _scrollRect;
+        
         
         [SerializeField] private CardController _cardController;
         [SerializeField] private TarotDeck _tarotDeck;
@@ -36,7 +39,15 @@ namespace TopBarUI
                 var card = child.GetComponent<CardVeiw>() as PooledObject;
                 card.ReturnPool();
             }
+            ResetScroll();
         }
+
+        private void ResetScroll()
+        {
+            _scrollRect.normalizedPosition = new Vector2(0, 1);
+            
+        }
+        
         private void SettingCardView()
         {
             //컨트롤러에서 전체 카드 덱을 조회한다.

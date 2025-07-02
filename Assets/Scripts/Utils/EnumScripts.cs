@@ -60,6 +60,12 @@ namespace Map
 
 namespace InGameShop
 {
+    public enum ItemType
+    {
+        item,
+        card,
+        both,
+    }
     public enum SortOrder
     {
         Item = 3,
@@ -84,5 +90,16 @@ namespace UI
         Map,
         Deck,
         Item,
+        Setting,
+        ItemRemove,
+    }
+
+    //Global UI 랑 enum 값 맞춰주기
+    public enum ToggleUI 
+    {
+        Map = 1,
+        Deck,
+        Item,
+        Setting,
     }
 }

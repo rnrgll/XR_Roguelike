@@ -48,6 +48,7 @@ namespace InGameShop
             if (Manager.GameState.CurrentItemCount == 3)
             {
                 _fullSlotAlarmPopUp.SetActive(true);
+                
             }
             else
             {

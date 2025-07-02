@@ -53,7 +53,7 @@ namespace TopBarUI
         {
             if (string.IsNullOrEmpty(itemId)) return;
             SendData();
-            Manager.UI.ToggleUI(GlobalUI.Item);
+            Manager.UI.ToggleUI(ToggleUI.Item);
         }
         
         private void SendData()
