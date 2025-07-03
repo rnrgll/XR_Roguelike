@@ -21,10 +21,12 @@ public class CardDeck
     private readonly CsvTable _csvTable;
     public Action<MinorArcana, CardEnchant> OnCardEnchanted;
     public Action<MinorArcana, CardDebuff> OnCardDebuffed;
+    public Action<MinorArcana, CardDebuff> OnCardDebuffCleared;
     // 카드가 추가될 때의 이벤트 (미사용)
     // public Action<MinorArcana> OnCardAdded;
     // 카드가 삭제될 때의 이벤트 (미사용)
     // public Action<MinorArcana> OnCardRemoved;
+
 
     public CardDeck(CsvTable csvTable)
     {
@@ -48,6 +50,7 @@ public class CardDeck
             {
                 Deck[(MinorSuit)suit].Add(GetCardData(suit, num));
             }
+            Debug.Log((MinorSuit)suit);
         }
     }
 
@@ -152,22 +155,24 @@ public class CardDeck
         OnCardEnchanted?.Invoke(_card, _enchant.EnchantType);
     }
 
-    public void Debuff(MinorArcana _card, CardDebuffSO _debuff)
+    public void Debuff(MinorArcana _card, CardDebuffSO _debuffSO)
     {
-        DebuffDic[_card] = _debuff;
-        _card.debuff.DebuffToCard(_debuff.DebuffType);
-        OnCardDebuffed?.Invoke(_card, _debuff.DebuffType);
+        // 디버프가 걸려있다면 먼저 해제한다.
+        if (DebuffDic.TryGetValue(_card, out var old) &&
+        old.DebuffType != CardDebuff.none)
+            DebuffClear(_card);
+
+
+        DebuffDic[_card] = _debuffSO;
+        _card.debuff.DebuffToCard(_debuffSO.DebuffType);
+        OnCardDebuffed?.Invoke(_card, _debuffSO.DebuffType);
     }
 
     public void DebuffClear(MinorArcana _card)
     {
         DebuffDic.Remove(_card);
         _card.debuff.DebuffToCard(CardDebuff.none);
-    }
-    public void EnchantClear(MinorArcana _card)
-    {
-        EnchantDic.Remove(_card);
-        _card.Enchant.EnchantToCard(CardEnchant.none);
+        OnCardDebuffCleared?.Invoke(_card, CardDebuff.none);
     }
 
     public CardDebuffSO GetDebuffSO(MinorArcana card)

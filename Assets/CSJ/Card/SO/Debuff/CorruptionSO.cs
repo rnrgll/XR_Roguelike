@@ -6,25 +6,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Corruption", menuName = "Cards/Debuff/Corruption")]
 public class CorruptionSO : CardDebuffSO
 {
-    private bool IsUsed;
-    [SerializeField] RustSO rust;
-    public override void OnSubscribe(MinorArcana card, CardController controller)
-    {
-        IsUsed = false;
-        base.OnSubscribe(card, controller);
-    }
+    [SerializeField] private CardDebuffSO rustDebuff; // 부식 디버프 종류
 
     public override void OnCardPlayed(MinorArcana card, CardController controller)
     {
-        IsUsed = true;
+        Debug.Log($"[부패] {card.CardName} 사용됨 → 부패 해제");
+        controller.Deck.DebuffClear(card);
     }
 
     public override void OnTurnEnd(MinorArcana card, CardController controller)
     {
-        if (!IsUsed)
-        {
-            controller.Deck.Debuff(card, rust);
-        }
-        else controller.Deck.DebuffClear(card);
+        Debug.Log($"[부패] {card.CardName} 사용되지 않음 → Rust로 부식됨");
+        controller.ApplyDebuff(card, rustDebuff); // RustSO 부여
     }
 }
