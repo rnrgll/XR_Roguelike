@@ -34,8 +34,10 @@ public class CardController : MonoBehaviour
     public List<int> _selectedNums;
     public CardDeck Deck { get; private set; }
     public int sumofNums { get; private set; }
-    public int penaltyAmount { get; private set; }
-    public int BonusAmount { get; private set; }
+    public Dictionary<CardBonus, float> turnBonusDic;
+    public Dictionary<CardBonus, float> BattleBonusDic;
+    public Dictionary<CardBonus, float> turnpenaltyDic;
+    public Dictionary<CardBonus, float> BattlePenaltyDic;
     public List<MinorArcana> SelectedCard { get; private set; } = new();
     public CardCombinationEnum cardComb { get; private set; }
     public int[] numbersList = new int[15];
@@ -69,14 +71,14 @@ public class CardController : MonoBehaviour
     public Action<MinorArcana> OnCardDiscarded;
     public Action<MinorArcana> OnCardSubmited;
     public Action<MinorArcana, MinorArcana> OnCardSwapped;
+    private Action<MinorArcana, CardDebuff> _onDebuffApplied;
+    private Action<MinorArcana, CardDebuff> _onDebuffCleared;
     #endregion
 
     #region SO관련 내용 모음
     [SerializeField] private CardEnchantSO[] EnchantList;
     [SerializeField] private CardDebuffSO[] DebuffList;
     [SerializeField] private StatusEffectCardSO[] StatusEffectList;
-    private Action<MinorArcana, CardDebuff> DebuffAction;
-    private Action<MinorArcana, CardEnchant> EnchantAction;
     #endregion
 
 
@@ -105,21 +107,23 @@ public class CardController : MonoBehaviour
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
         OnCardDrawn += AdjustCountList;
-        EnchantAction = (card, enchant) =>
-        {
-            var so = Array.Find(EnchantList, e => e.EnchantType == enchant);
-            so.OnApply(card, this);
-        };
+        TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
 
-        DebuffAction = (card, debuff) =>
+        // “디버프가 새로 걸릴 때” SO 구독
+        _onDebuffApplied = (card, debuff) =>
         {
             var so = Deck.GetDebuffSO(card);
-            so.OnSubscribe(card, this);
+            so?.OnSubscribe(card, this);
         };
-        if (Deck != null && EnchantList.Length > 0)
-            Deck.OnCardEnchanted += EnchantAction;
-        if (Deck != null && DebuffList.Length > 0)
-            Deck.OnCardDebuffed += DebuffAction;
+        Deck.OnCardDebuffed += _onDebuffApplied;
+
+        // “디버프가 해제될 때” SO 해제
+        _onDebuffCleared = (card, oldDebuff) =>
+        {
+            var so = Deck.GetDebuffSO(card);
+            so?.OnUnSubscribe(card, this);
+        };
+        Deck.OnCardDebuffCleared += _onDebuffCleared;
     }
 
     public void OnDisable()
@@ -127,10 +131,10 @@ public class CardController : MonoBehaviour
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
         OnCardDrawn -= AdjustCountList;
-        if (!(EnchantList.Count() == 0))
-            Deck.OnCardEnchanted -= EnchantAction;
-        if (!(DebuffList.Count() == 0))
-            Deck.OnCardDebuffed -= DebuffAction;
+        TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
+
+        Deck.OnCardDebuffed -= _onDebuffApplied;
+        Deck.OnCardDebuffCleared -= _onDebuffCleared;
     }
 
 
@@ -140,6 +144,9 @@ public class CardController : MonoBehaviour
         Hand = new HandPile<MinorArcana>();
         Graveyard = new GraveyardPile<MinorArcana>();
         BattleDeck = new BattlePile<MinorArcana>();
+
+        BattleBonusDic = new();
+        //foreach (var type in Enum.)
 
         ResetDeck();
         // 테스트용 임시로 Start에서 실행
@@ -172,10 +179,14 @@ public class CardController : MonoBehaviour
                 SuitsList[j]++;
             }
         }
-
         BattleDeck.Shuffle();
-        Draw(8);
+        Draw(drawNum);
+    }
 
+    public void TurnInit()
+    {
+        turnBonusDic.Clear();
+        Draw(drawNum);
     }
     #endregion
 
@@ -209,7 +220,7 @@ public class CardController : MonoBehaviour
             Debug.LogError("SelectedCard is null!");
             return;
         }
-        penaltyAmount = 0;
+        //penaltyAmount = 0;
         foreach (var card in SelectedCard)
         {
             OnCardSubmited?.Invoke(card);
@@ -230,10 +241,10 @@ public class CardController : MonoBehaviour
         return cards;
     }
 
-    public int GetPenalty()
-    {
-        return penaltyAmount;
-    }
+    //public int GetPenalty()
+    //{
+    //return penaltyAmount;
+    //}
     #endregion
 
     #region 카드를 직접 컨트롤하는 함수 모음
@@ -250,6 +261,9 @@ public class CardController : MonoBehaviour
             Hand.Add(card);
             if (card.debuff.debuffinfo != CardDebuff.none)
                 Deck.GetDebuffSO(card)?.OnSubscribe(card, this);
+
+            if (card.Enchant.enchantInfo != CardEnchant.none)
+                Deck.GetEnchantSO(card)?.OnSubscribe(card, this);
 
             OnCardDrawn?.Invoke(card);
 
@@ -290,6 +304,8 @@ public class CardController : MonoBehaviour
             Hand.Remove(_card);
             if (_card.debuff.debuffinfo != CardDebuff.none)
                 Deck.GetDebuffSO(_card).OnUnSubscribe(_card, this);
+            if (_card.Enchant.enchantInfo != CardEnchant.none)
+                Deck.GetEnchantSO(_card)?.OnUnSubscribe(_card, this);
 
             OnCardDiscarded?.Invoke(_card);
             _num++;
@@ -468,11 +484,11 @@ public class CardController : MonoBehaviour
 
     public void AddPanelty(int _paneltyAmount)
     {
-        penaltyAmount += _paneltyAmount;
+        //penaltyAmount += _paneltyAmount;
     }
     public void AddBonus(int _Bonus)
     {
-        BonusAmount += _Bonus;
+        //BonusAmount += _Bonus;
     }
     #endregion
 
@@ -650,17 +666,15 @@ public class CardController : MonoBehaviour
     /// <summary>
     /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
     /// </summary>
-    public void ApplyDebuff(MinorArcana card, CardDebuff type)
+    public void ApplyDebuff(MinorArcana card, CardDebuffSO _debuff)
     {
-        var so = DebuffDatabase.Instance.GetDebuffSO(type);
+        var so = _debuff;
         if (so == null) return;
 
-        // 1) 카드에 디버프 정보 세팅
-        card.debuff.DebuffToCard(type);
-        // 2) SO 구독
-        so.OnSubscribe(card, this);
+        // 1) Debuff를 적용한다.
+        Deck.Debuff(card, _debuff);
 
-        // 3) Rust(유혹)일 경우 몬스터 스택 연결
+        // 2) Rust(유혹)일 경우 몬스터 스택 연결
         if (so is CharmSO charm)
         {
             // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
