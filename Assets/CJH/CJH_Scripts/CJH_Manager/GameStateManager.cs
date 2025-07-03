@@ -1,10 +1,12 @@
 using InGameShop;
+using Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using UI;
 
 public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 {
@@ -60,8 +62,10 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public void AddWin() => Wins++;
     public void AddGold(int amount)
     {
+        if(amount==0) return;
         Gold += amount;
         OnGoldChanged?.Invoke(Gold);
+        Debug.Log($"골드 {amount}를 {(amount>=0?"획득":"감소")}!");
     }
 
     public void AddExp(int amount) => Exp += amount;
@@ -71,7 +75,15 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     public void AddItem(string itemID)
     {
-        //if (_inventory.Contains(itemID)) return; //아이템 중복 획득 가능할 것으로 판단하여 주석처리
+        //인벤토리 슬롯이 꽉 차있는지 확인
+        if (CurrentItemCount == 3)
+        {
+            //아이템 제거하도록 처리
+            Manager.UI.ItemRemoveUI.SetCallBack(() => AddItem(itemID));
+            Manager.UI.SetUIActive(GlobalUI.ItemRemove, true);
+            return;
+        }
+        
         int idx = _itemInventory.FindIndex(id => string.IsNullOrEmpty(id));
         if (idx != -1)
         {
@@ -80,13 +92,14 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         }
         else
         {
-            Debug.LogWarning("인벤토리가 가득 찼습니다.");
+            Debug.LogWarning("인벤토리가 가득 찼습니다. 아이템 제거가 제대로 이루어지지 않았습니다.");
             // 또는 UI 경고 처리
         }
     }
 
     public void AddCardItem(string cardId)
     {
+        Debug.Log(cardId);
         _cardInventory.Add(cardId);
         OnCardItemChanged?.Invoke(cardId);
     }

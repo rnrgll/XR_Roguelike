@@ -90,7 +90,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
-            TotalCardItemCount = rowCnt; //아이템 개수 저장
+            TotalCardItemCount = rowCnt-1; //아이템 개수 저장
             
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)

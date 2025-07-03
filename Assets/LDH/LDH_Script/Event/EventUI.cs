@@ -46,7 +46,6 @@ namespace Event
                 Debug.Log(subEffects==null);
                 eventOptions[i].onClick.AddListener(() =>
                 {
-                    Debug.Log(subEffects.Count);
                     foreach (SubEffect subEffect in subEffects)
                     {
                         Debug.Log(subEffect.SubEffectType.ToString());

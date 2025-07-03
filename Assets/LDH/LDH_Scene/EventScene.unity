@@ -1851,6 +1851,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2112178539596805376, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
       insertIndex: -1
       addedObject: {fileID: 828910785}
+    - targetCorrespondingSourceObject: {fileID: 2112178539596805376, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 828910790}
   m_SourcePrefab: {fileID: 100100000, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
 --- !u!224 &828910783 stripped
 RectTransform:
@@ -1875,7 +1878,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   majorCardCandidates: []
-  cardCon: {fileID: 0}
+  cardCon: {fileID: 828910784}
+--- !u!114 &828910790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828910784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6753dcbc66c0ddb49b4ee4f0c4d60502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectedNums: 
+  drawNum: 8
+  sortStand: 1
+  EnchantList: []
+  DebuffList: []
+  StatusEffectList: []
 --- !u!1 &960864623
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,7 @@
 using CustomUtility.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Event
@@ -131,11 +129,18 @@ namespace Event
                     bool hasDurtaion = int.TryParse(table.Table[r, c+2], out int duration);
                     if (hasType)
                     {
-                        SubEffect subEffect = new(
-                            (SubEffectType)type,
-                            value,
-                            hasDurtaion != null ? duration : null
-                        );
+                        SubEffect subEffect = (SubEffectType)type switch
+                        {
+                            SubEffectType.NoEffect => new NoEffect(),
+                            SubEffectType.AttackBoost => new AttackBoostEffect(value, duration),
+                            SubEffectType.ResourceGain => new GoldGainEffect(value),
+                            SubEffectType.ResourceLoss => new GoldLossEffect(value),
+                            SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
+                            SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
+                            SubEffectType.HPDrain => new HPChangeEffect()
+                        };
+                        
+                            
                         subEffects.Add(subEffect);
                     }
                     else
@@ -172,7 +177,7 @@ namespace Event
             EventRewardEffect noEffect = new EventRewardEffect();
             noEffect.RewardEffectID = 4000;
             List<SubEffect> effects = new();
-            effects.Add(new SubEffect(SubEffectType.NoEffect,0,null));
+            effects.Add(new NoEffect());
             noEffect.SubEffectList = effects;
             RewardEffectDB.Add(4000, noEffect);
             Debug.Log(RewardEffectDB.Count + "개 보상 효과 데이터를 로드했습니다.");

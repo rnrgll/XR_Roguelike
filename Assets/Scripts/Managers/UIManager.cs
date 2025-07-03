@@ -16,7 +16,7 @@ namespace Managers
         public GameObject DeckUI { get; private set; }
         public GameObject ItemUI { get; private set; }
         
-        public GameObject ItemRemoveUI { get; private set; }
+        public RemoveItemPanel ItemRemoveUI { get; private set; }
         
         private ToggleUI? _currentOpenUI = null;
 
@@ -61,8 +61,8 @@ namespace Managers
             
             // 5) Item Remove Canvas
             var itemRemovePrefab = Resources.Load<GameObject>("Prefabs/@ItemRemoveUI");
-            ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform);
-            ItemRemoveUI.SetActive(false);
+            ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform).GetComponent<RemoveItemPanel>();
+            ItemRemoveUI.gameObject.SetActive(false);
 
         }
         
@@ -108,7 +108,7 @@ namespace Managers
                     ItemUI?.SetActive(isActive);
                     break;
                 case GlobalUI.ItemRemove:
-                    ItemRemoveUI?.SetActive(isActive);
+                    ItemRemoveUI?.gameObject.SetActive(isActive);
                     break;  
             }
         }
