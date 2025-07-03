@@ -624,6 +624,38 @@ public class CardController : MonoBehaviour
     #endregion
 
 
+    /// <summary>
+    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
+    /// </summary>
+    public void ApplyDebuff(MinorArcana card, CardDebuff type)
+    {
+        var so = DebuffDatabase.Instance.GetDebuffSO(type);
+        if (so == null) return;
 
+        // 1) 카드에 디버프 정보 세팅
+        card.debuff.DebuffToCard(type);
+        // 2) SO 구독
+        so.OnSubscribe(card, this);
+
+        // 3) Rust(유혹)일 경우 몬스터 스택 연결
+        if (so is CharmSO charm)
+        {
+            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
+            charm.OnCharmCardUsed += amount =>
+                LustMonster.Instance.IncreaseLustStack(amount);
+        }
+    }
+
+    /// <summary>
+    /// 배틀 종료 시(혹은 카드 제거 시) 디버프 해제
+    /// </summary>
+    public void RemoveDebuff(MinorArcana card)
+    {
+        var type = card.debuff.debuffinfo;
+        var so = DebuffDatabase.Instance.GetDebuffSO(type);
+        if (so != null)
+            so.OnUnSubscribe(card, this);
+        card.debuff.DebuffToCard(CardDebuff.none);
+    }
 
 }

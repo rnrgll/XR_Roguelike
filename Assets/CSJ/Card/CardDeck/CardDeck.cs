@@ -26,6 +26,7 @@ public class CardDeck
     // 카드가 삭제될 때의 이벤트 (미사용)
     // public Action<MinorArcana> OnCardRemoved;
 
+
     public CardDeck(CsvTable csvTable)
     {
         _csvTable = csvTable;
@@ -153,11 +154,9 @@ public class CardDeck
         OnCardEnchanted?.Invoke(_card, _enchant.EnchantType);
     }
 
-    public void Debuff(MinorArcana _card, CardDebuffSO _debuff)
+    public void Debuff(MinorArcana card, CardDebuff debuffType)
     {
-        DebuffDic[_card] = _debuff;
-        _card.debuff.DebuffToCard(_debuff.DebuffType);
-        OnCardDebuffed?.Invoke(_card, _debuff.DebuffType);
+        OnCardDebuffed?.Invoke(card, debuffType);
     }
 
     public void DebuffClear(MinorArcana _card)

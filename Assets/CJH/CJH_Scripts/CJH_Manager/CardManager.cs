@@ -1,3 +1,4 @@
+using CardEnum;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,10 @@ public class CardManager : MonoBehaviour
         if (selectedCards.Count >= 5) return;
 
         selectedCards.Add(card);
+
+        //  디버프 적용
+        var debuffType = card.debuff.debuffinfo;
+
 
         if (selectedCards.Count == 5)
         {
@@ -48,4 +53,30 @@ public class CardManager : MonoBehaviour
     }
 
     public void Reset() => selectedCards.Clear();
+
+    public MinorArcana GetRandomHandCard()
+    {
+        if (handCards.Count == 0) return default;
+        return handCards[UnityEngine.Random.Range(0, handCards.Count)];
+    }
+
+    public int CountDebuffedCardsInHand(CardDebuff debuffType)
+    {
+        int count = 0;
+        foreach (var card in handCards)
+        {
+            if (card.debuff.debuffinfo == debuffType)
+                count++;
+        }
+        return count;
+    }
+
+    public void DiscardAllHandCards()
+    {
+        foreach (var card in new List<MinorArcana>(handCards))
+        {
+            RemoveCard(card);
+            Debug.Log($"[CardManager] 카드 폐기됨: {card.CardName}");
+        }
+    }
 }
