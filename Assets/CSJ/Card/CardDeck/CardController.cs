@@ -34,9 +34,9 @@ public class CardController : MonoBehaviour
     public List<int> _selectedNums;
     public CardDeck Deck { get; private set; }
     public int sumofNums { get; private set; }
-    public Dictionary<CardBonus, float> turnBonusDic;
+    public Dictionary<CardBonus, float> TurnBonusDic;
     public Dictionary<CardBonus, float> BattleBonusDic;
-    public Dictionary<CardBonus, float> turnpenaltyDic;
+    public Dictionary<CardBonus, float> TurnPenaltyDic;
     public Dictionary<CardBonus, float> BattlePenaltyDic;
     public List<MinorArcana> SelectedCard { get; private set; } = new();
     public CardCombinationEnum cardComb { get; private set; }
@@ -48,6 +48,7 @@ public class CardController : MonoBehaviour
     public int drawNum = 8;
     private List<MinorArcana> disposableCardList;
     public Dictionary<MinorArcana, bool> IsUsableDic = new();
+    public Dictionary<MinorArcana, int> MultiPleCardDic = new();
     public CardSortEnum sortStand = CardSortEnum.Suit;
 
     #endregion
@@ -75,6 +76,8 @@ public class CardController : MonoBehaviour
     private Action<MinorArcana, CardEnchant> _onEnchantCleared;
     private Action<MinorArcana, CardDebuff> _onDebuffApplied;
     private Action<MinorArcana, CardDebuff> _onDebuffCleared;
+    private Action<MinorArcana> OnRemoveStatusEffectCard;
+    private Action<MinorArcana> OnRemoveDisposableCard;
     #endregion
 
     #region SO관련 내용 모음
@@ -165,14 +168,17 @@ public class CardController : MonoBehaviour
         Graveyard = new GraveyardPile<MinorArcana>();
         BattleDeck = new BattlePile<MinorArcana>();
 
-        BattleBonusDic = new();
-        //foreach (var type in Enum.)
         foreach (var debuffSO in DebuffArr)
         {
             DebuffList.Add(debuffSO.DebuffType);
         }
-        ResetDeck();
 
+        BattleBonusDic = new();
+        BattlePenaltyDic = new();
+        TurnPenaltyDic = new();
+        TurnBonusDic = new();
+
+        ResetDeck();
         // 테스트용 임시로 Start에서 실행
         BattleInit();
 
@@ -205,14 +211,24 @@ public class CardController : MonoBehaviour
                 SuitsList[j]++;
             }
         }
+
+        foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
+        {
+            BattleBonusDic[type] = 0;
+            BattlePenaltyDic[type] = 0;
+            TurnPenaltyDic[type] = 0;
+            TurnBonusDic[type] = 0;
+        }
+
         BattleDeck.Shuffle();
-        Draw(drawNum);
+        Draw();
     }
 
     public void TurnInit()
     {
-        turnBonusDic.Clear();
-        Draw(drawNum);
+        TurnBonusDic.Clear();
+        TurnPenaltyDic.Clear();
+        Draw();
     }
     #endregion
 
@@ -271,10 +287,6 @@ public class CardController : MonoBehaviour
         return DebuffArr[DebuffList.LastIndexOf(_debuff)];
     }
 
-    //public int GetPenalty()
-    //{
-    //return penaltyAmount;
-    //}
     #endregion
 
     #region 카드를 직접 컨트롤하는 함수 모음
@@ -324,9 +336,9 @@ public class CardController : MonoBehaviour
         {
             if (!Hand.GetCardList().Contains(_card)) continue;
 
-            if (disposableCardList.Remove(_card))
+            if (disposableCardList.Contains(_card))
             {
-                Hand.Remove(_card);
+                RemoveDispoableCard(_card);
                 _num++;
                 continue;
             }
@@ -408,7 +420,7 @@ public class CardController : MonoBehaviour
 
     public void SortByStand()
     {
-        if (sortStand == CardEnum.CardSortEnum.Number)
+        if (sortStand == CardSortEnum.Number)
             SortByNum();
         else
             SortBySuit();
@@ -467,14 +479,25 @@ public class CardController : MonoBehaviour
     /// new MinorArcana로 생성해서 전달한다.
     /// </param>
     /// <param name="IsUsable">사용가능 여부를 인자로 받는다.</param>
-    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo)
+    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo, MinorArcana card)
     {
-        MinorArcana statusCard = _statusCardInfo.CreateCard();
-        Hand.Add(statusCard);
-        IsUsableDic.Add(statusCard, _statusCardInfo.IsUsable);
+        Hand.Add(card);
+        IsUsableDic.Add(card, _statusCardInfo.IsUsable);
         OnChangedHands?.Invoke();
     }
 
+    public void RemoveStatusEffectCard(MinorArcana card)
+    {
+        Hand.Remove(card);
+        OnRemoveStatusEffectCard?.Invoke(card);
+    }
+
+    public void RemoveDispoableCard(MinorArcana disposablecard)
+    {
+        Hand.Remove(disposablecard);
+        disposableCardList.Remove(disposablecard);
+        OnRemoveDisposableCard?.Invoke(disposablecard);
+    }
 
 
     #endregion
@@ -512,13 +535,91 @@ public class CardController : MonoBehaviour
         OnSelectionChanged?.Invoke(cardComb);
     }
 
-    public void AddPanelty(int _paneltyAmount)
+    public void TurnEndDiscard()
     {
-        //penaltyAmount += _paneltyAmount;
+        int handsCount = Hand.Count;
+        if (MultiPleCardDic.Count != 0)
+        {
+            foreach (var KeyValue in MultiPleCardDic)
+            {
+                handsCount += KeyValue.Value;
+            }
+        }
+        while (handsCount <= 8)
+        {
+            Discard();
+        }
     }
-    public void AddBonus(int _Bonus)
+
+    #endregion
+
+
+    #region 디버프 함수들
+    /// <summary>
+    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
+    /// </summary>
+    public void ApplyDebuff(MinorArcana card, CardDebuffSO _debuff)
     {
-        //BonusAmount += _Bonus;
+        var so = _debuff;
+        if (so == null) return;
+
+        // 1) Debuff를 적용한다.
+        Deck.Debuff(card, _debuff);
+
+        // 2) Rust(유혹)일 경우 몬스터 스택 연결
+        if (so is CharmSO charm)
+        {
+            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
+            charm.OnCharmCardUsed += amount =>
+                LustMonster.Instance.IncreaseLustStack(amount);
+        }
+    }
+    /// <summary>
+    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
+    /// </summary>
+    public void ApplyDebuff(MinorArcana card, CardDebuff _debuff)
+    {
+        var debuffSO = GetDebuffSO(_debuff);
+        if (debuffSO == null) return;
+
+        // 1) Debuff를 적용한다.
+        Deck.Debuff(card, debuffSO);
+
+        // 2) Rust(유혹)일 경우 몬스터 스택 연결
+        if (debuffSO is CharmSO charm)
+        {
+            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
+            charm.OnCharmCardUsed += amount =>
+                LustMonster.Instance.IncreaseLustStack(amount);
+        }
+    }
+
+    // /// <summary>
+    // /// 배틀 종료 시(혹은 카드 제거 시) 디버프 해제
+    // /// </summary>
+    // public void RemoveDebuff(MinorArcana card)
+    // {
+    //     var type = card.debuff.debuffinfo;
+    //     var so = DebuffDatabase.Instance.GetDebuffSO(type);
+    //     if (so != null)
+    //         so.OnUnSubscribe(card, this);
+    //     card.debuff.DebuffToCard(CardDebuff.none);
+    // }
+
+    public void SetBattleBonusList(CardBonus cardBonus, BonusType type, float Amount)
+    {
+        if (type == BonusType.Bonus)
+            BattleBonusDic[cardBonus] += Amount;
+        else
+            BattlePenaltyDic[cardBonus] += Amount;
+    }
+
+    public void SetTurnBonusList(CardBonus cardBonus, BonusType type, float Amount)
+    {
+        if (type == BonusType.Bonus)
+            TurnBonusDic[cardBonus] += Amount;
+        else
+            TurnPenaltyDic[cardBonus] += Amount;
     }
     #endregion
 
@@ -692,74 +793,5 @@ public class CardController : MonoBehaviour
     }*/
     #endregion
 
-    #region 디버프 함수들
-    /// <summary>
-    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
-    /// </summary>
-    public void ApplyDebuff(MinorArcana card, CardDebuffSO _debuff)
-    {
-        var so = _debuff;
-        if (so == null) return;
-
-        // 1) Debuff를 적용한다.
-        Deck.Debuff(card, _debuff);
-
-        // 2) Rust(유혹)일 경우 몬스터 스택 연결
-        if (so is CharmSO charm)
-        {
-            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
-            charm.OnCharmCardUsed += amount =>
-                LustMonster.Instance.IncreaseLustStack(amount);
-        }
-    }
-    /// <summary>
-    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
-    /// </summary>
-    public void ApplyDebuff(MinorArcana card, CardDebuff _debuff)
-    {
-
-        var debuffSO = GetDebuffSO(_debuff);
-        if (debuffSO == null) return;
-
-        // 1) Debuff를 적용한다.
-        Deck.Debuff(card, debuffSO);
-
-        // 2) Rust(유혹)일 경우 몬스터 스택 연결
-        if (debuffSO is CharmSO charm)
-        {
-            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
-            charm.OnCharmCardUsed += amount =>
-                LustMonster.Instance.IncreaseLustStack(amount);
-        }
-    }
-
-    // /// <summary>
-    // /// 배틀 종료 시(혹은 카드 제거 시) 디버프 해제
-    // /// </summary>
-    // public void RemoveDebuff(MinorArcana card)
-    // {
-    //     var type = card.debuff.debuffinfo;
-    //     var so = DebuffDatabase.Instance.GetDebuffSO(type);
-    //     if (so != null)
-    //         so.OnUnSubscribe(card, this);
-    //     card.debuff.DebuffToCard(CardDebuff.none);
-    // }
-
-    public void SetBattleBonusList(CardBonus cardBonus, BonusType type, float Amount)
-    {
-        if (type == BonusType.Bonus)
-            BattleBonusDic[cardBonus] += Amount;
-        else
-            BattlePenaltyDic[cardBonus] += Amount;
-    }
-
-    public void SetTurnBonusList(CardBonus cardBonus, BonusType type, float Amount)
-    {
-        if (type == BonusType.Bonus)
-            BattleBonusDic[cardBonus] += Amount;
-        else
-            BattlePenaltyDic[cardBonus] += Amount;
-    }
-    #endregion
 
 }
