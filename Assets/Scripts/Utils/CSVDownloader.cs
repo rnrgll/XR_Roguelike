@@ -21,8 +21,6 @@ namespace Utils
                 if (wrq.result == UnityWebRequest.Result.Success)
                 {
                     string csvText = wrq.downloadHandler.text;
-                    Debug.Log(csvText);
-
                     CsvTable csvTable = new CsvTable();
                     csvTable.Table = Parse(csvText);
                     onCompleted?.Invoke(csvTable);

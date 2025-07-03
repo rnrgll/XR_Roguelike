@@ -23,7 +23,7 @@ namespace Event
                     {
                         //todo : 테스트 필요 
                         var player = TurnManager.Instance.GetPlayerController();
-                        player.TakeDamage(SubstituteCost??0 * gap);
+                        player.ChangeMaxHp(-SubstituteCost??0 * gap);
                     }
                 }
                 subEffect.ApplyEffect();
