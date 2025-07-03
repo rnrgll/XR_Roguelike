@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace Event
 {
-    
     public class EventRewardEffect
     {
         public int RewardEffectID;
@@ -17,14 +16,17 @@ namespace Event
             foreach (SubEffect subEffect in SubEffectList)
             {
                 //서브 이팩트 효과 적용
+                if (subEffect is GoldLossEffect && PenaltyCost!=null)
+                {
+                    int gap = Manager.GameState.Gold - subEffect.Value;
+                    if (gap < 0)
+                    {
+                        //todo : 테스트 필요 
+                        var player = TurnManager.Instance.GetPlayerController();
+                        player.TakeDamage(SubstituteCost??0 * gap);
+                    }
+                }
                 subEffect.ApplyEffect();
-                
-            }
-            
-            //패널티가 있으면 패널티 적용
-            if (PenaltyCost != null)
-            {
-                if(Manager.GameState.)
             }
         }
     }

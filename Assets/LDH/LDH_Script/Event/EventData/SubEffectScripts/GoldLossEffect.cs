@@ -8,6 +8,7 @@ namespace Event
         public override void ApplyEffect()
         {
             base.ApplyEffect();
+            
             Manager.GameState.AddGold(-Value);
         }
     }

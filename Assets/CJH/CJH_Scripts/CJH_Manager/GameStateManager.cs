@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using UI;
+using Unity.Mathematics;
 
 public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 {
@@ -63,7 +64,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public void AddGold(int amount)
     {
         if(amount==0) return;
-        Gold += amount;
+        Gold = Mathf.Max(0, Gold + amount);
         OnGoldChanged?.Invoke(Gold);
         Debug.Log($"골드 {amount}를 {(amount>=0?"획득":"감소")}!");
     }

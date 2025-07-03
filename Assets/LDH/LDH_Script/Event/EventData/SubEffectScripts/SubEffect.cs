@@ -21,6 +21,7 @@ namespace Event
         public virtual void ApplyEffect()
         {
             Debug.Log($"효과 적용 : {SubEffectType.ToString()}, {Value}, {DurationTurns ?? 0}턴");
+            
         }
     }
 }
