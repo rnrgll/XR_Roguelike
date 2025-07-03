@@ -1,6 +1,7 @@
+using Managers;
+using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,15 @@ namespace Event
         [SerializeField] private TMP_Text eventText;
         [SerializeField] private Image eventImage;
         [SerializeField] private List<Button> eventOptions;
+
+
+        private void OnDestroy()
+        {
+            foreach (Button eventOption in eventOptions)
+            {
+                eventOption.onClick.RemoveAllListeners();
+            }
+        }
 
         public void UpdateUI(GameEvent gameEvent)
         {
@@ -30,9 +40,19 @@ namespace Event
                 eventOptions[i].GetComponentInChildren<TMP_Text>().text = options[i].Text;
                 
                 //option button onclick event 연결
-                //테스트용
-                int effectId = options[i].Id;
-                Debug.Log(effectId);
+                //버튼에 저장된 main reward id로 subeffect 리스트를 가져온다.
+                int mainRewardId = options[i].MainRewardId;
+                List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);
+                Debug.Log(subEffects==null);
+                eventOptions[i].onClick.AddListener(() =>
+                {
+                    Debug.Log(subEffects.Count);
+                    foreach (SubEffect subEffect in subEffects)
+                    {
+                        Debug.Log(subEffect.SubEffectType.ToString());
+                        subEffect.ApplyEffect();
+                    }
+                });
             }
         }
 

@@ -7,12 +7,12 @@ namespace Event
     [Serializable]
     public class Option
     {
-        public int Id;
+        public int MainRewardId;
         public string Text;
 
-        public Option(int id, string text)
+        public Option(int mainRewardID, string text)
         {
-            Id = id;
+            MainRewardId = mainRewardID;
             Text = text;
         }
     }

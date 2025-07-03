@@ -2,6 +2,7 @@ using CustomUtility.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Utils
                 if (wrq.result == UnityWebRequest.Result.Success)
                 {
                     string csvText = wrq.downloadHandler.text;
+                    Debug.Log(csvText);
+
                     CsvTable csvTable = new CsvTable();
                     csvTable.Table = Parse(csvText);
                     onCompleted?.Invoke(csvTable);

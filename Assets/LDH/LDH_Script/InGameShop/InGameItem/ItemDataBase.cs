@@ -135,11 +135,6 @@ namespace InGameShop
                 ItemType.Card => ItemDB.GetRange(TotalItemCount, TotalCardItemCount),
                 ItemType.Both => new List<TempItem>(ItemDB)
             };
-
-            foreach (TempItem item in tempList)
-            {
-                Debug.Log(item.name);
-            }
             List<string> results = new();
 
             while (results.Count < count)

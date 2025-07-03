@@ -121,6 +121,7 @@ namespace Event
 
     public enum SubEffectType
     {
+        NoEffect= 0,
         AttackBoost = 20,
         ResourceGain,
         ObtainItem,

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Event
@@ -84,6 +85,7 @@ namespace Event
         {
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
+
             
             for (int r = 1; r < rowCnt; r++)
             {
@@ -118,10 +120,15 @@ namespace Event
                 List<SubEffect> subEffects = new();
                 for (int c = 1; c < 10; c += 3)
                 {
-                    bool hasType = int.TryParse(table.Table[r, c], out int type);
-                    bool hasValue = int.TryParse(table.Table[r, c], out int value);
-                    bool hasDurtaion = int.TryParse(table.Table[r, c], out int duration);
+                    string rawData = table.Table[r, c];
 
+                    int type = (int)(SubEffectType.NoEffect);
+                    bool hasType = !string.IsNullOrEmpty(rawData) 
+                                   && rawData.Length >= 2 
+                                   &&
+                        int.TryParse(rawData.Substring(0, 2), out type);
+                    bool hasValue = int.TryParse(table.Table[r, c+1], out int value);
+                    bool hasDurtaion = int.TryParse(table.Table[r, c+2], out int duration);
                     if (hasType)
                     {
                         SubEffect subEffect = new(
@@ -135,28 +142,39 @@ namespace Event
                     {
                         break;
                     }
-
-                    //패널티 비용
-                    rewardEffect.PenaltyCost =
-                        int.TryParse(table.Table[r, columnCnt - 4], out int penalty) ? penalty : null;
-                    
-                    //패널티 대체 비용
-                    rewardEffect.SubstituteCost = int.TryParse(table.Table[r, columnCnt - 3], out int subCost) ? subCost : null;
-
-                    //아이템 보상
-                    List<ItemRewardType> itemRewards = new ();
-                    string[] items = table.Table[r, columnCnt - 1].Split(',');
-                    foreach (var item in items)
-                    {
-                        if(int.TryParse(table.Table[r,columnCnt-2], out int itemType))
-                            itemRewards.Add((ItemRewardType)itemType);
-                    }
-                    rewardEffect.ItemRewards = itemRewards;
                 }
+                rewardEffect.SubEffectList = subEffects;
+                    
+
+                //패널티 비용
+                rewardEffect.PenaltyCost =
+                    int.TryParse(table.Table[r, columnCnt - 4], out int penalty) ? penalty : null;
+                    
+                //패널티 대체 비용
+                rewardEffect.SubstituteCost = int.TryParse(table.Table[r, columnCnt - 3], out int subCost) ? subCost : null;
+
+                //아이템 보상
+                List<ItemRewardType> itemRewards = new ();
+                string[] items = table.Table[r, columnCnt - 1].Split(',');
+                foreach (var item in items)
+                {
+                    if(int.TryParse(table.Table[r,columnCnt-2], out int itemType))
+                        itemRewards.Add((ItemRewardType)itemType);
+                }
+                rewardEffect.ItemRewards = itemRewards;
                 
                 RewardEffectDB.Add(key, rewardEffect);
                 
+          
+                
             }
+            //4000번 아무 효과 없음 추가
+            EventRewardEffect noEffect = new EventRewardEffect();
+            noEffect.RewardEffectID = 4000;
+            List<SubEffect> effects = new();
+            effects.Add(new SubEffect(SubEffectType.NoEffect,0,null));
+            noEffect.SubEffectList = effects;
+            RewardEffectDB.Add(4000, noEffect);
             Debug.Log(RewardEffectDB.Count + "개 보상 효과 데이터를 로드했습니다.");
         }
         
@@ -183,7 +201,7 @@ namespace Event
 
         public int GetRewardEffectId(int mainRewardID)
         {
-            return MainRewardDB.TryGetValue(mainRewardID, out EventMainReward mainReward) ? mainReward.Id : -1;
+            return MainRewardDB.TryGetValue(mainRewardID, out EventMainReward mainReward) ? mainReward.RewardEffectID : -1;
         }
 
         public EventRewardEffect GetEventRewardEffectById(int id)
