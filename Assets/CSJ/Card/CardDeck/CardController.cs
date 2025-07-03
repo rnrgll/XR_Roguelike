@@ -71,6 +71,8 @@ public class CardController : MonoBehaviour
     public Action<MinorArcana> OnCardDiscarded;
     public Action<MinorArcana> OnCardSubmited;
     public Action<MinorArcana, MinorArcana> OnCardSwapped;
+    private Action<MinorArcana, CardEnchant> _onEnchantApplied;
+    private Action<MinorArcana, CardEnchant> _onEnchantCleared;
     private Action<MinorArcana, CardDebuff> _onDebuffApplied;
     private Action<MinorArcana, CardDebuff> _onDebuffCleared;
     #endregion
@@ -78,7 +80,7 @@ public class CardController : MonoBehaviour
     #region SO관련 내용 모음
     [SerializeField] private CardEnchantSO[] EnchantArr;
     [SerializeField] private CardDebuffSO[] DebuffArr;
-    private List<CardDebuff> DebuffList = new();
+    public List<CardDebuff> DebuffList { set; private get; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
     #endregion
 
@@ -108,7 +110,23 @@ public class CardController : MonoBehaviour
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
         OnCardDrawn += AdjustCountList;
-        TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
+
+        // “디버프가 새로 걸릴 때” SO 구독
+        _onEnchantApplied = (card, debuff) =>
+        {
+            var so = Deck.GetEnchantSO(card);
+            so?.OnSubscribe(card, this);
+        };
+        Deck.OnCardEnchanted += _onEnchantApplied;
+
+
+        // “디버프가 해제될 때” SO 해제
+        _onEnchantCleared = (card, oldEnchant) =>
+        {
+            var so = Deck.GetEnchantSO(card);
+            so?.OnUnSubscribe(card, this);
+        };
+        Deck.OnCardEnchantCleared += _onEnchantCleared;
 
         // “디버프가 새로 걸릴 때” SO 구독
         _onDebuffApplied = (card, debuff) =>
@@ -117,6 +135,7 @@ public class CardController : MonoBehaviour
             so?.OnSubscribe(card, this);
         };
         Deck.OnCardDebuffed += _onDebuffApplied;
+
 
         // “디버프가 해제될 때” SO 해제
         _onDebuffCleared = (card, oldDebuff) =>
@@ -132,7 +151,7 @@ public class CardController : MonoBehaviour
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
         OnCardDrawn -= AdjustCountList;
-        TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
+        // TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
 
         Deck.OnCardDebuffed -= _onDebuffApplied;
         Deck.OnCardDebuffCleared -= _onDebuffCleared;
@@ -170,6 +189,7 @@ public class CardController : MonoBehaviour
 
     public void BattleInit()
     {
+        // TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
         ClearDeck();
         disposableCardList = new();
         foreach (var card in DeckPile.Cards)
@@ -672,7 +692,7 @@ public class CardController : MonoBehaviour
     }*/
     #endregion
 
-
+    #region 디버프 함수들
     /// <summary>
     /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
     /// </summary>
@@ -713,16 +733,33 @@ public class CardController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 배틀 종료 시(혹은 카드 제거 시) 디버프 해제
-    /// </summary>
-    public void RemoveDebuff(MinorArcana card)
+    // /// <summary>
+    // /// 배틀 종료 시(혹은 카드 제거 시) 디버프 해제
+    // /// </summary>
+    // public void RemoveDebuff(MinorArcana card)
+    // {
+    //     var type = card.debuff.debuffinfo;
+    //     var so = DebuffDatabase.Instance.GetDebuffSO(type);
+    //     if (so != null)
+    //         so.OnUnSubscribe(card, this);
+    //     card.debuff.DebuffToCard(CardDebuff.none);
+    // }
+
+    public void SetBattleBonusList(CardBonus cardBonus, BonusType type, float Amount)
     {
-        var type = card.debuff.debuffinfo;
-        var so = DebuffDatabase.Instance.GetDebuffSO(type);
-        if (so != null)
-            so.OnUnSubscribe(card, this);
-        card.debuff.DebuffToCard(CardDebuff.none);
+        if (type == BonusType.Bonus)
+            BattleBonusDic[cardBonus] += Amount;
+        else
+            BattlePenaltyDic[cardBonus] += Amount;
     }
+
+    public void SetTurnBonusList(CardBonus cardBonus, BonusType type, float Amount)
+    {
+        if (type == BonusType.Bonus)
+            BattleBonusDic[cardBonus] += Amount;
+        else
+            BattlePenaltyDic[cardBonus] += Amount;
+    }
+    #endregion
 
 }

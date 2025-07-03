@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardEnum;
 
 [CreateAssetMenu(fileName = "LuckyCard", menuName = "Cards/Enchant/Lucky")]
 public class LuckyCard : CardEnchantSO
@@ -12,7 +13,7 @@ public class LuckyCard : CardEnchantSO
         int rand = RandomManager.Instance.RandInt(0, 100);
         if (rand < 20)
         {
-            TurnManager.Instance.GetPlayerController().ApplyAttackBuff(BonusScore, 1);
+            controller.SetTurnBonusList(CardBonus.Mult, BonusType.Bonus, BonusScore);
         }
         else if (rand < 30)
         {
