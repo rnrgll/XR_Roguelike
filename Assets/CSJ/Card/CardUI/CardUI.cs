@@ -11,7 +11,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image CardImage;
     [SerializeField] private GameObject border;
 
-    bool _isSelected;
+    public bool _isSelected { get; private set; }
     public MinorArcana CardData { get; private set; }
     public Action<MinorArcana> OnClick = delegate { };
 
@@ -41,6 +41,12 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
         _isSelected = !_isSelected;
         border.SetActive(_isSelected);
         return _isSelected;
+    }
+
+    public void SyncSelected(bool on)
+    {
+        _isSelected = on;
+        border.SetActive(on);
     }
 
 

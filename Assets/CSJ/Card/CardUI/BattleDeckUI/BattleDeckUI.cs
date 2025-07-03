@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class BattleDeckUI : MonoBehaviour
 {
+    [SerializeField] private HandUIController handUI;
     [SerializeField] private RectTransform CupsHorizon;
     [SerializeField] private RectTransform SwordsHorizon;
     [SerializeField] private RectTransform PentaclesHorizon;
@@ -17,6 +19,7 @@ public class BattleDeckUI : MonoBehaviour
     [SerializeField] private Button CloseButton;
 
     private List<GameObject> spawnedCards = new List<GameObject>();
+    private bool isSetted = false;
 
     private void Awake()
     {
@@ -25,20 +28,20 @@ public class BattleDeckUI : MonoBehaviour
 
     private void OnEnable()
     {
-
+        handUI.OnCardSetted += isSet;
         BackGround.onClick.AddListener(ClosePanel);
         CloseButton.onClick.AddListener(ClosePanel);
     }
 
     private void OnDisable()
     {
-
         BackGround.onClick.RemoveListener(ClosePanel);
         CloseButton.onClick.RemoveListener(ClosePanel);
     }
 
     public void OpenPanel()
     {
+        if (!isSetted) return;
         BattleDeckCanvas.SetActive(true);
         RefreshPanel();
     }
@@ -50,7 +53,6 @@ public class BattleDeckUI : MonoBehaviour
     public void RefreshPanel()
     {
         if (cardController == null) return;
-
         foreach (var go in spawnedCards)
         {
             Destroy(go);
@@ -87,5 +89,11 @@ public class BattleDeckUI : MonoBehaviour
 
             spawnedCards.Add(go);
         }
+    }
+
+    public void isSet()
+    {
+        isSetted = true;
+        handUI.OnCardSetted -= isSet;
     }
 }

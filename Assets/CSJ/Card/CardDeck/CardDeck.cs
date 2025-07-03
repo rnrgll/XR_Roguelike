@@ -49,7 +49,6 @@ public class CardDeck
             {
                 Deck[(MinorSuit)suit].Add(GetCardData(suit, num));
             }
-            Debug.Log((MinorSuit)suit);
         }
     }
 
@@ -163,6 +162,11 @@ public class CardDeck
     {
         DebuffDic.Remove(_card);
         _card.debuff.DebuffToCard(CardDebuff.none);
+    }
+    public void EnchantClear(MinorArcana _card)
+    {
+        EnchantDic.Remove(_card);
+        _card.Enchant.EnchantToCard(CardEnchant.none);
     }
 
     public CardDebuffSO GetDebuffSO(MinorArcana card)
