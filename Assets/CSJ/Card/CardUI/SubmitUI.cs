@@ -17,6 +17,9 @@ public class SubmitUI : MonoBehaviour
         DiscardButton.onClick.AddListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.AddListener(OnSuitSortButtonClicked);
         NumSortButton.onClick.AddListener(OnNumSortButtonClicked);
+
+        cardController.OnSelectionChanged += _ => UpdateButtons();
+        UpdateButtons();
     }
 
     private void OnDisable()
@@ -25,6 +28,16 @@ public class SubmitUI : MonoBehaviour
         DiscardButton.onClick.RemoveListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.RemoveListener(OnSuitSortButtonClicked);
         NumSortButton.onClick.RemoveListener(OnNumSortButtonClicked);
+
+        cardController.OnSelectionChanged -= _ => UpdateButtons();
+    }
+
+    private void UpdateButtons()
+    {
+        int selectedCount = cardController.SelectedCard.Count;
+
+        attackButton.interactable = selectedCount >= 5;
+        DiscardButton.interactable = selectedCount >= 1;
     }
 
     private void OnAttackButtonClicked()

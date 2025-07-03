@@ -97,7 +97,7 @@ namespace UI
     }
 
     //Global UI 랑 enum 값 맞춰주기
-    public enum ToggleUI 
+    public enum ToggleUI
     {
         Map = 1,
         Deck,
