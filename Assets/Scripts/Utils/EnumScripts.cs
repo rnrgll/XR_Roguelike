@@ -127,7 +127,6 @@ namespace Event
         ObtainItem,
         ObtainEnhancedCard,
         ResourceLoss,
-        HPDrain,
     }
 
     public enum ItemRewardType

@@ -42,15 +42,16 @@ namespace Event
                 //option button onclick event 연결
                 //버튼에 저장된 main reward id로 subeffect 리스트를 가져온다.
                 int mainRewardId = options[i].MainRewardId;
-                List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);
-                Debug.Log(subEffects==null);
+
+                EventRewardEffect rewardEffect = Manager.Data.EventDB.GetEventRewardEffectById(mainRewardId);
+                
+                rewardEffect.ApplyEffects();
+                
+                // List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);
+                // Debug.Log(subEffects==null);
                 eventOptions[i].onClick.AddListener(() =>
                 {
-                    foreach (SubEffect subEffect in subEffects)
-                    {
-                        Debug.Log(subEffect.SubEffectType.ToString());
-                        subEffect.ApplyEffect();
-                    }
+                    rewardEffect.ApplyEffects();
                 });
             }
         }

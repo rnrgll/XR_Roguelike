@@ -137,7 +137,6 @@ namespace Event
                             SubEffectType.ResourceLoss => new GoldLossEffect(value),
                             SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
                             SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
-                            SubEffectType.HPDrain => new HPChangeEffect()
                         };
                         
                             
@@ -157,16 +156,7 @@ namespace Event
                     
                 //패널티 대체 비용
                 rewardEffect.SubstituteCost = int.TryParse(table.Table[r, columnCnt - 3], out int subCost) ? subCost : null;
-
-                //아이템 보상
-                List<ItemRewardType> itemRewards = new ();
-                string[] items = table.Table[r, columnCnt - 1].Split(',');
-                foreach (var item in items)
-                {
-                    if(int.TryParse(table.Table[r,columnCnt-2], out int itemType))
-                        itemRewards.Add((ItemRewardType)itemType);
-                }
-                rewardEffect.ItemRewards = itemRewards;
+                
                 
                 RewardEffectDB.Add(key, rewardEffect);
                 
