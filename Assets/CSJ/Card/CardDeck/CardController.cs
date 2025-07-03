@@ -76,9 +76,10 @@ public class CardController : MonoBehaviour
     #endregion
 
     #region SO관련 내용 모음
-    [SerializeField] private CardEnchantSO[] EnchantList;
-    [SerializeField] private CardDebuffSO[] DebuffList;
-    [SerializeField] private StatusEffectCardSO[] StatusEffectList;
+    [SerializeField] private CardEnchantSO[] EnchantArr;
+    [SerializeField] private CardDebuffSO[] DebuffArr;
+    private List<CardDebuff> DebuffList = new();
+    [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
     #endregion
 
 
@@ -147,10 +148,15 @@ public class CardController : MonoBehaviour
 
         BattleBonusDic = new();
         //foreach (var type in Enum.)
-
+        foreach (var debuffSO in DebuffArr)
+        {
+            DebuffList.Add(debuffSO.DebuffType);
+        }
         ResetDeck();
+
         // 테스트용 임시로 Start에서 실행
         BattleInit();
+
 
         #region 미사용 코드
         // CardDicInit();
@@ -239,6 +245,10 @@ public class CardController : MonoBehaviour
             cards.Add(card);
         }
         return cards;
+    }
+    public CardDebuffSO GetDebuffSO(CardDebuff _debuff)
+    {
+        return DebuffArr[DebuffList.LastIndexOf(_debuff)];
     }
 
     //public int GetPenalty()
@@ -676,6 +686,26 @@ public class CardController : MonoBehaviour
 
         // 2) Rust(유혹)일 경우 몬스터 스택 연결
         if (so is CharmSO charm)
+        {
+            // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
+            charm.OnCharmCardUsed += amount =>
+                LustMonster.Instance.IncreaseLustStack(amount);
+        }
+    }
+    /// <summary>
+    /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
+    /// </summary>
+    public void ApplyDebuff(MinorArcana card, CardDebuff _debuff)
+    {
+
+        var debuffSO = GetDebuffSO(_debuff);
+        if (debuffSO == null) return;
+
+        // 1) Debuff를 적용한다.
+        Deck.Debuff(card, debuffSO);
+
+        // 2) Rust(유혹)일 경우 몬스터 스택 연결
+        if (debuffSO is CharmSO charm)
         {
             // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩
             charm.OnCharmCardUsed += amount =>
