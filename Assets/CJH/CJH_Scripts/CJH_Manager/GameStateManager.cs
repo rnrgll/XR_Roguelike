@@ -77,13 +77,15 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public void AddItem(string itemID)
     {
         //인벤토리 슬롯이 꽉 차있는지 확인
-        if (CurrentItemCount == 3)
-        {
-            //아이템 제거하도록 처리
-            Manager.UI.ItemRemoveUI.SetCallBack(() => AddItem(itemID));
-            Manager.UI.SetUIActive(GlobalUI.ItemRemove, true);
-            return;
-        }
+        // if (CurrentItemCount == 3)
+        // {
+        //     //아이템 제거하도록 처리
+        //     Manager.UI.ItemRemoveUI.InitPanel(
+        //         
+        //         () => AddItem(itemID));
+        //     Manager.UI.SetUIActive(GlobalUI.ItemRemove, true);
+        //     return;
+        // }
         
         int idx = _itemInventory.FindIndex(id => string.IsNullOrEmpty(id));
         if (idx != -1)
