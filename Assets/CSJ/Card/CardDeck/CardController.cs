@@ -69,14 +69,14 @@ public class CardController : MonoBehaviour
     public Action<MinorArcana> OnCardDiscarded;
     public Action<MinorArcana> OnCardSubmited;
     public Action<MinorArcana, MinorArcana> OnCardSwapped;
+    private Action<MinorArcana, CardDebuff> _onDebuffApplied;
+    private Action<MinorArcana, CardDebuff> _onDebuffCleared;
     #endregion
 
     #region SO관련 내용 모음
     [SerializeField] private CardEnchantSO[] EnchantList;
     [SerializeField] private CardDebuffSO[] DebuffList;
     [SerializeField] private StatusEffectCardSO[] StatusEffectList;
-    private Action<MinorArcana, CardDebuff> DebuffAction;
-    private Action<MinorArcana, CardEnchant> EnchantAction;
     #endregion
 
 
@@ -105,21 +105,22 @@ public class CardController : MonoBehaviour
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
         OnCardDrawn += AdjustCountList;
-        EnchantAction = (card, enchant) =>
-        {
-            var so = Array.Find(EnchantList, e => e.EnchantType == enchant);
-            so.OnApply(card, this);
-        };
 
-        DebuffAction = (card, debuff) =>
+        // “디버프가 새로 걸릴 때” SO 구독
+        _onDebuffApplied = (card, debuff) =>
         {
             var so = Deck.GetDebuffSO(card);
-            so.OnSubscribe(card, this);
+            so?.OnSubscribe(card, this);
         };
-        if (Deck != null && EnchantList.Length > 0)
-            Deck.OnCardEnchanted += EnchantAction;
-        if (Deck != null && DebuffList.Length > 0)
-            Deck.OnCardDebuffed += DebuffAction;
+        Deck.OnCardDebuffed += _onDebuffApplied;
+
+        // “디버프가 해제될 때” SO 해제
+        _onDebuffCleared = (card, oldDebuff) =>
+        {
+            var so = Deck.GetDebuffSO(card);
+            so?.OnUnSubscribe(card, this);
+        };
+        Deck.OnCardDebuffCleared += _onDebuffCleared;
     }
 
     public void OnDisable()
@@ -127,10 +128,9 @@ public class CardController : MonoBehaviour
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
         OnCardDrawn -= AdjustCountList;
-        if (!(EnchantList.Count() == 0))
-            Deck.OnCardEnchanted -= EnchantAction;
-        if (!(DebuffList.Count() == 0))
-            Deck.OnCardDebuffed -= DebuffAction;
+
+        Deck.OnCardDebuffed -= _onDebuffApplied;
+        Deck.OnCardDebuffCleared -= _onDebuffCleared;
     }
 
 
@@ -172,10 +172,8 @@ public class CardController : MonoBehaviour
                 SuitsList[j]++;
             }
         }
-
         BattleDeck.Shuffle();
         Draw(8);
-
     }
     #endregion
 
@@ -251,6 +249,9 @@ public class CardController : MonoBehaviour
             if (card.debuff.debuffinfo != CardDebuff.none)
                 Deck.GetDebuffSO(card)?.OnSubscribe(card, this);
 
+            if (card.Enchant.enchantInfo != CardEnchant.none)
+                Deck.GetEnchantSO(card)?.OnSubscribe(card, this);
+
             OnCardDrawn?.Invoke(card);
 
             if (BattleDeck.Count != 0) continue;
@@ -290,6 +291,8 @@ public class CardController : MonoBehaviour
             Hand.Remove(_card);
             if (_card.debuff.debuffinfo != CardDebuff.none)
                 Deck.GetDebuffSO(_card).OnUnSubscribe(_card, this);
+            if (_card.Enchant.enchantInfo != CardEnchant.none)
+                Deck.GetEnchantSO(_card)?.OnUnSubscribe(_card, this);
 
             OnCardDiscarded?.Invoke(_card);
             _num++;
@@ -650,17 +653,14 @@ public class CardController : MonoBehaviour
     /// <summary>
     /// 카드에 디버프를 걸고, 필요 시 몬스터 스택 증폭을 연결
     /// </summary>
-    public void ApplyDebuff(MinorArcana card, CardDebuff type)
+    public void ApplyDebuff(MinorArcana card, CardDebuffSO _debuff)
     {
-        var so = DebuffDatabase.Instance.GetDebuffSO(type);
+        var so = _debuff;
         if (so == null) return;
 
-        // 1) 카드에 디버프 정보 세팅
-        card.debuff.DebuffToCard(type);
-        // 2) SO 구독
-        so.OnSubscribe(card, this);
+        Deck.Debuff(card, _debuff);
 
-        // 3) Rust(유혹)일 경우 몬스터 스택 연결
+        // 2) Rust(유혹)일 경우 몬스터 스택 연결
         if (so is CharmSO charm)
         {
             // 유혹량이 발생할 때마다 스택 증가시키도록 바인딩

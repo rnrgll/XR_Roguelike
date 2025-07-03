@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private float attackMultiplier = 1f;
     private int flatAttackBonus = 0;
     private int attackBuffTurns = 0;
+    public Action OnTurnEnd;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -153,6 +155,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
                 Debug.Log("[플레이어] 공격력 버프 해제");
             }
         }
+        OnTurnEnd?.Invoke();
     }
 
     public bool IsTurnFinished() => turnEnded;
