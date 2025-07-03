@@ -56,6 +56,7 @@ namespace Map
                     break;
                 case NodeType.Event:
                     //todo : 이벤트 씬으로 전환
+                    SceneManager.LoadScene("EventScene");
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환

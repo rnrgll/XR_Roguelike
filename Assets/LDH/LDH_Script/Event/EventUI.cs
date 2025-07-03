@@ -43,9 +43,7 @@ namespace Event
                 //버튼에 저장된 main reward id로 subeffect 리스트를 가져온다.
                 int mainRewardId = options[i].MainRewardId;
 
-                EventRewardEffect rewardEffect = Manager.Data.EventDB.GetEventRewardEffectById(mainRewardId);
-                
-                rewardEffect.ApplyEffects();
+                EventRewardEffect rewardEffect = Manager.Data.EventDB.GetRewardEffectByMainRewardId(mainRewardId);
                 
                 // List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);
                 // Debug.Log(subEffects==null);

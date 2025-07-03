@@ -199,7 +199,7 @@ namespace Event
             return MainRewardDB.TryGetValue(mainRewardID, out EventMainReward mainReward) ? mainReward.RewardEffectID : -1;
         }
 
-        public EventRewardEffect GetEventRewardEffectById(int id)
+        public EventRewardEffect GetRewardEffectById(int id)
         {
             return RewardEffectDB.TryGetValue(id, out EventRewardEffect rewardEffect) ? rewardEffect : null;
         }
@@ -209,9 +209,9 @@ namespace Event
             return RewardEffectDB.TryGetValue(rewardEffectId, out EventRewardEffect rewardEffect) ? rewardEffect.SubEffectList : null;
         }
 
-        public List<SubEffect> GetSubEffectsByMainRewardId(int mainRewardId)
+        public EventRewardEffect GetRewardEffectByMainRewardId(int mainRewardId)
         {
-            return GetSubEffectsByRewardId(GetRewardEffectId(mainRewardId));
+            return GetRewardEffectById(GetRewardEffectId(mainRewardId));
         }
         
         #endregion

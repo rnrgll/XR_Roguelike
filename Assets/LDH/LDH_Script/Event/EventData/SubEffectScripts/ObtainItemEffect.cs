@@ -1,6 +1,7 @@
 using InGameShop;
 using Managers;
 using System.Collections.Generic;
+using UI;
 
 namespace Event
 {
@@ -15,8 +16,30 @@ namespace Event
         public override void ApplyEffect()
         {
             base.ApplyEffect();
-            //todo: potion 타입만 뽑아 올 수 있게 수정하기
             
+            //인벤토리 포화상태 체크
+            int emptySlotCnt = Manager.GameState.MaxItemInventorySize - Manager.GameState.CurrentItemCount;
+            if (emptySlotCnt < Value)
+            {
+                //인벤토리 비우기
+                Manager.UI.ItemRemoveUI.InitPanel(Value-emptySlotCnt,
+                    () =>
+                    {
+                        GetItems();
+                    });
+                Manager.UI.SetUIActive(GlobalUI.ItemRemove,true);
+            }
+            else
+            {
+                GetItems();
+            }
+
+        }
+
+        public void GetItems()
+        {
+            //todo: potion 타입만 뽑아 올 수 있게 수정하기
+         
             //아이템 Value개 뽑기
             List<string> newItems = Manager.Data.ItemDB.PickUniqeItemRandomByType(Value, ItemType.Item);
             
@@ -25,7 +48,6 @@ namespace Event
             {
                 Manager.GameState.AddItem(newItems[i]);
             }
-
 
         }
     }

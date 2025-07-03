@@ -1892,6 +1892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedNums: 
+  numbersList: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  SuitsList: 00000000000000000000000000000000
   drawNum: 8
   sortStand: 1
   EnchantList: []
@@ -2475,6 +2477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 1492033337}
+  eventID: 2
 --- !u!1 &1492033335
 GameObject:
   m_ObjectHideFlags: 0

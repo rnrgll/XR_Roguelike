@@ -9,12 +9,13 @@ public class EventManager : Singleton<EventManager>
 {
     [SerializeField] private EventUI _model;
     public GameEvent currentEvent;
-    
+
+    public int eventID;
     private void Awake() => SingletonInit();
     
     public void GameStart()
     {
-        currentEvent = Manager.Data.EventDB.GetGameEventById(1);
+        currentEvent = Manager.Data.EventDB.GetGameEventById(eventID);
         _model.UpdateUI(currentEvent);
     }
     
