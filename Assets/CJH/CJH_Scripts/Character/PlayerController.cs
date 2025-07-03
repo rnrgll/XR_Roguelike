@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private int flatAttackBonus = 0;
     private int attackBuffTurns = 0;
     public Action OnTurnEnd;
+    public Action OnTurnStarted;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -137,6 +138,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public void StartTurn()
     {
+        OnTurnStarted?.Invoke();
         Debug.Log("플레이어 턴 시작!");
         turnEnded = false;
     }

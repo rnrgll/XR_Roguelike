@@ -105,6 +105,7 @@ public class CardController : MonoBehaviour
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
         OnCardDrawn += AdjustCountList;
+        TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
 
         // “디버프가 새로 걸릴 때” SO 구독
         _onDebuffApplied = (card, debuff) =>
@@ -128,6 +129,7 @@ public class CardController : MonoBehaviour
         OnCardSelected -= AddSelect;
         OnCardDeSelected -= RemoveSelect;
         OnCardDrawn -= AdjustCountList;
+        TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
 
         Deck.OnCardDebuffed -= _onDebuffApplied;
         Deck.OnCardDebuffCleared -= _onDebuffCleared;
@@ -173,7 +175,14 @@ public class CardController : MonoBehaviour
             }
         }
         BattleDeck.Shuffle();
-        Draw(8);
+        Draw(drawNum);
+    }
+
+    public void TurnInit()
+    {
+        BonusAmount = 0;
+        penaltyAmount = 0;
+        Draw(drawNum);
     }
     #endregion
 
@@ -658,6 +667,7 @@ public class CardController : MonoBehaviour
         var so = _debuff;
         if (so == null) return;
 
+        // 1) Debuff를 적용한다.
         Deck.Debuff(card, _debuff);
 
         // 2) Rust(유혹)일 경우 몬스터 스택 연결
