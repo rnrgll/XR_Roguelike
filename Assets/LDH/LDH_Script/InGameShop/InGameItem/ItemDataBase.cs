@@ -27,8 +27,8 @@ namespace InGameShop
         {
             //todo: itemDB 초기화 및 데이터 셋팅 수정 필요
             ItemDB = new();
-            LoadItemData( ItemType.item, "TestItemData.csv");
-            LoadItemData(ItemType.card ,"TestCardItemData.csv");
+            LoadItemData(ItemType.Item, "TestItemData.csv");
+            LoadItemData(ItemType.Card ,"TestCardItemData.csv");
 
         }
         
@@ -36,7 +36,7 @@ namespace InGameShop
         {
             //<아이템 형>
             //1. CSV 테이블 생성
-            CsvTable table = new CsvTable($"Data/Item/{fileName}", splitSymol);
+            CsvTable table = new CsvTable($"Data/Item/{fileName}");
             
             //2. Reader로 파일 읽기
             CsvReader.Read(table);
@@ -44,10 +44,10 @@ namespace InGameShop
             //3. 아이템 데이터 파싱
             switch (type)
             {
-                case ItemType.item:
+                case ItemType.Item:
                     ParseItemData(table);
                     break;
-                case ItemType.card:
+                case ItemType.Card:
                     ParseCardItemData(table);
                     break;
             }
@@ -63,7 +63,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
             
-            TotalItemCount = rowCnt; //아이템 개수 저장
+            TotalItemCount = rowCnt-1; //아이템 개수 저장
             
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
@@ -90,7 +90,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
-            TotalCardItemCount = rowCnt; //아이템 개수 저장
+            TotalCardItemCount = rowCnt-1; //아이템 개수 저장
             
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
@@ -127,13 +127,13 @@ namespace InGameShop
             return tempList.Count - 1; 
         }
 
-        public List<string> PickUniqeItemRandomByType(int count, ItemType itemType = ItemType.both)
+        public List<string> PickUniqeItemRandomByType(int count, ItemType itemType = ItemType.Both)
         {
             List<TempItem> tempList = itemType switch
             {
-                ItemType.item => ItemDB.GetRange(0, TotalItemCount),
-                ItemType.card => ItemDB.GetRange(TotalItemCount, TotalCardItemCount),
-                ItemType.both => new List<TempItem>(ItemDB)
+                ItemType.Item => ItemDB.GetRange(0, TotalItemCount),
+                ItemType.Card => ItemDB.GetRange(TotalItemCount, TotalCardItemCount),
+                ItemType.Both => new List<TempItem>(ItemDB)
             };
             List<string> results = new();
 

@@ -159,6 +159,19 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         OnTurnEnd?.Invoke();
     }
-
+    
     public bool IsTurnFinished() => turnEnded;
+    
+    
+    //최대 체력 조절
+    public void ChangeMaxHp(int amount)
+    {
+        maxHP += Mathf.Clamp(maxHP + amount, 0, 100);
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        
+        Debug.Log($"{currentHP}/{maxHP}");
+        //플레이어 사망..? 처리를 어떻게 할지... 
+        //이벤트 씬에서 ChangeMaxHp를 호출, hp가 0이 되면, 사망처리필요. 
+        //턴매니저를 계속 인게임 내에서 계속 살려둔다면, turnmanager로 게임 종료 호출 처리..?
+    }
 }

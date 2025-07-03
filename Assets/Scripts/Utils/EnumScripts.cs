@@ -64,9 +64,9 @@ namespace InGameShop
 {
     public enum ItemType
     {
-        item,
-        card,
-        both,
+        Item,
+        Card,
+        Both,
     }
     public enum SortOrder
     {
@@ -103,5 +103,36 @@ namespace UI
         Deck,
         Item,
         Setting,
+    }
+    
+}
+
+
+
+namespace Event
+{
+    public enum EffectType
+    {
+        Buff = 10,
+        Debuff,
+        CompoundEffect,
+        NoEffect,
+    }
+
+    public enum SubEffectType
+    {
+        NoEffect= 0,
+        AttackBoost = 20,
+        ResourceGain,
+        ObtainItem,
+        ObtainEnhancedCard,
+        ResourceLoss,
+    }
+
+    public enum ItemRewardType
+    {
+        CardRandom = -10,
+        ItemRandom = -20,
+        ItemPotionRandom = -30,
     }
 }

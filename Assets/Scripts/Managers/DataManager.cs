@@ -1,7 +1,10 @@
+using CustomUtility.IO;
 using DesignPattern;
+using Event;
 using InGameShop;
 using System;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
@@ -9,6 +12,7 @@ namespace Managers
     {
 
         public ItemDataBase ItemDB;
+        public EventDataBase EventDB;
         
         private void Awake()
         {
@@ -18,6 +22,21 @@ namespace Managers
         private void Start()
         {
             ItemDB = new ItemDataBase();
+            EventDB = new EventDataBase();
+            
+            //csv file load
+            StartCoroutine(CSVDownloader.Start(
+                CSVLink.CsvLinkDict["Event"],
+                EventDB.LoadEventData
+            ));
+            StartCoroutine(CSVDownloader.Start(
+                CSVLink.CsvLinkDict["EventMainReward"],
+                EventDB.LoadMainRewardData
+            ));
+            StartCoroutine(CSVDownloader.Start(
+                CSVLink.CsvLinkDict["EventRewardEffect"],
+                EventDB.LoadRewardEffectData
+            ));
         }
     }
 }

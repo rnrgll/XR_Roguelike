@@ -17,7 +17,7 @@ namespace Test
             Manager.GameState.AddGold(1000);
             
             // //랜덤으로 아이템 하나 획득 처리
-            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1, ItemType.item);
+            List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1, ItemType.Item);
             Manager.GameState.AddItem(items[0]);
             
             

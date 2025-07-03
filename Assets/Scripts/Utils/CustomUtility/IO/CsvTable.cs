@@ -24,22 +24,28 @@ namespace CustomUtility
         {
             public string[,] Table { get; set; }
 
-            public CsvTable(string path, char splitSymbol) : base(path, splitSymbol)
+            //csv 웹으로 다운로드해서 사용하는 경우 사용하는 생성자
+            public CsvTable() : base("", ',') { }
+            //원래 용도의 생성자 복구, 아래 생성자와 구분하기 위해 splitSymbol 강제 ,로 지정(로컬 Path의 파일을 읽어서 쓰는 경우)
+            public CsvTable(string path) : base(path, ',') { }
+
+            public CsvTable(string csvText, char splitSymbol) : base("", ',')
             {
+                
                 // 1) 줄 단위로 분리 (윈도우 CRLF 처리)
-                var lines = path
+                var lines = csvText
                     .Replace("\r\n", "\n")
                     .Split('\n')
                     .Where(l => !string.IsNullOrEmpty(l))
                     .ToArray();
-
+                
                 // 2) 열 개수 계산
                 int rowCount = lines.Length;
                 int colCount = lines[0].Split(splitSymbol).Length;
-
+                
                 // 3) 2차원 배열 할당
                 Table = new string[rowCount, colCount];
-
+                
                 // 4) 실제 데이터 채우기
                 for (int r = 0; r < rowCount; r++)
                 {
@@ -52,7 +58,7 @@ namespace CustomUtility
             /// <summary>
             /// Retrieves data from a specific cell in the table.
             /// 테이블에서 특정 셀의 데이터를 가져옴.
-            /// </summary>
+            /// </summary>ㅁ
             /// <param name="row">Row index of the cell. 셀의 행 인덱스.</param>
             /// <param name="column">Column index of the cell. 셀의 열 인덱스.</param>
             /// <returns>The data at the specified cell. 지정된 셀의 데이터.</returns>
