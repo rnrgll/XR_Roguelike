@@ -1811,19 +1811,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770768584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1551317501}
   - {fileID: 1239637392}
-  m_Father: {fileID: 1777860281}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770768586
 MonoBehaviour:
@@ -4710,6 +4710,34 @@ PrefabInstance:
       propertyPath: _tarotDeck
       value: 
       objectReference: {fileID: 1432436371}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[0]
+      value: 206
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[1]
+      value: 207
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[2]
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[3]
+      value: 209
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[4]
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720952469969060033, guid: 7c9c03866752b4b4a91b5925e865cd59, type: 3}
+      propertyPath: testItemIDList.Array.data[5]
+      value: 214
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5207,7 +5235,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 770768585}
   - {fileID: 456462994}
   m_Father: {fileID: 1058908759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6336,6 +6363,7 @@ SceneRoots:
   - {fileID: 1058908759}
   - {fileID: 120435478}
   - {fileID: 291767618}
+  - {fileID: 770768585}
   - {fileID: 1432436369}
   - {fileID: 453292563}
   - {fileID: 991887628}

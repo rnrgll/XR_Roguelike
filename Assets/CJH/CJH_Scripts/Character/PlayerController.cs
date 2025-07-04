@@ -1,4 +1,5 @@
-using Buff;
+using Buffs;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,11 +25,11 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
     public float GetAttackMultiplier() => attackMultiplier;
-    public int GetFlatAttackBonus() => flatAttackBonus;
+    public int GetFlatAttackBonus() => ApplyFlatAttackBuff();
 
     // 버프 관리
-    private Queue<HealBuff> recoveryQueue = new();
-    
+    private Queue<Buff> healBonusQueue = new();
+    private Queue<Buff> attackBonusQueue = new();
     
     private IEnumerator Start()
     {
@@ -117,23 +118,36 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         Debug.Log($"[플레이어] 공격력 {multiplier}배 버프 적용, {turns}턴 지속");
     }
 
-    public void ApplyFlatAttackBuff(int amount, int turns)
+    public int ApplyFlatAttackBuff()
     {
-        flatAttackBonus = amount;
-        attackBuffTurns = turns;
-
-        Debug.Log($"[플레이어] 공격력 {(amount >= 0 ? "+" : "")}{amount} 고정 버프 적용, {turns}턴 지속");
-
-        if (attackBuffTurns > 0)
+        flatAttackBonus = 0;
+        int count = attackBonusQueue.Count;
+        for(int i=0; i<count; i++)
         {
-            attackBuffTurns--;
-            if (attackBuffTurns <= 0)
+            Buff attackBuff = attackBonusQueue.Dequeue();
+            flatAttackBonus += attackBuff.value;
+            attackBuff.remainTurn--;
+            if (attackBuffTurns>0)
             {
-                attackMultiplier = 1f;
-                flatAttackBonus = 0;
-                Debug.Log("[플레이어] 모든 공격 버프 해제됨");
+                attackBonusQueue.Enqueue(attackBuff);
             }
         }
+        Debug.Log($"[플레이어] 현재 턴에서 공격력 {(flatAttackBonus >= 0 ? "+" : "")}{flatAttackBonus} 버프 적용");
+        
+        return flatAttackBonus;
+        // flatAttackBonus = amount;
+        // attackBuffTurns = turns;
+        
+        // if (attackBuffTurns > 0)
+        // {
+        //     attackBuffTurns--;
+        //     if (attackBuffTurns <= 0)
+        //     {
+        //         attackMultiplier = 1f;
+        //         flatAttackBonus = 0;
+        //         Debug.Log("[플레이어] 모든 공격 버프 해제됨");
+        //     }
+        // }
     }
 
     public void ForceSetHpToRate(float rate)
@@ -200,16 +214,52 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         TurnManager.Instance.NotifyPlayerDeath();
     }
 
-    #region HPControl
+
+    #region Buff Queue
+    
     /// <summary>
-    /// Heal Buff Queue에 담긴 버프를 하나씩 적용
+    /// 턴 지속 체력 회복 버프를 큐에 추가합니다. 매 턴마다 지정된 수치만큼 회복됩니다.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="turns"></param>
+    public void AddHealBuff(int amount, int turns)
+    {
+        healBonusQueue.Enqueue(new Buff(amount,turns));
+    }
+    
+    /// <summary>
+    /// (퍼센트 기반) 턴 지속 체력 회복 버프를 큐에 추가합니다. 매 턴마다 MaxHP 기준 비율만큼 회복됩니다.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="turns"></param>
+    public void AddHealBuff(float amount, int turns)
+    {
+        healBonusQueue.Enqueue(new Buff(amount,turns));
+    }
+    
+    /// <summary>
+    /// 공격력 버프를 큐에 추가합니다.
+    /// 매 턴 동안 지정된 수치만큼 공격력이 증가합니다.
+    /// </summary>
+    public void AddAttackBuff(int amount, int turns)
+    {
+        attackBonusQueue.Enqueue(new Buff(amount,turns));
+    }
+
+    #endregion
+
+    #region HPControl
+    
+    /// <summary>
+    /// 힐 버프 큐에 저장된 회복 효과를 적용합니다.
+    /// 회복 후 남은 턴 수가 있을 경우 다시 큐에 넣습니다.
     /// </summary>
     private void ApplyHeal()
     {
-        int count = recoveryQueue.Count;
+        int count = healBonusQueue.Count;
         for (int i = 0; i < count; i++)
         {
-            HealBuff healBuff = recoveryQueue.Dequeue();
+            Buff healBuff = healBonusQueue.Dequeue();
 
             //hp 적용
             if (healBuff.value != 0)
@@ -230,15 +280,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             healBuff.remainTurn--;
             if (healBuff.remainTurn > 0)
             {
-                recoveryQueue.Enqueue(healBuff);
+                healBonusQueue.Enqueue(healBuff);
             }
         }
     }
 
     /// <summary>
-    /// HP Change 
+    /// 현재 체력에 정수 값만큼 증감합니다.
+    /// 체력은 0~MaxHP 사이로 클램프되며, 0 이하가 되면 사망 처리됩니다.
     /// </summary>
-    /// <param name="amount"></param>
     public void ChangeHp(int amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
@@ -250,9 +300,9 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     }
 
     /// <summary>
-    /// max hp의 percent value만큼 증감
+    /// Max HP 기준, 퍼센트 비율만큼 체력을 증감합니다.
+    /// 체력은 0~MaxHP 사이로 클램프되며, 0 이하가 되면 사망 처리됩니다.
     /// </summary>
-    /// <param name="percentValue"></param>
     public void ChangeHpByPercent(float percentValue)
     {
         currentHP = Mathf.Clamp(currentHP + (int)(percentValue * maxHP), 0, maxHP);
@@ -262,23 +312,18 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             TurnManager.Instance.NotifyPlayerDeath();
         }
     }
-    //매 턴마다 체력 amount 만큼 회복
-    
-    /// <summary>
-    /// 힐 버프를 큐에 추가
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <param name="turns"></param>
-    public void AddHealBuff(int amount, int turns)
-    {
-        recoveryQueue.Enqueue(new HealBuff(amount,turns));
-    }
-    
-    //매 턴마다 체력 amount% 만큼 회복
-    public void AddHealBuff(float amount, int turns)
-    {
-        recoveryQueue.Enqueue(new HealBuff(amount,turns));
-    }
-    
+   
     #endregion
+
+    public void PrintAttackQueue()
+    {
+        int total = 0;
+        foreach (Buff buff in attackBonusQueue)
+        {
+            Debug.Log($"{buff.value} 증가, {buff.remainTurn} 남음");
+            total += buff.value;
+        }
+        Debug.Log($"total {total} 증가");
+        
+    }
 }

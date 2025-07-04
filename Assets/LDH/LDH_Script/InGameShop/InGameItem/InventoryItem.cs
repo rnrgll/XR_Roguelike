@@ -9,7 +9,5 @@ namespace InGameShop
     {
         public InventoryItemType type;
         public List<EffectGroup> effectGroups;
-
-        public string condition; // OnSuccessOnly, RandomPick 등
     }
 }

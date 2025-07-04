@@ -19,9 +19,14 @@ MonoBehaviour:
   description: "\uC989\uC2DC \uB371\uC5D0\uC11C 5\uC7A5\uC758 \uCE74\uB4DC\uB97C
     \uD68D\uB4DD\uD558\uACE0, \uD134 \uC885\uB8CC \uC2DC \uB0A8\uC740 \uD578\uB4DC\uB97C
     \uC804\uBD80 \uBC84\uB9B0\uB2E4"
-  price: 0
+  price: 90
   sprite: {fileID: 0}
   weight: 1
   type: 2
-  effectGroups: []
-  condition: 
+  effectGroups:
+  - chance: 1
+    effects:
+    - effectType: 4
+      percentValue: 0
+      value: 5
+      duration: 1

@@ -38,7 +38,7 @@ namespace Item
                     break;
 
                 case EffectType.BuffAttack:
-                    //RunBuffAttack(effect);
+                    ApplyBuffAttack(effect);
                     break;
 
                 case EffectType.DrawCard:
@@ -80,11 +80,11 @@ namespace Item
         //     _playerStatus.ReduceHP(ParseValue(effect.value));
         // }
         //
-        // private void RunBuffAttack(Effect effect)
-        // {
-        //     _buffManager.ApplyAttackBuff(ParseValue(effect.value), effect.duration);
-        // }
-        //
+        private void ApplyBuffAttack(ItemEffect effect)
+        {
+            _player.AddAttackBuff(effect.value, effect.duration);
+        }
+        
         // private void RunDrawCard(Effect effect)
         // {
         //     _cardManager.DrawCard(ParseValue(effect.value));

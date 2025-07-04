@@ -17,9 +17,14 @@ MonoBehaviour:
   id: 212
   name: "\uD1B5\uCC30\uC758 \uD3EC\uC158"
   description: "\uB371\uC5D0\uC11C \uCE74\uB4DC\uB97C 2\uC7A5 \uD68D\uB4DD\uD55C\uB2E4"
-  price: 0
+  price: 80
   sprite: {fileID: 0}
   weight: 1
   type: 2
-  effectGroups: []
-  condition: 
+  effectGroups:
+  - chance: 1
+    effects:
+    - effectType: 4
+      percentValue: 0
+      value: 2
+      duration: 1

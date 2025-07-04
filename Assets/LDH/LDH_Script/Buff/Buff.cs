@@ -1,13 +1,13 @@
-namespace Buff
+namespace Buffs
 {
-    public class HealBuff
+    public class Buff
     {
         public int value;
         public float percentValue;
         public int remainTurn;
         public int turn;
 
-        public HealBuff(int value, int turn)
+        public Buff(int value, int turn)
         {
             this.value = value;
             this.turn = turn;
@@ -15,7 +15,7 @@ namespace Buff
             percentValue = 0;
         }
 
-        public HealBuff(float percentValue, int turn)
+        public Buff(float percentValue, int turn)
         {
             this.percentValue = percentValue;
             this.turn = turn;

@@ -37,7 +37,7 @@ public class PrideLuciferMonster : EnemyBase
             {
                 // 특수공격2 조건 발동
                 Debug.Log("[프라이드] 특수공격2 발동! 플레이어 공격력 -50 디버프 적용!");
-                player.ApplyFlatAttackBuff(-50, 1);
+                player.AddAttackBuff(-50, 1); // 버프를 큐로 관리로 변경함에 따라 함수 수정
                 pendingCheck = SpecialState.ExpectHighDamage;
                 isAwaitingSpecialCheck = true;
             }
@@ -45,7 +45,7 @@ public class PrideLuciferMonster : EnemyBase
             {
                 // 특수공격1 조건 발동
                 Debug.Log("[프라이드] 특수공격1 발동! 플레이어 공격력 +40 버프 적용!");
-                player.ApplyFlatAttackBuff(40, 1);
+                player.AddAttackBuff(40, 1); // 버프를 큐로 관리로 변경함에 따라 함수 수정
                 pendingCheck = SpecialState.ExpectLowDamage;
                 isAwaitingSpecialCheck = true;
             }

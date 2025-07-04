@@ -17,9 +17,14 @@ MonoBehaviour:
   id: 211
   name: "\uCC9C\uC0AC\uC758 \uAE43\uD138"
   description: "1\uD134 \uB3D9\uC548 \uBB34\uC801"
-  price: 0
+  price: 150
   sprite: {fileID: 0}
   weight: 1
   type: 2
-  effectGroups: []
-  condition: 
+  effectGroups:
+  - chance: 1
+    effects:
+    - effectType: 5
+      percentValue: 0
+      value: 0
+      duration: 1

@@ -40,11 +40,13 @@ namespace Item
                     foreach (var effect in group.effects)
                     {
                         _effectHandler.ApplyEffect(effect);
-                    }   
+                    }
+                    break;
                 }
                 
             }
             
+            Manager.turnManager.GetPlayerController().PrintAttackQueue();
         }
     }
 }

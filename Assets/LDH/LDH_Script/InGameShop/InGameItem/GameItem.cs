@@ -10,7 +10,7 @@ namespace Item
         
         public string id;
         public string name;
-        public string description;
+        [TextArea(1,3)]public string description;
         public int price;
         public Sprite sprite;
         public float weight;
