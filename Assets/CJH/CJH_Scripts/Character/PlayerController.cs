@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private CardController cardController;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
+    public int MaxHP => maxHP;
     private int currentHP;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
