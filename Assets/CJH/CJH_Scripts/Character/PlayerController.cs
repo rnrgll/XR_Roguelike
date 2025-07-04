@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public int GetFlatAttackBonus() => flatAttackBonus;
 
     // 버프 관리
-    private Queue<HealBuff> recoveryQueue;
+    private Queue<HealBuff> recoveryQueue = new();
     
     
     private IEnumerator Start()

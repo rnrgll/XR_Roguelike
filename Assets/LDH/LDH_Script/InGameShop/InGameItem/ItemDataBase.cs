@@ -23,8 +23,8 @@ namespace InGameShop
             private set;
         } //todo : 아이템 만들면 scriptable obj 를 불러오던지, csv 파일을 읽어서 아이템만들어서 넣어주던지 하는 방식으로 DB 데이터 셋팅하는 방식으로 변경필요
 
-        public int TotalItemCount { get; private set; } // 강화카드 제외 아이템 개수
-        public int TotalCardItemCount { get; private set; } // 강화카드 아이템 개수
+        public int InventoryItemCount { get; private set; } // 강화카드 제외 아이템 개수
+        public int CardItemTotalCount { get; private set; } // 강화카드 아이템 개수
         public string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
         public string cardSpriteFolder = "ArcanaTest"; //todo: 수정 필요
 
@@ -66,6 +66,7 @@ namespace InGameShop
 
             //인벤토리 아이템 로드
             InventoryItem[] inventoryItems = Resources.LoadAll<InventoryItem>("ScriptableObjects/GameItem");
+            InventoryItemCount = inventoryItems.Length;
             foreach (InventoryItem inventoryItem in inventoryItems)
             {
                 ItemDB.Add(inventoryItem);
@@ -73,6 +74,7 @@ namespace InGameShop
 
             //카드 아이템 로드
             CardItem[] cardItems = Resources.LoadAll<CardItem>("ScriptableObjects/GameItem");
+            CardItemTotalCount = cardItems.Length;
             foreach (CardItem cardItem in cardItems)
             {
                 ItemDB.Add(cardItem);
@@ -92,7 +94,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
-            TotalItemCount = rowCnt - 1; //아이템 개수 저장
+            InventoryItemCount = rowCnt - 1; //아이템 개수 저장
 
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
@@ -119,7 +121,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
-            TotalCardItemCount = rowCnt - 1; //아이템 개수 저장
+            CardItemTotalCount = rowCnt - 1; //아이템 개수 저장
 
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
@@ -163,8 +165,8 @@ namespace InGameShop
         {
             List<GameItem> tempList = itemType switch
             {
-                ItemType.Item => ItemDB.GetRange(0, TotalItemCount),
-                ItemType.Card => ItemDB.GetRange(TotalItemCount, TotalCardItemCount),
+                ItemType.Item => ItemDB.GetRange(0, InventoryItemCount),
+                ItemType.Card => ItemDB.GetRange(InventoryItemCount, CardItemTotalCount),
                 ItemType.Both => new List<GameItem>(ItemDB)
             };
             List<string> results = new();

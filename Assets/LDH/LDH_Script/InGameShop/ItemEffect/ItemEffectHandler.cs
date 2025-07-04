@@ -1,4 +1,5 @@
 using InGameShop;
+using Managers;
 using UnityEngine;
 
 namespace Item
@@ -12,13 +13,22 @@ namespace Item
 
         private PlayerController _player;
         
-        public void ApplyEffect(InventoryItem item)
+        public void ApplyEffect(ItemEffect effect)
         {
+            _player ??= Manager.turnManager.GetPlayerController();
             //todo:고치기
-            ItemEffect effect = item.effectGroups[1].effects[0];
-            //if (!TryChance(effect.chance)) return;
+            if (effect.effectType == EffectType.None)
+            {
+               
+                Debug.Log($"[아이템] 효과 적용 : {effect.effectType.ToString()}");
+                return;
+            }
+            
+            Debug.Log($"[아이템] 효과 적용 : {effect.effectType.ToString()}, value : {effect.value}, percent value : {effect.percentValue}, turn : {effect.duration}");
+            
             switch (effect.effectType)
             {
+                
                 case EffectType.Heal:
                     ApplyHeal(effect);
                     break;
@@ -91,10 +101,6 @@ namespace Item
         // }
         //
         
-        private bool TryChance(float chance)
-        {
-            return UnityEngine.Random.value <= chance;
-        }
 
     }
 }
