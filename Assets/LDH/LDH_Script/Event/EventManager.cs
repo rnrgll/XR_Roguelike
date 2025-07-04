@@ -10,13 +10,27 @@ public class EventManager : Singleton<EventManager>
     [SerializeField] private EventUI _model;
     public GameEvent currentEvent;
 
-    public int eventID;
     private void Awake() => SingletonInit();
-    
-    public void GameStart()
+    private void Start()
     {
-        currentEvent = Manager.Data.EventDB.GetGameEventById(eventID);
+        if (!Manager.Data.EventDB.IsReady)
+        {
+            Manager.Data.EventDB.OnDataLoadEnd += EventStart;
+        }
+        else
+        {
+            EventStart();
+        }
+        
+    }
+
+    private void EventStart()
+    {
+        currentEvent = Manager.Data.EventDB.GetRandomEvent();
         _model.UpdateUI(currentEvent);
+        Debug.Log(currentEvent.EventImage);
+
+        Manager.Data.EventDB.OnDataLoadEnd -= EventStart;
     }
     
     

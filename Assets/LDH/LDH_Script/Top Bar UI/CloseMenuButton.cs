@@ -8,7 +8,7 @@ namespace TopBarUI
 { 
     public class CloseMenuButton : MonoBehaviour
     {
-        [SerializeField] private ToggleUI _globalUIType;
+        [SerializeField] private GlobalUI _globalUIType;
         
         private Button _button;
         // Start is called before the first frame update
@@ -29,7 +29,7 @@ namespace TopBarUI
 
         private void CloseMenuUI()
         {
-            Manager.UI.ToggleUI(_globalUIType);
+            Manager.UI.TopBarUI.GetComponent<ToggleGroup>().SetAllTogglesOff();
         }
 
     }

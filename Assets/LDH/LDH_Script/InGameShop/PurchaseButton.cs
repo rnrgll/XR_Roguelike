@@ -1,3 +1,4 @@
+using Item;
 using Managers;
 using System;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace InGameShop
 
         }
 
-        public void SetButton(int slotIndex, TempItem item)
+        public void SetButton(int slotIndex, GameItem item)
         {
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();
@@ -36,7 +37,7 @@ namespace InGameShop
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, (item is GameItem? ItemType.Item: ItemType.Card), _itemId);
+                    Purchase(slotIndex, (item is InventoryItem? ItemType.Item: ItemType.Card), _itemId);
                     
                 });
             }

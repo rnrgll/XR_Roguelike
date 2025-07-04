@@ -35,7 +35,7 @@ namespace InGameShop
 
             GameStateManager.Instance.AddGold(-item.price);
 
-            if (item is GameItem)
+            if (item is InventoryItem)
             {
                 Manager.GameState.AddItem(itemID);
                 Debug.Log("item is game Item");

@@ -18,6 +18,6 @@ public class GlassCard : CardEnchantSO
     }
     public override void OnRemove(MinorArcana card)
     {
-        controller.Deck.EnchantClear(card);
+        // controller.Deck.EnchantClear(card);
     }
 }

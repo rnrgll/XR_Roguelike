@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e314451e579f4763b9fa678cea647592, type: 3}
+  m_Name: 5104_SteelCard
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 1
+  id: 5104
+  name: "\uAC15\uCCA0 \uCE74\uB4DC"
+  description: "\uD574\uB2F9 \uCE74\uB4DC\uAC00 \uD578\uB4DC\uC5D0 \uB0A8\uC544 \uC788\uC744
+    \uACBD\uC6B0 \uBC30\uC218 x1.5 \uC9C0\uC18D \uC99D\uAC00/ \uC0AC\uC6A9 \uC2DC
+    \uBC30\uC218 x3 \uC99D\uAC00"
+  price: 200
+  sprite: {fileID: 21300000, guid: 7febde1890d7146499e94a3aecdbe77f, type: 3}
+  weight: 1
+  cardName: SteelCard

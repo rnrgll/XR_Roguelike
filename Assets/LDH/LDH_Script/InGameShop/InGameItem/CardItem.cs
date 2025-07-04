@@ -1,9 +1,11 @@
+using Item;
 using UnityEngine;
 
 namespace InGameShop
 {
-    public class CardItem : TempItem
+    [CreateAssetMenu(menuName = "GameItem/CardItem")]
+    public class CardItem : GameItem
     {
-        
+        public string cardName;
     }
 }

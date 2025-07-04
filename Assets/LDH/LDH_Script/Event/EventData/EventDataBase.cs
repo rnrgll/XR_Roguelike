@@ -1,4 +1,6 @@
 using CustomUtility.IO;
+using Managers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,13 +21,25 @@ namespace Event
         public int RewardEffectsCount => RewardEffectDB.Count;
         
         
-        
         public string eventSpirteFolder = "EventSprites"; //todo : 수정 필요
 
-        #region HardCoding 값...?
+        #region HardCoding 값
 
         private int EventTable_OptionColumn = 'E' - 'A'; //이벤트 테이블의 option 데이터 시작 열 인덱스
+        private List<int> usableEventList = new() {2, 4, 5, 8, 11, 23, 25, 30, 33, 34 };  //현재 기획에서 지정한 사용 가능한 이벤트. 여기 있는 이벤트 내에서만 랜덤으로 이벤트를 선별.
+        
+        
         #endregion
+
+        //이벤트 관련
+        public bool isEventLoadEnd = false;
+        public bool isMainRewardLoadEnd = false;
+        public bool isRewardEffectLoadEnd = false;
+        public bool IsReady => isEventLoadEnd && isMainRewardLoadEnd && isRewardEffectLoadEnd;
+        public Action OnDataLoadEnd;
+        
+        
+        
         
         public EventDataBase()
         {
@@ -34,6 +48,14 @@ namespace Event
             RewardEffectDB = new();
             
             EventDB.Add(new GameEvent()); //0번은 빈 이벤트를 넣어서 비워두기. event id와 index를 맞추기 위함
+        }
+        
+        
+        //데이터 로드가 모두 완료되면 이벤트 호출
+        public void CheckAllLoaded()
+        {
+            if(IsReady)
+                OnDataLoadEnd?.Invoke();
         }
 
 
@@ -60,7 +82,6 @@ namespace Event
                 string fileName = table.Table[r, 1]; //image1.png
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
                 
-                
                 //게임 이벤트 클래스 생성 및 파싱
                 GameEvent gameEvent = new(
                     int.Parse(table.Table[r, 0]),
@@ -76,6 +97,8 @@ namespace Event
             }
             
             Debug.Log(EventDB.Count + "개 이벤트 데이터를 로드했습니다.");
+            isEventLoadEnd = true;
+            CheckAllLoaded();
 
         }
 
@@ -98,6 +121,8 @@ namespace Event
                 MainRewardDB.Add(key, mainReward);
             }
             Debug.Log(MainRewardDB.Count + "개 메인 보상 데이터를 로드했습니다.");
+            isMainRewardLoadEnd = true;
+            CheckAllLoaded();
         }
         
         public void LoadRewardEffectData(CsvTable table)
@@ -160,8 +185,6 @@ namespace Event
                 
                 RewardEffectDB.Add(key, rewardEffect);
                 
-          
-                
             }
             //4000번 아무 효과 없음 추가
             EventRewardEffect noEffect = new EventRewardEffect();
@@ -170,13 +193,38 @@ namespace Event
             effects.Add(new NoEffect());
             noEffect.SubEffectList = effects;
             RewardEffectDB.Add(4000, noEffect);
+            
+            
             Debug.Log(RewardEffectDB.Count + "개 보상 효과 데이터를 로드했습니다.");
+            isRewardEffectLoadEnd = true;
+            CheckAllLoaded();
         }
         
         #endregion
 
 
         #region DB API
+        /// <summary>
+        /// 가능한 모든 이벤트들의 이름을 출력. 기획에서 지정한 이벤트들이 제대로 매칭되는지 확인용(디버깅용)
+        /// </summary>
+        public void PrintUsableEventsName()
+        {
+            foreach (int id in usableEventList)
+            {
+                Debug.Log(EventDB[id].EventName);
+            }
+        }
+
+        /// <summary>
+        /// 기획에서 지정한 사용 가능한 이벤트 중에서 랜덤으로 하나를 선택해서 반환
+        /// </summary>
+        /// <returns></returns>
+        public GameEvent GetRandomEvent()
+        {
+            int roll = Manager.randomManager.RandInt(0, usableEventList.Count);
+            int eventID = usableEventList[roll];
+            return EventDB[eventID];
+        }
 
         
         /// <summary>

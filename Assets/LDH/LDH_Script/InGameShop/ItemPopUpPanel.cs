@@ -1,3 +1,4 @@
+using Item;
 using Managers;
 using TMPro;
 using Unity.VisualScripting;
@@ -30,7 +31,7 @@ namespace InGameShop
             gameObject.SetActive(false);
         }
 
-        private void UpdateUI(TempItem itemData)
+        private void UpdateUI(GameItem itemData)
         {
             _itemInfo.text = $"{itemData.name}\n{itemData.description}";
 
