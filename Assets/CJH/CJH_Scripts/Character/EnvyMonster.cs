@@ -45,7 +45,7 @@ public class EnvyMonster : EnemyBase
         {
             case EnvyPattern.Basic:
                 Debug.Log("[엔비] 기본 공격!");
-                player.TakeDamage(Mathf.RoundToInt(0.3f * maxHP));
+                player.TakeDamage(Mathf.RoundToInt(0.03f * maxHP));
                 break;
 
             case EnvyPattern.Charge1:
@@ -78,12 +78,12 @@ public class EnvyMonster : EnemyBase
             if (chargeDamageReceived >= 100)
             {
                 Debug.Log("[엔비] 차지1 저지 성공 → 15% 피해");
-                player.TakeDamage(Mathf.RoundToInt(0.15f * maxHP));
+                player.TakeDamage(Mathf.RoundToInt(0.015f * maxHP));
             }
             else
             {
                 Debug.Log("[엔비] 차지1 실패 → 60% 피해 + 부상카드 1장!");
-                player.TakeDamage(Mathf.RoundToInt(0.6f * maxHP));
+                player.TakeDamage(Mathf.RoundToInt(0.06f * maxHP));
                 //CardManager.Instance.AddInjuryCardToHand(1);
             }
         }
@@ -92,7 +92,7 @@ public class EnvyMonster : EnemyBase
             if (chargeDamageReceived >= 150)
             {
                 Debug.Log("[엔비] 차지2 저지 성공 → 20% 피해");
-                player.TakeDamage(Mathf.RoundToInt(0.2f * maxHP));
+                player.TakeDamage(Mathf.RoundToInt(0.02f * maxHP));
             }
             else
             {

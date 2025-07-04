@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
+    [SerializeField] private CardController cardController;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
     private int currentHP;
@@ -26,26 +27,47 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private IEnumerator Start()
     {
+        Debug.Log("[PC] Start 코루틴 진입");
         currentHP = maxHP;
         UpdateHpBar(); // ← 슬라이더 초기화
 
         yield return new WaitUntil(() => Managers.Manager.turnManager != null);
-        Managers.Manager.turnManager.RegisterPlayer(this);
+
+        Debug.Log("[PC] TurnManager 등록 전");
+        TurnManager.Instance.RegisterPlayer(this);
+        Debug.Log("[PC] TurnManager 준비 완료");
 
         yield return new WaitUntil(() => CardManager.Instance != null);
+        Debug.Log("[PC] CardManager 대기 전");
         CardManager.Instance.OnMinorArcanaAttack += OnAttackTriggered;
+        Debug.Log("[PC] CardManager 준비 완료");
+
+        Debug.Log("[PC] cardController 대기 전");
+        yield return new WaitUntil(() => cardController != null);
+        Debug.Log($"[PC] cardController 할당됨: {cardController.name}");
+
+        cardController.OnSubmit += OnAttackTriggered;
+        Debug.Log("[PC] OnSubmit에 OnAttackTriggered 연결 완료");
+
     }
 
+    private void OnDestroy()
+    {
+        if (cardController != null)
+            cardController.OnSubmit -= OnAttackTriggered;
+    }
     private void OnAttackTriggered(List<MinorArcana> cards)
     {
-        // 1. 카드 조합 계산
+        Debug.Log("[디버그]  OnAttackTriggered 진입");
+        // 1) 카드 조합 계산
         List<int> comboCardNums;
         var combo = CardCombination.CalCombination(cards, out comboCardNums);
 
-        Debug.Log($"족보: {combo}, 카드번호: {string.Join(", ", comboCardNums)}");
-
         // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
-        TurnManager.Instance.SetCurrentEnemyByType(EnemyType.Boss);
+        var tm = Managers.Manager.turnManager;
+        Debug.Log($"[디버그] 사용할 TurnManager = {tm}");
+
+        tm.SetCurrentEnemyByType(EnemyType.Boss);
 
         // 3. 타겟 찾기
         var target = TurnManager.Instance
