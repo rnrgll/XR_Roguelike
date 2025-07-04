@@ -27,7 +27,7 @@ namespace InGameShop
         public int CardItemTotalCount { get; private set; } // 강화카드 아이템 개수
         public string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
         public string cardSpriteFolder = "ArcanaTest"; //todo: 수정 필요
-
+        
 
 
         public ItemDataBase()

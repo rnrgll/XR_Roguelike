@@ -25,6 +25,8 @@ namespace Managers
             EventDB = new EventDataBase();
             
             //csv file load
+            
+            //이벤트 로드
             StartCoroutine(CSVDownloader.Start(
                 CSVLink.CsvLinkDict["Event"],
                 EventDB.LoadEventData
