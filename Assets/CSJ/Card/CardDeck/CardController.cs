@@ -76,6 +76,8 @@ public class CardController : MonoBehaviour
     private Action<MinorArcana, CardDebuff> _onDebuffApplied;
     private Action<MinorArcana, CardDebuff> _onDebuffCleared;
     private Action<MinorArcana> OnRemoveStatusEffectCard;
+    public event Action<int> OnEnterSelectionMode;
+    public event Action OnExitSelectionMode;
     #endregion
 
     #region SO관련 내용 모음
@@ -377,6 +379,7 @@ public class CardController : MonoBehaviour
             _num++;
         }
         OnChangedHands?.Invoke();
+        ClearSelect();
         return _num;
     }
 
@@ -583,6 +586,16 @@ public class CardController : MonoBehaviour
         // {
         //     Discard();
         // }
+    }
+
+    public void EnterSelection(int DrawNum)
+    {
+        OnEnterSelectionMode?.Invoke(DrawNum);
+    }
+
+    public void ExitSelection()
+    {
+        OnExitSelectionMode?.Invoke();
     }
 
     #endregion

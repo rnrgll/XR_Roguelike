@@ -1,3 +1,4 @@
+using CardEnum;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,22 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Tarot/Abilities/TheWorld/Reversed")]
 public class TheWorldReversedAbility : ScriptableObject, IArcanaAbility
 {
+    [SerializeField] float Ratio = 10f;
+    [SerializeField] float TakenRatio = 10f;
+    private PlayerController playerController;
     public void Excute(ArcanaContext ctx)
     {
-        var controller = ctx.cardController;
-        // TODO : 추후 제대로 구현
+        playerController = ctx.player;
 
+        playerController.GetCardController().SetTurnBonusList(CardBonus.Ratio, BonusType.Bonus, Ratio);
 
+        playerController.OnPlayerDamaged += playerController.ApplyBonusRatioToMonster;
+        playerController.OnTurnEnd += OnTurnEnd;
+    }
+
+    public void OnTurnEnd()
+    {
+        playerController.OnPlayerDamaged -= playerController.ApplyBonusRatioToMonster;
+        playerController.OnTurnEnd -= OnTurnEnd;
     }
 }

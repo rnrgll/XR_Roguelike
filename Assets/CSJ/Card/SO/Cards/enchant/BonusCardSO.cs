@@ -8,7 +8,7 @@ using CardEnum;
 public class BonusCardSO : CardEnchantSO
 {
     [SerializeField] private int Bonus = 40;
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         controller.SetTurnBonusList(CardBonus.Score, BonusType.Bonus, Bonus);
     }
