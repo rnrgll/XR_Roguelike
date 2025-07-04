@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private int attackBuffTurns = 0;
     public Action OnTurnEnd;
     public Action OnTurnStarted;
+    public Action<int> OnPlayerDamaged;
+    public Action<int> OnMonsterDamaged;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -78,7 +80,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         // 4. 공격 수행
         if (target != null)
         {
-            BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+            int damage = BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+            OnMonsterDamaged(damage);
         }
         else
         {
@@ -95,6 +98,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         Debug.Log($"플레이어가 {dmg} 피해를 입음. 남은 체력: {currentHP}");
+        OnPlayerDamaged(dmg);
         UpdateHpBar();
 
         if (IsDead)
@@ -181,19 +185,24 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         OnTurnEnd?.Invoke();
     }
-    
+
     public bool IsTurnFinished() => turnEnded;
-    
-    
+
+
     //최대 체력 조절
     public void ChangeMaxHp(int amount)
     {
-        maxHP += Mathf.Clamp(maxHP + amount, 0, 100);
+        maxHP = Mathf.Clamp(maxHP + amount, 0, 100);
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        
+
         Debug.Log($"{currentHP}/{maxHP}");
         //플레이어 사망..? 처리를 어떻게 할지... 
         //이벤트 씬에서 ChangeMaxHp를 호출, hp가 0이 되면, 사망처리필요. 
         //턴매니저를 계속 인게임 내에서 계속 살려둔다면, turnmanager로 게임 종료 호출 처리..?
+    }
+
+    public CardController GetCardController()
+    {
+        return cardController;
     }
 }

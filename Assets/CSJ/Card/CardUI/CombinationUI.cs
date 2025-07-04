@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class CombinationUI : MonoBehaviour
 {
-    [SerializeField] private CardController cardController;
+    private CardController cardController;
     [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private TextMeshProUGUI sumText;
 
     private void Awake()
     {
+        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
         RefreshUI();
     }
     private void OnEnable()

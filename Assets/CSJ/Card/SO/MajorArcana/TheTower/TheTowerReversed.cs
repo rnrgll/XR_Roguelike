@@ -8,7 +8,7 @@ public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
     public void Excute(ArcanaContext ctx)
     {
 
-        var controller = ctx.Owner.GetComponent<CardController>();
+        var controller = ctx.cardController;
         controller.Draw(5);
         // TODO : UI와 연계
         List<MinorArcana> handList = controller.Hand.GetCardList().GetRange(0, 5);

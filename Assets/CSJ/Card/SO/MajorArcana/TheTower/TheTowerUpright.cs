@@ -8,9 +8,7 @@ public class TheTowerUprightAbility : ScriptableObject, IArcanaAbility
 {
     public void Excute(ArcanaContext ctx)
     {
-
-        var controller = ctx.Owner.GetComponent<CardController>();
-
+        var controller = ctx.cardController;
         controller.Discard(controller.Hand.GetCardList());
         controller.Draw(8);
     }

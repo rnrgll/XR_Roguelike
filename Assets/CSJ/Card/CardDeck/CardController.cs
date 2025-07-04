@@ -46,7 +46,6 @@ public class CardController : MonoBehaviour
 
     #region  설정 모음 
     public int drawNum = 8;
-    private List<MinorArcana> disposableCardList;
     public Dictionary<MinorArcana, bool> IsUsableDic = new();
     public Dictionary<MinorArcana, int> MultiPleCardDic = new();
     public CardSortEnum sortStand = CardSortEnum.Suit;
@@ -85,6 +84,8 @@ public class CardController : MonoBehaviour
     [SerializeField] private CardDebuffSO[] DebuffArr;
     public List<CardDebuff> DebuffList { set; private get; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
+    [SerializeField] private DisposableCardSO[] DisposableArr;
+    public List<MinorArcana> disposableCardList { set; private get; } = new();
     #endregion
 
 
@@ -118,7 +119,7 @@ public class CardController : MonoBehaviour
         _onEnchantApplied = (card, debuff) =>
         {
             var so = Deck.GetEnchantSO(card);
-            so?.OnSubscribe(card, this);
+            so?.OnSubscribe(card);
         };
         Deck.OnCardEnchanted += _onEnchantApplied;
 
@@ -127,7 +128,7 @@ public class CardController : MonoBehaviour
         _onEnchantCleared = (card, oldEnchant) =>
         {
             var so = Deck.GetEnchantSO(card);
-            so?.OnUnSubscribe(card, this);
+            so?.OnUnSubscribe(card);
         };
         Deck.OnCardEnchantCleared += _onEnchantCleared;
 
@@ -135,7 +136,7 @@ public class CardController : MonoBehaviour
         _onDebuffApplied = (card, debuff) =>
         {
             var so = Deck.GetDebuffSO(card);
-            so?.OnSubscribe(card, this);
+            so?.OnSubscribe(card);
         };
         Deck.OnCardDebuffed += _onDebuffApplied;
 
@@ -144,7 +145,7 @@ public class CardController : MonoBehaviour
         _onDebuffCleared = (card, oldDebuff) =>
         {
             var so = Deck.GetDebuffSO(card);
-            so?.OnUnSubscribe(card, this);
+            so?.OnUnSubscribe(card);
         };
         Deck.OnCardDebuffCleared += _onDebuffCleared;
     }
@@ -302,10 +303,10 @@ public class CardController : MonoBehaviour
             var card = BattleDeck.Draw();
             Hand.Add(card);
             if (card.debuff.debuffinfo != CardDebuff.none)
-                Deck.GetDebuffSO(card)?.OnSubscribe(card, this);
+                Deck.GetDebuffSO(card)?.OnSubscribe(card);
 
             if (card.Enchant.enchantInfo != CardEnchant.none)
-                Deck.GetEnchantSO(card)?.OnSubscribe(card, this);
+                Deck.GetEnchantSO(card)?.OnSubscribe(card);
 
             OnCardDrawn?.Invoke(card);
 
@@ -345,9 +346,9 @@ public class CardController : MonoBehaviour
             Graveyard.Add(_card);
             Hand.Remove(_card);
             if (_card.debuff.debuffinfo != CardDebuff.none)
-                Deck.GetDebuffSO(_card).OnUnSubscribe(_card, this);
+                Deck.GetDebuffSO(_card).OnUnSubscribe(_card);
             if (_card.Enchant.enchantInfo != CardEnchant.none)
-                Deck.GetEnchantSO(_card)?.OnUnSubscribe(_card, this);
+                Deck.GetEnchantSO(_card)?.OnUnSubscribe(_card);
 
             OnCardDiscarded?.Invoke(_card);
             _num++;
@@ -444,9 +445,15 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        Discard(cards);
+        int handCard = Hand.Count;
+        int discCount = Discard(cards);
         ClearSelect();
-        Draw();
+        if (handCard < 8)
+        {
+            Draw(discCount);
+        }
+        else
+            Draw();
     }
 
     public void AdjustCountList(MinorArcana card)
@@ -464,7 +471,7 @@ public class CardController : MonoBehaviour
     /// <param name="_disposCard">
     /// Card의 Suit는 특수 카드의 경우 Special 이외에는 해당 문양으로 지정한다.
     /// </param>
-    public void AddDisposableCard(MinorArcana _disposCard)
+    public void AddDisposableCard(DisposableCardSO disposableCardSO, MinorArcana _disposCard)
     {
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
@@ -545,10 +552,10 @@ public class CardController : MonoBehaviour
                 handsCount += KeyValue.Value;
             }
         }
-        while (handsCount <= 8)
-        {
-            Discard();
-        }
+        // while (handsCount <= 8)
+        // {
+        //     Discard();
+        // }
     }
 
     #endregion
