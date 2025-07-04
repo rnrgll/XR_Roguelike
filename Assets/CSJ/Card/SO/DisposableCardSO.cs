@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CardEnum;
+using System;
 
 [CreateAssetMenu(fileName = "new DisposableCard", menuName = "Cards/DisposableCard")]
 public class DisposableCardSO : ScriptableObject
@@ -15,17 +16,58 @@ public class DisposableCardSO : ScriptableObject
     public int cardNum = 0;
 
     [Header("부가 효과")]
-    public DisposableCardSO disposableCard;
+    public DisposableCardSO disposableCardSO;
+
+    protected MinorArcana disposableCard;
+    protected PlayerController playercontroller = TurnManager.Instance.GetPlayerController();
+    protected Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
+    protected Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
+    protected Dictionary<MinorArcana, Action<MinorArcana>> DiscardDic = new();
 
     public void AddDisposableCard()
     {
+        disposableCard = new MinorArcana(cardName, suit, cardNum);
         TurnManager.Instance.GetPlayerController().GetCardController().
-        AddDisposableCard(this, new MinorArcana(cardName, suit, cardNum));
+        AddDisposableCard(this, disposableCard);
     }
 
-    public void OnCardPlayed()
+    public virtual void OnCardPlayed(MinorArcana card) { }
+
+    public virtual void OnSubscribe(MinorArcana card)
     {
+        Action<MinorArcana> play = c =>
+        {
+            if (c == card)
+                OnCardPlayed(c);
+        };
+        Action<MinorArcana> discard = c =>
+        {
+            if (c == card)
+                OnUnSubscribe(c);
+        };
+        PlayDic[card] = play;
+        playercontroller.GetCardController().OnCardSubmited += play;
+
+        PlayDic[card] = discard;
+        playercontroller.GetCardController().OnCardDiscarded += discard;
 
     }
+
+    public virtual void OnUnSubscribe(MinorArcana card)
+    {
+        if (PlayDic.TryGetValue(card, out var play))
+        {
+            playercontroller.GetCardController().OnCardSubmited -= play;
+        }
+        if (DiscardDic.TryGetValue(card, out var discard))
+        {
+            playercontroller.GetCardController().OnCardSubmited -= discard;
+        }
+    }
+    public void RemoveCard()
+    {
+        playercontroller.GetCardController().RemoveDisposableCard(disposableCard);
+    }
+
 
 }

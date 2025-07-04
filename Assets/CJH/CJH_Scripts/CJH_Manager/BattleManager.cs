@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using CardEnum;
 using Unity.Burst.Intrinsics;
@@ -16,12 +15,13 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public int ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyBase target)
+    public int ExecuteCombinationAttack(CardCombinationEnum combo, int nums, EnemyBase target)
     {
-        int baseDamage = nums.Sum();
-        float multiplier = TurnManager.Instance.GetPlayerController().GetAttackMultiplier();
-        int bonus = TurnManager.Instance.GetPlayerController().GetFlatAttackBonus();
-        int finalDamage = Mathf.RoundToInt(baseDamage * multiplier);
+        int baseDamage = nums;
+        float multiplier = TurnManager.Instance.GetPlayerController().GetAttackMultiplier() + TurnManager.Instance.GetPlayerController().GetCardController().GetCardBonus(CardBonus.Mult);
+        int bonus = TurnManager.Instance.GetPlayerController().GetFlatAttackBonus() + (int)TurnManager.Instance.GetPlayerController().GetCardController().GetCardBonus(CardBonus.Score);
+        float ratio = TurnManager.Instance.GetPlayerController().GetCardController().GetCardBonus(CardBonus.Ratio);
+        int finalDamage = Mathf.RoundToInt((baseDamage * multiplier + bonus) * ratio);
 
 
         GameStatusUI.Instance.SetComboInfo(combo.ToString(), multiplier);
