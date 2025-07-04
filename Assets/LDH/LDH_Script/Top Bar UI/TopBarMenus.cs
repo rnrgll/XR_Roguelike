@@ -13,40 +13,42 @@ namespace TopBarUI
 
     public class TopBarMenus : MonoBehaviour
     {
-        [SerializeField] private Button _mapButton;
-        [SerializeField] private Button _cardDeckButton;
-        [SerializeField] private Button _settingButton;
+        [SerializeField] private Toggle _mapToggle;
+        [SerializeField] private Toggle _cardDeckToggle;
+        [SerializeField] private Toggle _settingToggle;
         
         
         // Start is called before the first frame update
         void Start()
         {
-            _mapButton.onClick.AddListener(ShowMap);
-            _settingButton.onClick.AddListener(ShowSetting);
-            _cardDeckButton.onClick.AddListener(ShowDeck);
+            _mapToggle.onValueChanged.AddListener(OnMapToggleChanged);
+            _cardDeckToggle.onValueChanged.AddListener(OnDeckToggleChanged);
+            _settingToggle.onValueChanged.AddListener(OnSettingToggleChanged);
         }
 
         private void OnDestroy()
         {
-            _mapButton.onClick.RemoveAllListeners();
-            _settingButton.onClick.RemoveAllListeners();
-            _cardDeckButton.onClick.RemoveAllListeners();
-            
+            _mapToggle.onValueChanged.RemoveAllListeners();
+            _cardDeckToggle.onValueChanged.RemoveAllListeners();
+            _settingToggle.onValueChanged.RemoveAllListeners();
         }
 
-        private void ShowMap()
+
+        private void OnMapToggleChanged(bool isOn)
         {
-            Manager.UI.ToggleUI(ToggleUI.Map);
+            Manager.UI.SetUIActive(GlobalUI.Map, isOn);
         }
 
-        private void ShowDeck()
+        private void OnDeckToggleChanged(bool isOn)
         {
-            Manager.UI.ToggleUI(ToggleUI.Deck);
+            Manager.UI.SetUIActive(GlobalUI.Deck, isOn);
         }
 
-        private void ShowSetting()
+        private void OnSettingToggleChanged(bool isOn)
         {
-            //todo : Setting UI 연결
+            //Manager.UI.SetUIActive(GlobalUI.Setting, isOn);
+        
         }
+    
     }
 }

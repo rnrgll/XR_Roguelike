@@ -18,7 +18,6 @@ namespace Managers
         
         public RemoveItemPanel ItemRemoveUI { get; private set; }
         
-        private ToggleUI? _currentOpenUI = null;
 
         #endregion
         
@@ -64,25 +63,6 @@ namespace Managers
             ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform).GetComponent<RemoveItemPanel>();
             ItemRemoveUI.gameObject.SetActive(false);
 
-        }
-        
-        public void ToggleUI(ToggleUI uiType)
-        {
-            if (_currentOpenUI == uiType)
-            {
-                // 이미 열려 있던 UI면 닫고 상태 초기화
-                SetUIActive((GlobalUI)uiType, false);
-                _currentOpenUI = null;
-                return;
-            }
-
-            // 다른 UI 열려있으면 닫기
-            if (_currentOpenUI.HasValue)
-                SetUIActive((GlobalUI)_currentOpenUI.Value, false);
-
-            // 새 UI 열기
-            SetUIActive((GlobalUI)uiType, true);
-            _currentOpenUI = uiType;
         }
         
         public void SetUIActive(GlobalUI uiType, bool isActive)

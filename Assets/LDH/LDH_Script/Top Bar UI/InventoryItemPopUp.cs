@@ -15,6 +15,7 @@ namespace TopBarUI
 
         [SerializeField] private Button _useButton;
         private string currentItemId;
+        public string CurrentItemId => currentItemId;
 
         private void OnDisable()
         {

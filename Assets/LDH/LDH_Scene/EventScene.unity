@@ -1878,7 +1878,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   majorCardCandidates: []
-  cardCon: {fileID: 828910784}
 --- !u!114 &828910790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,9 +1895,10 @@ MonoBehaviour:
   SuitsList: 00000000000000000000000000000000
   drawNum: 8
   sortStand: 1
-  EnchantList: []
-  DebuffList: []
-  StatusEffectList: []
+  EnchantArr: []
+  DebuffArr: []
+  StatusEffectArr: []
+  DisposableArr: []
 --- !u!1 &960864623
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ namespace TopBarUI
 {
     public class InventorySlot : MonoBehaviour
     {
-        private Button _slotButton;
+        private Toggle _slotToggle;
         [SerializeField] private Image _itemImage;
         
         public int slotIndex;
@@ -19,19 +19,20 @@ namespace TopBarUI
         
         private void Awake()
         {
-            _slotButton = GetComponent<Button>();
+            _slotToggle = GetComponent<Toggle>();
+            
         }
 
         private void OnEnable()
         {
             Manager.GameState.OnItemChanged.AddListener(UpdateSlot);
-            _slotButton.onClick.AddListener(ShowItem);
+            _slotToggle.onValueChanged.AddListener(OnSlotToggleChanged);
         }
 
         private void OnDisable()
         {
             Manager.GameState.OnItemChanged.RemoveListener(UpdateSlot);
-            _slotButton.onClick.RemoveListener(ShowItem);
+            _slotToggle.onValueChanged.RemoveListener(OnSlotToggleChanged);
         }
 
 
@@ -50,11 +51,14 @@ namespace TopBarUI
             
         }
 
-        private void ShowItem()
+        private void OnSlotToggleChanged(bool isON)
         {
-            if (string.IsNullOrEmpty(itemId)) return;
-            SendData();
-            Manager.UI.ToggleUI(ToggleUI.Item);
+            if (isON)
+            {
+                if (string.IsNullOrEmpty(itemId)) return;
+                SendData();
+            }
+            Manager.UI.SetUIActive(GlobalUI.Item, isON);
         }
         
         private void SendData()

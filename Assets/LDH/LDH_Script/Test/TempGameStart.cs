@@ -20,12 +20,12 @@ namespace Test
             // //랜덤으로 아이템 하나 획득 처리
             // List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1, ItemType.Item);
             // Debug.Log(items[0]);
-            int randIdx = Manager.randomManager.RandInt(0, testItemIDList.Count);
-            string randItem = testItemIDList[randIdx];
-            Manager.GameState.AddItem(randItem);
+            // int randIdx = Manager.randomManager.RandInt(0, testItemIDList.Count);
+            // string randItem = testItemIDList[randIdx];
+            // Manager.GameState.AddItem(randItem);
             Manager.GameState.AddItem("207");
             Manager.GameState.AddItem("208");
-            _tarotDeck.AddMajorCards(_startCard);
+            // _tarotDeck.AddMajorCards(_startCard);
         }
 
         
