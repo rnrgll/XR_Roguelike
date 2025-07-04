@@ -10,7 +10,7 @@ public class TheDevilUprightAbility : ScriptableObject, IArcanaAbility
     private PlayerController playerController;
     public void Excute(ArcanaContext ctx)
     {
-        playerController = ctx.playerController;
+        playerController = ctx.player;
         // TODO : 추후 제대로 구현
         if (!TurnManager.Instance.isFinal)
         {

@@ -8,7 +8,7 @@ public class TheMagicianReversed : MonoBehaviour
     public MinorArcana HandCard;
     public void Excute(ArcanaContext ctx)
     {
-        var controller = ctx.cardController;
+        var controller = ctx.player.GetCardController();
         var tempCards = new List<MinorArcana>();
         for (int i = 0; i < 3; i++)
         {

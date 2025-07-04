@@ -19,8 +19,10 @@ public class StatusEffectCardSO : ScriptableObject
 
     [Header("부가 효과 (디버프로 생성)")]
     public CardDebuffSO debuff;
+    protected CardController cardController = TurnManager.Instance.GetPlayerController().GetCardController();
 
-    public void AddStatusEffect(CardController cardController)
+
+    public void AddStatusEffect()
     {
         cardController.AddStatusEffectCard(this, new MinorArcana(cardName, suit, cardNum));
     }

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private int currentHP;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
+    private bool isInvincible;
 
     private float attackMultiplier = 1f;
     private int flatAttackBonus = 0;
@@ -63,8 +64,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         Debug.Log("[디버그]  OnAttackTriggered 진입");
         // 1) 카드 조합 계산
-        List<int> comboCardNums;
-        var combo = CardCombination.CalCombination(cards, out comboCardNums);
+        var combo = cardController.cardComb;
 
         // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
         var tm = Managers.Manager.turnManager;
@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public void TakeDamage(int dmg)
     {
+        if (isInvincible) return;
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         Debug.Log("플레이어 턴 종료!");
         turnEnded = true;
+        isInvincible = false;
 
         if (attackBuffTurns > 0)
         {
@@ -189,11 +191,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public bool IsTurnFinished() => turnEnded;
 
+    public void SetInvincible()
+    {
+        isInvincible = true;
+    }
+
 
     //최대 체력 조절
     public void ChangeMaxHp(int amount)
     {
-        maxHP = Mathf.Clamp(maxHP + amount, 0, 100);
+        maxHP = Mathf.Min(maxHP + amount, 0);
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         Debug.Log($"{currentHP}/{maxHP}");

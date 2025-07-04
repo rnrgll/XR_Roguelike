@@ -9,7 +9,7 @@ public class TheDevilReversedAbility : ScriptableObject, IArcanaAbility
     private DisposableCardSO contractSO;
     public void Excute(ArcanaContext ctx)
     {
-        playerController = ctx.playerController;
+        playerController = ctx.player;
         if (!TurnManager.Instance.isFinal)
         {
             playerController.OnMonsterDamaged += GetGold;
