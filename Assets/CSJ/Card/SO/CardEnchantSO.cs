@@ -9,7 +9,7 @@ public abstract class CardEnchantSO : ScriptableObject
     public CardEnchant EnchantType => _enchant;
     [SerializeField] private CardEnchant _enchant;
     [TextArea] public string description;
-    private CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
+    protected CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
 
     private Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();

@@ -9,7 +9,7 @@ public abstract class CardDebuffSO : ScriptableObject
     public CardDebuff DebuffType => _type;
     [SerializeField] private CardDebuff _type;
     [TextArea] public string description;
-    private CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
+    protected CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
 
     private Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();

@@ -9,16 +9,16 @@ public class SteelCard : CardEnchantSO
     [SerializeField] private int MultPlayed = 3;
     [SerializeField] private float MultInHand = 1.5f;
 
-    public override void OnSubscribe(MinorArcana card, CardController controller)
+    public override void OnSubscribe(MinorArcana card)
     {
-        base.OnSubscribe(card, controller);
+        base.OnSubscribe(card);
         controller.SetTurnBonusList(CardBonus.Ratio, BonusType.Bonus, MultInHand);
     }
 
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         controller.SetTurnBonusList(CardBonus.Ratio, BonusType.Bonus, MultPlayed);
-        OnUnSubscribe(card, controller);
+        OnUnSubscribe(card);
     }
 
 
