@@ -14,8 +14,6 @@ public class GluttonMonster : EnemyBase
 
     private int consecutiveBasic = 0;
 
-
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -28,93 +26,98 @@ public class GluttonMonster : EnemyBase
 
     private IEnumerator TurnRoutine()
     {
-        // 조건부 행동: 손패에 부식 카드 4장 이상 → 즉사
+        // 1) 플레이어와 최대체력 참조
+        var player = TurnManager.Instance.GetPlayerController();
+        int playerMax = player.MaxHP;
+
+        // 2) 부식 카드 4장 이상이면 즉사
         int rustCount = CardManager.Instance.CountDebuffedCardsInHand(CardDebuff.Rust);
         if (rustCount >= 4)
         {
-            Debug.Log("[GluttonMonster] 부식 카드 4장 이상 → 패배 조건 발동");
-            TurnManager.Instance.GetPlayerController().TakeDamage(maxHP);
+            Debug.Log("[GluttonMonster] 부식 카드 4장 이상 → 즉사!");
+            player.TakeDamage(playerMax);
             yield break;
         }
 
+        // 3) 기본•강•특수 패턴 분기
         float roll = Random.value;
         if (roll < basicChance)
         {
-            // 일반 패턴: 기본 or 강공격
             if (consecutiveBasic < 2)
-                yield return BasicAttack();
+                yield return BasicAttack(player, playerMax);
             else
-                yield return HeavyAttack();
+                yield return HeavyAttack(player, playerMax);
         }
         else
         {
-            // 특수 패턴 (특수공격 1/3, 특수행동 2/3)
             if (Random.value < 0.33f)
-                yield return SpecialAttack();
+                yield return SpecialAttack(player, playerMax);
             else
-                yield return SpecialAction();
+                yield return SpecialAction(player);
         }
 
         yield return null;
     }
 
-    private IEnumerator BasicAttack()
+    private IEnumerator BasicAttack(PlayerController player, int playerMax)
     {
-        Debug.Log("[GluttonMonster] 기본 공격: 5% 피해 + 부패 1장");
-        var player = TurnManager.Instance.GetPlayerController();
-        player.TakeDamage(Mathf.RoundToInt(maxHP * basicRatio));
+        int dmg = Mathf.RoundToInt(playerMax * basicRatio);
+        Debug.Log($"[GluttonMonster] 기본 공격: 플레이어 최대체력 5% → {dmg} 피해 + 부패 1장");
+        player.TakeDamage(dmg);
 
         var card = CardManager.Instance.GetRandomHandCard();
         if (card != null)
-            player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
+            player.GetComponent<CardController>()
+                  .ApplyDebuff(card, CardDebuff.Corruption);
 
         consecutiveBasic++;
         yield return null;
     }
 
-    private IEnumerator HeavyAttack()
+    private IEnumerator HeavyAttack(PlayerController player, int playerMax)
     {
-        Debug.Log("[GluttonMonster] 강공격: 15% 피해 + 부식 1장");
-        var player = TurnManager.Instance.GetPlayerController();
-        player.TakeDamage(Mathf.RoundToInt(maxHP * heavyRatio));
+        int dmg = Mathf.RoundToInt(playerMax * heavyRatio);
+        Debug.Log($"[GluttonMonster] 강공격: 플레이어 최대체력 15% → {dmg} 피해 + 부식 1장");
+        player.TakeDamage(dmg);
 
         var card = CardManager.Instance.GetRandomHandCard();
         if (card != null)
-            player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Rust);
+            player.GetComponent<CardController>()
+                  .ApplyDebuff(card, CardDebuff.Rust);
 
         consecutiveBasic = 0;
         yield return null;
     }
 
-    private IEnumerator SpecialAttack()
+    private IEnumerator SpecialAttack(PlayerController player, int playerMax)
     {
-        Debug.Log("[GluttonMonster] 특수공격: 10% 피해 + 부패 2장");
-        var player = TurnManager.Instance.GetPlayerController();
-        player.TakeDamage(Mathf.RoundToInt(maxHP * specialRatio));
+        int dmg = Mathf.RoundToInt(playerMax * specialRatio);
+        Debug.Log($"[GluttonMonster] 특수공격: 플레이어 최대체력 10% → {dmg} 피해 + 부패 2장");
+        player.TakeDamage(dmg);
 
         for (int i = 0; i < 2; i++)
         {
             var card = CardManager.Instance.GetRandomHandCard();
             if (card != null)
-                player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
+                player.GetComponent<CardController>()
+                      .ApplyDebuff(card, CardDebuff.Corruption);
         }
         yield return null;
     }
 
-    private IEnumerator SpecialAction()
+    private IEnumerator SpecialAction(PlayerController player)
     {
-        Debug.Log("[GluttonMonster] 특수 행동: 피해 없음 + 부식1장, 부패1장");
-        var player = TurnManager.Instance.GetPlayerController();
-
+        Debug.Log("[GluttonMonster] 특수 행동: 피해 없음 + 부식1장 + 부패1장");
         var rustCard = CardManager.Instance.GetRandomHandCard();
         if (rustCard != null)
-            player.GetComponent<CardController>().ApplyDebuff(rustCard, CardDebuff.Rust);
+            player.GetComponent<CardController>()
+                  .ApplyDebuff(rustCard, CardDebuff.Rust);
 
         var corCard = CardManager.Instance.GetRandomHandCard();
         if (corCard != null)
-            player.GetComponent<CardController>().ApplyDebuff(corCard, CardDebuff.Corruption);
+            player.GetComponent<CardController>()
+                  .ApplyDebuff(corCard, CardDebuff.Corruption);
 
         yield return null;
     }
-
 }

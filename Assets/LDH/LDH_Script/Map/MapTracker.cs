@@ -48,7 +48,7 @@ namespace Map
             {
                 case NodeType.Battle:
                     //todo : 배틀 씬으로 전환 및 설정
-                    //SceneManager.LoadScene("BattleScene");
+                    SceneManager.LoadScene("BattleScene");
                     break;
                 case NodeType.Shop:
                     //todo : 인게임 상점 씬으로 전환
@@ -60,6 +60,7 @@ namespace Map
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환
+                    SceneManager.LoadScene("BossBattleScene");
                     break;
                 
                 default:
