@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9338fbaf11f4f2eb621886f4f98f246, type: 3}
+  m_Name: 212_Potion of Insight
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 0
+  id: 212
+  name: "\uD1B5\uCC30\uC758 \uD3EC\uC158"
+  description: "\uB371\uC5D0\uC11C \uCE74\uB4DC\uB97C 2\uC7A5 \uD68D\uB4DD\uD55C\uB2E4"
+  price: 0
+  sprite: {fileID: 0}
+  weight: 1
+  type: 2
+  effectGroups: []
+  condition: 

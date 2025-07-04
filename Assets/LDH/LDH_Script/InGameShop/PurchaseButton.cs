@@ -1,3 +1,4 @@
+using Item;
 using Managers;
 using System;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace InGameShop
 
         }
 
-        public void SetButton(int slotIndex, Item item)
+        public void SetButton(int slotIndex, GameItem item)
         {
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();

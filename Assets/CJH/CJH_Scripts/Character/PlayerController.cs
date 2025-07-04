@@ -1,3 +1,4 @@
+using Buff;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public float GetAttackMultiplier() => attackMultiplier;
     public int GetFlatAttackBonus() => flatAttackBonus;
 
+    // 버프 관리
+    private Queue<HealBuff> recoveryQueue;
+    
+    
     private IEnumerator Start()
     {
         Debug.Log("[PC] Start 코루틴 진입");
@@ -192,67 +197,48 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         
         Debug.Log($"{currentHP}/{maxHP}");
-        //플레이어 사망..? 처리를 어떻게 할지... 
-        //이벤트 씬에서 ChangeMaxHp를 호출, hp가 0이 되면, 사망처리필요. 
-        //턴매니저를 계속 인게임 내에서 계속 살려둔다면, turnmanager로 게임 종료 호출 처리..?
+        TurnManager.Instance.NotifyPlayerDeath();
     }
 
-    #region HPControll
-    public class Recovery
-    {
-        public int value;
-        public float percentValue;
-        public int remainTurn;
-        public int turn;
-
-        public Recovery(int value, int turn)
-        {
-            this.value = value;
-            this.turn = turn;
-            remainTurn = turn;
-        }
-
-        public Recovery(float percentValue, int turn)
-        {
-            this.percentValue = percentValue;
-            this.turn = turn;
-            remainTurn = turn;
-        }
-    }
-
-    private Queue<Recovery> recoveryQueue;
-
-    public void ApplyRecovery()
+    #region HPControl
+    /// <summary>
+    /// Heal Buff Queue에 담긴 버프를 하나씩 적용
+    /// </summary>
+    private void ApplyHeal()
     {
         int count = recoveryQueue.Count;
         for (int i = 0; i < count; i++)
         {
-            Recovery recovery = recoveryQueue.Dequeue();
+            HealBuff healBuff = recoveryQueue.Dequeue();
 
             //hp 적용
-            if (recovery.value != 0)
+            if (healBuff.value != 0)
             {
-                ChangeHp(recovery.value);
-                Debug.Log($"[플레이어] 체력 : {recovery.value}만큼 회복, 턴 수 : {recovery.remainTurn}/{recovery.turn} ");
+                ChangeHp(healBuff.value);
+                Debug.Log($"[플레이어] 체력 : {healBuff.value}만큼 회복, 턴 수 : {healBuff.remainTurn}/{healBuff.turn} ");
 
             }
 
-            else if (recovery.percentValue != 0)
+            else if (healBuff.percentValue != 0)
             {
-                ChangeHp((int)(maxHP * recovery.percentValue));
-                Debug.Log($"[플레이어] 체력 : {recovery.value}% 만큼 회복, 턴 수 : {recovery.remainTurn}/{recovery.turn} ");
+                ChangeHpByPercent(healBuff.percentValue);
+                Debug.Log($"[플레이어] 체력 : {healBuff.value}% 만큼 회복, 턴 수 : {healBuff.remainTurn}/{healBuff.turn} ");
             }
             else
                 Debug.LogError("Recovery value, percentValue 설정 오류");
 
-            recovery.remainTurn--;
-            if (recovery.remainTurn > 0)
+            healBuff.remainTurn--;
+            if (healBuff.remainTurn > 0)
             {
-                recoveryQueue.Enqueue(recovery);
+                recoveryQueue.Enqueue(healBuff);
             }
         }
     }
 
+    /// <summary>
+    /// HP Change 
+    /// </summary>
+    /// <param name="amount"></param>
     public void ChangeHp(int amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
@@ -262,17 +248,36 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             TurnManager.Instance.NotifyPlayerDeath();
         }
     }
-    
-    //매 턴마다 체력 amount 만큼 회복
-    public void HealOverTurns(int amount, int turns)
+
+    /// <summary>
+    /// max hp의 percent value만큼 증감
+    /// </summary>
+    /// <param name="percentValue"></param>
+    public void ChangeHpByPercent(float percentValue)
     {
-        recoveryQueue.Enqueue(new Recovery(amount,turns));
+        currentHP = Mathf.Clamp(currentHP + (int)(percentValue * maxHP), 0, maxHP);
+        if (IsDead)
+        {
+            Debug.Log("플레이어가 사망했습니다.");
+            TurnManager.Instance.NotifyPlayerDeath();
+        }
+    }
+    //매 턴마다 체력 amount 만큼 회복
+    
+    /// <summary>
+    /// 힐 버프를 큐에 추가
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="turns"></param>
+    public void AddHealBuff(int amount, int turns)
+    {
+        recoveryQueue.Enqueue(new HealBuff(amount,turns));
     }
     
     //매 턴마다 체력 amount% 만큼 회복
-    public void HealOverTurns(float amount, int turns)
+    public void AddHealBuff(float amount, int turns)
     {
-        recoveryQueue.Enqueue(new Recovery(amount,turns));
+        recoveryQueue.Enqueue(new HealBuff(amount,turns));
     }
     
     #endregion

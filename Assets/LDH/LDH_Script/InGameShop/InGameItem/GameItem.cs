@@ -5,8 +5,9 @@ namespace Item
 {
     public class GameItem : ScriptableObject
     {
-        public ShopType shopType;
+        public ShopType shopType = ShopType.InGame;
         public InGameShop.ItemType itemType;
+        
         public string id;
         public string name;
         public string description;

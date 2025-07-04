@@ -547,7 +547,7 @@ public class CardController : MonoBehaviour
         }
         while (handsCount <= 8)
         {
-            Discard();
+            //Discard();
         }
     }
 

@@ -1,4 +1,5 @@
 using InGameShop;
+using Item;
 using Managers;
 using System;
 using Unity.VisualScripting;
@@ -43,7 +44,7 @@ namespace TopBarUI
             }
             else
             {
-                Item item = Manager.Data.ItemDB.GetItemById(this.itemId);
+                GameItem item = Manager.Data.ItemDB.GetItemById(this.itemId);
                 _itemImage.sprite = item.sprite;
             }
             

@@ -1,4 +1,5 @@
 using Item;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace InGameShop
@@ -6,14 +7,8 @@ namespace InGameShop
     [CreateAssetMenu(menuName = "GameItem/InventoyItem")]
     public class InventoryItem : GameItem
     {
-        public int shopId;
-        public int itemId;
-        
-        public ItemType type;
-        public int price;
-
-        public ItemEffect baseEffect;
-        public ItemEffect extraEffect;
+        public InventoryItemType type;
+        public List<EffectGroup> effectGroups;
 
         public string condition; // OnSuccessOnly, RandomPick 등
     }

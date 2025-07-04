@@ -1,3 +1,4 @@
+using InGameShop;
 using UnityEngine;
 
 namespace Item
@@ -11,9 +12,11 @@ namespace Item
 
         private PlayerController _player;
         
-        public void ApplyEffect(ItemEffect effect)
+        public void ApplyEffect(InventoryItem item)
         {
-            if (!TryChance(effect.chance)) return;
+            //todo:고치기
+            ItemEffect effect = item.effectGroups[1].effects[0];
+            //if (!TryChance(effect.chance)) return;
             switch (effect.effectType)
             {
                 case EffectType.Heal:
@@ -49,9 +52,17 @@ namespace Item
         private void ApplyHeal(ItemEffect effect)
         {
             if (effect.duration <= 1)
-               _player.ChangeHp((int)effect.value);
+            {
+                if (effect.value!=0)
+                    _player.ChangeHp(effect.value);
+                else
+                    _player.ChangeHpByPercent(effect.percentValue);
+            }
             else
-                _player.
+            if (effect.value!=0)
+                _player.AddHealBuff(effect.value, effect.duration);
+            else
+                _player.AddHealBuff(effect.percentValue, effect.duration);
         }
 
         // private void RunHPReduce(Effect effect)

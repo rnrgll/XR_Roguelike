@@ -1,4 +1,5 @@
 using InGameShop;
+using Item;
 using Managers;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace UI
         {
             _infoText.text = $"삭제할 아이템을 {requiredRemoveCount}개 선택하세요.";
             
-            Item item = Manager.Data.ItemDB.GetItemById(itemId);
+            GameItem item = Manager.Data.ItemDB.GetItemById(itemId);
             slots[slotIndex].transform.GetChild(0).GetComponent<Image>().sprite = item.sprite;
         }
         

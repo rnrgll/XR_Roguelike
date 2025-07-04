@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9338fbaf11f4f2eb621886f4f98f246, type: 3}
+  m_Name: 206_Potion of Strength
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 0
+  id: 206
+  name: "\uD798\uC758 \uD3EC\uC158"
+  description: "1\uD134 \uB3D9\uC548 \uB370\uBBF8\uC9C0 +50"
+  price: 0
+  sprite: {fileID: 0}
+  weight: 1
+  type: 1
+  effectGroups: []
+  condition: 

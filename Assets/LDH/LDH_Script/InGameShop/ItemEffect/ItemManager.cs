@@ -15,11 +15,7 @@ namespace Item
 
         public void UseItem(InventoryItem item)
         {
-            _effectHandler.ApplyEffect(item.baseEffect);
-            if (item.extraEffect != null && item.extraEffect.effectType != EffectType.None)
-            {
-                _effectHandler.ApplyEffect(item.extraEffect);
-            }
+            _effectHandler.ApplyEffect(item);
         }
     }
 }
