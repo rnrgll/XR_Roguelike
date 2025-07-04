@@ -5,6 +5,6 @@ using CardEnum;
 
 public class ArcanaContext
 {
-    public PlayerController playerController;
+    public PlayerController player;
     public MajorPosition MajorPos;
 }

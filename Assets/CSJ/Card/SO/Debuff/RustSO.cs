@@ -9,7 +9,7 @@ public class RustSO : CardDebuffSO
 {
     [SerializeField] private int penalty = 50;
 
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         Debug.Log($"[부식] {card.CardName} 사용 → 데미지 {penalty}만큼 감소");
         controller.SetTurnBonusList(CardBonus.Score, BonusType.Penalty, penalty);

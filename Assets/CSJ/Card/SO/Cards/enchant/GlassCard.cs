@@ -7,16 +7,16 @@ using CardEnum;
 public class GlassCard : CardEnchantSO
 {
     [SerializeField] private int AttackBuff = 2;
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         controller.SetTurnBonusList(CardBonus.Ratio, BonusType.Bonus, AttackBuff);
         int rand = RandomManager.Instance.RandInt(0, 100);
         if (rand < 25)
         {
-            OnRemove(card, controller);
+            OnRemove(card);
         }
     }
-    public override void OnRemove(MinorArcana card, CardController controller)
+    public override void OnRemove(MinorArcana card)
     {
         // controller.Deck.EnchantClear(card);
     }

@@ -76,7 +76,6 @@ public class CardController : MonoBehaviour
     private Action<MinorArcana, CardDebuff> _onDebuffApplied;
     private Action<MinorArcana, CardDebuff> _onDebuffCleared;
     private Action<MinorArcana> OnRemoveStatusEffectCard;
-    private Action<MinorArcana> OnRemoveDisposableCard;
     #endregion
 
     #region SO관련 내용 모음
@@ -181,8 +180,6 @@ public class CardController : MonoBehaviour
 
         ResetDeck();
         // 테스트용 임시로 Start에서 실행
-        BattleInit();
-
 
         #region 미사용 코드
         // CardDicInit();
@@ -288,6 +285,11 @@ public class CardController : MonoBehaviour
         return DebuffArr[DebuffList.LastIndexOf(_debuff)];
     }
 
+    public float GetCardBonus(CardBonus bonus)
+    {
+        return TurnBonusDic[bonus] + BattleBonusDic[bonus] - TurnPenaltyDic[bonus] - BattlePenaltyDic[bonus];
+    }
+
     #endregion
 
     #region 카드를 직접 컨트롤하는 함수 모음
@@ -321,6 +323,27 @@ public class CardController : MonoBehaviour
         OnChangedHands?.Invoke();
     }
 
+    public void Draw(MinorArcana card)
+    {
+        List<MinorArcana> deckList = BattleDeck.GetCardList();
+        if (!deckList.Contains(card)) return;
+        BattleDeck.Remove(card);
+        Hand.Add(card);
+        if (card.debuff.debuffinfo != CardDebuff.none)
+            Deck.GetDebuffSO(card)?.OnSubscribe(card);
+
+        if (card.Enchant.enchantInfo != CardEnchant.none)
+            Deck.GetEnchantSO(card)?.OnSubscribe(card);
+
+        OnCardDrawn?.Invoke(card);
+
+        if (BattleDeck.Count == 0)
+        {
+            DeckRefill();
+        }
+        OnChangedHands?.Invoke();
+    }
+
     public void DeckRefill()
     {
         foreach (var card in Graveyard.Cards)
@@ -339,7 +362,7 @@ public class CardController : MonoBehaviour
 
             if (disposableCardList.Contains(_card))
             {
-                RemoveDispoableCard(_card);
+                RemoveDisposableCard(_card);
                 _num++;
                 continue;
             }
@@ -475,6 +498,7 @@ public class CardController : MonoBehaviour
     {
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
+        disposableCardSO.OnSubscribe(_disposCard);
         OnChangedHands?.Invoke();
     }
 
@@ -493,17 +517,20 @@ public class CardController : MonoBehaviour
         OnChangedHands?.Invoke();
     }
 
-    public void RemoveStatusEffectCard(MinorArcana card)
+    public void RemoveStatusEffectCard(MinorArcana statusEffectcard)
     {
-        Hand.Remove(card);
-        OnRemoveStatusEffectCard?.Invoke(card);
+        Hand.Remove(statusEffectcard);
+        if (SelectedCard.Contains(statusEffectcard))
+            SelectedCard.Remove(statusEffectcard);
+        OnRemoveStatusEffectCard?.Invoke(statusEffectcard);
     }
 
-    public void RemoveDispoableCard(MinorArcana disposablecard)
+    public void RemoveDisposableCard(MinorArcana disposablecard)
     {
         Hand.Remove(disposablecard);
+        if (SelectedCard.Contains(disposablecard))
+            SelectedCard.Remove(disposablecard);
         disposableCardList.Remove(disposablecard);
-        OnRemoveDisposableCard?.Invoke(disposablecard);
     }
 
 
