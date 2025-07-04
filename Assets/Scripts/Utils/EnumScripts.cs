@@ -108,6 +108,7 @@ namespace Item
         BuffAttack,
         HPReduce,
         DrawCard,
+        DiscardHand,
         Invincible,
         GainJoker,
     }

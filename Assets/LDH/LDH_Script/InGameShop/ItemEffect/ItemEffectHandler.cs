@@ -1,3 +1,4 @@
+using CardEnum;
 using InGameShop;
 using Managers;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Item
         }
 
         private PlayerController _player;
+        private CardController _card => _player.GetCardController();
         
         public void ApplyEffect(ItemEffect effect)
         {
@@ -34,7 +36,7 @@ namespace Item
                     break;
 
                 case EffectType.HPReduce:
-                    //RunHPReduce(effect);
+                    ApplyHPReduce(effect);
                     break;
 
                 case EffectType.BuffAttack:
@@ -42,17 +44,19 @@ namespace Item
                     break;
 
                 case EffectType.DrawCard:
-                    //RunDrawCard(effect);
+                    ApplyDrawCard(effect);
                     break;
-
+                case EffectType.DiscardHand:
+                    _player.OnTurnEnd += DiscardHand;
+                    break;
                 case EffectType.Invincible:
-                    //RunInvincible(effect);
+                    ApplyInvincible(effect);
                     break;
 
                 case EffectType.GainJoker:
-                    //RunGainJoker(effect);
+                    ApplyTryGainJoker(effect);
                     break;
-
+                
                 default:
                     Debug.LogWarning($"[ItemEffectRunner] 알 수 없는 효과 타입: {effect.effectType}");
                     break;
@@ -75,31 +79,67 @@ namespace Item
                 _player.AddHealBuff(effect.percentValue, effect.duration);
         }
 
-        // private void RunHPReduce(Effect effect)
-        // {
-        //     _playerStatus.ReduceHP(ParseValue(effect.value));
-        // }
-        //
+        private void ApplyHPReduce(ItemEffect effect)
+        {
+            if (effect.duration <= 1)
+            {
+                if (effect.value!=0)
+                    _player.ChangeHp(-effect.value);
+                else
+                    _player.ChangeHpByPercent(-effect.percentValue);
+            }
+            else
+            if (effect.value!=0)
+                _player.AddHealBuff(-effect.value, effect.duration);
+            else
+                _player.AddHealBuff(-effect.percentValue, effect.duration);
+        }
+        
         private void ApplyBuffAttack(ItemEffect effect)
         {
             _player.AddAttackBuff(effect.value, effect.duration);
         }
         
-        // private void RunDrawCard(Effect effect)
-        // {
-        //     _cardManager.DrawCard(ParseValue(effect.value));
-        // }
-        //
-        // private void RunGainJoker(Effect effect)
-        // {
-        //     _jokerDeck.TryAddJoker(effect.value);
-        // }
-        //
-        // private void RunInvincible(Effect effect)
-        // {
-        //     _buffManager.ApplyInvincible(effect.duration);
-        // }
-        //
+        private void ApplyDrawCard(ItemEffect effect)
+        {
+           _card.Draw(effect.value);
+        }
+        
+        private void ApplyTryGainJoker(ItemEffect effect)
+        { 
+            
+            //조커 카드 보유 여부 확인
+            //battle deck에서 카드 문양이 와일드이고, 카드 넘버가 14 인 카드가 있는지 확인
+            //있으면 인덱스 반환, 없으면 -1 반환
+            int jockerIndex = _card.BattleDeck.GetCardList()
+                .FindIndex(minor => minor.CardNum == 14);
+
+            //조커 카드 미보유시 아이템 효과 적용 실패
+            if (jockerIndex == -1)
+            {
+                Debug.Log("[아이템] 보유하고 있는 조커가 없습니다. 아이템 효과 적용 실패");
+                return;
+            }
+            
+            //조커 카드 보유시 battle deck에서 해당 카드를 빼서
+            //핸드에 넣어주어야 함
+            MinorArcana jockerCard = _card.BattleDeck.GetCard(jockerIndex);
+            _card.BattleDeck.Remove(jockerCard);
+            //_card.DrawJockerCard(jockerCard); //todo: Jocker Card Draw 변경 필요
+
+        }
+        
+        private void ApplyInvincible(ItemEffect effect)
+        {
+            //todo : 무적상태 적용 필요
+        }
+
+        private void DiscardHand()
+        {
+            Debug.Log("[아이템 효과] 남은 핸드를 전부 버립니다.");
+            _card.Discard(_card.Hand.GetCardList()); //손패에 있는 카드 전부 버리기
+            _player.OnTurnEnd -= DiscardHand; //등록한거 삭제
+        }
         
 
     }

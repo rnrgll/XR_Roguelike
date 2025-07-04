@@ -30,3 +30,7 @@ MonoBehaviour:
       percentValue: 0
       value: 5
       duration: 1
+    - effectType: 5
+      percentValue: 0
+      value: 0
+      duration: 1

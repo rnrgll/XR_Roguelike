@@ -4027,6 +4027,7 @@ MonoBehaviour:
   EnchantArr: []
   DebuffArr: []
   StatusEffectArr: []
+  DisposableArr: []
 --- !u!114 &1432436371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4039,8 +4040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e7efe62fff523f43971a7de733d8a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  majorCardCandidates: []
-  cardCon: {fileID: 1432436367}
+  majorCardCandidates:
+  - {fileID: 11400000, guid: d0cedffe82394ec4f8a083e307266c3c, type: 2}
 --- !u!1001 &1453359441
 PrefabInstance:
   m_ObjectHideFlags: 0

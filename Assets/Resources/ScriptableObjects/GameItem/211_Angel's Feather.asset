@@ -24,7 +24,7 @@ MonoBehaviour:
   effectGroups:
   - chance: 1
     effects:
-    - effectType: 5
+    - effectType: 6
       percentValue: 0
       value: 0
       duration: 1
