@@ -15,7 +15,7 @@ namespace InGameShop
 {
     public class ItemDataBase
     {
-        public List<TempItem> ItemDB { get; private set; }  //todo : 아이템 만들면 scriptable obj 를 불러오던지, csv 파일을 읽어서 아이템만들어서 넣어주던지 하는 방식으로 DB 데이터 셋팅하는 방식으로 변경필요
+        public List<Item> ItemDB { get; private set; }  //todo : 아이템 만들면 scriptable obj 를 불러오던지, csv 파일을 읽어서 아이템만들어서 넣어주던지 하는 방식으로 DB 데이터 셋팅하는 방식으로 변경필요
         public int TotalItemCount { get; private set; } // 강화카드 제외 아이템 개수
         public int TotalCardItemCount { get; private set; } // 강화카드 아이템 개수
         public string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
@@ -71,7 +71,7 @@ namespace InGameShop
             
             for (int r = 1; r < rowCnt; r++)
             {
-                TempItem item = new GameItem()
+                Item item = new InventoryItem()
                 {
                     id = table.Table[r,columnMap["id"]],
                     name = table.Table[r,columnMap["name"]],
@@ -98,7 +98,7 @@ namespace InGameShop
             
             for (int r = 1; r < rowCnt; r++)
             {
-                TempItem item = new CardItem()
+                Item item = new CardItem()
                 {
                     id = table.Table[r,columnMap["id"]],
                     name = table.Table[r,columnMap["name"]],
@@ -111,7 +111,7 @@ namespace InGameShop
             }
         }
         
-        public int PickIndexRandomByWeight(List<TempItem> tempList)
+        public int PickIndexRandomByWeight(List<Item> tempList)
         {
             float totalWeight = tempList.Sum(item => item.weight);
             float roll = Manager.randomManager.RandFloat(0, totalWeight);
@@ -129,11 +129,11 @@ namespace InGameShop
 
         public List<string> PickUniqeItemRandomByType(int count, ItemType itemType = ItemType.Both)
         {
-            List<TempItem> tempList = itemType switch
+            List<Item> tempList = itemType switch
             {
                 ItemType.Item => ItemDB.GetRange(0, TotalItemCount),
                 ItemType.Card => ItemDB.GetRange(TotalItemCount, TotalCardItemCount),
-                ItemType.Both => new List<TempItem>(ItemDB)
+                ItemType.Both => new List<Item>(ItemDB)
             };
             List<string> results = new();
 
@@ -153,7 +153,7 @@ namespace InGameShop
         
         
         
-        public TempItem GetItemById(string id)
+        public Item GetItemById(string id)
         {
             return ItemDB.FirstOrDefault(item => item.id == id);
         }

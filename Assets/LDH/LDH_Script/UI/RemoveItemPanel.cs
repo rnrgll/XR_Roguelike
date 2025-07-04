@@ -66,7 +66,7 @@ namespace UI
         {
             _infoText.text = $"삭제할 아이템을 {requiredRemoveCount}개 선택하세요.";
             
-            TempItem item = Manager.Data.ItemDB.GetItemById(itemId);
+            Item item = Manager.Data.ItemDB.GetItemById(itemId);
             slots[slotIndex].transform.GetChild(0).GetComponent<Image>().sprite = item.sprite;
         }
         

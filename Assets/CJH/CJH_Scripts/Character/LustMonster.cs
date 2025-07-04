@@ -69,12 +69,12 @@ public class LustMonster : EnemyBase
         player.TakeDamage(Mathf.RoundToInt(maxHP * 0.05f));
 
         var card = CardManager.Instance.GetRandomHandCard();
-        if (card != null)
-        {
-            // 연결한 이벤트들 작동
-            player.GetComponent<CardController>()
-                  .ApplyDebuff(card, CardDebuff.Rust);
-        }
+        // if (card != null)
+        // {
+        //     // 연결한 이벤트들 작동
+        //     player.GetComponent<CardController>()
+        //           .ApplyDebuff(card, CardDebuff.Rust);
+        // }
 
         yield return null;
     }

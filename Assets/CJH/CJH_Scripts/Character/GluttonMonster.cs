@@ -65,8 +65,8 @@ public class GluttonMonster : EnemyBase
         player.TakeDamage(Mathf.RoundToInt(maxHP * basicRatio));
 
         var card = CardManager.Instance.GetRandomHandCard();
-        if (card != null)
-            player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
+        // if (card != null)
+        //     player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
 
         consecutiveBasic++;
         yield return null;
@@ -79,8 +79,8 @@ public class GluttonMonster : EnemyBase
         player.TakeDamage(Mathf.RoundToInt(maxHP * heavyRatio));
 
         var card = CardManager.Instance.GetRandomHandCard();
-        if (card != null)
-            player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Rust);
+        // if (card != null)
+        //     player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Rust);
 
         consecutiveBasic = 0;
         yield return null;
@@ -95,8 +95,8 @@ public class GluttonMonster : EnemyBase
         for (int i = 0; i < 2; i++)
         {
             var card = CardManager.Instance.GetRandomHandCard();
-            if (card != null)
-                player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
+            // if (card != null)
+            //     player.GetComponent<CardController>().ApplyDebuff(card, CardDebuff.Corruption);
         }
         yield return null;
     }
@@ -107,12 +107,12 @@ public class GluttonMonster : EnemyBase
         var player = TurnManager.Instance.GetPlayerController();
 
         var rustCard = CardManager.Instance.GetRandomHandCard();
-        if (rustCard != null)
-            player.GetComponent<CardController>().ApplyDebuff(rustCard, CardDebuff.Rust);
+        // if (rustCard != null)
+        //     player.GetComponent<CardController>().ApplyDebuff(rustCard, CardDebuff.Rust);
 
         var corCard = CardManager.Instance.GetRandomHandCard();
-        if (corCard != null)
-            player.GetComponent<CardController>().ApplyDebuff(corCard, CardDebuff.Corruption);
+        // if (corCard != null)
+        //     player.GetComponent<CardController>().ApplyDebuff(corCard, CardDebuff.Corruption);
 
         yield return null;
     }

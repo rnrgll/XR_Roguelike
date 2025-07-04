@@ -43,7 +43,7 @@ namespace TopBarUI
             }
             else
             {
-                TempItem item = Manager.Data.ItemDB.GetItemById(this.itemId);
+                Item item = Manager.Data.ItemDB.GetItemById(this.itemId);
                 _itemImage.sprite = item.sprite;
             }
             

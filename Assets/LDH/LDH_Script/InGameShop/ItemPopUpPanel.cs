@@ -30,7 +30,7 @@ namespace InGameShop
             gameObject.SetActive(false);
         }
 
-        private void UpdateUI(TempItem itemData)
+        private void UpdateUI(Item itemData)
         {
             _itemInfo.text = $"{itemData.name}\n{itemData.description}";
 

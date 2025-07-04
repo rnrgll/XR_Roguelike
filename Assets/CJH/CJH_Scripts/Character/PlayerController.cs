@@ -174,4 +174,84 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         //이벤트 씬에서 ChangeMaxHp를 호출, hp가 0이 되면, 사망처리필요. 
         //턴매니저를 계속 인게임 내에서 계속 살려둔다면, turnmanager로 게임 종료 호출 처리..?
     }
+
+    #region HPControll
+    public class Recovery
+    {
+        public int value;
+        public float percentValue;
+        public int remainTurn;
+        public int turn;
+
+        public Recovery(int value, int turn)
+        {
+            this.value = value;
+            this.turn = turn;
+            remainTurn = turn;
+        }
+
+        public Recovery(float percentValue, int turn)
+        {
+            this.percentValue = percentValue;
+            this.turn = turn;
+            remainTurn = turn;
+        }
+    }
+
+    private Queue<Recovery> recoveryQueue;
+
+    public void ApplyRecovery()
+    {
+        int count = recoveryQueue.Count;
+        for (int i = 0; i < count; i++)
+        {
+            Recovery recovery = recoveryQueue.Dequeue();
+
+            //hp 적용
+            if (recovery.value != 0)
+            {
+                ChangeHp(recovery.value);
+                Debug.Log($"[플레이어] 체력 : {recovery.value}만큼 회복, 턴 수 : {recovery.remainTurn}/{recovery.turn} ");
+
+            }
+
+            else if (recovery.percentValue != 0)
+            {
+                ChangeHp((int)(maxHP * recovery.percentValue));
+                Debug.Log($"[플레이어] 체력 : {recovery.value}% 만큼 회복, 턴 수 : {recovery.remainTurn}/{recovery.turn} ");
+            }
+            else
+                Debug.LogError("Recovery value, percentValue 설정 오류");
+
+            recovery.remainTurn--;
+            if (recovery.remainTurn > 0)
+            {
+                recoveryQueue.Enqueue(recovery);
+            }
+        }
+    }
+
+    public void ChangeHp(int amount)
+    {
+        currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
+        if (IsDead)
+        {
+            Debug.Log("플레이어가 사망했습니다.");
+            TurnManager.Instance.NotifyPlayerDeath();
+        }
+    }
+    
+    //매 턴마다 체력 amount 만큼 회복
+    public void HealOverTurns(int amount, int turns)
+    {
+        recoveryQueue.Enqueue(new Recovery(amount,turns));
+    }
+    
+    //매 턴마다 체력 amount% 만큼 회복
+    public void HealOverTurns(float amount, int turns)
+    {
+        recoveryQueue.Enqueue(new Recovery(amount,turns));
+    }
+    
+    #endregion
 }

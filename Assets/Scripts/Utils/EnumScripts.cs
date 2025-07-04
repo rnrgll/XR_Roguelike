@@ -83,6 +83,33 @@ namespace InGameShop
 
 }
 
+namespace Item
+{
+    public enum ShopType
+    {
+        Lobby = 1,
+        InGame = 2,
+    }
+    
+    public enum InventoryItemType
+    {
+        Recovery,
+        Enforce,
+        Special
+    }
+    
+    public enum EffectType
+    {
+        None,
+        Heal,
+        BuffAttack,
+        HPReduce,
+        DrawCard,
+        Invincible,
+        GainJoker,
+    }
+}
+
 
 namespace UI
 {
@@ -128,11 +155,5 @@ namespace Event
         ObtainEnhancedCard,
         ResourceLoss,
     }
-
-    public enum ItemRewardType
-    {
-        CardRandom = -10,
-        ItemRandom = -20,
-        ItemPotionRandom = -30,
-    }
+    
 }
