@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private CardController cardController;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
+    public int MaxHP => maxHP;
     private int currentHP;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private int attackBuffTurns = 0;
     public Action OnTurnEnd;
     public Action OnTurnStarted;
+    public Action<int> OnPlayerDamaged;
+    public Action<int> OnMonsterDamaged;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -84,7 +87,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         // 4. 공격 수행
         if (target != null)
         {
-            BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+            int damage = BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
+            OnMonsterDamaged(damage);
         }
         else
         {
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         Debug.Log($"플레이어가 {dmg} 피해를 입음. 남은 체력: {currentHP}");
+        OnPlayerDamaged(dmg);
         UpdateHpBar();
 
         if (IsDead)
@@ -200,16 +205,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         OnTurnEnd?.Invoke();
     }
-    
+
     public bool IsTurnFinished() => turnEnded;
-    
-    
+
+
     //최대 체력 조절
     public void ChangeMaxHp(int amount)
     {
-        maxHP += Mathf.Clamp(maxHP + amount, 0, 100);
+        maxHP = Mathf.Clamp(maxHP + amount, 0, 100);
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        
+
         Debug.Log($"{currentHP}/{maxHP}");
         TurnManager.Instance.NotifyPlayerDeath();
     }
@@ -325,5 +330,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         Debug.Log($"total {total} 증가");
         
+    }
+
+    public CardController GetCardController()
+    {
+        return cardController;
     }
 }

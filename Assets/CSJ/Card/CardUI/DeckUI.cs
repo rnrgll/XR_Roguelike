@@ -8,8 +8,8 @@ public class DeckUI : MonoBehaviour
 {
     [SerializeField] Button DeckButton;
     [SerializeField] TextMeshProUGUI DeckCount;
-    [SerializeField] CardController cardController;
     [SerializeField] BattleDeckUI BattleDeckUI;
+    CardController cardController = TurnManager.Instance.GetPlayerController().GetCardController();
 
     private void OnEnable()
     {

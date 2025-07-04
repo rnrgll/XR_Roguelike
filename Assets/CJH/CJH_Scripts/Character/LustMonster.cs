@@ -34,8 +34,12 @@ public class LustMonster : EnemyBase
 
     private IEnumerator TriggerFatalAttack()
     {
+        var player = TurnManager.Instance.GetPlayerController();
+        int playerMax = player.MaxHP;
+
         Debug.Log($"[LustMonster] 스택 {lustStack} → 즉사기 발동!!");
-        TurnManager.Instance.GetPlayerController().TakeDamage(maxHP); // 즉사 처리
+        // 플레이어 최대체력 전부만큼 대미지 입혀 즉사 처리
+        player.TakeDamage(playerMax);
         lustStack = 0;
         yield return null;
     }
@@ -49,29 +53,32 @@ public class LustMonster : EnemyBase
     {
         Debug.Log("[LustMonster] 턴 시작");
 
+        var player = TurnManager.Instance.GetPlayerController();
+        int playerMax = player.MaxHP;
+
         // 1. 유혹 확률 판단
         if (Random.value < temptChance)
         {
-            yield return ExecuteTemptation();
+            yield return ExecuteTemptation(player, playerMax);
         }
         else
         {
-            yield return ExecutePunishment();
+            yield return ExecutePunishment(player, playerMax);
         }
 
         yield return null;
     }
 
-    private IEnumerator ExecuteTemptation()
+    private IEnumerator ExecuteTemptation(PlayerController player, int playerMax)
     {
-        Debug.Log("[LustMonster] 유혹 공격: 5% 피해 + Rust 디버프 부여");
-        var player = TurnManager.Instance.GetPlayerController();
-        player.TakeDamage(Mathf.RoundToInt(maxHP * 0.05f));
+        // 5% of player's max HP
+        int dmg = Mathf.RoundToInt(playerMax * 0.05f);
+        Debug.Log($"[LustMonster] 유혹 공격: 플레이어 최대체력 5% → {dmg} 피해 + Rust 디버프");
+        player.TakeDamage(dmg);
 
         var card = CardManager.Instance.GetRandomHandCard();
         if (card != null)
         {
-            // 연결한 이벤트들 작동
             player.GetComponent<CardController>()
                   .ApplyDebuff(card, CardDebuff.Charm);
         }
@@ -79,22 +86,31 @@ public class LustMonster : EnemyBase
         yield return null;
     }
 
-    private IEnumerator ExecutePunishment()
+    private IEnumerator ExecutePunishment(PlayerController player, int playerMax)
     {
         int rustedCount = CardManager.Instance.CountDebuffedCardsInHand(CardDebuff.Charm);
 
         if (rustedCount >= 3)
         {
-            Debug.Log("[LustMonster] 손패에 Charm 카드 3장 이상 → 전부 폐기 + 10% 피해!");
-
+            // 10% of player's max HP
+            int dmg = Mathf.RoundToInt(playerMax * 0.10f);
+            Debug.Log($"[LustMonster] Charm 카드 3장 이상 → 전부 폐기 + 플레이어 최대체력 10% → {dmg} 피해");
             CardManager.Instance.DiscardAllHandCards();
-            TurnManager.Instance.GetPlayerController().TakeDamage(Mathf.RoundToInt(maxHP * 0.1f));
+            player.TakeDamage(dmg);
         }
         else
         {
-            Debug.Log("[LustMonster] 손패의 Charm 카드 부족 → 아무 일도 일어나지 않음");
+            Debug.Log("[LustMonster] Charm 카드 부족 → 아무 일도 일어나지 않음");
         }
 
         yield return null;
+    }
+
+    public override void ApplyDamage(int damage)
+    {
+        base.ApplyDamage(damage);
+
+        // 러스트 차지 중에는 stack 증감만
+        if (lustStack > 0) { /* 아무 추가 효과 없음 */ }
     }
 }

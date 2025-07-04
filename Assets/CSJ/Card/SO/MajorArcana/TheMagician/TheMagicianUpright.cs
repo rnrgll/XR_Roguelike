@@ -9,7 +9,7 @@ public class TheMagicianUpright : ScriptableObject, IArcanaAbility
     public MinorArcana HandCard;
     public void Excute(ArcanaContext ctx)
     {
-        var controller = ctx.Owner.GetComponent<CardController>();
+        var controller = ctx.cardController;
         PickCards(controller);
 
         controller.SwapCard(DeckCard, HandCard);
