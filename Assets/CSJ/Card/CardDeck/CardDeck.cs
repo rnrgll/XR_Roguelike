@@ -20,6 +20,7 @@ public class CardDeck
     [SerializeField] readonly int arcanaLength = 14;
     private readonly CsvTable _csvTable;
     public Action<MinorArcana, CardEnchant> OnCardEnchanted;
+    public Action<MinorArcana, CardEnchant> OnCardEnchantCleared;
     public Action<MinorArcana, CardDebuff> OnCardDebuffed;
     public Action<MinorArcana, CardDebuff> OnCardDebuffCleared;
     // 카드가 추가될 때의 이벤트 (미사용)
@@ -144,15 +145,20 @@ public class CardDeck
 
     public void Enchant(MinorArcana _card, CardEnchantSO _enchant)
     {
-        // List<MinorArcana> Enchantable = GetEnchantableCard();
+        if (EnchantDic.TryGetValue(_card, out var old) &&
+            old.EnchantType != CardEnchant.none)
+            EnchantClear(_card);
 
-        // if (!Enchantable.Contains(_card))
-        // {
-        //     throw new ArgumentException($"카드({_card})가 이미 강화되어 있습니다.");
-        // }
         EnchantDic[_card] = _enchant;
         _card.Enchant.EnchantToCard(_enchant.EnchantType);
         OnCardEnchanted?.Invoke(_card, _enchant.EnchantType);
+    }
+
+    public void EnchantClear(MinorArcana _card)
+    {
+        EnchantDic.Remove(_card);
+        _card.Enchant.EnchantToCard(CardEnchant.none);
+        OnCardEnchantCleared?.Invoke(_card, CardEnchant.none);
     }
 
     public void Debuff(MinorArcana _card, CardDebuffSO _debuffSO)

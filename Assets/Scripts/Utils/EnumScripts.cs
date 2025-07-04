@@ -14,6 +14,9 @@ namespace CardEnum
     public enum CardDebuff { none, Charm, Corruption, Rust }
     public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
 
+    public enum CardBonus { Score, Mult, Ratio }
+    public enum BonusType { Bonus, Penalty }
+
 
     public enum CardCombinationEnum
     {

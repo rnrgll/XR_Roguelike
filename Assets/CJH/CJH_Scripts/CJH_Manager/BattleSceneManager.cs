@@ -18,16 +18,7 @@ public class BattleSceneManager : MonoBehaviour
         if (pc != null)
         {
             // 1. 적 생성
-            GameObject selectedPrefab = GetMonsterPrefab(StageInfo.selectedMonster);
-            if (selectedPrefab == null)
-            {
-                Debug.LogError("선택된 몬스터 프리팹이 없습니다!");
-                yield break;
-            }
 
-            GameObject enemyObj = Instantiate(selectedPrefab);
-            EnemyBase enemy = enemyObj.GetComponent<EnemyBase>();
-            TurnManager.Instance.RegisterEnemy(enemy);
 
             // 2. 플레이어 등록 및 전투 시작
             TurnManager.Instance.RegisterPlayer(pc);
