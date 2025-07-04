@@ -8,7 +8,7 @@ public class LuckyCard : CardEnchantSO
 {
     [SerializeField] int BonusScore = 60;
     [SerializeField] int BonusMoney = 50;
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         int rand = RandomManager.Instance.RandInt(0, 100);
         if (rand < 20)

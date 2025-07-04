@@ -12,9 +12,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private int maxHP = 100;
     public int MaxHP => maxHP;
     private int currentHP;
+    private float additionalDamage;
+    private float ratio;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
+    private bool isNextTurnSkip = false;
+    private bool isTurnSkip = false;
     private bool isInvincible;
+    private bool isAdditionalDamage;
+
 
     private float attackMultiplier = 1f;
     private int flatAttackBonus = 0;
@@ -63,7 +69,14 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private void OnAttackTriggered(List<MinorArcana> cards)
     {
         Debug.Log("[디버그]  OnAttackTriggered 진입");
+        if (isTurnSkip)
+        {
+            Debug.Log("턴 스킵이 활성화되어 있습니다.");
+            isTurnSkip = false;
+            EndTurn();
+        }
         // 1) 카드 조합 계산
+        int comboCardNums = cardController.sumofNums;
         var combo = cardController.cardComb;
 
         // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
@@ -89,6 +102,12 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             Debug.LogWarning("[PlayerController] 대상 Boss가 없습니다!");
         }
 
+        if (isNextTurnSkip)
+        {
+            isNextTurnSkip = false;
+            isTurnSkip = true;
+        }
+
         // 5. 턴 종료
         EndTurn();
     }
@@ -99,8 +118,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
+        OnPlayerDamaged?.Invoke(dmg);
+        if (isAdditionalDamage)
+        {
+            currentHP -= (int)additionalDamage;
+            currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+            dmg = dmg + (int)additionalDamage;
+        }
+
         Debug.Log($"플레이어가 {dmg} 피해를 입음. 남은 체력: {currentHP}");
-        OnPlayerDamaged(dmg);
         UpdateHpBar();
 
         if (IsDead)
@@ -135,6 +161,21 @@ public class PlayerController : MonoBehaviour, IPlayerActor
                 Debug.Log("[플레이어] 모든 공격 버프 해제됨");
             }
         }
+    }
+
+    public void ApplyBonusRatioToMonster(int dmg)
+    {
+        isAdditionalDamage = true;
+        additionalDamage = dmg * (ratio - 1);
+    }
+
+    public void SetRatio(float _ratio)
+    {
+        ratio = _ratio;
+    }
+    public void SetTurnSkip()
+    {
+        isNextTurnSkip = true;
     }
 
     public void ForceSetHpToRate(float rate)

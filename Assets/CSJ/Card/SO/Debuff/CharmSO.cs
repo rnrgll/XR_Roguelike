@@ -10,7 +10,7 @@ public class CharmSO : CardDebuffSO
     public int charmAmount = 1;
     public Action<int> OnCharmCardUsed;
 
-    public override void OnCardPlayed(MinorArcana card, CardController controller)
+    public override void OnCardPlayed(MinorArcana card)
     {
         OnCharmCardUsed?.Invoke(charmAmount);
     }

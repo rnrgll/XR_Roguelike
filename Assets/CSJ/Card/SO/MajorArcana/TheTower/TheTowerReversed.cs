@@ -14,12 +14,11 @@ public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
         controller.Draw(DrawNum);
         // TODO : UI와 연계
         HandleSelect(controller);
-        controller.Discard(handList);
     }
 
     public IEnumerator HandleSelect(CardController cardController)
     {
-        OnEnterSelectionMode?.Invoke(DrawNum);
+        cardController.EnterSelection(DrawNum);
 
         cardController.ClearSelect();
 
@@ -34,6 +33,11 @@ public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
         while (!done)
             yield return null;
 
-        onSel
+        cardController.OnSelectionChanged -= selectionWatcher;
+        cardController.ExitSelection();
+
+        cardController.Discard(cardController.SelectedCard);
+
+        cardController.OnChangedHands?.Invoke();
     }
 }

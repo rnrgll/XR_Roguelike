@@ -9,7 +9,7 @@ public class InjurySO : CardDebuffSO
 {
 
 
-    public override void OnTurnEnd(MinorArcana card, CardController controller)
+    public override void OnTurnEnd(MinorArcana card)
     {
         controller.RemoveStatusEffectCard(card);
     }
