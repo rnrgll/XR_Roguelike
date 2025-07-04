@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e314451e579f4763b9fa678cea647592, type: 3}
+  m_Name: 5102_WildCard
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 1
+  id: 5102
+  name: "\uC640\uC77C\uB4DC \uCE74\uB4DC"
+  description: "\uD574\uB2F9 \uCE74\uB4DC\uB294 \uBAA8\uB4E0 \uBB38\uC591\uC73C\uB85C
+    \uCDE8\uAE09"
+  price: 140
+  sprite: {fileID: 21300000, guid: 5f15dc667c496e64a9da0887adc1069e, type: 3}
+  weight: 1
+  cardName: WildCard

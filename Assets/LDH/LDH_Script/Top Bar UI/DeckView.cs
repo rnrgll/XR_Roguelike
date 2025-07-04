@@ -21,7 +21,7 @@ namespace TopBarUI
 
         private void Awake()
         {
-            _cardPool = new(transform, _cardPrefab, 67);
+            _cardPool = new(transform, _cardPrefab, 100);
         }
 
         private void OnEnable()

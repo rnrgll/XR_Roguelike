@@ -125,7 +125,7 @@ namespace Item
             //핸드에 넣어주어야 함
             MinorArcana jockerCard = _card.BattleDeck.GetCard(jockerIndex);
             _card.BattleDeck.Remove(jockerCard);
-            //_card.DrawJockerCard(jockerCard); //todo: Jocker Card Draw 변경 필요
+            _card.Draw(jockerCard);
 
         }
         
