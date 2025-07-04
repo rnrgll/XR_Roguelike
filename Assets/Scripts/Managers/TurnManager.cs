@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class TurnManager : Singleton<TurnManager>
@@ -25,6 +26,7 @@ public class TurnManager : Singleton<TurnManager>
         if (!enemies.Contains(e))
         {
             enemies.Add(e);
+            Debug.Log($"[디버그] 등록된 적들: {string.Join(", ", enemies.Select(en => ((MonoBehaviour)en).name))}");
 
             // 첫 등록된 EnemyBase를 기본 타겟으로 설정
             if (currentEnemy == null && e is EnemyBase monster)
@@ -43,6 +45,7 @@ public class TurnManager : Singleton<TurnManager>
         var match = enemies
             .OfType<EnemyBase>()
             .FirstOrDefault(e => e.Type == type && !e.IsDead);
+        Debug.Log($"[디버그] 공격 대상: {match} ({match?.name})");
 
         if (match != null)
         {

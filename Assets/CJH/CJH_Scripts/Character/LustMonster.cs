@@ -69,30 +69,30 @@ public class LustMonster : EnemyBase
         player.TakeDamage(Mathf.RoundToInt(maxHP * 0.05f));
 
         var card = CardManager.Instance.GetRandomHandCard();
-        // if (card != null)
-        // {
-        //     // 연결한 이벤트들 작동
-        //     player.GetComponent<CardController>()
-        //           .ApplyDebuff(card, CardDebuff.Rust);
-        // }
+        if (card != null)
+        {
+            // 연결한 이벤트들 작동
+            player.GetComponent<CardController>()
+                  .ApplyDebuff(card, CardDebuff.Charm);
+        }
 
         yield return null;
     }
 
     private IEnumerator ExecutePunishment()
     {
-        int rustedCount = CardManager.Instance.CountDebuffedCardsInHand(CardDebuff.Rust);
+        int rustedCount = CardManager.Instance.CountDebuffedCardsInHand(CardDebuff.Charm);
 
         if (rustedCount >= 3)
         {
-            Debug.Log("[LustMonster] 손패에 Rust 카드 3장 이상 → 전부 폐기 + 10% 피해!");
+            Debug.Log("[LustMonster] 손패에 Charm 카드 3장 이상 → 전부 폐기 + 10% 피해!");
 
             CardManager.Instance.DiscardAllHandCards();
             TurnManager.Instance.GetPlayerController().TakeDamage(Mathf.RoundToInt(maxHP * 0.1f));
         }
         else
         {
-            Debug.Log("[LustMonster] 손패의 Rust 카드 부족 → 아무 일도 일어나지 않음");
+            Debug.Log("[LustMonster] 손패의 Charm 카드 부족 → 아무 일도 일어나지 않음");
         }
 
         yield return null;

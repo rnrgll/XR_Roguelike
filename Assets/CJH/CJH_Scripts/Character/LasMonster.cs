@@ -72,55 +72,42 @@ public class LasMonster : EnemyBase
 
     private MonsterAttackPattern SelectAttackPattern()
     {
-        List<MonsterAttackPattern> availablePatterns = new List<MonsterAttackPattern>();
-
-        foreach (var pattern in attackPatterns)
+        // ① 리스트 자체가 비었으면 null 반환
+        if (attackPatterns == null || attackPatterns.Count == 0)
         {
-            if (pattern.type == MonsterAttackType.Special)
-                continue;
+            Debug.LogError("[라스] attackPatterns 리스트가 비어 있습니다!");
+            return null;
+        }
 
+        // ② 사용할 수 있는 패턴 필터링
+        var candidates = new List<MonsterAttackPattern>();
+        foreach (var p in attackPatterns)
+        {
+            if (p.type == MonsterAttackType.Special) continue;
             if (isEnraged)
             {
-                // 분노 상태에서는 강공격만 허용
-                if (pattern.name.Contains("강공격"))
-                {
-                    availablePatterns.Add(pattern);
-                }
+                if (p.name.Contains("강공격"))
+                    candidates.Add(p);
             }
             else
             {
-                // 일반 상태에서는 기본공격만 허용
-                if (pattern.name.Contains("기본공격"))
-                {
-                    availablePatterns.Add(pattern);
-                }
+                if (p.name.Contains("기본공격"))
+                    candidates.Add(p);
             }
         }
 
-        if (availablePatterns.Count == 0)
+        // ③ 후보가 있으면 그 중 랜덤, 없으면 전체 중 랜덤
+        if (candidates.Count > 0)
         {
-            Debug.LogWarning("[라스] 사용 가능한 공격 패턴이 없어 fallback 한다.");
-            return attackPatterns[0];
+            return candidates[Random.Range(0, candidates.Count)];
         }
-
-        return availablePatterns[Random.Range(0, availablePatterns.Count)];
+        else
+        {
+            Debug.LogWarning("[라스] 사용 가능한 일반 공격 패턴이 없어 전체 패턴 중 하나를 선택합니다.");
+            return attackPatterns[Random.Range(0, attackPatterns.Count)];
+        }
     }
 
-    private bool ShouldTriggerSpecialAttack()
-    {
-        foreach (var pattern in attackPatterns)
-        {
-            if (pattern.type != MonsterAttackType.Special) continue;
-
-            if (pattern.triggerTurn > 0 && turnCounter == pattern.triggerTurn)
-                return true;
-
-            if (pattern.triggerTurn == 0 && Random.value < 0.3f)
-                return true;
-        }
-
-        return false;
-    }
 
     private void PrepareSpecialAttack()
     {
@@ -167,4 +154,6 @@ public class LasMonster : EnemyBase
 
         TurnManager.Instance.GetPlayerController().TakeDamage(Mathf.RoundToInt(damage));
     }
+
+
 }

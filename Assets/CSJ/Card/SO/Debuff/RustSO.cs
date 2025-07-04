@@ -12,7 +12,7 @@ public class RustSO : CardDebuffSO
     public override void OnCardPlayed(MinorArcana card, CardController controller)
     {
         Debug.Log($"[부식] {card.CardName} 사용 → 데미지 {penalty}만큼 감소");
-        controller.AddPanelty(penalty);
+        controller.SetTurnBonusList(CardBonus.Score, BonusType.Penalty, penalty);
         // 부식 효과는 사라지지 않고 계속 유지된다
     }
 }
