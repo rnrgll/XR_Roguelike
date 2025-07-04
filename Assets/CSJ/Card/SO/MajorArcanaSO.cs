@@ -24,12 +24,12 @@ public class MajorArcanaSO : ScriptableObject
 
     public MajorPosition cardPos { get; private set; }
     private MajorPosition PrevPos;
-    private bool IsUsed;
+    protected PlayerController playercontroller = TurnManager.Instance.GetPlayerController();
 
 
-    public void Activate(GameObject _go)
+    public void Activate()
     {
-        ArcanaContext ctx = new ArcanaContext { Owner = _go, MajorPos = cardPos };
+        ArcanaContext ctx = new ArcanaContext { player = playercontroller, MajorPos = cardPos };
         if (cardPos == MajorPosition.Upright)
             UprightAbilitySO?.Excute(ctx);
         else

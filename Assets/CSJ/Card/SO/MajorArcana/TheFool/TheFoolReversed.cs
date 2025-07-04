@@ -9,7 +9,7 @@ public class TheFoolReversedAbility : ScriptableObject, IArcanaAbility
     public void Excute(ArcanaContext ctx)
     {
         MinorArcana Joker = new MinorArcana("disposJoker", MinorSuit.wildCard, 14);
-        ctx.Owner.GetComponent<CardController>().
+        ctx.cardController.
         AddDisposableCard(Joker);
     }
 }

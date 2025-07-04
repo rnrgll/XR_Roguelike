@@ -9,6 +9,7 @@ public abstract class CardEnchantSO : ScriptableObject
     public CardEnchant EnchantType => _enchant;
     [SerializeField] private CardEnchant _enchant;
     [TextArea] public string description;
+    private CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
 
     private Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
@@ -19,32 +20,32 @@ public abstract class CardEnchantSO : ScriptableObject
     /// <summary>
     /// 카드에 인챈트를 적용할 떄 호출
     /// </summary>
-    public virtual void OnApply(MinorArcana card, CardController controller)
+    public virtual void OnApply(MinorArcana card)
     {
     }
     /// <summary>
     /// 디버프가 카드에 걸릴 때(Setup 직후) 한 번 호출, 카드를 뽑을때 한 번 호출
     /// </summary>
-    public virtual void OnSubscribe(MinorArcana card, CardController controller)
+    public virtual void OnSubscribe(MinorArcana card)
     {
         Action<MinorArcana> play = c =>
         {
             if (c == card)
-                OnCardPlayed(c, controller);
+                OnCardPlayed(c);
         };
         Action<MinorArcana> draw = c =>
         {
             if (c == card)
-                OnSubscribe(c, controller);
+                OnSubscribe(c);
         };
         Action<MinorArcana> discard = c =>
         {
             if (c == card)
-                OnUnSubscribe(c, controller);
+                OnUnSubscribe(c);
         };
         Action turnEnd = () =>
         {
-            OnTurnEnd(card, controller);
+            OnTurnEnd(card);
         };
 
         PlayDic[card] = play;
@@ -63,7 +64,7 @@ public abstract class CardEnchantSO : ScriptableObject
     /// 디버프 중인 카드가 패에서 벗어날 때 호출
     /// </summary>
 
-    public virtual void OnUnSubscribe(MinorArcana card, CardController controller)
+    public virtual void OnUnSubscribe(MinorArcana card)
     {
         if (PlayDic.TryGetValue(card, out var play))
         {
@@ -82,20 +83,20 @@ public abstract class CardEnchantSO : ScriptableObject
     /// <summary>
     /// 카드가 플레이될 때마다 호출
     /// </summary>
-    public virtual void OnCardPlayed(MinorArcana card, CardController controller) { }
+    public virtual void OnCardPlayed(MinorArcana card) { }
 
     /// <summary>
     /// 카드에 인챈트가 제거될 때 호출
     /// </summary>
-    public virtual void OnRemove(MinorArcana card, CardController controller) { }
+    public virtual void OnRemove(MinorArcana card) { }
 
     /// <summary>
     /// 턴이 끝날 때 호출
     /// </summary>
-    public virtual void OnTurnEnd(MinorArcana card, CardController controller) { }
+    public virtual void OnTurnEnd(MinorArcana card) { }
 
     /// <summary>
     /// 배틀이 끝날 때 호출
     /// </summary>
-    public virtual void OnBattleEnd(MinorArcana card, CardController controller) { }
+    public virtual void OnBattleEnd(MinorArcana card) { }
 }

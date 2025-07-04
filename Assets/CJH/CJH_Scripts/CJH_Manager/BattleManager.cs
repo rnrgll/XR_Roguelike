@@ -16,7 +16,7 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyBase target)
+    public int ExecuteCombinationAttack(CardCombinationEnum combo, List<int> nums, EnemyBase target)
     {
         int baseDamage = nums.Sum();
         float multiplier = TurnManager.Instance.GetPlayerController().GetAttackMultiplier();
@@ -32,6 +32,8 @@ public class BattleManager : MonoBehaviour
 
         GameStatusUI.Instance.AddDamage(baseDamage);
         Debug.Log($"[{combo}] → {target.name}에게 {baseDamage}의 피해!");
+
+        return finalDamage;
     }
 
 }

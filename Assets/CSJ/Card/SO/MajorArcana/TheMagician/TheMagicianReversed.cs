@@ -8,7 +8,7 @@ public class TheMagicianReversed : MonoBehaviour
     public MinorArcana HandCard;
     public void Excute(ArcanaContext ctx)
     {
-        var controller = ctx.Owner.GetComponent<CardController>();
+        var controller = ctx.cardController;
         var tempCards = new List<MinorArcana>();
         for (int i = 0; i < 3; i++)
         {
@@ -31,8 +31,7 @@ public class TheMagicianReversed : MonoBehaviour
                 discardList.Add(_card);
             }
         }
-        int _num = controller.Discard(discardList);
-        controller.Draw(_num);
+        controller.exchangeHand(discardList);
     }
 
     // TODO: UI 연계 카드 뽑기

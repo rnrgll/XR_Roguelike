@@ -16,6 +16,7 @@ public class TurnManager : Singleton<TurnManager>
 
     private bool battleStarted = false;
     private bool isGameEnded = false;
+    public bool isFinal = false;
 
     private void Awake() => SingletonInit();
 
