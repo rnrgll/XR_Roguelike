@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Item;
 using Managers;
 using System;
 using Unity.VisualScripting;
@@ -49,18 +50,22 @@ namespace Map
                 case NodeType.Battle:
                     //todo : 배틀 씬으로 전환 및 설정
                     SceneManager.LoadScene("BattleScene");
+                    ItemManager.Instance.SetInventorySlotState(false);
                     break;
                 case NodeType.Shop:
                     //todo : 인게임 상점 씬으로 전환
                     SceneManager.LoadScene("InGameShop");
+                    ItemManager.Instance.SetInventorySlotState(true);
                     break;
                 case NodeType.Event:
                     //todo : 이벤트 씬으로 전환
                     SceneManager.LoadScene("EventScene");
+                    ItemManager.Instance.SetInventorySlotState(true);
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환
                     SceneManager.LoadScene("BossBattleScene");
+                    ItemManager.Instance.SetInventorySlotState(false);
                     break;
                 
                 default:

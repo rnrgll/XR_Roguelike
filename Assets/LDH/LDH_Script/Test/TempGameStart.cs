@@ -1,4 +1,5 @@
 using InGameShop;
+using Item;
 using Managers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,15 @@ namespace Test
             // _tarotDeck.AddMajorCards(_startCard);
         }
 
+        public void Lock()
+        {
+            ItemManager.Instance.SetInventorySlotState(true);
+        }
+
+        public void UnLock()
+        {
+            ItemManager.Instance.SetInventorySlotState(false);
+        }
         
     }
 }

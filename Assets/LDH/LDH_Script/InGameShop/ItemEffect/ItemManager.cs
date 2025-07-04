@@ -2,19 +2,40 @@ using DesignPattern;
 using InGameShop;
 using Managers;
 using System;
+using System.Collections.Generic;
+using TopBarUI;
 using UnityEngine;
 
 namespace Item
 {
     public class ItemManager : Singleton<ItemManager>
     {
-        
         private ItemEffectHandler _effectHandler;
+        private List<InventorySlot> _inventorySlots = new();
+        
         private void Awake()
         {
             _effectHandler = new ItemEffectHandler(Manager.turnManager.GetPlayerController());
-            
             SingletonInit();
+        }
+
+        /// <summary>
+        /// 상단 바의 인벤토리 슬롯의 버튼의 lock 여부를 설정할 수 있습니다.
+        /// lock을 활성화하면 인벤토리 슬롯 버튼이 비활성화되어 아이템을 사용할 수 없습니다.
+        /// </summary>
+        /// <param name="isLock"></param>
+        public void SetInventorySlotState(bool isLock)
+        {
+            foreach (InventorySlot slot in _inventorySlots)
+            {
+                slot.SetLock(isLock);
+            }
+        }
+
+        public void EnrollInventorySlot(InventorySlot slot)
+        {
+            if(!_inventorySlots.Contains(slot))
+                _inventorySlots.Add(slot);
         }
 
         public void UseItem(string itemID)

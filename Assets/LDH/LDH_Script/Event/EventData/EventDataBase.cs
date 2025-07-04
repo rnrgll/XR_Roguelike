@@ -82,8 +82,6 @@ namespace Event
                 string fileName = table.Table[r, 1]; //image1.png
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
                 
-                Debug.Log(fileNameNoExt);
-                Debug.Log(Path.Combine(eventSpirteFolder, fileNameNoExt));
                 //게임 이벤트 클래스 생성 및 파싱
                 GameEvent gameEvent = new(
                     int.Parse(table.Table[r, 0]),
