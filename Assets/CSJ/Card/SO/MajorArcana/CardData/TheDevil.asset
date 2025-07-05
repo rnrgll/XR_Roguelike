@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bac247502bb34694c9da33636ee53de3, type: 3}
-  m_Name: TheFool
+  m_Name: TheDevil
   m_EditorClassIdentifier: 
-  cardName: TheFool
-  desctiption: 
+  cardName: TheDevil
   sprite: {fileID: 0}
-  uprightAbilitySO: {fileID: 11400000, guid: 25110a487030f204181f78e1f0b79432, type: 2}
-  reversedAbilitySO: {fileID: 11400000, guid: c3c04c89a0034e94689e2b0ffcc1fcb1, type: 2}
+  uprightAbilitySO: {fileID: 11400000, guid: 1ea298366d2c03a488cd433ea720a037, type: 2}
+  reversedAbilitySO: {fileID: 11400000, guid: 4085f594d5ab1eb4fa778ec97153d735, type: 2}

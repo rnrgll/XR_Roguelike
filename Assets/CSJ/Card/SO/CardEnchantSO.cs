@@ -9,13 +9,19 @@ public abstract class CardEnchantSO : ScriptableObject
     public CardEnchant EnchantType => _enchant;
     [SerializeField] private CardEnchant _enchant;
     [TextArea] public string description;
-    protected CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
+    protected CardController controller;
+    protected PlayerController playerController;
 
     private Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DiscardDic = new();
     private Dictionary<MinorArcana, Action> TurnEndDic = new();
 
+    public void InitializeSO(PlayerController _playerController)
+    {
+        playerController = _playerController;
+        controller = playerController.GetCardController();
+    }
 
     /// <summary>
     /// 카드에 인챈트를 적용할 떄 호출

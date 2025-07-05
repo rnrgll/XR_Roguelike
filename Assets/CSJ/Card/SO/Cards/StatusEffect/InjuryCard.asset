@@ -17,4 +17,4 @@ MonoBehaviour:
   suit: 50
   cardNum: 0
   IsUsable: 0
-  debuff: {fileID: 0}
+  debuff: {fileID: 11400000, guid: cd0db3a26db458c4cb5f67c27625ddb3, type: 2}

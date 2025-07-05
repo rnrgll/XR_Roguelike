@@ -51,7 +51,6 @@ public class CardDeck
             {
                 Deck[(MinorSuit)suit].Add(GetCardData(suit, num));
             }
-            Debug.Log((MinorSuit)suit);
         }
     }
 

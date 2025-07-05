@@ -219,8 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e7efe62fff523f43971a7de733d8a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  majorCardCandidates: []
-  cardCon: {fileID: 9071509700379224567}
+  majorCardCandidates:
+  - {fileID: 11400000, guid: 56276000bac6bea4fa7cc93aeebada08, type: 2}
+  - {fileID: 11400000, guid: d0cedffe82394ec4f8a083e307266c3c, type: 2}
+  - {fileID: 11400000, guid: 9e25b213ff308e449a0f01e3ccb9b837, type: 2}
+  - {fileID: 11400000, guid: 4b2097dcf92beae43b4de159b15a121f, type: 2}
+  - {fileID: 11400000, guid: 4a217ead521a4b9479f2dfbf14cb58d1, type: 2}
 --- !u!4 &595012468
 Transform:
   m_ObjectHideFlags: 0
@@ -344,14 +348,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2023834239811450184, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -250
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990957007653874598, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 5936658913238072073, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1212.6298
@@ -392,14 +388,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6287151264823287542, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7221531962120911595, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 8305541565112924176, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
       propertyPath: m_Name
       value: CardHandUI
@@ -409,11 +397,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
---- !u!1 &9071509700379224567 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5532235488221590510, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-  m_PrefabInstance: {fileID: 1573738348990725491}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

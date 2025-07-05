@@ -15,14 +15,20 @@ public class DisposableCardSO : ScriptableObject
     public MinorSuit suit = MinorSuit.Special;
     public int cardNum = 0;
 
-    [Header("부가 효과")]
-    public DisposableCardSO disposableCardSO;
 
     protected MinorArcana disposableCard;
-    protected PlayerController playercontroller = TurnManager.Instance.GetPlayerController();
+    protected CardController controller;
+    protected PlayerController playerController;
     protected Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     protected Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
     protected Dictionary<MinorArcana, Action<MinorArcana>> DiscardDic = new();
+
+
+    public void InitializeSO(PlayerController _playerController)
+    {
+        playerController = _playerController;
+        controller = playerController.GetCardController();
+    }
 
     public void AddDisposableCard()
     {
@@ -46,10 +52,10 @@ public class DisposableCardSO : ScriptableObject
                 OnUnSubscribe(c);
         };
         PlayDic[card] = play;
-        playercontroller.GetCardController().OnCardSubmited += play;
+        controller.OnCardSubmited += play;
 
         PlayDic[card] = discard;
-        playercontroller.GetCardController().OnCardDiscarded += discard;
+        controller.OnCardDiscarded += discard;
 
     }
 
@@ -57,16 +63,16 @@ public class DisposableCardSO : ScriptableObject
     {
         if (PlayDic.TryGetValue(card, out var play))
         {
-            playercontroller.GetCardController().OnCardSubmited -= play;
+            playerController.GetCardController().OnCardSubmited -= play;
         }
         if (DiscardDic.TryGetValue(card, out var discard))
         {
-            playercontroller.GetCardController().OnCardSubmited -= discard;
+            playerController.GetCardController().OnCardSubmited -= discard;
         }
     }
     public void RemoveCard()
     {
-        playercontroller.GetCardController().RemoveDisposableCard(disposableCard);
+        playerController.GetCardController().RemoveDisposableCard(disposableCard);
     }
 
 

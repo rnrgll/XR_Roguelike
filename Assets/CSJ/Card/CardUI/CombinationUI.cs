@@ -10,13 +10,13 @@ public class CombinationUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private TextMeshProUGUI sumText;
 
-    private void Awake()
+    private void InitializeUI(CardController cc)
     {
-        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
+        if (cardController != null)
+            cardController.OnSelectionChanged -= RefreshUI;
+
+        cardController = cc;
         RefreshUI();
-    }
-    private void OnEnable()
-    {
         cardController.OnSelectionChanged += RefreshUI;
     }
 
