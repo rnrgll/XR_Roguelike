@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheMagician/Upright")]
+[CreateAssetMenu(fileName = "TheMagicianUpright", menuName = "Tarot/Abilities/TheMagician/Upright")]
 public class TheMagicianUpright : ScriptableObject, IArcanaAbility
 {
     public MinorArcana DeckCard;

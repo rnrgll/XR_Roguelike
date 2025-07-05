@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardEnum;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheWorld/Upright")]
+[CreateAssetMenu(fileName = "TheWorldUpright", menuName = "Tarot/Abilities/TheWorld/Upright")]
 public class TheWorldUprightAbility : ScriptableObject, IArcanaAbility
 {
     [SerializeField] float Ratio = 10f;
@@ -16,10 +16,6 @@ public class TheWorldUprightAbility : ScriptableObject, IArcanaAbility
         CheckTheHands = _ => CheckFiveCard();
 
         playerController.GetCardController().OnCardSubmited += CheckTheHands;
-
-        playerController.GetCardController().SetBattleBonusList(CardBonus.Ratio, BonusType.Bonus, Ratio);
-
-        playerController.OnPlayerDamaged += playerController.ApplyBonusRatioToMonster;
         playerController.OnTurnEnd += OnUnSubscribe;
     }
 

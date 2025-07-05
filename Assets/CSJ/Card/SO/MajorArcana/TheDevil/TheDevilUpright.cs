@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardEnum;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheDevil/Upright")]
+[CreateAssetMenu(fileName = "TheDevilUpright", menuName = "Tarot/Abilities/TheDevil/Upright")]
 public class TheDevilUprightAbility : ScriptableObject, IArcanaAbility
 {
     [SerializeField] private int BonusMult = 1;

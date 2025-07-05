@@ -15,8 +15,6 @@ public class DisposableCardSO : ScriptableObject
     public MinorSuit suit = MinorSuit.Special;
     public int cardNum = 0;
 
-    [Header("부가 효과")]
-    public DisposableCardSO disposableCardSO;
 
     protected MinorArcana disposableCard;
     protected CardController controller;

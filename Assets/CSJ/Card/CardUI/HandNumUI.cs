@@ -8,11 +8,13 @@ public class HandNumUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI textArea;
     private CardController cardController;
 
-    private void OnEnable()
+    private void InitializeUI(CardController cc)
     {
-        cardController = FindAnyObjectByType<PlayerController>().GetCardController();
+        if (cardController != null)
+            cardController.OnChangedHands -= RefreshCount;
+
+        cardController = cc;
         cardController.OnChangedHands += RefreshCount;
-        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
     }
 
     private void OnDisable()

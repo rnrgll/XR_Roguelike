@@ -15,12 +15,19 @@ public class HandUIController : MonoBehaviour
     private List<GameObject> spawnedCards = new List<GameObject>();
     public event Action OnCardSetted;
 
-    private void OnEnable()
+    private void InitializeUI(CardController cc)
     {
-        cardController = FindAnyObjectByType<PlayerController>().GetCardController();
+        if (cardController != null)
+        {
+            cardController.OnSelectionChanged -= SyncUI;
+            cardController.OnChangedHands -= RefreshHand;
+        }
+
+        cardController = cc;
         cardController.OnChangedHands += RefreshHand;
         cardController.OnSelectionChanged += SyncUI;
-        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
+
+        RefreshHand();
     }
 
     private void OnDisable()

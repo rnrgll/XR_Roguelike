@@ -12,10 +12,15 @@ public class DeckUI : MonoBehaviour
     private CardController cardController;
 
 
-    private void Start()
+    private void InitializeUI(CardController cc)
     {
-        var player = TurnManager.Instance.GetPlayerController();
-        cardController = player.GetCardController();
+        if (cardController != null)
+        {
+            cardController.OnChangedHands -= OnDrawCard;
+            DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);
+        }
+
+        cardController = cc;
         cardController.OnChangedHands += OnDrawCard;
         DeckButton.onClick.AddListener(BattleDeckUI.OpenPanel);
     }

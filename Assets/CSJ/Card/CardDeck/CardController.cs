@@ -207,7 +207,7 @@ public class CardController : MonoBehaviour
             so.InitializeSO(playerController);
         foreach (var so in majorArcanaArr)
             so.InitializeSO(playerController);
-        OnInitCardController?.Invoke(this);
+        InitializeUI();
     }
     public void BattleInit()
     {
