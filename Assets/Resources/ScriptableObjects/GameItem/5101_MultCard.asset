@@ -20,4 +20,7 @@ MonoBehaviour:
   price: 100
   sprite: {fileID: 21300000, guid: 4c2c6788a4bc2664d91112f52fdef70e, type: 3}
   weight: 1
-  cardName: MultCard
+  enchantType: 2
+  enchantSprite: {fileID: 0}
+  minTargetNum: 1
+  maxTargetNum: 14

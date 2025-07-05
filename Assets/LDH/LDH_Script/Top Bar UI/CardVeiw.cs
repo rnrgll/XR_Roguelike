@@ -65,16 +65,16 @@ namespace TopBarUI
             Debug.Log(cardName);
         }
 
-        public void SetData(CardItem cardItem)
+        public void SetData(EnchantItem enchantItem)
         {
             //메이저 아르카나 이미지
-            cardImg.sprite = cardItem.sprite;
+            cardImg.sprite = enchantItem.sprite;
             
             //인챈트 이미지
             enchantImg.enabled = false;
             
             //todo : 카드 효과부분 고치기
-            effectText.text = cardItem.description;
+            effectText.text = enchantItem.description;
         }
         
     }

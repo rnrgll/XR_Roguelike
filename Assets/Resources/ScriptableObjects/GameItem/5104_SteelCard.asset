@@ -22,4 +22,7 @@ MonoBehaviour:
   price: 200
   sprite: {fileID: 21300000, guid: 7febde1890d7146499e94a3aecdbe77f, type: 3}
   weight: 1
-  cardName: SteelCard
+  enchantType: 5
+  enchantSprite: {fileID: 0}
+  minTargetNum: 1
+  maxTargetNum: 14

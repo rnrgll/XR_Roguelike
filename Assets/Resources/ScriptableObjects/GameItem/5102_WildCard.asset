@@ -21,4 +21,7 @@ MonoBehaviour:
   price: 140
   sprite: {fileID: 21300000, guid: 5f15dc667c496e64a9da0887adc1069e, type: 3}
   weight: 1
-  cardName: WildCard
+  enchantType: 3
+  enchantSprite: {fileID: 0}
+  minTargetNum: 1
+  maxTargetNum: 14

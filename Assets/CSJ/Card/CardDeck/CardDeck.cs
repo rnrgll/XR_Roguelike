@@ -143,6 +143,26 @@ public class CardDeck
         return EnchantedCardList;
     }
 
+    /// <summary>
+    /// 인챈트 효과가 적용되지 않은 카드 가져오기
+    /// </summary>
+    /// <returns></returns>
+     public List<MinorArcana> GetCardsWithoutEnchant()
+    {
+        List<MinorArcana> result = new();
+
+        foreach (var suit in Deck.Keys)
+        {
+            foreach (var card in Deck[suit])
+            {
+                if (!EnchantDic.ContainsKey(card))
+                    result.Add(card);
+            }
+        }
+
+        return result;
+    }
+    
     public void Enchant(MinorArcana _card, CardEnchantSO _enchant)
     {
         if (EnchantDic.TryGetValue(_card, out var old) &&

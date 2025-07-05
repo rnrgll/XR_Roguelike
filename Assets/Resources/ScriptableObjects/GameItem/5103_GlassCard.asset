@@ -22,4 +22,7 @@ MonoBehaviour:
   price: 160
   sprite: {fileID: 21300000, guid: d34f227b9d1f41247bbdfedd8b1eb93a, type: 3}
   weight: 1
-  cardName: GlassCard
+  enchantType: 4
+  enchantSprite: {fileID: 0}
+  minTargetNum: 1
+  maxTargetNum: 13

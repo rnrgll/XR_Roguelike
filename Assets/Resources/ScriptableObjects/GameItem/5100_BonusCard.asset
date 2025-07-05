@@ -20,4 +20,7 @@ MonoBehaviour:
   price: 60
   sprite: {fileID: 21300000, guid: 99444116af61a6c408e728ebc81fc631, type: 3}
   weight: 1
-  cardName: BonusCard
+  enchantType: 1
+  enchantSprite: {fileID: 21300000, guid: 30cd7954ad415a24e82b89ef78558675, type: 3}
+  minTargetNum: 1
+  maxTargetNum: 14

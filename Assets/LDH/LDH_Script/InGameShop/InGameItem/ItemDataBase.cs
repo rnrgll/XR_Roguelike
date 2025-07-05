@@ -1,14 +1,9 @@
+using CardEnum;
 using CustomUtility.IO;
-using DesignPattern;
-using DG.Tweening.Plugins.Core.PathCore;
-using Dialogue;
 using Item;
 using Managers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using TopBarUI;
-using Unity.VisualScripting;
 using UnityEngine;
 using Path = System.IO.Path;
 
@@ -16,32 +11,204 @@ namespace InGameShop
 {
     public class ItemDataBase
     {
-        public List<GameItem>
-            ItemDB
-        {
-            get;
-            private set;
-        } //todo : 아이템 만들면 scriptable obj 를 불러오던지, csv 파일을 읽어서 아이템만들어서 넣어주던지 하는 방식으로 DB 데이터 셋팅하는 방식으로 변경필요
-
+        public List<GameItem> ItemDB { get; private set; }
+        public Dictionary<CardEnchant, GameItem> EnchantDB { get; private set; }
         public int InventoryItemCount { get; private set; } // 강화카드 제외 아이템 개수
-        public int CardItemTotalCount { get; private set; } // 강화카드 아이템 개수
-        public string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
-        public string cardSpriteFolder = "ArcanaTest"; //todo: 수정 필요
-        
+        // public int CardItemTotalCount { get; private set; } // 강화카드 아이템 개수
+
+        private string itemDataFolder = "ScriptableObjects/GameItem";
+
+        private string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
+        private string cardSpriteFolder = "ArcanaTest"; //todo: 수정 필요
 
 
         public ItemDataBase()
         {
             //todo: itemDB 초기화 및 데이터 셋팅 수정 필요
             ItemDB = new();
-            LoadItemData(ItemType.Item, "TestItemData.csv");
-            LoadItemData(ItemType.Card, "TestCardItemData.csv");
+            //LoadItemData(ItemType.Item, "TestItemData.csv");
+            //LoadItemData(ItemType.Card, "TestCardItemData.csv");
 
+            LoadItemData();
+            LoadCardData();
         }
+
+        #region 데이터 로드
+
+        public void LoadItemData()
+        {
+            //인벤토리 아이템 로드
+            InventoryItem[] inventoryItems = Resources.LoadAll<InventoryItem>("ScriptableObjects/GameItem");
+            InventoryItemCount = inventoryItems.Length;
+            foreach (InventoryItem inventoryItem in inventoryItems)
+            {
+                ItemDB.Add(inventoryItem);
+            }
+
+            Debug.Log($"Item DB - 현재까지 불러온 아이템 수 : {ItemDB.Count}");
+        }
+
+        public void LoadCardData()
+        {
+            //카드 아이템 로드
+            EnchantItem[] enchantItems = Resources.LoadAll<EnchantItem>("ScriptableObjects/GameItem");
+            foreach (EnchantItem enchantItem in enchantItems)
+            {
+                EnchantDB.Add(enchantItem.enchantType, enchantItem);
+            }
+
+            Debug.Log($"Enchant DB - 로드 완료");
+        }
+
+        #endregion
+
+
+        public GameItem GetItemById(string id)
+        {
+            return ItemDB.FirstOrDefault(item => item.id == id);
+        }
+
+
+        #region 아이템 랜덤 선택
+
+        /// <summary>
+        /// 아이템 타입애 해당하는 서로 다른 count개의 아이템을 뽑아서 아이템 아이디 리스트를 반환합니다.
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        public List<GameItem> PickUniqeItemRandomByType(int count, ItemType itemType = ItemType.Both)
+        {
+            
+            if (itemType == ItemType.Item)
+            {
+                return PickRandomInventoryItems(count);
+            }
+            if (itemType == ItemType.Card)
+            {
+                return PickRandomEnchantItems(count);
+            }
+            else
+            {
+                int random = Manager.randomManager.RandInt(0, count);
+                int enchantCount = TurnManager.Instance.GetPlayerController().GetCardController().Deck
+                    .GetEnchantableCard().Count;
+                
+                enchantCount = Mathf.Min(enchantCount, random);
+                List<GameItem> result = PickRandomEnchantItems(enchantCount);
+                result.AddRange(PickRandomInventoryItems(count - enchantCount));
+                return result;
+            }
+        }
+
+        private int PickIndexRandomByWeight(List<GameItem> tempList)
+        {
+            
+            float totalWeight = tempList.Sum(item => item.weight);
+            float roll = Manager.randomManager.RandFloat(0, totalWeight);
+            float current = 0;
+
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                current += tempList[i].weight;
+                if (roll < current)
+                    return i;
+            }
+
+            return tempList.Count - 1;
+        }
+
+        private List<GameItem> PickRandomEnchantItems(int count)
+        {
+            List<GameItem> results = new();
+            
+            var deck = TurnManager.Instance.GetPlayerController().GetCardController().Deck;
+            var enchantables = deck.GetEnchantableCard();
+
+            // 1. 카드가 부족하면 count 조정
+            count = Mathf.Min(count, enchantables.Count);
+
+            // 2. 셔플
+            Shuffle(enchantables); 
+
+            for (int i = 0; i < count; i++)
+            {
+                var card = enchantables[i];
+
+                // 3. 랜덤한 EnchantType 선택 (1~7 사이)
+                int random = UnityEngine.Random.Range(1, 8);
+                var enchantType = (CardEnchant)random;
+
+                EnchantItem enchantItem = ScriptableObject.Instantiate(EnchantDB[enchantType]) as EnchantItem;
+                enchantItem.SetData(card.CardSuit, card.CardNum);
+                
+                
+                results.Add(enchantItem);
+            }
+
+
+            
+            
+            return results;
+        }
+
+        public List<GameItem> PickRandomPotionItems(int count)
+        {
+            List<GameItem> candidates = ItemDB
+                .OfType<InventoryItem>()          // InventoryItem으로 필터링
+                .Where(i => i.isPotion == true)   // 조건 필터
+                .Cast<GameItem>()                 // GameItem으로 캐스팅 (필요한 경우)
+                .ToList();        
+            List<GameItem> results = new();
+            while (results.Count < count)
+            {
+                int pickedIndex = PickIndexRandomByWeight(candidates);
+                results.Add(candidates[pickedIndex]);
+
+                int lastIdx = candidates.Count - 1;
+                (candidates[pickedIndex], candidates[lastIdx]) = (candidates[lastIdx], candidates[pickedIndex]);
+
+                candidates.RemoveAt(lastIdx);
+            }
+
+            return results;
+            
+        }
+        
+        private List<GameItem> PickRandomInventoryItems(int count)
+        {
+            List<GameItem> candidates = new(ItemDB);
+            List<GameItem> results = new();
+            while (results.Count < count)
+            {
+                int pickedIndex = PickIndexRandomByWeight(candidates);
+                results.Add(candidates[pickedIndex]);
+
+                int lastIdx = candidates.Count - 1;
+                (candidates[pickedIndex], candidates[lastIdx]) = (candidates[lastIdx], candidates[pickedIndex]);
+
+                candidates.RemoveAt(lastIdx);
+            }
+
+            return results;
+        }
+
+        
+        public void Shuffle(List<MinorArcana> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                int rnd = Manager.randomManager.RandInt(i, list.Count);
+                (list[i], list[rnd]) = (list[rnd], list[i]);
+            }
+        }
+        #endregion
+
+
+        #region CSV Load(사용x)
 
         public bool LoadItemData(ItemType type, string fileName, char splitSymol = ',')
         {
-            #region Legacy
 
             // //<아이템 형>
             // //1. CSV 테이블 생성
@@ -62,32 +229,9 @@ namespace InGameShop
             // }
             //
 
-            #endregion
-
-            //인벤토리 아이템 로드
-            InventoryItem[] inventoryItems = Resources.LoadAll<InventoryItem>("ScriptableObjects/GameItem");
-            InventoryItemCount = inventoryItems.Length;
-            foreach (InventoryItem inventoryItem in inventoryItems)
-            {
-                ItemDB.Add(inventoryItem);
-            }
-
-            //카드 아이템 로드
-            CardItem[] cardItems = Resources.LoadAll<CardItem>("ScriptableObjects/GameItem");
-            CardItemTotalCount = cardItems.Length;
-            foreach (CardItem cardItem in cardItems)
-            {
-                ItemDB.Add(cardItem);
-            }
-
-            Debug.Log($"Item DB - 현재까지 불러온 아이템 수 : {ItemDB.Count}");
-
-            //파싱 완료
             return true;
         }
 
-
-        #region Item Test code
 
         public void ParseItemData(CsvTable table)
         {
@@ -113,7 +257,6 @@ namespace InGameShop
                 };
                 ItemDB.Add(item);
             }
-
         }
 
         public void ParseCardItemData(CsvTable table)
@@ -121,7 +264,7 @@ namespace InGameShop
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
 
-            CardItemTotalCount = rowCnt - 1; //아이템 개수 저장
+            //CardItemTotalCount = rowCnt - 1; //아이템 개수 저장
 
             Dictionary<string, int> columnMap = new();
             for (int c = 0; c < columnCnt; c++)
@@ -129,7 +272,7 @@ namespace InGameShop
 
             for (int r = 1; r < rowCnt; r++)
             {
-                GameItem item = new CardItem()
+                GameItem item = new EnchantItem()
                 {
                     id = table.Table[r, columnMap["id"]],
                     name = table.Table[r, columnMap["name"]],
@@ -142,55 +285,6 @@ namespace InGameShop
             }
         }
 
-
         #endregion
-
-        public int PickIndexRandomByWeight(List<GameItem> tempList)
-        {
-            float totalWeight = tempList.Sum(item => item.weight);
-            float roll = Manager.randomManager.RandFloat(0, totalWeight);
-            float current = 0;
-
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                current += tempList[i].weight;
-                if (roll < current)
-                    return i;
-            }
-
-            return tempList.Count - 1;
-        }
-
-        public List<string> PickUniqeItemRandomByType(int count, ItemType itemType = ItemType.Both)
-        {
-            List<GameItem> tempList = itemType switch
-            {
-                ItemType.Item => ItemDB.GetRange(0, InventoryItemCount),
-                ItemType.Card => ItemDB.GetRange(InventoryItemCount, CardItemTotalCount),
-                ItemType.Both => new List<GameItem>(ItemDB)
-            };
-            List<string> results = new();
-
-            while (results.Count < count)
-            {
-                int pickedIndex = PickIndexRandomByWeight(tempList);
-                results.Add(tempList[pickedIndex].id);
-
-                int lastIdx = tempList.Count - 1;
-                (tempList[pickedIndex], tempList[lastIdx]) = (tempList[lastIdx], tempList[pickedIndex]);
-
-                tempList.RemoveAt(lastIdx);
-            }
-
-            return results;
-
-        }
-
-
-
-        public GameItem GetItemById(string id)
-        {
-            return ItemDB.FirstOrDefault(item => item.id == id);
-        }
     }
 }

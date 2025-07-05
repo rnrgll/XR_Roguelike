@@ -22,4 +22,7 @@ MonoBehaviour:
   price: 170
   sprite: {fileID: 21300000, guid: c3d0fd0ffcc7e164da1783048cf75350, type: 3}
   weight: 1
-  cardName: GoldCard
+  enchantType: 6
+  enchantSprite: {fileID: 0}
+  minTargetNum: 1
+  maxTargetNum: 14

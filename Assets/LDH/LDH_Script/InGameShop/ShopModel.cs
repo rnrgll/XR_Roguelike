@@ -1,4 +1,5 @@
 using DesignPattern;
+using Item;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,11 +19,11 @@ namespace InGameShop
         }
             
         
-        public void SetItems(List<string> newItemsID)
+        public void SetItems(List<GameItem> newItems)
         {
             for (int i = 0; i < 4; i++)
             {
-                shopSlots[i].Value = newItemsID[i];
+                shopSlots[i].Value = newItems[i].id;
             }
         }
         
