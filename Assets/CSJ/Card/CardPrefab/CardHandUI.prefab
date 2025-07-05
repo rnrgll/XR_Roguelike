@@ -2851,7 +2851,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5532235488221590510}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -3047,7 +3047,6 @@ MonoBehaviour:
   PentaclesHorizon: {fileID: 6287151264823287542}
   WandsHorizon: {fileID: 4990957007653874598}
   cardPrefab: {fileID: 2291821742499749129, guid: fb45a4f57893e004988295f7274b2a0a, type: 3}
-  cardController: {fileID: 4687377856476261407}
   BattleDeckCanvas: {fileID: 7289898200632928111}
   BackGround: {fileID: 2248941147369264286}
   CloseButton: {fileID: 582328406958742943}
@@ -3426,7 +3425,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5983816888189786745}
-  - {fileID: 5234672879033070800}
   - {fileID: 1842995478473586295}
   m_Father: {fileID: 5936658913238072073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4436,7 +4434,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5532235488221590510}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -6194,79 +6192,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &5532235488221590510
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5234672879033070800}
-  - component: {fileID: 4687377856476261407}
-  m_Layer: 0
-  m_Name: CardController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5234672879033070800
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5532235488221590510}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -882.45624, y: -287.99844, z: 0.12962471}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4621731424488367317}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4687377856476261407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5532235488221590510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6753dcbc66c0ddb49b4ee4f0c4d60502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectedNums: 
-  numbersList: 040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  SuitsList: 00000000000000000000000000000000
-  drawNum: 8
-  sortStand: 1
-  EnchantArr:
-  - {fileID: 11400000, guid: de944e8bb6000814490366ed29f644cb, type: 2}
-  - {fileID: 11400000, guid: dad74a8e4f17d6b42af42bcaa7350d5a, type: 2}
-  - {fileID: 11400000, guid: 41cfbd010b76ba24c9dfe864dd475186, type: 2}
-  - {fileID: 11400000, guid: cedc10324df38e642ab86eca391f3262, type: 2}
-  - {fileID: 11400000, guid: fc1cfdecbdb448c43b69b062c306fd86, type: 2}
-  - {fileID: 11400000, guid: a2cae928c1f167e47ba58fea5c4b7dda, type: 2}
-  - {fileID: 11400000, guid: f67f3794ca2548e439e8fd4243843231, type: 2}
-  DebuffArr:
-  - {fileID: 11400000, guid: 494befe971e106240ab4fa3dad0d8676, type: 2}
-  - {fileID: 11400000, guid: 70ca110aeaf789745a488dba96896f7c, type: 2}
-  - {fileID: 11400000, guid: 7b34298909bc2f24193b70027b4d299d, type: 2}
-  - {fileID: 11400000, guid: cd0db3a26db458c4cb5f67c27625ddb3, type: 2}
-  StatusEffectArr:
-  - {fileID: 11400000, guid: fa74c93f3be2cd647977f65618eb20a0, type: 2}
-  DisposableArr:
-  - {fileID: 11400000, guid: 30275cd6c15666f498ce2a6824c79355, type: 2}
-  - {fileID: 11400000, guid: 58feab81a66d5bb4cbe8715b55928101, type: 2}
-  majorArcanaArr:
-  - {fileID: 11400000, guid: 56276000bac6bea4fa7cc93aeebada08, type: 2}
-  - {fileID: 11400000, guid: d0cedffe82394ec4f8a083e307266c3c, type: 2}
-  - {fileID: 11400000, guid: 9e25b213ff308e449a0f01e3ccb9b837, type: 2}
-  - {fileID: 11400000, guid: 4b2097dcf92beae43b4de159b15a121f, type: 2}
-  - {fileID: 11400000, guid: 4a217ead521a4b9479f2dfbf14cb58d1, type: 2}
 --- !u!1 &5685891846302236814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6359,7 +6284,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumPanel: {fileID: 435408347693236269}
   SuitPanel: {fileID: 4619984733962729090}
-  cardController: {fileID: 4687377856476261407}
 --- !u!1 &6128105551157288517
 GameObject:
   m_ObjectHideFlags: 0
@@ -8525,6 +8449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5936658913238072073}
+  - component: {fileID: 1112633771534564260}
   m_Layer: 0
   m_Name: CardHandUI
   m_TagString: Untagged
@@ -8554,6 +8479,26 @@ Transform:
   - {fileID: 4247327543708713481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1112633771534564260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305541565112924176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b216f38210e6e4eb577e7dfa4bb625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIArr:
+  - {fileID: 5695420943147854066}
+  - {fileID: 2893283726109042193}
+  - {fileID: 8219787367539101058}
+  - {fileID: 7885741093772777814}
+  - {fileID: 4560529056785923125}
+  - {fileID: 7928278657037496061}
+  - {fileID: 7169975501275316520}
 --- !u!1 &8512446654496681555
 GameObject:
   m_ObjectHideFlags: 0

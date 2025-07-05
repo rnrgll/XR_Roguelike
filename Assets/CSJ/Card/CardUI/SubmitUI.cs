@@ -5,25 +5,16 @@ using UnityEngine.UI;
 using System;
 using CardEnum;
 
-public class SubmitUI : MonoBehaviour
+public class SubmitUI : UIRequire
 {
     [SerializeField] private Button attackButton;
     [SerializeField] private Button DiscardButton;
     [SerializeField] private Button SuitSortButton;
     [SerializeField] private Button NumSortButton;
-    private CardController cardController;
     private Action<CardCombinationEnum> _onSelectionChanged;
 
-    private void InitializeUI(CardController cc)
+    protected override void Subscribe()
     {
-        cardController = cc;
-    }
-
-    private void OnEnable()
-    {
-        if (cardController == null) return;
-
-
         attackButton.onClick.AddListener(OnAttackButtonClicked);
         DiscardButton.onClick.AddListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.AddListener(OnSuitSortButtonClicked);
@@ -34,7 +25,7 @@ public class SubmitUI : MonoBehaviour
         UpdateButtons();
     }
 
-    private void OnDisable()
+    protected override void UnSubscribe()
     {
         attackButton.onClick.RemoveListener(OnAttackButtonClicked);
         DiscardButton.onClick.RemoveListener(OnDiscardButtonClicked);

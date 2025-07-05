@@ -73,3 +73,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e25b213ff308e449a0f01e3ccb9b837, type: 2}
   - {fileID: 11400000, guid: 4b2097dcf92beae43b4de159b15a121f, type: 2}
   - {fileID: 11400000, guid: 4a217ead521a4b9479f2dfbf14cb58d1, type: 2}
+  HandUIArr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

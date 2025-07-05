@@ -9,6 +9,7 @@ public class BattleSceneManager : MonoBehaviour
     [SerializeField] private GameObject lasMonsterPrefab;
     [SerializeField] private GameObject envyMonsterPrefab;
     [SerializeField] private GameObject prideMonsterPrefab;
+    [SerializeField] private GameObject CardHandUIPrefab;
 
     private IEnumerator Start()
     {
@@ -19,11 +20,25 @@ public class BattleSceneManager : MonoBehaviour
         {
             // 1. 적 생성
 
-
             // 2. 플레이어 등록 및 전투 시작
             TurnManager.Instance.RegisterPlayer(pc);
             Debug.Log("Player 등록 완료");
             yield return null; // 한 프레임
+
+            yield return new WaitUntil(() => pc.GetCardController() != null);
+            var cc = pc.GetCardController();
+
+            bool ready = false;
+            cc.OnReady += () => ready = true;
+            yield return new WaitUntil(() => ready);
+
+            Debug.Log("[BattleManager] CardHandUI init");
+            var go = Instantiate(CardHandUIPrefab, transform);
+            go.GetComponent<BattleUI>().InitScene(pc);
+            cc.BattleInit();
+
+
+            Debug.Log("[BattleManager] cardHand 생성");
 
             TurnManager.Instance.StartBattle();
             Debug.Log(" 전투 시작됨");

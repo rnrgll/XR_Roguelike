@@ -4,19 +4,39 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NumUpdateUI : MonoBehaviour
+public class NumUpdateUI : UIRequire
 {
     [Header("NumPanel")]
     [SerializeField] private RectTransform NumPanel;
     [Header("SuitPanel")]
     [SerializeField] private RectTransform SuitPanel;
 
-    [SerializeField] private CardController cardController;
-
     private Dictionary<string, TMP_Text> numCounts;
     private Dictionary<string, TMP_Text> suitCounts;
 
-    private void Awake()
+    public override void InitializeUI(PlayerController pc)
+    {
+        Debug.Log("[NumUI] Init 호출");
+        base.InitializeUI(pc);
+        DictionaryInit();
+        RefreshAllCounts();
+    }
+
+    protected override void Subscribe()
+    {
+        Debug.Log("[NumUI] Subsctibe 호출");
+        cardController.OnCardDrawn += UpdateCountFor;
+        cardController.OnCardSwapped += OnSwapCard;
+        cardController.OnChangedHands += RefreshAllCounts;
+    }
+
+    protected override void UnSubscribe()
+    {
+        cardController.OnCardDrawn -= UpdateCountFor;
+        cardController.OnCardSwapped -= OnSwapCard;
+        cardController.OnChangedHands -= RefreshAllCounts;
+    }
+    private void DictionaryInit()
     {
         numCounts = new();
         foreach (Transform child in NumPanel)
@@ -37,19 +57,6 @@ public class NumUpdateUI : MonoBehaviour
                 suitCounts[child.name] = ctPanel;
             }
         }
-    }
-    private void Start()
-    {
-        RefreshAllCounts();
-
-        cardController.OnCardDrawn += UpdateCountFor;
-        cardController.OnCardSwapped += OnSwapCard;
-    }
-
-    private void OnDestroy()
-    {
-        cardController.OnCardDrawn -= UpdateCountFor;
-        cardController.OnCardSwapped -= OnSwapCard;
     }
 
     private void RefreshAllCounts()

@@ -7,30 +7,26 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HandUIController : MonoBehaviour
+public class HandUIController : UIRequire
 {
     [SerializeField] private RectTransform handContainer;
     [SerializeField] private GameObject cardPrefab;
-    private CardController cardController;
     private List<GameObject> spawnedCards = new List<GameObject>();
     public event Action OnCardSetted;
 
-    private void InitializeUI(CardController cc)
+    public override void InitializeUI(PlayerController pc)
     {
-        if (cardController != null)
-        {
-            cardController.OnSelectionChanged -= SyncUI;
-            cardController.OnChangedHands -= RefreshHand;
-        }
-
-        cardController = cc;
-        cardController.OnChangedHands += RefreshHand;
-        cardController.OnSelectionChanged += SyncUI;
-
+        base.InitializeUI(pc);
         RefreshHand();
     }
 
-    private void OnDisable()
+    protected override void Subscribe()
+    {
+        cardController.OnChangedHands += RefreshHand;
+        cardController.OnSelectionChanged += SyncUI;
+    }
+
+    protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= RefreshHand;
         cardController.OnSelectionChanged -= SyncUI;
