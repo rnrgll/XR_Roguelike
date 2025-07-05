@@ -1169,7 +1169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8920370518399140944
@@ -1997,7 +1997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9175982005674865710
@@ -2553,7 +2553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5624643111395312421
@@ -3928,7 +3928,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handContainer: {fileID: 2009095218098618290}
   cardPrefab: {fileID: 4946283185403926165, guid: 434e27bc87175d944a946bf5ac475afb, type: 3}
-  cardController: {fileID: 4687377856476261407}
 --- !u!1 &3860068400445201673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4047,7 +4046,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeckButton: {fileID: 8184966813637340561}
   DeckCount: {fileID: 1311171474330439111}
-  cardController: {fileID: 4687377856476261407}
   BattleDeckUI: {fileID: 4560529056785923125}
 --- !u!1 &3884048550612997804
 GameObject:
@@ -5224,7 +5222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textArea: {fileID: 1868472212142693423}
-  cardController: {fileID: 4687377856476261407}
 --- !u!1 &4695897552599897882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5259,7 +5256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
+  m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1344425352189817332
@@ -6246,13 +6243,30 @@ MonoBehaviour:
   SuitsList: 00000000000000000000000000000000
   drawNum: 8
   sortStand: 1
-  EnchantList:
+  EnchantArr:
+  - {fileID: 11400000, guid: de944e8bb6000814490366ed29f644cb, type: 2}
+  - {fileID: 11400000, guid: dad74a8e4f17d6b42af42bcaa7350d5a, type: 2}
+  - {fileID: 11400000, guid: 41cfbd010b76ba24c9dfe864dd475186, type: 2}
+  - {fileID: 11400000, guid: cedc10324df38e642ab86eca391f3262, type: 2}
+  - {fileID: 11400000, guid: fc1cfdecbdb448c43b69b062c306fd86, type: 2}
+  - {fileID: 11400000, guid: a2cae928c1f167e47ba58fea5c4b7dda, type: 2}
   - {fileID: 11400000, guid: f67f3794ca2548e439e8fd4243843231, type: 2}
-  DebuffList:
+  DebuffArr:
   - {fileID: 11400000, guid: 494befe971e106240ab4fa3dad0d8676, type: 2}
   - {fileID: 11400000, guid: 70ca110aeaf789745a488dba96896f7c, type: 2}
   - {fileID: 11400000, guid: 7b34298909bc2f24193b70027b4d299d, type: 2}
-  StatusEffectList: []
+  - {fileID: 11400000, guid: cd0db3a26db458c4cb5f67c27625ddb3, type: 2}
+  StatusEffectArr:
+  - {fileID: 11400000, guid: fa74c93f3be2cd647977f65618eb20a0, type: 2}
+  DisposableArr:
+  - {fileID: 11400000, guid: 30275cd6c15666f498ce2a6824c79355, type: 2}
+  - {fileID: 11400000, guid: 58feab81a66d5bb4cbe8715b55928101, type: 2}
+  majorArcanaArr:
+  - {fileID: 11400000, guid: 56276000bac6bea4fa7cc93aeebada08, type: 2}
+  - {fileID: 11400000, guid: d0cedffe82394ec4f8a083e307266c3c, type: 2}
+  - {fileID: 11400000, guid: 9e25b213ff308e449a0f01e3ccb9b837, type: 2}
+  - {fileID: 11400000, guid: 4b2097dcf92beae43b4de159b15a121f, type: 2}
+  - {fileID: 11400000, guid: 4a217ead521a4b9479f2dfbf14cb58d1, type: 2}
 --- !u!1 &5685891846302236814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6468,7 +6482,6 @@ MonoBehaviour:
   DiscardButton: {fileID: 4626313253065833947}
   SuitSortButton: {fileID: 5638951127610687384}
   NumSortButton: {fileID: 4101991106653205389}
-  cardController: {fileID: 4687377856476261407}
 --- !u!1 &6218854544731173946
 GameObject:
   m_ObjectHideFlags: 0
@@ -7798,7 +7811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4247327543708713481
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8049,7 +8062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3b73c7a9b82b940af13dd8b4e8db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardController: {fileID: 4687377856476261407}
   comboText: {fileID: 4765813599839618689}
   sumText: {fileID: 7538177613867270242}
 --- !u!1 &7646030007007205351

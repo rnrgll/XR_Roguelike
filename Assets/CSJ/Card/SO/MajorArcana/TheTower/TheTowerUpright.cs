@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheTower/Upright")]
+[CreateAssetMenu(fileName = "TheTowerUpright", menuName = "Tarot/Abilities/TheTower/Upright")]
 public class TheTowerUprightAbility : ScriptableObject, IArcanaAbility
 {
     public void Excute(ArcanaContext ctx)

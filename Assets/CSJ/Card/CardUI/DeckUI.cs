@@ -9,14 +9,23 @@ public class DeckUI : MonoBehaviour
     [SerializeField] Button DeckButton;
     [SerializeField] TextMeshProUGUI DeckCount;
     [SerializeField] BattleDeckUI BattleDeckUI;
-    CardController cardController = TurnManager.Instance.GetPlayerController().GetCardController();
+    private CardController cardController;
 
-    private void OnEnable()
+
+    private void InitializeUI(CardController cc)
     {
+        if (cardController != null)
+        {
+            cardController.OnChangedHands -= OnDrawCard;
+            DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);
+        }
+
+        cardController = cc;
         cardController.OnChangedHands += OnDrawCard;
         DeckButton.onClick.AddListener(BattleDeckUI.OpenPanel);
     }
-    private void OnDisable()
+
+    private void OnDestroy()
     {
         cardController.OnChangedHands -= OnDrawCard;
         DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);

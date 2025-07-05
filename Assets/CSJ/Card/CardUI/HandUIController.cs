@@ -11,15 +11,23 @@ public class HandUIController : MonoBehaviour
 {
     [SerializeField] private RectTransform handContainer;
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private CardController cardController;
-
+    private CardController cardController;
     private List<GameObject> spawnedCards = new List<GameObject>();
     public event Action OnCardSetted;
 
-    private void OnEnable()
+    private void InitializeUI(CardController cc)
     {
+        if (cardController != null)
+        {
+            cardController.OnSelectionChanged -= SyncUI;
+            cardController.OnChangedHands -= RefreshHand;
+        }
+
+        cardController = cc;
         cardController.OnChangedHands += RefreshHand;
         cardController.OnSelectionChanged += SyncUI;
+
+        RefreshHand();
     }
 
     private void OnDisable()

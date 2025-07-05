@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheFool/Upright")]
+[CreateAssetMenu(fileName = "TheFoolUpright", menuName = "Tarot/Abilities/TheFool/Upright")]
 public class TheFoolUprightAbility : ScriptableObject, IArcanaAbility
 {
     [SerializeField] JokerCard joker;

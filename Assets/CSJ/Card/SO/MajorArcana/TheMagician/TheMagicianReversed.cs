@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheMagicianReversed : MonoBehaviour
+[CreateAssetMenu(fileName = "TheMagicianReversed", menuName = "Tarot/Abilities/TheMagician/Reversed")]
+public class TheMagicianReversed : ScriptableObject, IArcanaAbility
 {
     public MinorArcana DeckCard;
     public MinorArcana HandCard;

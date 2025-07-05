@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheWorld/Reversed")]
+[CreateAssetMenu(fileName = "TheWorldReversed", menuName = "Tarot/Abilities/TheWorld/Reversed")]
 public class TheWorldReversedAbility : ScriptableObject, IArcanaAbility
 {
     [SerializeField] float Ratio = 10f;
@@ -15,12 +15,14 @@ public class TheWorldReversedAbility : ScriptableObject, IArcanaAbility
 
         playerController.GetCardController().SetTurnBonusList(CardBonus.Ratio, BonusType.Bonus, Ratio);
 
+        playerController.SetRatio(TakenRatio);
         playerController.OnPlayerDamaged += playerController.ApplyBonusRatioToMonster;
         playerController.OnTurnEnd += OnTurnEnd;
     }
 
     public void OnTurnEnd()
     {
+        playerController.SetRatio(1);
         playerController.OnPlayerDamaged -= playerController.ApplyBonusRatioToMonster;
         playerController.OnTurnEnd -= OnTurnEnd;
     }

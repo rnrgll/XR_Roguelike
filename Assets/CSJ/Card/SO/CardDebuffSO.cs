@@ -9,12 +9,19 @@ public abstract class CardDebuffSO : ScriptableObject
     public CardDebuff DebuffType => _type;
     [SerializeField] private CardDebuff _type;
     [TextArea] public string description;
-    protected CardController controller = TurnManager.Instance.GetPlayerController().GetCardController();
+    protected CardController controller;
+    protected PlayerController playerController;
 
     private Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
     private Dictionary<MinorArcana, Action<MinorArcana>> DiscardDic = new();
     private Dictionary<MinorArcana, Action> TurnEndDic = new();
+
+    public void InitializeSO(PlayerController _playerController)
+    {
+        playerController = _playerController;
+        controller = playerController.GetCardController();
+    }
 
     /// <summary>
     /// 디버프가 카드에 걸릴 때(Setup 직후) 한 번 호출, 카드를 뽑을때 한 번 호출

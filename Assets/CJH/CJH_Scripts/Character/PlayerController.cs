@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public Action OnTurnStarted;
     public Action<int> OnPlayerDamaged;
     public Action<int> OnMonsterDamaged;
+    public Action<PlayerController> OnPlayerInit;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
-    
+
     private IEnumerator Start()
     {
         Debug.Log("[PC] Start 코루틴 진입");
@@ -65,6 +66,13 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         cardController.OnSubmit += OnAttackTriggered;
         Debug.Log("[PC] OnSubmit에 OnAttackTriggered 연결 완료");
 
+        InitializeCard();
+    }
+
+    private void InitializeCard()
+    {
+        cardController.InitializeSO(this);
+        //cardController.InitializeUI(this);
     }
 
     private void OnDestroy()
@@ -154,22 +162,22 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         flatAttackBonus = 0;
         int count = attackBonusQueue.Count;
-        for(int i=0; i<count; i++)
+        for (int i = 0; i < count; i++)
         {
             Buff attackBuff = attackBonusQueue.Dequeue();
             flatAttackBonus += attackBuff.value;
             attackBuff.remainTurn--;
-            if (attackBuffTurns>0)
+            if (attackBuffTurns > 0)
             {
                 attackBonusQueue.Enqueue(attackBuff);
             }
         }
         Debug.Log($"[플레이어] 현재 턴에서 공격력 {(flatAttackBonus >= 0 ? "+" : "")}{flatAttackBonus} 버프 적용");
-        
+
         return flatAttackBonus;
         // flatAttackBonus = amount;
         // attackBuffTurns = turns;
-        
+
         // if (attackBuffTurns > 0)
         // {
         //     attackBuffTurns--;
@@ -269,7 +277,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
 
     #region Buff Queue
-    
+
     /// <summary>
     /// 턴 지속 체력 회복 버프를 큐에 추가합니다. 매 턴마다 지정된 수치만큼 회복됩니다.
     /// </summary>
@@ -277,9 +285,9 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     /// <param name="turns"></param>
     public void AddHealBuff(int amount, int turns)
     {
-        healBonusQueue.Enqueue(new Buff(amount,turns));
+        healBonusQueue.Enqueue(new Buff(amount, turns));
     }
-    
+
     /// <summary>
     /// (퍼센트 기반) 턴 지속 체력 회복 버프를 큐에 추가합니다. 매 턴마다 MaxHP 기준 비율만큼 회복됩니다.
     /// </summary>
@@ -287,22 +295,22 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     /// <param name="turns"></param>
     public void AddHealBuff(float amount, int turns)
     {
-        healBonusQueue.Enqueue(new Buff(amount,turns));
+        healBonusQueue.Enqueue(new Buff(amount, turns));
     }
-    
+
     /// <summary>
     /// 공격력 버프를 큐에 추가합니다.
     /// 매 턴 동안 지정된 수치만큼 공격력이 증가합니다.
     /// </summary>
     public void AddAttackBuff(int amount, int turns)
     {
-        attackBonusQueue.Enqueue(new Buff(amount,turns));
+        attackBonusQueue.Enqueue(new Buff(amount, turns));
     }
 
     #endregion
 
     #region HPControl
-    
+
     /// <summary>
     /// 힐 버프 큐에 저장된 회복 효과를 적용합니다.
     /// 회복 후 남은 턴 수가 있을 경우 다시 큐에 넣습니다.
@@ -365,7 +373,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             TurnManager.Instance.NotifyPlayerDeath();
         }
     }
-   
+
     #endregion
 
     public void PrintAttackQueue()
@@ -377,7 +385,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             total += buff.value;
         }
         Debug.Log($"total {total} 증가");
-        
+
     }
 
     public CardController GetCardController()
