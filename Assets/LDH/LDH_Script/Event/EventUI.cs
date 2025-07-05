@@ -47,7 +47,6 @@ namespace Event
                 int mainRewardId = options[i].MainRewardId;
 
                 EventMainReward mainReward = Manager.Data.EventDB.GetMainRewardById(mainRewardId);
-                
                 EventRewardEffect rewardEffect = Manager.Data.EventDB.GetRewardEffectByMainRewardId(mainRewardId);
                 
                 // List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);

@@ -106,7 +106,7 @@ namespace Event
         {
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
-
+            Debug.Log(table.Table[1,2]);
             
             for (int r = 1; r < rowCnt; r++)
             {

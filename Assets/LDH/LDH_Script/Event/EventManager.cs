@@ -37,6 +37,7 @@ public class EventManager : Singleton<EventManager>
     public void EventEnd()
     {
         Manager.Map.ShowMap();
+        Release();
     }
     
 }

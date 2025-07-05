@@ -26,6 +26,8 @@ namespace Test
             // Manager.GameState.AddItem(randItem);
             Manager.GameState.AddItem("207");
             Manager.GameState.AddItem("208");
+            Manager.GameState.AddItem("209");
+            
             // _tarotDeck.AddMajorCards(_startCard);
         }
 
