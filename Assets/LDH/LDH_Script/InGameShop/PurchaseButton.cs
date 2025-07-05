@@ -10,7 +10,6 @@ namespace InGameShop
     {
         [SerializeField] private GameObject _goldAlarmPopUp;
         [SerializeField] private FullSlotAlarmPanel _fullSlotAlarmPopUp;
-        private string _itemId;
         private ButtonCondition _condition;
         
         private void Awake() => Init();
@@ -27,7 +26,6 @@ namespace InGameShop
             if (_condition == null)
                 _condition = GetComponent<ButtonCondition>();
 
-            _itemId = item.id;
             
             if (GameStateManager.Instance.Gold < item.price)
             {
@@ -37,14 +35,14 @@ namespace InGameShop
             {
                 _condition.SetButtonState(ButtonState.Active, ()=>
                 {
-                    Purchase(slotIndex, (item is InventoryItem? ItemType.Item: ItemType.Card), _itemId);
+                    Purchase(slotIndex, (item is InventoryItem? ItemType.Item: ItemType.Card));
                     
                 });
             }
             
         }
 
-        public void Purchase(int slotIndex, ItemType itemType, string itemID)
+        public void Purchase(int slotIndex, ItemType itemType)
         {
             if (itemType == ItemType.Item &&  Manager.GameState.CurrentItemCount == 3)
             {
@@ -52,7 +50,7 @@ namespace InGameShop
             }
             else
             {
-                ShopManager.Instance.Purchase(slotIndex, itemID);
+                ShopManager.Instance.Purchase(slotIndex);
             }
         }
         

@@ -21,6 +21,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 2cb5f04851f834ccda69dbf55fc8a56f, type: 3}
   weight: 1
   type: 0
+  isPotion: 1
   effectGroups:
   - chance: 1
     effects:
@@ -28,4 +29,3 @@ MonoBehaviour:
       percentValue: 10
       value: 0
       duration: 1
-  condition: 

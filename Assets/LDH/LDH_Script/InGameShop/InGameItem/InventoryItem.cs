@@ -8,6 +8,7 @@ namespace InGameShop
     public class InventoryItem : GameItem
     {
         public InventoryItemType type;
+        public bool isPotion;
         public List<EffectGroup> effectGroups;
     }
 }

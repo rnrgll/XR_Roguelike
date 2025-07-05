@@ -16,10 +16,7 @@ namespace InGameShop
         public void Show(int slotIndex)
         {
             gameObject.SetActive(true);
-            
-            string itemId = ShopManager.Instance.GetItemId(slotIndex);
-            
-            var item = Manager.Data.ItemDB.GetItemById(itemId);
+            var item = ShopManager.Instance.GetItem(slotIndex);
             
             UpdateUI(item);
             _purchaseButton.SetButton( slotIndex, item);

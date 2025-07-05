@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3861e9b02fd2524ebe05cc0d9eb5dbe, type: 3}
   m_Name: SteelCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 5
   description: 
   MultPlayed: 3
   MultInHand: 1.5

@@ -11,7 +11,7 @@ namespace Managers
     public class DataManager : Singleton<DataManager>
     {
 
-        public ItemDataBase ItemDB;
+        public ItemDataBase GameItemDB;
         public EventDataBase EventDB;
         
         private void Awake()
@@ -21,7 +21,7 @@ namespace Managers
 
         private void Start()
         {
-            ItemDB = new ItemDataBase();
+            GameItemDB = new ItemDataBase();
             EventDB = new EventDataBase();
             
             //csv file load

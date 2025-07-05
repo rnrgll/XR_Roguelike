@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11300aa6d2415d949b4aa178bcf31430, type: 3}
   m_Name: MultCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 2
   description: 
   Mult: 3

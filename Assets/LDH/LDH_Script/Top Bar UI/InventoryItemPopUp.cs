@@ -15,7 +15,7 @@ namespace TopBarUI
 
         public void SetData(string itemID)
         {
-            var item = Manager.Data.ItemDB.GetItemById(itemID);
+            var item = Manager.Data.GameItemDB.GetItemById(itemID);
             _itemImage.sprite = item.sprite;
             _itemDescription.text = $"{item.name}\n{item.description}";
         }

@@ -1,8 +1,7 @@
+using CustomUtility.UI;
 using DG.Tweening;
+using Item;
 using Managers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +11,8 @@ namespace InGameShop
     public class ItemButton : MonoBehaviour
     {
         [Header("Item Data")] 
-         public int slotIndex;
-        
+        public int slotIndex;
+        private GameItem currentItem;
         
         [Header("PopUp UI")]
         [SerializeField] private ItemPopUpPanel _popUpPanel;
@@ -26,7 +25,6 @@ namespace InGameShop
         [SerializeField] private GameObject _priceLabel;
         private TMP_Text _priceText;
         private Image _itemImage;
-        
         
         //버튼 이동 관련(Pop up)
         private Button _itemButton;
@@ -50,8 +48,7 @@ namespace InGameShop
         {
             _itemButton.onClick.RemoveListener(MoveToPopUp);
         }
-
-
+        
         
         private void Init()
         {
@@ -71,15 +68,36 @@ namespace InGameShop
 
         #region Item Data 연동
 
-        public void OnItemUpdated(string itemID)
+        public void OnItemUpdated(GameItem item)
         {
-            var itemData = Manager.Data.ItemDB.GetItemById(itemID);
-            //이미지 설정
-            SetImage(itemData.sprite);
-            
-            //price 설정
-            _priceText.text = itemData.price.ToString();
+            currentItem = item;
+            if (item is InventoryItem inventoryItem)
+            {
+                
+                if(_itemButton.transform.childCount!=0)
+                    foreach (Transform child in _itemButton.transform)
+                    {
+                        Destroy(child.gameObject);
+                    }
+            }
+            else if(item is EnchantItem enchantItem)
+            {
+                //여기서 버튼 아래에 이미지를 생성해서 이미지 설정하고 stretch 하고 싶음
+                Image enchantImage = new GameObject("EnchantImage", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image)).GetComponent<Image>();
+                enchantImage.transform.SetParent(_itemButton.transform, false); // false → 로컬 기준 유지
+                UILayout.Stretch(enchantImage.GetComponent<RectTransform>());
 
+                enchantImage.sprite = enchantItem.enchantSprite;
+                enchantImage.preserveAspect = true;
+
+            }
+            
+            //이미지 설정
+            SetImage(item.sprite);
+            //price 설정
+            _priceText.text = item.price.ToString();
+
+            
         }
 
         #endregion

@@ -106,6 +106,7 @@ public class CardDeck
     }*/
     #endregion
 
+    //인첸트 가능
     public List<MinorArcana> GetEnchantableCard()
     {
         List<MinorArcana> EnchantedCardList = GetEnchantedCard();

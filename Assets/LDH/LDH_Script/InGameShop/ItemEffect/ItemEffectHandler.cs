@@ -14,23 +14,24 @@ namespace Item
 
         private PlayerController _player;
         private CardController _card => _player.GetCardController();
-        
+
         public void ApplyEffect(ItemEffect effect)
         {
             _player ??= Manager.turnManager.GetPlayerController();
             //todo:고치기
             if (effect.effectType == EffectType.None)
             {
-               
+
                 Debug.Log($"[아이템] 효과 적용 : {effect.effectType.ToString()}");
                 return;
             }
-            
-            Debug.Log($"[아이템] 효과 적용 : {effect.effectType.ToString()}, value : {effect.value}, percent value : {effect.percentValue}, turn : {effect.duration}");
-            
+
+            Debug.Log(
+                $"[아이템] 효과 적용 : {effect.effectType.ToString()}, value : {effect.value}, percent value : {effect.percentValue}, turn : {effect.duration}");
+
             switch (effect.effectType)
             {
-                
+
                 case EffectType.Heal:
                     ApplyHeal(effect);
                     break;
@@ -56,7 +57,7 @@ namespace Item
                 case EffectType.GainJoker:
                     ApplyTryGainJoker(effect);
                     break;
-                
+
                 default:
                     Debug.LogWarning($"[ItemEffectRunner] 알 수 없는 효과 타입: {effect.effectType}");
                     break;
@@ -67,13 +68,12 @@ namespace Item
         {
             if (effect.duration <= 1)
             {
-                if (effect.value!=0)
+                if (effect.value != 0)
                     _player.ChangeHp(effect.value);
                 else
                     _player.ChangeHpByPercent(effect.percentValue);
             }
-            else
-            if (effect.value!=0)
+            else if (effect.value != 0)
                 _player.AddHealBuff(effect.value, effect.duration);
             else
                 _player.AddHealBuff(effect.percentValue, effect.duration);
@@ -83,31 +83,30 @@ namespace Item
         {
             if (effect.duration <= 1)
             {
-                if (effect.value!=0)
+                if (effect.value != 0)
                     _player.ChangeHp(-effect.value);
                 else
                     _player.ChangeHpByPercent(-effect.percentValue);
             }
-            else
-            if (effect.value!=0)
+            else if (effect.value != 0)
                 _player.AddHealBuff(-effect.value, effect.duration);
             else
                 _player.AddHealBuff(-effect.percentValue, effect.duration);
         }
-        
+
         private void ApplyBuffAttack(ItemEffect effect)
         {
             _player.AddAttackBuff(effect.value, effect.duration);
         }
-        
+
         private void ApplyDrawCard(ItemEffect effect)
         {
-           _card.Draw(effect.value);
+            _card.Draw(effect.value);
         }
-        
+
         private void ApplyTryGainJoker(ItemEffect effect)
-        { 
-            
+        {
+
             //조커 카드 보유 여부 확인
             //battle deck에서 카드 문양이 와일드이고, 카드 넘버가 14 인 카드가 있는지 확인
             //있으면 인덱스 반환, 없으면 -1 반환
@@ -120,7 +119,7 @@ namespace Item
                 Debug.Log("[아이템] 보유하고 있는 조커가 없습니다. 아이템 효과 적용 실패");
                 return;
             }
-            
+
             //조커 카드 보유시 battle deck에서 해당 카드를 빼서
             //핸드에 넣어주어야 함
             MinorArcana jockerCard = _card.BattleDeck.GetCard(jockerIndex);
@@ -128,10 +127,11 @@ namespace Item
             _card.Draw(jockerCard);
 
         }
-        
+
         private void ApplyInvincible(ItemEffect effect)
         {
-            //todo : 무적상태 적용 필요
+            Debug.Log("[아이템] 무적 상태를 1턴 동안 적용합니다.");
+            _player.SetInvincible();
         }
 
         private void DiscardHand()
@@ -140,7 +140,7 @@ namespace Item
             _card.Discard(_card.Hand.GetCardList()); //손패에 있는 카드 전부 버리기
             _player.OnTurnEnd -= DiscardHand; //등록한거 삭제
         }
-        
 
     }
+
 }
