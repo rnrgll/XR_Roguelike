@@ -10,12 +10,18 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
     [SerializeField] private CardController cardController;
+    [SerializeField] private TarotDeck tarotDeck;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
+
+
     public int MaxHP => maxHP;
     private int currentHP;
+    private int flatAttackBonus = 0;
+    private int attackBuffTurns = 0;
     private float additionalDamage;
     private float ratio;
+    private float attackMultiplier = 1f;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
     private bool isNextTurnSkip = false;
@@ -23,10 +29,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private bool isInvincible;
     private bool isAdditionalDamage;
 
+    public CardController CardController => cardController;
+    public TarotDeck TarotDeck => tarotDeck;
 
-    private float attackMultiplier = 1f;
-    private int flatAttackBonus = 0;
-    private int attackBuffTurns = 0;
+
     public Action OnTurnEnd;
     public Action OnTurnStarted;
     public Action<int> OnPlayerDamaged;
@@ -41,6 +47,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
+
+
+    private void Awake()
+    {
+        // Inspector 에 할당 안 되어 있으면 자동으로 GetComponent 시도
+        if (cardController == null)
+            cardController = GetComponent<CardController>();
+        if (tarotDeck == null)
+            tarotDeck = GetComponent<TarotDeck>();
+    }
 
     private IEnumerator Start()
     {
