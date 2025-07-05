@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UI;
+using Managers;
 
 public class BattleSceneManager : MonoBehaviour
 {
+
     [SerializeField] private PlayerController player;
+    [SerializeField] private GameObject playerPrefab;
+
     [SerializeField] private GameObject lasMonsterPrefab;
     [SerializeField] private GameObject envyMonsterPrefab;
     [SerializeField] private GameObject prideMonsterPrefab;

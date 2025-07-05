@@ -94,6 +94,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     public void AddCardItem(EnchantItem enchantItem)
     {
+        var deck = Player.GetCardController().Deck;
         CardDeck cardDeck = TurnManager.Instance.GetPlayerController().GetCardController().Deck;
         MinorArcana card = cardDeck.GetEnchantableCard().FirstOrDefault(card =>
             card.CardSuit == enchantItem.Suit && card.CardNum == enchantItem.CardNum);
