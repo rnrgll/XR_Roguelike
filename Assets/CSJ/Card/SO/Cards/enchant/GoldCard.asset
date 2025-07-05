@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2898fac397379284ea7cf5c23ca66c05, type: 3}
   m_Name: GoldCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 6
   description: 
   Money: 100
   Damage: 100

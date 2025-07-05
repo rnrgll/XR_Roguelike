@@ -148,6 +148,7 @@ namespace InGameShop
                 
                 //타겟 범위인 경우
                 EnchantItem enchantItem = ScriptableObject.Instantiate(origin);
+                Debug.Log($"{origin.enchantSo} / {enchantItem.enchantSo}");
                 enchantItem.SetData(card.CardSuit, card.CardNum);
                 
                 string cNum = card.CardNum < 10 ? $"0" + card.CardNum : card.CardNum.ToString();

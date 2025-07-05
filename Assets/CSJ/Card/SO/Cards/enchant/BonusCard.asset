@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04236fefbc97cd44914367ff84c00e1, type: 3}
   m_Name: BonusCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 1
   description: 
   Bonus: 40

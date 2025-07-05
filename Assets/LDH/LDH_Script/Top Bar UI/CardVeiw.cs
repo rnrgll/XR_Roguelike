@@ -35,6 +35,7 @@ namespace TopBarUI
             }
             else
             {
+                Debug.Log($"인챈트 효과 있음 : {minor.Enchant.enchantInfo}");
                 enchantImg.enabled = true;
                 //todo:인챈트에 따른 이미지 적용하기
                 enchantImg.sprite = (Manager.Data.GameItemDB.EnchantDB[minor.Enchant.enchantInfo] as EnchantItem)
@@ -43,7 +44,6 @@ namespace TopBarUI
             }
             
             // 효과 텍스트
-            
             string cardEffect = $"데미지 +{minor.CardNum}";
             effectText.text = $"{cardEffect}{(string.IsNullOrEmpty(enchantEffect) ? string.Empty : $"\n{enchantEffect}")}";
 
@@ -66,18 +66,6 @@ namespace TopBarUI
         public void PrintCardName()
         {
             Debug.Log(cardName);
-        }
-
-        public void SetData(EnchantItem enchantItem)
-        {
-            //메이저 아르카나 이미지
-            cardImg.sprite = enchantItem.sprite;
-            
-            //인챈트 이미지
-            enchantImg.enabled = false;
-            
-            //todo : 카드 효과부분 고치기
-            effectText.text = enchantItem.description;
         }
         
     }

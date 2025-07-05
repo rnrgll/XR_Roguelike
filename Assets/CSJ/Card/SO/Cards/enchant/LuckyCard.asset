@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0316c2d0daece4fa96646333247e5e, type: 3}
   m_Name: LuckyCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 7
   description: 
   BonusScore: 60
   BonusMoney: 50

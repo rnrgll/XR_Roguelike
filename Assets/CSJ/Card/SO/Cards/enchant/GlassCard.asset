@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce8adc486e0f424b88b02b3f0340a36, type: 3}
   m_Name: GlassCard
   m_EditorClassIdentifier: 
-  _enchant: 0
+  _enchant: 4
   description: 
   AttackBuff: 2

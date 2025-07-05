@@ -37,7 +37,6 @@ namespace InGameShop
             if (item is InventoryItem)
             {
                 Manager.GameState.AddItem(item.id);
-                Debug.Log("item is game Item");
                 Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
             }
 
@@ -46,7 +45,6 @@ namespace InGameShop
                 
                 Manager.GameState.AddCardItem(item as EnchantItem);
                 EnchantItem enchantItem = item as EnchantItem;
-                Debug.Log("item is card item");
                 Debug.Log($"덱에 {enchantItem.enchantType} - {item.name} {enchantItem.Suit} {enchantItem.CardNum} 이 추가됩니다.");
             }
             
