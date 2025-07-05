@@ -9,10 +9,11 @@ public class SubmitUI : MonoBehaviour
     [SerializeField] private Button DiscardButton;
     [SerializeField] private Button SuitSortButton;
     [SerializeField] private Button NumSortButton;
-    private CardController cardController = TurnManager.Instance.GetPlayerController().GetCardController();
+    private CardController cardController;
 
     private void OnEnable()
     {
+        cardController = FindAnyObjectByType<PlayerController>().GetCardController();
         attackButton.onClick.AddListener(OnAttackButtonClicked);
         DiscardButton.onClick.AddListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.AddListener(OnSuitSortButtonClicked);

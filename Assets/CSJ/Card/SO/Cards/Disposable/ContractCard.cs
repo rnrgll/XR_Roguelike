@@ -7,7 +7,7 @@ public class ContractCard : DisposableCardSO
 {
     public override void OnCardPlayed(MinorArcana card)
     {
-        playercontroller.SetInvincible();
+        playerController.SetInvincible();
     }
 }
 

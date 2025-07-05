@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public Action OnTurnStarted;
     public Action<int> OnPlayerDamaged;
     public Action<int> OnMonsterDamaged;
+    public Action<PlayerController> OnPlayerInit;
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
@@ -65,6 +66,12 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         cardController.OnSubmit += OnAttackTriggered;
         Debug.Log("[PC] OnSubmit에 OnAttackTriggered 연결 완료");
 
+        InitializeSO();
+    }
+
+    private void InitializeSO()
+    {
+        cardController.InitializeSO(this);
     }
 
     private void OnDestroy()

@@ -78,6 +78,7 @@ public class CardController : MonoBehaviour
     private Action<MinorArcana> OnRemoveStatusEffectCard;
     public event Action<int> OnEnterSelectionMode;
     public event Action OnExitSelectionMode;
+    public Action<CardController> OnInitCardController;
     #endregion
 
     #region SO관련 내용 모음
@@ -87,6 +88,7 @@ public class CardController : MonoBehaviour
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
     [SerializeField] private DisposableCardSO[] DisposableArr;
     public List<MinorArcana> disposableCardList { set; private get; } = new();
+    [SerializeField] private MajorArcanaSO[] majorArcanaArr;
     #endregion
 
 
@@ -181,7 +183,7 @@ public class CardController : MonoBehaviour
         TurnBonusDic = new();
 
         ResetDeck();
-        // 테스트용 임시로 Start에서 실행
+
 
         #region 미사용 코드
         // CardDicInit();
@@ -193,6 +195,20 @@ public class CardController : MonoBehaviour
         #endregion
     }
 
+    public void InitializeSO(PlayerController playerController)
+    {
+        foreach (var so in EnchantArr)
+            so.InitializeSO(playerController);
+        foreach (var so in DebuffArr)
+            so.InitializeSO(playerController);
+        foreach (var so in DisposableArr)
+            so.InitializeSO(playerController);
+        foreach (var so in StatusEffectArr)
+            so.InitializeSO(playerController);
+        foreach (var so in majorArcanaArr)
+            so.InitializeSO(playerController);
+        OnInitCardController?.Invoke(this);
+    }
     public void BattleInit()
     {
         // TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;

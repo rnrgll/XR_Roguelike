@@ -12,7 +12,7 @@ public class CombinationUI : MonoBehaviour
 
     private void Awake()
     {
-        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
+        cardController = FindAnyObjectByType<PlayerController>().GetCardController();
         RefreshUI();
     }
     private void OnEnable()

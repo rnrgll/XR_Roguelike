@@ -6,11 +6,13 @@ using UnityEngine;
 public class HandNumUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textArea;
-    [SerializeField] CardController cardController;
+    private CardController cardController;
 
     private void OnEnable()
     {
+        cardController = FindAnyObjectByType<PlayerController>().GetCardController();
         cardController.OnChangedHands += RefreshCount;
+        cardController = TurnManager.Instance.GetPlayerController().GetCardController();
     }
 
     private void OnDisable()

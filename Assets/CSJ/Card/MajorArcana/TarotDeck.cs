@@ -7,7 +7,6 @@ using UnityEngine;
 public class TarotDeck : MonoBehaviour
 {
     [SerializeField] List<MajorArcanaSO> majorCardCandidates;
-    private CardController cardController = TurnManager.Instance.GetPlayerController().GetCardController();
     List<MajorArcanaSO> deckMajorCards = new();
     MajorArcanaSO curCard;
     private int prevIndex;
