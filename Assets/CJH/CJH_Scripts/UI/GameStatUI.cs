@@ -10,14 +10,9 @@ public class GameStatusUI : MonoBehaviour
     public TextMeshProUGUI monsterHPText;
     public TextMeshProUGUI accumulatedDamageText;
 
-    [Header("공격 정보")]
-    public TextMeshProUGUI comboText;
-    public TextMeshProUGUI multiplierText;
-
     private int accumulatedDamage = 0;
     private int maxMonsterHP = 1000;
 
-    [SerializeField] private TextMeshProUGUI stageLabel;
     private int currentStage = 1;
 
     private void Awake()
@@ -47,15 +42,9 @@ public class GameStatusUI : MonoBehaviour
         accumulatedDamageText.text = $"누적 피해: {accumulatedDamage}";
     }
 
-    public void SetComboInfo(string comboName, float multiplier)
-    {
-        comboText.text = $"{comboName}";
-        multiplierText.text = $"x{multiplier}";
-    }
 
     public void SetStage(int stage)
     {
         currentStage = stage;
-        stageLabel.text = $"Stage {currentStage}";
     }
 }

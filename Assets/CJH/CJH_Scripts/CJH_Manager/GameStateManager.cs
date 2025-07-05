@@ -30,7 +30,8 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     #endregion
 
-
+    private PlayerController playerController;
+    public PlayerController Player => playerController;
 
 
     public MonsterID SelectedMonster { get; set; }
@@ -54,7 +55,11 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         for (int i = 0; i < MaxItemInventorySize; i++)
             _itemInventory.Add(String.Empty);
     }
-
+    public void RegisterPlayerController(PlayerController pc)
+    {
+        playerController = pc;
+        Debug.Log($"[GameStateManager] PlayerController 등록됨: {pc.name}");
+    }
 
 
     public void AddWin() => Wins++;
