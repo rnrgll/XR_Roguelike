@@ -9,6 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b2f933041e95944991d4f350b3fd3bc, type: 3}
-  m_Name: Reversed Ability
+  m_Script: {fileID: 11500000, guid: 6971e36602aa6d44eb4b6c13ac807992, type: 3}
+  m_Name: UsableMucus
   m_EditorClassIdentifier: 
+  cardName: 
+  sprite: {fileID: 0}
+  suit: 50
+  cardNum: 0
+  IsUsable: 1
+  debuff: {fileID: 0}

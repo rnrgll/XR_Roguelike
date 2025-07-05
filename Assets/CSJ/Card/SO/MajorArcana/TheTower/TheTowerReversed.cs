@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardEnum;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheTower/Reversed")]
+[CreateAssetMenu(fileName = "TheTowerReversed", menuName = "Tarot/Abilities/TheTower/Reversed")]
 public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
 {
-    [SerializeField] int DrawNum;
+    [SerializeField] int DrawNum = 8;
     public void Excute(ArcanaContext ctx)
     {
         var controller = ctx.player.GetCardController();
