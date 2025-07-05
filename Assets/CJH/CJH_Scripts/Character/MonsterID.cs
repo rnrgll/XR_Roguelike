@@ -6,5 +6,9 @@ public enum MonsterID
 {
     Las,
     Envy,
-    Pride
+    Pride,
+    Grid,
+    Lust,
+    Glutton,
+    Sloth
 }

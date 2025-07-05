@@ -2,6 +2,7 @@ using CardEnum;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class CardManager : MonoBehaviour
     private List<MinorArcana> selectedCards = new List<MinorArcana>();
 
     public event Action<List<MinorArcana>> OnMinorArcanaAttack;
+
+    [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class CardManager : MonoBehaviour
             selectedCards.Clear();
         }
     }
+
 
     private List<MinorArcana> handCards = new();
 
@@ -79,4 +83,6 @@ public class CardManager : MonoBehaviour
             Debug.Log($"[CardManager] 카드 폐기됨: {card.CardName}");
         }
     }
+
+
 }
