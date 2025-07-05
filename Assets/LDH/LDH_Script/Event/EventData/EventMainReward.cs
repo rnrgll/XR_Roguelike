@@ -8,13 +8,15 @@ namespace Event
         public string Text;
         public EffectType RewardType;
         public int RewardEffectID;
+        public string ResultText;
 
-        public EventMainReward(int id, string text, EffectType rewardType, int rewardEffectID)
+        public EventMainReward(int id, string text, EffectType rewardType, int rewardEffectID, string resultText)
         {
             Id = id;
             Text = text;
             RewardType = rewardType;
             RewardEffectID = rewardEffectID;
+            ResultText = resultText;
         }
     }
     

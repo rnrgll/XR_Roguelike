@@ -116,7 +116,8 @@ namespace Event
                     key,
                     table.Table[r,1],
                     (EffectType)(int.Parse(table.Table[r,2].Substring(0,2))),
-                    int.Parse(table.Table[r, 3])
+                    int.Parse(table.Table[r, 3]),
+                    table.Table[r, 4]
                 );
                 MainRewardDB.Add(key, mainReward);
             }
