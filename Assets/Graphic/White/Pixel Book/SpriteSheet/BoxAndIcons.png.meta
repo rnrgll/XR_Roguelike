@@ -1,0 +1,4254 @@
+fileFormatVersion: 2
+guid: b4020b6b892074fed8019adbe581ecc4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BoxAndIcons_0
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb1dba12523241dd8520a40abd3cd41
+      internalID: -752553270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_1
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 495
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ed8613e731343a299fd17b8ad8044a
+      internalID: 600920098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_2
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b200d171e429f43a7bcc7f312e7d0794
+      internalID: -96404368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_3
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 495
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3327f82daf044324a81e4a475441ffb
+      internalID: 1270838765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_4
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 495
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5ea33e060ee450eb0f1e4b46e4f523
+      internalID: 1396103055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_5
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 495
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3adfc82de1b48269facae529eefc1a
+      internalID: -1000603519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_6
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 465
+        width: 37
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f57e40e5d2534e898368088a3a62653
+      internalID: -54291399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_7
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 465
+        width: 34
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc770d642da1043399ad7bb0412f549b
+      internalID: -852310598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_8
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 465
+        width: 37
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25c37fb8d171a46839d0db35235ec7f8
+      internalID: -1616326710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_9
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 470
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99db421a4bd814c31ab3e3a517da107f
+      internalID: 1225683741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_10
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 470
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c8bb58ddc5184f7890da4cf79447fc8
+      internalID: 403705263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_11
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 497
+        width: 30
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 498726cd6f4ac4dbeaf33e7299e428cf
+      internalID: 1168233357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_12
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 497
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da5cf425794fa4417a526c2e9d10d831
+      internalID: -903326412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_13
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 497
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b7cd6ea48ebf4d75a85adc5b7731440
+      internalID: 760650645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_14
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 500
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c83e274504b8940ed99e82dd43192272
+      internalID: -1903927607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_15
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 497
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f9023d52c3504ebc9ab1cde8e947eaa
+      internalID: 529713974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_16
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 495
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f7066083c1e4e2298cfc86d0c28244
+      internalID: -376440361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_17
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67b172f23d83e4e0fa77c648cbc8e5b6
+      internalID: 1886605202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_18
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5275203a49d2c4471adae0fc3a55f623
+      internalID: -912629581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_19
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 202aff5c0e8cb439891f3f27a5f39733
+      internalID: -470893192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_20
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 495
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bfc6fd2592104576b39514cb6038d70
+      internalID: -784284635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_21
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 463
+        width: 49
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3da58b0204d054e97b600d38197ab8c1
+      internalID: 153102493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_22
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 463
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0a44fd925ecd4b118fa0308b62685e5
+      internalID: -1292380857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_23
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 497
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf0ef9cef3fcf4aa58b10f864f3a72df
+      internalID: 215498462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_24
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 497
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5130ec149ee2041e5b03cba3bd8f52f2
+      internalID: -1897445486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_25
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 497
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e075c095b7a47dab9593c7bfd841ad
+      internalID: -1675635676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_26
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 500
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8452484b10d44045a2b26f5ae5e5fde
+      internalID: -1105090666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_27
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 500
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96b6117a804f24668ae1c5b7897ae253
+      internalID: -569784123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_28
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 500
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57d158de1b8d642d597365a8e390c8d9
+      internalID: 1144740591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_29
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 482
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fda3a8956c11b4552b70b090670d7626
+      internalID: -80398543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_30
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 482
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07880c3ea62b4704ae3dd131ff830dc
+      internalID: 1715924098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_31
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 482
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e29166b5d9df24391824001f7e701a10
+      internalID: 937897489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_32
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 482
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7c51c51af56343df86294e51077534b
+      internalID: 736453171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_33
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 482
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fee4061ae5cd4115b9d87abaeada6a8
+      internalID: -135084265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_34
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 482
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65fc21c2de416421ca4c891f151b5052
+      internalID: -1270846162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_35
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 463
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f48738a035ad4b50ac7319b22ce0c7b
+      internalID: 1581582205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_36
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 463
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d595a7d1f901e43fb8ee6a3563be0de5
+      internalID: 368047127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_37
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 463
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53da78cf74cea43db86a6b39c4f10236
+      internalID: 1026223933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_38
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 463
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0d6d52b6b9bf40c099ca54c230e09a6
+      internalID: -1568183457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_39
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 463
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc8b2d4925d1414984c60e2c2fc006a
+      internalID: 1409152264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_40
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 463
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d58344bd490f54883b493ffe50d8f6c8
+      internalID: -1024123209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_41
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 468
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1581e36377be4aae8236bd157fa349b
+      internalID: -1442823063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_42
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 468
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce951daed24b48ca9d1e5c26ce46d8f
+      internalID: 471316663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_43
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 465
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35ab5f87a93b24d38b8f7594effdd7ba
+      internalID: 516378307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_44
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 468
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc7483c95d089403dade14e2b46afb02
+      internalID: -2062833352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_45
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 465
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 730528f3b37c14abc8ce81ec8de6ad5a
+      internalID: 539820756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_46
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 465
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e2db4ae1c64641379a60eb682ba92f8
+      internalID: 1116791391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_47
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 463
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0793a805ecb5a402fa17c88bfa4b4df6
+      internalID: -654632934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_48
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 463
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cb38ae33410845bf923df02f3714857
+      internalID: -1424582190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_49
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 463
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a5c9b133c81424e9180fc015d3adbf
+      internalID: 386972367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_50
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 463
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec509f5680ebe4175aa7e72631934c32
+      internalID: -704144268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_51
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 463
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9d92020808de46beba9512635daebe5
+      internalID: -1032671884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_52
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 465
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ae861ad464c34af6b6f81864e33409c
+      internalID: -984876839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_53
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 465
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae0126ab8fc90409faed96e06884eadf
+      internalID: -1643939617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_54
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 465
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7459ffb693f4e43f5af487c0b40b6e5e
+      internalID: -2117324968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_55
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 468
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7beee420334394a7484a7d6621ca6910
+      internalID: 1086775422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_56
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 468
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2743a46dc54c43c584f1aff930c7efa
+      internalID: -716348969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_57
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 468
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be17916657aa7425b86f668fca864fe1
+      internalID: -422191831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_58
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 450
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 720aedc7f8ec34ad1a032600ddac8c67
+      internalID: 2085044060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_59
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 450
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a97e49cfd6f4467abd5459c9e0c2b52
+      internalID: 363863222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_60
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 450
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144752bdfb62d4c6191170d170baf77a
+      internalID: 337957656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_61
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 450
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0ee7c122bf1440cf83c4e7ac51d9737
+      internalID: 2000305369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_62
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 450
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35b6856a3b8594978928679ccf71a7b6
+      internalID: 1383880256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_63
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 450
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 230619896f97d49179d2db8b83436c27
+      internalID: 453631143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_64
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 431
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5b934fc5864243beaa1146b7ef72927
+      internalID: -1739458778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_65
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 431
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af160fa088b044c8789bf6dc61c35346
+      internalID: 565173863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_66
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 431
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c73547a8e54491190c143e2462e2c4
+      internalID: 1958689574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_67
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 436
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c52d529bdeaa4b0f91c8910a3af28f3
+      internalID: -1349154797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_68
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 436
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ddfd236f7ca7495397275c56cf7993d
+      internalID: 974898667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_69
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 436
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 569bb20f0c2db441f9e79c64a98ea66c
+      internalID: -768252208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_70
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 414
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e350fa9df63343449c2c650d05861e9
+      internalID: -1786928157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_71
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 414
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f43dda019f284bdfab4a35d5951863f
+      internalID: -1652286644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_72
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 414
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9444bc25efa94f76836160d7c3b24e9
+      internalID: 1474766243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_73
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 414
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2070eafcf411142a2a14e18d5549ac82
+      internalID: -1984964350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_74
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 414
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 173a103bcf3a64533aadaed3eb516235
+      internalID: 1062062760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_75
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 414
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a25fb2a9e144d0d9904eaa26aac208
+      internalID: 1938181725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_76
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 414
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97fed3eeac9354f9890737a69b5daa8b
+      internalID: 87562566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_77
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 436
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 436d09405f01e4ba7a427833cebca298
+      internalID: 340819742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_78
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 436
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96c5ee4f85d1845939d00260d1804a61
+      internalID: -1766830609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_79
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 436
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5712a7e1996dd4cb993b29443fb46049
+      internalID: -1136419218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_80
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 433
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf2a294955130420a98f4af15f7cb598
+      internalID: -1927592922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_81
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 431
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38034fc556bed4420a19b061cc403e40
+      internalID: 999242366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_82
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 431
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c6b942d32e0418898e2cf11d2857b1
+      internalID: -795913281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_83
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 431
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21931091d7c174542a39f0e411edf368
+      internalID: -1181938844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_84
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 431
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b1b61bcc82d496d9f2a42c4b9da893
+      internalID: -618993379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_85
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 433
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9394903ef1bfe45c891d85b5b55bfe57
+      internalID: 34594041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_86
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 431
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55eacb1cd668e4cedbe60c511af57e2d
+      internalID: -439002020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_87
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 431
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63bb2946e5a74802a96c13c77a92e61
+      internalID: 1377774074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_88
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 399
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46efb61069abf4fcfa1ac5d9ccdefa6d
+      internalID: -178763011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_89
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 399
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cb35b9431af84784a78b58efc81ba4c
+      internalID: -1484612299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_90
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 433
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 252e0d7e715424dc78c61eaaef58707a
+      internalID: 1878161784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_91
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 441
+        width: 20
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3e7fb2f74cf94225adddfd85ca65451
+      internalID: 1248882157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_92
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 433
+        width: 22
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae84812622d5d4c6c8339f14c52fd0c5
+      internalID: 1249442432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_93
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 433
+        width: 20
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b63a4a2e343d244e3aa7f4a24e1b4d6f
+      internalID: 2059795191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_94
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 401
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a0c01ca743f6471c985d02e5a37e052
+      internalID: 2041223504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_95
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 401
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0340114399240c5a13a48798ec906f
+      internalID: -835717344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_96
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 401
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d20d9f9a0bdc4d839b1c41f6236db68
+      internalID: -224580866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_97
+      rect:
+        serializedVersion: 2
+        x: 1425
+        y: 401
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b9cdd992a6e3428a8213d674ee2d2ea
+      internalID: 1194679952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_98
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 367
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b03082019b5634aec8c2443f89d608c4
+      internalID: -1911362926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_99
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 367
+        width: 84
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1720e8fd1789742e4b9691879410927d
+      internalID: 439443713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_100
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 367
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af1012ddc24e4176b01513f825c0158
+      internalID: 1650933915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_101
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 374
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86c910415290249688efcdf2c571bf00
+      internalID: 1788123217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_102
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 374
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1389d124a27d425ea03878c78d78025
+      internalID: 2002243459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_103
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 374
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad51d57a5e0940c4a4ca97ac7ef8fd0
+      internalID: -961530934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_104
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 382
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b30ea87f288246479f67e383e9d498e
+      internalID: 1406717664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_105
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 382
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aedbfd907be2745068b37b22f8737784
+      internalID: -1875401116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_106
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f23088407de9f47998d9bae3b3d1d1da
+      internalID: 1204750578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_107
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 382
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b5f49f8bcff49f283fd5e59372f029
+      internalID: -553074843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_108
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 382
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687080c33beb14f6e991ba14f7f9162c
+      internalID: -1962015388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_109
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 382
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1674cae688414aa3b9a048d0467252a
+      internalID: -1690011648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_110
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 386
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d245e9bd934746e98ddc28e0f572b64
+      internalID: -531230996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_111
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 386
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 894501eb38c1741e6a9f040fe41bb418
+      internalID: 772042443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_112
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 386
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79ca77a9f1444d4fb531357253bebb5
+      internalID: 1611557230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_113
+      rect:
+        serializedVersion: 2
+        x: 1425
+        y: 386
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 718a49c592faf46a38aec6f6d1807f69
+      internalID: -1610884648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_114
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 367
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74f2ab507856443c4ab69929fadd7973
+      internalID: -883652601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_115
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 369
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d13b908fe09c549feae1db6defb782ed
+      internalID: 65956127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_116
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 367
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c595955289134483a02336d0a266651
+      internalID: -1663512429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_117
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 367
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82c13c8b66f354725a13b6a5031a35b1
+      internalID: 493416487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_118
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 367
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5654c243cc3b3445388c8a3296607b0f
+      internalID: -669374613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_119
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 367
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23bc639f7ea24470bba8c9d4e17bf938
+      internalID: 112339476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_120
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 367
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5e767e2f246d451ea833b6e1b7aec43
+      internalID: 1261401722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_121
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 335
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5b9436da646a43a0a5f3a9461a39455
+      internalID: -2019489842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_122
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 335
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3f8bce9690b344aab0c5f50c39b7130
+      internalID: 841367156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_123
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 369
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ed13686b050c4463b5ff4d0f4d673ab
+      internalID: 1596929251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_124
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 369
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4319ffe99e894af5a1fe1482f4b743f
+      internalID: -239567645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_125
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 369
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7a354fece6714418a979b3db771f012
+      internalID: -28480295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_126
+      rect:
+        serializedVersion: 2
+        x: 1425
+        y: 369
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dee150a3847c458e8fdcc115c242b46
+      internalID: -172152620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_127
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 286
+        width: 32
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e164f42104acd4969939685ef4618199
+      internalID: -1728564636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_128
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 286
+        width: 84
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b49a1a09cce1d419aa327018eedf6bc6
+      internalID: -1174350265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_129
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 286
+        width: 32
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b19a5260f1038454e97ae27e05e91cce
+      internalID: -1058785386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_130
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 335
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e11430e185f8e40d4ae99fa6135349d3
+      internalID: -420762293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_131
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 350
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94922b2d8791343b4bc49ae6ea57a6c7
+      internalID: -1556475625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_132
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 350
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2bc37b45d6ad4edb93444b2ff153096
+      internalID: 648222089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_133
+      rect:
+        serializedVersion: 2
+        x: 957
+        y: 350
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3b23b5178e2e4ea1bb764d795e33670
+      internalID: -48932299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_134
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 350
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03c56579545d5461da7690d74831d5ec
+      internalID: -1833319320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_135
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 350
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3624dd9bac41149b1be95197a97677d2
+      internalID: -1931612830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_136
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 352
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0a4734bde69d4f15a45bd196f24edd0
+      internalID: -1891924936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_137
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 340
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bc6c4201f65e4a13a49ad8bf8f5f93d
+      internalID: 53237423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_138
+      rect:
+        serializedVersion: 2
+        x: 1395
+        y: 340
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d19bed695d98b4bc18b7c473d19c4c3c
+      internalID: 1480542468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_139
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 320
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5babe1852aa043199dacf5f7be480a7
+      internalID: 547242909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_140
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712753e79858b4d3ba3116736d228b8d
+      internalID: 1138630539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_141
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 318
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50e6a8f1a4cdf41ddbe570bd50713290
+      internalID: -1487804273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_142
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 303
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77ad9a9d6bb1142429d3d7dd724e6563
+      internalID: -1413907672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_143
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 271
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe8b2b13bce004000b8aa22dc616bcad
+      internalID: -1623099148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_144
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 256
+        width: 40
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcab7a45174d040c482c6387e5f287e8
+      internalID: 1570933330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_145
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 258
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc7f567ac3e6b4c6380780956329ad34
+      internalID: 114589596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_146
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 266
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6026c100d9bdb4c8a9d256cb359fa900
+      internalID: -1782575334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_147
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 266
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6018051b5f91044228d1fdf8d7f3a744
+      internalID: -2105189980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_148
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 266
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b05fb91f2a2d46d78cade657a06c132
+      internalID: 1539907110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_149
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 266
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb9f1c37dbc1f4155b701dc95aca1d69
+      internalID: 1431674242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_150
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 266
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69a5d186b23884103bb838b2ab682b3b
+      internalID: 1745864608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_151
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 266
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd07cb4e23c79449f9fea2b562c3a811
+      internalID: 745613304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_152
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 266
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aac3a43da771499db08529217a4cad0
+      internalID: -614300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_153
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 276
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75a1b8b81f2b4471eb5acfb286853e22
+      internalID: 1749420180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_154
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 234
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16397ea84cd3046ab8b8adc3625a9aec
+      internalID: -1732154592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_155
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 234
+        width: 84
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 386fe7c1985c1409e987f7048ff3fc69
+      internalID: -2034420912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_156
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 234
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d289aa1b88f44099742d6cc24aa94b
+      internalID: -885673155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_157
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 209
+        width: 35
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed1da3d2d705248a4b352b1cc750eeb5
+      internalID: -1387931469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_158
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 226
+        width: 45
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59ff7e29c09a4873ab94bcf8968b113
+      internalID: 887659906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_159
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 219
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b01b8746a125d4c8d9b5c230a04a3d6e
+      internalID: 184293782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_160
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 219
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ea0fd827296d440fa7976289e12e1d5
+      internalID: 1294365691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_161
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 219
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2afea19c5d43498892bd3dcbd0e465b
+      internalID: -116652093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_162
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 219
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c6409dfdaed47e59bf19965025c3a4
+      internalID: 605361695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_163
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 219
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f0d667fea9a24298a53cb8d6e87804d
+      internalID: 1404976029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_164
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 219
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee71ee8e69c9b4b049f7aaa6bd1d1ba0
+      internalID: -1952426529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_165
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 207
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3541f94e6047348919542be2bd163249
+      internalID: -575723225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_166
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 207
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b06bc23b187ee473a983fb9cbbd672de
+      internalID: -1693525241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_167
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 194
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69477593b872e44268434453aef5c82e
+      internalID: 1434942785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_168
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 194
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d3c9148e99e403095445424a570834
+      internalID: 2023573269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_169
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 202
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c996f2a7488e47fcbccc4f48d7d15cd
+      internalID: 597437155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_170
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 202
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1258b3f030406482fbdd8558c7665edc
+      internalID: -1422660311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_171
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 192
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588e8c57221f24566abb1269c7e69009
+      internalID: 476624977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_172
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09617fe28a0854601b7546a114388aae
+      internalID: -107972908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_173
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 160
+        width: 40
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 776f4d08e858b4ea996e370734f89b12
+      internalID: 1390817083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_174
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99061f649a0674c67b6561221092fc7a
+      internalID: -2071134898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_175
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 192
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0c71cc6f1cd7452c885aa3ae725a8b5
+      internalID: 902295633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_176
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 143
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be81ea88f234841bc90650934e4dea37
+      internalID: -471797816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_177
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 180
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d00ae5addc744481dbd9022d8a7642b6
+      internalID: 773769021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_178
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58ff21a23cf7548ed83b361e5b435539
+      internalID: -1379402978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_179
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 145
+        width: 56
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7467e95e28c9940cebb88fa4a0837bfe
+      internalID: 1151343413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_180
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 145
+        width: 57
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53d76953666d74f8d88e0c603f8f2dc8
+      internalID: -277999139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_181
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 145
+        width: 57
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9e4d6892e6394beb9f56beced6d208d
+      internalID: -8073942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_182
+      rect:
+        serializedVersion: 2
+        x: 947
+        y: 145
+        width: 57
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bc1347368c3c4ed4a3c0aba68ed5bf3
+      internalID: 920596591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_183
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 143
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7a918bf39244f7e98fdda4e18f3e89
+      internalID: -518315727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_184
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 113
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b770815a99ba4a6b9d47368000a1698
+      internalID: 261715364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_185
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 145
+        width: 56
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dcd45706c6bb4f449849600fe3aaa2f
+      internalID: -1624416429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoxAndIcons_186
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 145
+        width: 56
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a94ec783b21004118b0733ef50e0be17
+      internalID: 830830204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      BoxAndIcons_0: -752553270
+      BoxAndIcons_1: 600920098
+      BoxAndIcons_10: 403705263
+      BoxAndIcons_100: 1650933915
+      BoxAndIcons_101: 1788123217
+      BoxAndIcons_102: 2002243459
+      BoxAndIcons_103: -961530934
+      BoxAndIcons_104: 1406717664
+      BoxAndIcons_105: -1875401116
+      BoxAndIcons_106: 1204750578
+      BoxAndIcons_107: -553074843
+      BoxAndIcons_108: -1962015388
+      BoxAndIcons_109: -1690011648
+      BoxAndIcons_11: 1168233357
+      BoxAndIcons_110: -531230996
+      BoxAndIcons_111: 772042443
+      BoxAndIcons_112: 1611557230
+      BoxAndIcons_113: -1610884648
+      BoxAndIcons_114: -883652601
+      BoxAndIcons_115: 65956127
+      BoxAndIcons_116: -1663512429
+      BoxAndIcons_117: 493416487
+      BoxAndIcons_118: -669374613
+      BoxAndIcons_119: 112339476
+      BoxAndIcons_12: -903326412
+      BoxAndIcons_120: 1261401722
+      BoxAndIcons_121: -2019489842
+      BoxAndIcons_122: 841367156
+      BoxAndIcons_123: 1596929251
+      BoxAndIcons_124: -239567645
+      BoxAndIcons_125: -28480295
+      BoxAndIcons_126: -172152620
+      BoxAndIcons_127: -1728564636
+      BoxAndIcons_128: -1174350265
+      BoxAndIcons_129: -1058785386
+      BoxAndIcons_13: 760650645
+      BoxAndIcons_130: -420762293
+      BoxAndIcons_131: -1556475625
+      BoxAndIcons_132: 648222089
+      BoxAndIcons_133: -48932299
+      BoxAndIcons_134: -1833319320
+      BoxAndIcons_135: -1931612830
+      BoxAndIcons_136: -1891924936
+      BoxAndIcons_137: 53237423
+      BoxAndIcons_138: 1480542468
+      BoxAndIcons_139: 547242909
+      BoxAndIcons_14: -1903927607
+      BoxAndIcons_140: 1138630539
+      BoxAndIcons_141: -1487804273
+      BoxAndIcons_142: -1413907672
+      BoxAndIcons_143: -1623099148
+      BoxAndIcons_144: 1570933330
+      BoxAndIcons_145: 114589596
+      BoxAndIcons_146: -1782575334
+      BoxAndIcons_147: -2105189980
+      BoxAndIcons_148: 1539907110
+      BoxAndIcons_149: 1431674242
+      BoxAndIcons_15: 529713974
+      BoxAndIcons_150: 1745864608
+      BoxAndIcons_151: 745613304
+      BoxAndIcons_152: -614300042
+      BoxAndIcons_153: 1749420180
+      BoxAndIcons_154: -1732154592
+      BoxAndIcons_155: -2034420912
+      BoxAndIcons_156: -885673155
+      BoxAndIcons_157: -1387931469
+      BoxAndIcons_158: 887659906
+      BoxAndIcons_159: 184293782
+      BoxAndIcons_16: -376440361
+      BoxAndIcons_160: 1294365691
+      BoxAndIcons_161: -116652093
+      BoxAndIcons_162: 605361695
+      BoxAndIcons_163: 1404976029
+      BoxAndIcons_164: -1952426529
+      BoxAndIcons_165: -575723225
+      BoxAndIcons_166: -1693525241
+      BoxAndIcons_167: 1434942785
+      BoxAndIcons_168: 2023573269
+      BoxAndIcons_169: 597437155
+      BoxAndIcons_17: 1886605202
+      BoxAndIcons_170: -1422660311
+      BoxAndIcons_171: 476624977
+      BoxAndIcons_172: -107972908
+      BoxAndIcons_173: 1390817083
+      BoxAndIcons_174: -2071134898
+      BoxAndIcons_175: 902295633
+      BoxAndIcons_176: -471797816
+      BoxAndIcons_177: 773769021
+      BoxAndIcons_178: -1379402978
+      BoxAndIcons_179: 1151343413
+      BoxAndIcons_18: -912629581
+      BoxAndIcons_180: -277999139
+      BoxAndIcons_181: -8073942
+      BoxAndIcons_182: 920596591
+      BoxAndIcons_183: -518315727
+      BoxAndIcons_184: 261715364
+      BoxAndIcons_185: -1624416429
+      BoxAndIcons_186: 830830204
+      BoxAndIcons_19: -470893192
+      BoxAndIcons_2: -96404368
+      BoxAndIcons_20: -784284635
+      BoxAndIcons_21: 153102493
+      BoxAndIcons_22: -1292380857
+      BoxAndIcons_23: 215498462
+      BoxAndIcons_24: -1897445486
+      BoxAndIcons_25: -1675635676
+      BoxAndIcons_26: -1105090666
+      BoxAndIcons_27: -569784123
+      BoxAndIcons_28: 1144740591
+      BoxAndIcons_29: -80398543
+      BoxAndIcons_3: 1270838765
+      BoxAndIcons_30: 1715924098
+      BoxAndIcons_31: 937897489
+      BoxAndIcons_32: 736453171
+      BoxAndIcons_33: -135084265
+      BoxAndIcons_34: -1270846162
+      BoxAndIcons_35: 1581582205
+      BoxAndIcons_36: 368047127
+      BoxAndIcons_37: 1026223933
+      BoxAndIcons_38: -1568183457
+      BoxAndIcons_39: 1409152264
+      BoxAndIcons_4: 1396103055
+      BoxAndIcons_40: -1024123209
+      BoxAndIcons_41: -1442823063
+      BoxAndIcons_42: 471316663
+      BoxAndIcons_43: 516378307
+      BoxAndIcons_44: -2062833352
+      BoxAndIcons_45: 539820756
+      BoxAndIcons_46: 1116791391
+      BoxAndIcons_47: -654632934
+      BoxAndIcons_48: -1424582190
+      BoxAndIcons_49: 386972367
+      BoxAndIcons_5: -1000603519
+      BoxAndIcons_50: -704144268
+      BoxAndIcons_51: -1032671884
+      BoxAndIcons_52: -984876839
+      BoxAndIcons_53: -1643939617
+      BoxAndIcons_54: -2117324968
+      BoxAndIcons_55: 1086775422
+      BoxAndIcons_56: -716348969
+      BoxAndIcons_57: -422191831
+      BoxAndIcons_58: 2085044060
+      BoxAndIcons_59: 363863222
+      BoxAndIcons_6: -54291399
+      BoxAndIcons_60: 337957656
+      BoxAndIcons_61: 2000305369
+      BoxAndIcons_62: 1383880256
+      BoxAndIcons_63: 453631143
+      BoxAndIcons_64: -1739458778
+      BoxAndIcons_65: 565173863
+      BoxAndIcons_66: 1958689574
+      BoxAndIcons_67: -1349154797
+      BoxAndIcons_68: 974898667
+      BoxAndIcons_69: -768252208
+      BoxAndIcons_7: -852310598
+      BoxAndIcons_70: -1786928157
+      BoxAndIcons_71: -1652286644
+      BoxAndIcons_72: 1474766243
+      BoxAndIcons_73: -1984964350
+      BoxAndIcons_74: 1062062760
+      BoxAndIcons_75: 1938181725
+      BoxAndIcons_76: 87562566
+      BoxAndIcons_77: 340819742
+      BoxAndIcons_78: -1766830609
+      BoxAndIcons_79: -1136419218
+      BoxAndIcons_8: -1616326710
+      BoxAndIcons_80: -1927592922
+      BoxAndIcons_81: 999242366
+      BoxAndIcons_82: -795913281
+      BoxAndIcons_83: -1181938844
+      BoxAndIcons_84: -618993379
+      BoxAndIcons_85: 34594041
+      BoxAndIcons_86: -439002020
+      BoxAndIcons_87: 1377774074
+      BoxAndIcons_88: -178763011
+      BoxAndIcons_89: -1484612299
+      BoxAndIcons_9: 1225683741
+      BoxAndIcons_90: 1878161784
+      BoxAndIcons_91: 1248882157
+      BoxAndIcons_92: 1249442432
+      BoxAndIcons_93: 2059795191
+      BoxAndIcons_94: 2041223504
+      BoxAndIcons_95: -835717344
+      BoxAndIcons_96: -224580866
+      BoxAndIcons_97: 1194679952
+      BoxAndIcons_98: -1911362926
+      BoxAndIcons_99: 439443713
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
