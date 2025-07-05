@@ -9,6 +9,8 @@ namespace InGameShop
     {
         [Header("Enchant Type")]
         public CardEnchant enchantType;
+
+        public CardEnchantSO enchantSo;
         public Sprite enchantSprite;
         
         [Header("Target Card Num")]

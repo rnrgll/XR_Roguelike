@@ -1,6 +1,7 @@
 using CardEnum;
 using DesignPattern;
 using InGameShop;
+using Managers;
 using System;
 using TMPro;
 using UnityEngine;
@@ -36,6 +37,8 @@ namespace TopBarUI
             {
                 enchantImg.enabled = true;
                 //todo:인챈트에 따른 이미지 적용하기
+                enchantImg.sprite = (Manager.Data.GameItemDB.EnchantDB[minor.Enchant.enchantInfo] as EnchantItem)
+                    .enchantSprite;
                 enchantEffect = minor.Enchant.enchantInfo.ToString();
             }
             

@@ -43,10 +43,10 @@ namespace Event
            
             if (isPotion)
                 //potion 타입만 뽑기
-                newItems = Manager.Data.ItemDB.PickRandomPotionItems(Value);
+                newItems = Manager.Data.GameItemDB.PickRandomPotionItems(Value);
             else
                 //아이템 Value개 뽑기
-                newItems = Manager.Data.ItemDB.PickUniqeItemRandomByType(Value, ItemType.Item);
+                newItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Item);
             
             //인벤토리에 추가
             for (int i = 0; i < newItems.Count; i++)

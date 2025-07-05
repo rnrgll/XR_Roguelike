@@ -1,4 +1,5 @@
 using DesignPattern;
+using Item;
 using Managers;
 using System;
 using System.Collections;
@@ -21,15 +22,13 @@ namespace InGameShop
         public void Reroll()
         {
             //가중치 기반으로 랜덤으로 아이템을 가져온다.
-            var newItems = Manager.Data.ItemDB.PickUniqeItemRandomByType(4);
+            var newItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(4);
             _model.SetItems(newItems);
             
         }
 
-        public void Purchase(string itemID)
+        public void Purchase(GameItem item)
         {
-            var item = Manager.Data.ItemDB.GetItemById(itemID);
-            
             if (GameStateManager.Instance.Gold < item.price)
                 return;
 
@@ -37,19 +36,22 @@ namespace InGameShop
 
             if (item is InventoryItem)
             {
-                Manager.GameState.AddItem(itemID);
+                Manager.GameState.AddItem(item.id);
                 Debug.Log("item is game Item");
+                Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
             }
 
             else
             {
-                Manager.GameState.AddCardItem(itemID);
+                
+                Manager.GameState.AddCardItem(item as EnchantItem);
+                EnchantItem enchantItem = item as EnchantItem;
                 Debug.Log("item is card item");
+                Debug.Log($"덱에 {enchantItem.enchantType} - {item.name} {enchantItem.Suit} {enchantItem.CardNum} 이 추가됩니다.");
             }
             
-            
             Debug.Log($"현재 보유 재화 : {GameStateManager.Instance.Gold}");
-            Debug.Log($"인덴토리에 {item.id} - {item.name} 이 추가됩니다.");
+        
             //popup 닫고, 비활성화 처리하기
             
         }

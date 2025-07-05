@@ -26,6 +26,7 @@ namespace InGameShop
         {
             //todo: itemDB 초기화 및 데이터 셋팅 수정 필요
             ItemDB = new();
+            EnchantDB = new();
             //LoadItemData(ItemType.Item, "TestItemData.csv");
             //LoadItemData(ItemType.Card, "TestCardItemData.csv");
 
@@ -131,17 +132,28 @@ namespace InGameShop
             // 2. 셔플
             Shuffle(enchantables); 
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && results.Count<count; i++)
             {
                 var card = enchantables[i];
-
+                
+                
                 // 3. 랜덤한 EnchantType 선택 (1~7 사이)
                 int random = UnityEngine.Random.Range(1, 8);
                 var enchantType = (CardEnchant)random;
+                
+                //4. enchant type의 target 범위에 들어가는지 체크
+                EnchantItem origin = EnchantDB[enchantType] as EnchantItem;
+                if(enchantables[i].CardNum > origin.maxTargetNum || enchantables[i].CardNum < origin.minTargetNum) continue; //타겟 범위 아님
 
-                EnchantItem enchantItem = ScriptableObject.Instantiate(EnchantDB[enchantType]) as EnchantItem;
+                
+                //타겟 범위인 경우
+                EnchantItem enchantItem = ScriptableObject.Instantiate(origin);
                 enchantItem.SetData(card.CardSuit, card.CardNum);
                 
+                string cNum = card.CardNum < 10 ? $"0" + card.CardNum : card.CardNum.ToString();
+                string cName = $"ArcanaTest/{card.CardSuit}{cNum}";
+                var sprite = Resources.Load<Sprite>(cName);
+                enchantItem.sprite = sprite;
                 
                 results.Add(enchantItem);
             }

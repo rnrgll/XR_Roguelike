@@ -54,7 +54,7 @@ namespace TopBarUI
             
             //마이너 아르카나
             if(_cardController.DeckPile==null) return;
-            var minorArcanaList = _cardController.DeckPile.GetCardList();
+            var minorArcanaList = _cardController.Deck.GetAllCards();
             foreach (var minor in minorArcanaList)
             {
                 CardVeiw card = _cardPool.PopPool() as CardVeiw;
@@ -70,16 +70,6 @@ namespace TopBarUI
             {
                 CardVeiw card = _cardPool.PopPool() as CardVeiw;
                 card.SetData(major);
-                card.transform.SetParent(_gridContainer);
-                card.transform.SetAsLastSibling();
-            }
-            
-            //카드 아이템
-            foreach (string cardId in Manager.GameState.CardInventory)
-            {
-                var itemData = Manager.Data.ItemDB.GetItemById(cardId) as EnchantItem;
-                CardVeiw card = _cardPool.PopPool() as CardVeiw;
-                card.SetData(itemData);
                 card.transform.SetParent(_gridContainer);
                 card.transform.SetAsLastSibling();
             }

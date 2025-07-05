@@ -20,9 +20,10 @@ MonoBehaviour:
     \uD68D\uB4DD\uD558\uACE0, \uD134 \uC885\uB8CC \uC2DC \uB0A8\uC740 \uD578\uB4DC\uB97C
     \uC804\uBD80 \uBC84\uB9B0\uB2E4"
   price: 90
-  sprite: {fileID: 0}
+  sprite: {fileID: 3163464341699602868, guid: 5fa619387b31647b284537421a245d40, type: 3}
   weight: 1
   type: 2
+  isPotion: 0
   effectGroups:
   - chance: 1
     effects:

@@ -13,7 +13,7 @@ namespace Event
         public override void ApplyEffect()
         {
             base.ApplyEffect();
-            List<GameItem> cardItems = Manager.Data.ItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
+            List<GameItem> cardItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
 
             //todo:나중에 할꺼임
             // foreach (string cardItem in cardItems)

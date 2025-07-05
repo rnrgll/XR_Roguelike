@@ -18,9 +18,10 @@ MonoBehaviour:
   name: "\uCC9C\uC0AC\uC758 \uAE43\uD138"
   description: "1\uD134 \uB3D9\uC548 \uBB34\uC801"
   price: 150
-  sprite: {fileID: 0}
+  sprite: {fileID: 3163464341699602868, guid: 5fa619387b31647b284537421a245d40, type: 3}
   weight: 1
   type: 2
+  isPotion: 0
   effectGroups:
   - chance: 1
     effects:

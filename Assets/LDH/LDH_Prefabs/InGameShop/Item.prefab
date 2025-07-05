@@ -192,6 +192,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Button
       objectReference: {fileID: 0}
+    - target: {fileID: 7898167504520606754, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898167504520606754, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898167504520606754, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9106723205197593268, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -273,7 +285,8 @@ PrefabInstance:
       value: -12.977
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8436152370441962832, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}

@@ -40,7 +40,7 @@ namespace Item
 
         public void UseItem(string itemID)
         {
-            InventoryItem item = Manager.Data.ItemDB.GetItemById(itemID) as InventoryItem;
+            InventoryItem item = Manager.Data.GameItemDB.GetItemById(itemID) as InventoryItem;
             
             //아이템 인벤토리에서 제거
             Manager.GameState.RemoveItem(itemID);

@@ -73,7 +73,7 @@ namespace TopBarUI
             }
             else
             {
-                GameItem item = Manager.Data.ItemDB.GetItemById(this.itemId);
+                GameItem item = Manager.Data.GameItemDB.GetItemById(this.itemId);
                 _itemImage.sprite = item.sprite;
             }
         }

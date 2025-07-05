@@ -1,3 +1,4 @@
+using Item;
 using Managers;
 using System;
 using System.Collections.Generic;
@@ -60,14 +61,14 @@ namespace InGameShop
             }
         }
         
-        public void Purchase(int slotIndex, string itemId)
+        public void Purchase(int slotIndex)
         {
             var button = itemButtons.Find(button => button.slotIndex == slotIndex);
             
             button?.ReturnToOrigin();
             button?.transform.parent.gameObject.SetActive(false);
             
-            controller.Purchase(itemId);
+            controller.Purchase(model.shopSlots[slotIndex].Value);
         }
 
         public void Reroll()
@@ -80,7 +81,7 @@ namespace InGameShop
             controller.Reroll();
         }
         
-        public string GetItemId(int slotIndex) => model.GetItemID(slotIndex);
+        public GameItem GetItem(int slotIndex) => model.GetItem(slotIndex);
         
         //나가기 
         public void ExitShop()

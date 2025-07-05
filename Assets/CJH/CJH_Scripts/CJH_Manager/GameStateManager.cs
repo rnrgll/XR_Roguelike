@@ -1,4 +1,5 @@
 using InGameShop;
+using Item;
 using Managers;
 using System;
 using System.Collections;
@@ -20,12 +21,9 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     #region Inventory 변수, 프로퍼티
 
     private readonly List<string> _itemInventory = new();
-    private readonly List<string> _cardInventory = new(); // 카드용
     public IReadOnlyList<string> ItemInventory => _itemInventory;
-    public IReadOnlyList<string> CardInventory => _cardInventory;
     public int CurrentItemCount => _itemInventory.Count(id => !string.IsNullOrEmpty(id));
-    public int CurrentCardItemCount => _itemInventory.Count;
-
+    
 
     private const int maxItemInventorySize = 3;
     public int MaxItemInventorySize => maxItemInventorySize;
@@ -40,7 +38,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     // 이벤트 추가
     public UnityEvent<int> OnGoldChanged = new();
     public UnityEvent<string> OnItemChanged = new();
-    public UnityEvent<string> OnCardItemChanged = new();
+    public UnityEvent<EnchantItem> OnGetEnchantItem = new();
 
     private void Awake()
     {
@@ -52,7 +50,6 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public void Init()
     {
         _itemInventory.Clear();
-        _cardInventory.Clear();
 
         for (int i = 0; i < MaxItemInventorySize; i++)
             _itemInventory.Add(String.Empty);
@@ -76,16 +73,6 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     public void AddItem(string itemID)
     {
-        //인벤토리 슬롯이 꽉 차있는지 확인
-        // if (CurrentItemCount == 3)
-        // {
-        //     //아이템 제거하도록 처리
-        //     Manager.UI.ItemRemoveUI.InitPanel(
-        //         
-        //         () => AddItem(itemID));
-        //     Manager.UI.SetUIActive(GlobalUI.ItemRemove, true);
-        //     return;
-        // }
         
         int idx = _itemInventory.FindIndex(id => string.IsNullOrEmpty(id));
         if (idx != -1)
@@ -100,11 +87,14 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         }
     }
 
-    public void AddCardItem(string cardId)
+    public void AddCardItem(EnchantItem enchantItem)
     {
-        Debug.Log(cardId);
-        _cardInventory.Add(cardId);
-        OnCardItemChanged?.Invoke(cardId);
+        CardDeck cardDeck = TurnManager.Instance.GetPlayerController().GetCardController().Deck;
+        MinorArcana card = cardDeck.GetEnchantableCard().FirstOrDefault(card =>
+            card.CardSuit == enchantItem.Suit && card.CardNum == enchantItem.CardNum);
+        cardDeck.Enchant(card, enchantItem.enchantSo);
+        
+        OnGetEnchantItem?.Invoke(enchantItem);
     }
     public void RemoveItem(string itemID)
     {
@@ -114,13 +104,6 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
             _itemInventory[idx] = string.Empty;
             OnItemChanged?.Invoke(itemID);
         }
-    }
-
-    public void RemoveCardItem(string cardId)
-    {
-        int idx = _cardInventory.FindIndex(id => id == cardId);
-        _cardInventory.RemoveAt(idx);
-        OnCardItemChanged?.Invoke(cardId);
     }
 
     #endregion
