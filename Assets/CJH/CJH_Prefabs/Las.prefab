@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 443434461940535900}
   - component: {fileID: 135135785232663810}
-  - component: {fileID: 7353443691865846716}
   m_Layer: 0
   m_Name: Las
   m_TagString: Untagged
@@ -85,24 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7353443691865846716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113776486796595827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d0e88cddb927649826776ce8a9dadd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 1000
-  type: 0
-  attackPatterns:
-  - name: "\uC77C\uBC18\uACF5\uACA9"
-    type: 0
-    damageRate: 0.1
-    description: 
-    triggerTurn: 0
-    triggerHpRate: 0
