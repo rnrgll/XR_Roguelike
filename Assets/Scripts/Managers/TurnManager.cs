@@ -164,4 +164,20 @@ public class TurnManager : Singleton<TurnManager>
         Debug.Log("보상 선택 완료 → 맵 씬으로 복귀");
         Manager.Map.ShowMap();
     }
+
+
+    /// <summary>
+    /// TurnManager의 모든 상태를 초기화합니다.
+    /// </summary>
+    public void ResetState()
+    {
+        player = null;
+        enemies.Clear();
+        currentEnemy = null;
+        battleStarted = false;
+        isGameEnded = false;
+        isFinal = false;
+
+        Debug.Log("[TurnManager] 상태 초기화 완료");
+    }
 }

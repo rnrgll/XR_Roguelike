@@ -23,10 +23,6 @@ public class BattleManager : MonoBehaviour
         float ratio = TurnManager.Instance.GetPlayerController().GetCardController().GetCardBonus(CardBonus.Ratio);
         int finalDamage = Mathf.RoundToInt((baseDamage * multiplier + bonus) * ratio);
 
-
-        GameStatusUI.Instance.SetComboInfo(combo.ToString(), multiplier);
-
-
         // 기본 데미지 적용
         target.ApplyDamage(finalDamage);
 
