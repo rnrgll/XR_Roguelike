@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
 
         GameStatusUI.Instance.AddDamage(baseDamage);
         Debug.Log($"[{combo}] → {target.name}에게 {finalDamage}의 피해!");
+        GameStatusUI.Instance.AddDamage(finalDamage);
 
         return finalDamage;
     }
