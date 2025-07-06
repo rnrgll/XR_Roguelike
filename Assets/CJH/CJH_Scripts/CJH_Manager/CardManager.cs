@@ -1,14 +1,13 @@
 using CardEnum;
+using DesignPattern;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardManager : MonoBehaviour
+public class CardManager : Singleton<CardManager>
 {
-    public static CardManager Instance;
-
     private List<MinorArcana> selectedCards = new List<MinorArcana>();
 
     public event Action<List<MinorArcana>> OnMinorArcanaAttack;
@@ -17,8 +16,7 @@ public class CardManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        SingletonInit();
     }
 
     public void ShootCard(MinorArcana card)

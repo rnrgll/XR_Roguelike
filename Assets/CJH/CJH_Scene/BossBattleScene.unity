@@ -122,17 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &11973236 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4687377856476261407, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
-  m_PrefabInstance: {fileID: 1864258559}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6753dcbc66c0ddb49b4ee4f0c4d60502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &15986804
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,9 +152,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1195877377}
+  playerPrefab: {fileID: 0}
   lasMonsterPrefab: {fileID: 8418062639792227227, guid: de0361b5d2215b34ea09d68e54585421, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
   prideMonsterPrefab: {fileID: 0}
+  CardHandUIPrefab: {fileID: 0}
+  gridMonsterPrefab: {fileID: 0}
+  slothMonsterPrefab: {fileID: 0}
+  lustMonsterPrefab: {fileID: 0}
+  gluttonMonsterPrefab: {fileID: 0}
 --- !u!4 &15986806
 Transform:
   m_ObjectHideFlags: 0
@@ -400,50 +395,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262834887}
   m_CullTransparentMesh: 1
---- !u!1 &316884212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 316884214}
-  - component: {fileID: 316884213}
-  m_Layer: 0
-  m_Name: CardManger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &316884213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316884212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7639cc4101cbb488543964c7756235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &316884214
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316884212}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1368.2611, y: 1241.9584, z: -21.351315}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &369023171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,9 +1379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterHPText: {fileID: 0}
   accumulatedDamageText: {fileID: 0}
-  comboText: {fileID: 0}
-  multiplierText: {fileID: 0}
-  stageLabel: {fileID: 0}
 --- !u!114 &1276296884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2380,7 +2328,7 @@ PrefabInstance:
     - target: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
       propertyPath: cardController
       value: 
-      objectReference: {fileID: 11973236}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2396,7 +2344,6 @@ SceneRoots:
   - {fileID: 994806537}
   - {fileID: 669790709}
   - {fileID: 15986806}
-  - {fileID: 316884214}
   - {fileID: 1276296887}
   - {fileID: 1012965815}
   - {fileID: 1733179623}
