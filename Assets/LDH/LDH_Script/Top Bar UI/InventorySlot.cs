@@ -108,7 +108,7 @@ namespace TopBarUI
         private void UseItem()
         {
             if (string.IsNullOrEmpty(itemId)) return;
-            ItemManager.Instance.UseItem(itemId);
+            ItemManager.Instance.UseItem(itemId, slotIndex);
         }
         
         

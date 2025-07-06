@@ -38,12 +38,12 @@ namespace Item
                 _inventorySlots.Add(slot);
         }
 
-        public void UseItem(string itemID)
+        public void UseItem(string itemID, int slotIdx)
         {
             InventoryItem item = Manager.Data.GameItemDB.GetItemById(itemID) as InventoryItem;
             
             //아이템 인벤토리에서 제거
-            Manager.GameState.RemoveItem(itemID);
+            Manager.GameState.RemoveItem(itemID, slotIdx);
             
             
             if (item.effectGroups == null || item.effectGroups.Count == 0) return;

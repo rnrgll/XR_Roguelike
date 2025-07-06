@@ -102,7 +102,7 @@ namespace UI
         {
             foreach (var index in selectedIndices)
             {
-                Manager.GameState.RemoveItem(Manager.GameState.ItemInventory[index]);
+                Manager.GameState.RemoveItem(Manager.GameState.ItemInventory[index], index);
             }
 
             Manager.UI.SetUIActive(GlobalUI.ItemRemove, false);
