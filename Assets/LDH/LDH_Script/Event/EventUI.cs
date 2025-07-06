@@ -17,6 +17,7 @@ namespace Event
         [SerializeField] private List<Button> eventOptions;
         [SerializeField] private GameObject resultPanel;
         [SerializeField] private TMP_Text rewardText;
+        [SerializeField] private Button rewardConfirmButton;
         
 
         private void OnDestroy()
@@ -29,7 +30,14 @@ namespace Event
 
         public void UpdateUI(GameEvent gameEvent)
         {
-            eventTitle.text = gameEvent.EventName;
+            if (gameEvent.EventName.Contains('('))
+            {
+                int index = gameEvent.EventName.IndexOf('(');
+                string line1 = gameEvent.EventName.Substring(0, index);         // 괄호 이전
+                string line2 = gameEvent.EventName.Substring(index);            // 괄호 포함 이후
+                eventTitle.text  = line1 + "\n" + line2;
+            }
+            
             eventText.text = gameEvent.EventText;
             eventImage.sprite = gameEvent.EventImage;
             SetOptions(gameEvent.Options);
@@ -53,15 +61,16 @@ namespace Event
                 // Debug.Log(subEffects==null);
                 eventOptions[i].onClick.AddListener(() =>
                 {
-                    rewardEffect.ApplyEffects();
+                    rewardConfirmButton.onClick.AddListener(() =>
+                    {
+                        rewardEffect.ApplyEffects();
+                        resultPanel.SetActive(false);
+                        Manager.Map.ShowMap();
+                    });
                     rewardText.text = string.Join("\n", mainReward.ResultText.Split(',').Select(s => s.Trim()));
                     resultPanel.SetActive(true);
                 });
             }
         }
-
-
-
-
     }
 }
