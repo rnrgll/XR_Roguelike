@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.SceneManagement;
 
 namespace Dialogue
 {
@@ -22,7 +23,11 @@ namespace Dialogue
         private Coroutine typingCoroutine = null;
         private DialogueContainer currentContainer;
 
-        
+        private void Start()
+        {
+           PlayDialogue(Manager.Dialogue.DialogueData.lines);
+        }
+
         public void PlayDialogue(List<DialogueLine> lines)
         {
             Clear();
@@ -63,7 +68,7 @@ namespace Dialogue
             Vector2? moveTo = from == to ? null : to.portraitOriginAnchorPos;
 
             typingCoroutine = from.Show(
-                speaker.speakerName,
+                speaker,
                 sprite,
                 line.dialogueText,
                 moveTo
@@ -132,6 +137,8 @@ namespace Dialogue
             Clear();
             Manager.Dialogue.ClearDialogueData();
             _rootUI.SetActive(false);
+            SceneManager.UnloadSceneAsync("Dialogue");
+
             OnEndDialogue?.Invoke();
         }
 

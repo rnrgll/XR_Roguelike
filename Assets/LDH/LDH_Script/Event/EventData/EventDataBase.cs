@@ -106,7 +106,6 @@ namespace Event
         {
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
-            Debug.Log(table.Table[1,2]);
             
             for (int r = 1; r < rowCnt; r++)
             {
@@ -164,7 +163,6 @@ namespace Event
                             SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
                             SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
                         };
-                        
                             
                         subEffects.Add(subEffect);
                     }

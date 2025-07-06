@@ -13,7 +13,8 @@ namespace Dialogue
         [Header("UI Elements")] public Image portrait;
         public TMP_Text nameText;
         public TMP_Text dialogueText;
-
+        public Image dialogueBox;
+        
         [Header("Animation Control")] [Range(0f, 2f)] [SerializeField]
         private float moveDuration = 0.5f;
 
@@ -46,9 +47,9 @@ namespace Dialogue
 
         #region 대사 출력
 
-        public Coroutine Show(string speakerName, Sprite portraitSprite, string text, Vector2? moveTo = null)
+        public Coroutine Show(Speaker speaker, Sprite portraitSprite, string text, Vector2? moveTo = null)
         {
-            UpdateData(speakerName, portraitSprite);
+            UpdateUI(speaker.speakerName, portraitSprite, speaker.textColor, speaker.textBoxColor);
             ActiveUI();
 
             // 이동이 필요한 경우만 애니메이션
@@ -63,11 +64,21 @@ namespace Dialogue
         }
 
 
-        private void UpdateData(string speakerName, Sprite portraitSprite)
+        private void UpdateUI(string speakerName, Sprite portraitSprite, Color32 textColor, Color32 textBoxColor)
         {
             nameText.text = speakerName;
-            portrait.sprite = portraitSprite;
+            if (portraitSprite == null ||  portraitSprite.texture == null )
+                portrait.gameObject.SetActive(false);
+            else
+            {
+                portrait.sprite = portraitSprite;
+                portrait.enabled = true;
+            }
+            
             dialogueText.text = "";
+
+            dialogueText.color = textColor;
+            dialogueBox.color = textBoxColor;
         }
 
 
@@ -86,28 +97,15 @@ namespace Dialogue
 
         private IEnumerator TypeText(string text, float typingSpeed)
         {
+            text = text.Replace("\\n", "\n");
             dialogueText.text = "";
             string current = "";
-            bool insideTag = false;
-
             for (int i = 0; i < text.Length; i++)
             {
-                char c = text[i];
-                if (c == '<')
-                    insideTag = true;
-                current += c;
+                current += text[i];
+                dialogueText.text = current;
 
-                if (c == '>')
-                {
-                    insideTag = false;
-                    continue;
-                }
-
-                if (!insideTag)
-                {
-                    dialogueText.text = current;
-                    yield return new WaitForSeconds(typingSpeed);
-                }
+                yield return new WaitForSeconds(typingSpeed);
             }
 
             OnTypingEnd?.Invoke();

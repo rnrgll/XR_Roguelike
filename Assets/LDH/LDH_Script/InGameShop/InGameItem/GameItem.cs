@@ -9,7 +9,7 @@ namespace Item
         public InGameShop.ItemType itemType;
         
         public string id;
-        public string name;
+        public string itemName;
         [TextArea(1,3)]public string description;
         public int price;
         public Sprite sprite;

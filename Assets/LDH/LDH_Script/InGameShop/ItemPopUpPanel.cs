@@ -30,7 +30,7 @@ namespace InGameShop
 
         private void UpdateUI(GameItem itemData)
         {
-            _itemInfo.text = $"{itemData.name}\n{itemData.description}";
+            _itemInfo.text = $"{itemData.itemName}\n{itemData.description}";
 
             _itemPrice.text = itemData.price.ToString();
            

@@ -159,5 +159,18 @@ namespace Event
         ObtainEnhancedCard,
         ResourceLoss,
     }
-    
+
+    namespace Dialogue
+    {
+        public enum DialogueType
+        {
+            Prologue,
+            BeforeBoss,
+            AfterBoss,
+            Ending,
+            FirstInGameShop,
+            InGameShop,
+            
+        }
+    }
 }

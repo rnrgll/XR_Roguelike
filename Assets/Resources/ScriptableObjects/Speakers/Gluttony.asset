@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2adf683e75d54696b9de3542a1c629e6, type: 3}
-  m_Name: Alice
+  m_Name: Gluttony
   m_EditorClassIdentifier: 
-  speakerName: Alice
+  speakerName: "\uAE00\uB7EC\uD2B8\uB2C8"
+  textColor:
+    serializedVersion: 2
+    rgba: 4283478016
+  textBoxColor:
+    serializedVersion: 2
+    rgba: 4278785024
   portraits:
-  - key: Idle
-    sprite: {fileID: 21300000, guid: fa81749307c64486191d5e2b4002e63a, type: 3}
-  - key: Smile
-    sprite: {fileID: 21300000, guid: b2cb6765dd3b440adb60a06584e0c646, type: 3}
+  - key: None
+    sprite: {fileID: 0}

@@ -4,25 +4,33 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Dialogue;
+using Event.Dialogue;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
     public class DialogueManager : Singleton<DialogueManager>
     {
         private void Awake() => SingletonInit();
-        
+        public Action OnLoadDialogue;
         public DialougeData DialogueData { get; private set; } = new();
-        
+
+
+        private void Start()
+        {
+            OnLoadDialogue += LoadDialogueScene;
+        }
+
         /// <summary>
         /// 확장자 포함한 파일 이름 (ex. IntroDialogue.csv)
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="splitSymol"></param>
         /// <returns></returns>
-        public bool LoadDialogueData(string fileName, char splitSymol = ',')
+        private bool LoadDialogueData(string fileName)
         {
             //1. CSV 테이블 생성
-            CsvTable table = new CsvTable($"Data/Dialogue/{fileName}", splitSymol);
+            CsvTable table = new CsvTable($"Data/Dialogue/{fileName}");
             
             //2. Reader로 파일 읽기
             CsvReader.Read(table);
@@ -33,6 +41,7 @@ namespace Managers
             
             Debug.Log($"{DialogueData.dialogueID} file 읽어오기 성공");
             
+            OnLoadDialogue?.Invoke();
             //파싱 완료
             return true;
         }
@@ -71,6 +80,25 @@ namespace Managers
             DialogueData.dialogueID = string.Empty;
             DialogueData.lines?.Clear(); // 리스트 클리어
             DialogueData.lines = null;   // 참조 해제
+        }
+
+
+
+        public void PlayDialogue(DialogueType dialogueType)
+        {
+            string fileName = dialogueType switch
+            {
+                DialogueType.Prologue => "Prologue.csv",
+            };
+            
+            LoadDialogueData(fileName);
+            
+           
+        }
+
+        private void LoadDialogueScene()
+        {
+            SceneManager.LoadScene("Dialogue", LoadSceneMode.Additive);
         }
     }
 }
