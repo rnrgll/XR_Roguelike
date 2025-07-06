@@ -338,7 +338,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!1001 &1192480076537963320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1309,6 +1309,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239403548456971799, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -113676088, guid: 96910f5e8311f4efdb89bf90704ae675, type: 3}
     - target: {fileID: 8499132586263571240, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
