@@ -74,9 +74,17 @@ namespace Item
                     _player.ChangeHpByPercent(effect.percentValue);
             }
             else if (effect.value != 0)
-                _player.AddHealBuff(effect.value, effect.duration);
+            {
+                _player.ChangeHp(effect.value);
+                _player.AddHealBuff(effect.value, effect.duration-1);
+            }
+
             else
-                _player.AddHealBuff(effect.percentValue, effect.duration);
+            {
+                _player.ChangeHpByPercent(effect.percentValue);
+                _player.AddHealBuff(effect.percentValue, effect.duration-1);
+            }
+                
         }
 
         private void ApplyHPReduce(ItemEffect effect)
@@ -137,6 +145,7 @@ namespace Item
         private void DiscardHand()
         {
             Debug.Log("[아이템 효과] 남은 핸드를 전부 버립니다.");
+            Debug.Log(_card.Hand.GetCardList().Count);
             _card.Discard(_card.Hand.GetCardList()); //손패에 있는 카드 전부 버리기
             _player.OnTurnEnd -= DiscardHand; //등록한거 삭제
         }

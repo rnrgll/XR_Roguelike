@@ -117,17 +117,11 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         int comboCardNums = cardController.sumofNums;
         var combo = cardController.cardComb;
 
-        // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
-        var tm = Managers.Manager.turnManager;
-        Debug.Log($"[디버그] 사용할 TurnManager = {tm}");
-
-        tm.SetCurrentEnemyByType(EnemyType.Boss);
-
         // 3. 타겟 찾기
         var target = TurnManager.Instance
             .GetEnemies()
             .OfType<EnemyBase>()
-            .FirstOrDefault(e => e.Type == EnemyType.Boss && !e.IsDead);
+            .FirstOrDefault(e => !e.IsDead);
 
         // 4. 공격 수행
         if (target != null)
@@ -152,6 +146,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public void TakeDamage(int dmg)
     {
+        Debug.Log(isInvincible);
         if (isInvincible) return;
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
@@ -192,7 +187,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             Buff attackBuff = attackBonusQueue.Dequeue();
             flatAttackBonus += attackBuff.value;
             attackBuff.remainTurn--;
-            if (attackBuffTurns > 0)
+            if (attackBuff.remainTurn > 0)
             {
                 attackBonusQueue.Enqueue(attackBuff);
             }
@@ -252,7 +247,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         if (hpBar != null)
         {
-            hpBar.value = (float)currentHP / maxHP;
+            hpBar.value = currentHP;
         }
 
     }
@@ -294,6 +289,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void SetInvincible()
     {
         isInvincible = true;
+        Debug.Log(isInvincible);
     }
 
 
@@ -347,7 +343,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     /// 힐 버프 큐에 저장된 회복 효과를 적용합니다.
     /// 회복 후 남은 턴 수가 있을 경우 다시 큐에 넣습니다.
     /// </summary>
-    private void ApplyHeal()
+    public void ApplyHeal()
     {
         int count = healBonusQueue.Count;
         for (int i = 0; i < count; i++)
@@ -385,6 +381,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void ChangeHp(int amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
+        UpdateHpBar();
         if (IsDead)
         {
             Debug.Log("플레이어가 사망했습니다.");
@@ -399,6 +396,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void ChangeHpByPercent(float percentValue)
     {
         currentHP = Mathf.Clamp(currentHP + (int)(percentValue * maxHP), 0, maxHP);
+        UpdateHpBar();
         if (IsDead)
         {
             Debug.Log("플레이어가 사망했습니다.");

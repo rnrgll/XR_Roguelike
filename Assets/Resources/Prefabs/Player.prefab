@@ -99,6 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardControllerPrefab: {fileID: 3860805868157528225, guid: 6b21ec85c0ee71040b909c50c885a9e8, type: 3}
   tarotDeckPrefab: {fileID: 7050862700832878961, guid: 7f5cbfe08c4482b44a36c0a5d3e9a452, type: 3}
-  hpText: {fileID: 0}
-  maxHP: 1000
+  maxHP: 100
   hpBar: {fileID: 0}

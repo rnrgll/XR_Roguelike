@@ -15,7 +15,7 @@ MonoBehaviour:
   shopType: 2
   itemType: 0
   id: 201
-  itemName: 
+  itemName: "\uD68C\uBCF5 \uD3EC\uC158"
   description: "\uCCB4\uB825 10% \uD68C\uBCF5"
   price: 20
   sprite: {fileID: 21300000, guid: a869ce05239194b56bd82e745191f04a, type: 3}
@@ -26,6 +26,6 @@ MonoBehaviour:
   - chance: 1
     effects:
     - effectType: 1
-      percentValue: 10
+      percentValue: 0.1
       value: 0
       duration: 1

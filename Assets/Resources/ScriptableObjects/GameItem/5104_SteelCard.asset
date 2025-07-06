@@ -15,7 +15,7 @@ MonoBehaviour:
   shopType: 2
   itemType: 1
   id: 5104
-  name: "\uAC15\uCCA0 \uCE74\uB4DC"
+  itemName: "\uAC15\uCCA0 \uCE74\uB4DC"
   description: "\uD574\uB2F9 \uCE74\uB4DC\uAC00 \uD578\uB4DC\uC5D0 \uB0A8\uC544 \uC788\uC744
     \uACBD\uC6B0 \uBC30\uC218 x1.5 \uC9C0\uC18D \uC99D\uAC00/ \uC0AC\uC6A9 \uC2DC
     \uBC30\uC218 x3 \uC99D\uAC00"
