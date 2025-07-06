@@ -15,12 +15,12 @@ MonoBehaviour:
   shopType: 2
   itemType: 0
   id: 213
-  name: "\uB9E4\uB4ED\uC758 \uB8EC"
+  itemName: 
   description: "\uC989\uC2DC \uB371\uC5D0\uC11C 5\uC7A5\uC758 \uCE74\uB4DC\uB97C
     \uD68D\uB4DD\uD558\uACE0, \uD134 \uC885\uB8CC \uC2DC \uB0A8\uC740 \uD578\uB4DC\uB97C
     \uC804\uBD80 \uBC84\uB9B0\uB2E4"
   price: 90
-  sprite: {fileID: 3163464341699602868, guid: 5fa619387b31647b284537421a245d40, type: 3}
+  sprite: {fileID: 21300000, guid: c17cf1967e8d744518faad1d071250e1, type: 3}
   weight: 1
   type: 2
   isPotion: 0
