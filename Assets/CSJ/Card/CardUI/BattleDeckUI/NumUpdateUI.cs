@@ -62,9 +62,6 @@ public class NumUpdateUI : UIRequire
 
     private void RefreshAllCounts()
     {
-        Debug.Log("[NumUI] RefreshAllCounts 시작");
-        Debug.Log($"[NumUI] controller.numbersList = {string.Join(",", cardController.numbersList)}");
-        Debug.Log($"[NumUI] controller.SuitsList   = {string.Join(",", cardController.SuitsList)}");
         foreach (var keyValue in numCounts)
         {
             int idx = GetNumIndex(keyValue.Key);

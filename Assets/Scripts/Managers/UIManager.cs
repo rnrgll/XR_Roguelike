@@ -1,8 +1,10 @@
 using Map;
 using System;
+using TopBarUI;
 using UI;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -11,6 +13,7 @@ namespace Managers
         #region Global UI Object
 
         public GameObject TopBarUI { get; private set; }
+        public Action<bool> OnCardDeckToggleClicked => TopBarUI.GetComponent<TopBarMenus>().OnCardDeckToggleClicked;
         public GameObject MapUI { get; private set; }
         
         public GameObject DeckUI { get; private set; }

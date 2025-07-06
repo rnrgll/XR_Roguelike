@@ -34,10 +34,10 @@ public class CardController : MonoBehaviour
     public List<int> _selectedNums;
     public CardDeck Deck { get; private set; }
     public int sumofNums { get; private set; }
-    public Dictionary<CardBonus, float> TurnBonusDic;
-    public Dictionary<CardBonus, float> BattleBonusDic;
-    public Dictionary<CardBonus, float> TurnPenaltyDic;
-    public Dictionary<CardBonus, float> BattlePenaltyDic;
+    public Dictionary<CardBonus, List<float>> TurnBonusDic;
+    public Dictionary<CardBonus, List<float>> BattleBonusDic;
+    public Dictionary<CardBonus, List<float>> TurnPenaltyDic;
+    public Dictionary<CardBonus, List<float>> BattlePenaltyDic;
     public List<MinorArcana> SelectedCard { get; private set; } = new();
     public CardCombinationEnum cardComb { get; private set; }
     public int[] numbersList = new int[15];
@@ -248,10 +248,10 @@ public class CardController : MonoBehaviour
 
         foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
         {
-            BattleBonusDic[type] = 0;
-            BattlePenaltyDic[type] = 0;
-            TurnPenaltyDic[type] = 0;
-            TurnBonusDic[type] = 0;
+            BattleBonusDic[type] = new();
+            BattlePenaltyDic[type] = new();
+            TurnPenaltyDic[type] = new();
+            TurnBonusDic[type] = new();
         }
 
         BattleDeck.Shuffle();
@@ -264,6 +264,7 @@ public class CardController : MonoBehaviour
     {
         TurnBonusDic.Clear();
         TurnPenaltyDic.Clear();
+        Debug.Log(Hand.Count);
         Draw();
     }
     #endregion
@@ -307,7 +308,7 @@ public class CardController : MonoBehaviour
         }
         OnSubmit?.Invoke(SelectedCard);
 
-        Discard(SelectedCard);
+        exchangeHand(SelectedCard);
     }
 
     public List<MinorArcana> GetHand()
@@ -331,7 +332,28 @@ public class CardController : MonoBehaviour
 
     public float GetCardBonus(CardBonus bonus)
     {
-        return TurnBonusDic[bonus] + BattleBonusDic[bonus] - TurnPenaltyDic[bonus] - BattlePenaltyDic[bonus];
+        float value = 0;
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (BattleBonusDic.ContainsKey(bonus))
+            foreach (var i in BattleBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnPenaltyDic[bonus])
+            {
+                value -= i;
+            }
+        if (BattlePenaltyDic.ContainsKey(bonus))
+            foreach (var i in BattlePenaltyDic[bonus])
+            {
+                value -= i;
+            }
+        return value;
     }
 
     #endregion
@@ -343,6 +365,7 @@ public class CardController : MonoBehaviour
     // 현재는 8장 고정이므로 Draw를 8장 뽑는다.
     public void Draw(int n)
     {
+        Debug.Log(StackTraceUtility.ExtractStackTrace());
         if (BattleDeck.Count == 0) DeckRefill();
         for (int i = 0; i < n; i++)
         {
@@ -513,16 +536,21 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        int handCount = Hand.Count;
+        Debug.Log("[exchangeHand] 호출");
+        int beforeCount = Hand.Count;
         int discCount = Discard(cards);
         ClearSelect();
         int afterCount = Hand.Count;
-        int targetCount = Mathf.Min(handCount, drawNum);
+        int targetCount = Mathf.Min(beforeCount, drawNum);
 
 
         int toDraw = targetCount - afterCount;
         if (toDraw > 0)
+        {
+            Debug.Log($"[exchangeHand] before={beforeCount}, removed={discCount}, after={afterCount}, toDraw={toDraw}");
             Draw(toDraw);
+        }
+
     }
 
     public void AdjustCountList(MinorArcana card)
@@ -704,17 +732,17 @@ public class CardController : MonoBehaviour
     public void SetBattleBonusList(CardBonus cardBonus, BonusType type, float Amount)
     {
         if (type == BonusType.Bonus)
-            BattleBonusDic[cardBonus] += Amount;
+            BattleBonusDic[cardBonus].Add(Amount);
         else
-            BattlePenaltyDic[cardBonus] += Amount;
+            BattlePenaltyDic[cardBonus].Add(Amount);
     }
 
     public void SetTurnBonusList(CardBonus cardBonus, BonusType type, float Amount)
     {
         if (type == BonusType.Bonus)
-            TurnBonusDic[cardBonus] += Amount;
+            TurnBonusDic[cardBonus].Add(Amount);
         else
-            TurnPenaltyDic[cardBonus] += Amount;
+            TurnPenaltyDic[cardBonus].Add(Amount);
     }
     #endregion
 

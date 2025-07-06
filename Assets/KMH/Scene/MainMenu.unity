@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 79571369}
   - component: {fileID: 79571368}
   - component: {fileID: 79571372}
-  - component: {fileID: 79571373}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -240,18 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba84a2d1a4b2b6441adb2a19589a3e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &79571373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79571367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8c9d6c9c28d164da2f2502787c5a98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  gameInitializer: {fileID: 1984542998}
 --- !u!1 &80462896
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +658,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984542998}
         m_TargetAssemblyTypeName: GameInitializer, Assembly-CSharp
-        m_MethodName: InitializeGame
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

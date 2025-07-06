@@ -11,13 +11,7 @@ public class PrideLuciferMonster : EnemyBase
     private bool isAwaitingSpecialCheck = false;
     private bool forceNextStrong = false;
 
-    private enum SpecialState
-    {
-        None,
-        ExpectLowDamage,   // 특수공격1: 100 이하
-        ExpectHighDamage   // 특수공격2: 150 이상
-    }
-
+    private enum SpecialState { None, ExpectLowDamage, ExpectHighDamage }
     private SpecialState pendingCheck = SpecialState.None;
 
     public override void TakeTurn()
@@ -30,104 +24,84 @@ public class PrideLuciferMonster : EnemyBase
         var player = TurnManager.Instance.GetPlayerController();
         int playerMax = player.MaxHP;
 
-        // 3턴째라면 특수 체크 패턴
+        // ▶ 3턴째 → 반드시 특수공격
         if (turn == 3)
         {
             int recentDamage = lastThreeTurnDamages.Sum();
 
-            if (recentDamage <= 400)
+            if (recentDamage < 400)  // 400미만 → 특수1
             {
-                // 특수공격2
-                Debug.Log("[프라이드] 특수공격2 발동! 플레이어 공격력 -50 디버프 적용!");
-                player.AddAttackBuff(-50, 1); // 버프를 큐로 관리로 변경함에 따라 함수 수정
-                pendingCheck = SpecialState.ExpectHighDamage;
-                isAwaitingSpecialCheck = true;
-            }
-            else
-            {
-                // 특수공격1
-                Debug.Log("[프라이드] 특수공격1 발동! 플레이어 공격력 +40 버프 적용!");
-                player.AddAttackBuff(40, 1); // 버프를 큐로 관리로 변경함에 따라 함수 수정
+                Debug.Log("[프라이드] 특수공격1 발동! 공격력 +40 버프!");
+                player.AddAttackBuff(40, 1);
                 pendingCheck = SpecialState.ExpectLowDamage;
-                isAwaitingSpecialCheck = true;
+            }
+            else                       // 400이상 → 특수2
+            {
+                Debug.Log("[프라이드] 특수공격2 발동! 공격력 -50 디버프!");
+                player.AddAttackBuff(-50, 1);
+                pendingCheck = SpecialState.ExpectHighDamage;
             }
 
+            isAwaitingSpecialCheck = true;
             turn++;
             yield break;
         }
 
-        // 예고된 강공격
+        // ▶ 특수 직후 강공격 보장
         if (forceNextStrong)
         {
             forceNextStrong = false;
-            int dmg = Mathf.RoundToInt(playerMax * 0.3f);  // 플레이어 최대체력의 30%
-            Debug.Log("[프라이드] 예고된 강공격 시전! 플레이어 최대체력 30% → " + dmg);
+            int dmg = Mathf.RoundToInt(playerMax * 0.3f);
+            Debug.Log("[프라이드] 강공격! 플레이어 최대체력 30% → " + dmg);
             player.TakeDamage(dmg);
+
             turn++;
             yield break;
         }
 
-        // 기본 공격 (3의 배수가 아닐 때는 스킵)
-        if (turn % 3 == 0)
+        // ▶ 그 외엔 언제나 기본공격
         {
-            int dmg = Mathf.RoundToInt(playerMax * 0.1f);  // 플레이어 최대체력의 10%
+            int dmg = Mathf.RoundToInt(playerMax * 0.1f);
             Debug.Log("[프라이드] 기본 공격! 플레이어 최대체력 10% → " + dmg);
             player.TakeDamage(dmg);
-        }
-        else
-        {
-            // **기본 공격 외에는 아무 행동 없음**
-            yield break;
-        }
 
-        turn++;
-        yield return null;
+            turn++;
+            yield return null;
+        }
     }
 
     public override void ApplyDamage(int damage)
     {
         base.ApplyDamage(damage);
 
-        // 지난 3턴 동안 받은 피해량 기록
+        // 지난 3턴 피해 누적
         lastThreeTurnDamages.Add(damage);
         if (lastThreeTurnDamages.Count > 3)
             lastThreeTurnDamages.RemoveAt(0);
 
-        // 특수공격 체크 중이라면
+        // 특수공격 성공/실패 체크
         if (isAwaitingSpecialCheck)
         {
             var player = TurnManager.Instance.GetPlayerController();
+            bool success = false;
 
-            switch (pendingCheck)
+            if (pendingCheck == SpecialState.ExpectLowDamage)
+                success = (damage <= 100);      // 100이하면 성공
+            else if (pendingCheck == SpecialState.ExpectHighDamage)
+                success = (damage >= 150);     // 150이상이면 성공
+
+            if (success)
             {
-                case SpecialState.ExpectLowDamage:
-                    if (damage > 100)
-                    {
-                        Debug.Log("[프라이드] 특수공격1 성공! 프라이드 체력 30%로 감소");
-                        currentHP = Mathf.RoundToInt(maxHP * 0.3f);
-                    }
-                    else
-                    {
-                        Debug.Log("[프라이드] 특수공격1 실패! 플레이어 체력 35%로 감소");
-                        player.ForceSetHpToRate(0.35f);
-                    }
-                    break;
-
-                case SpecialState.ExpectHighDamage:
-                    if (damage >= 150)
-                    {
-                        Debug.Log("[프라이드] 특수공격2 성공! 프라이드 체력 30%로 감소");
-                        currentHP = Mathf.RoundToInt(maxHP * 0.3f);
-                    }
-                    else
-                    {
-                        Debug.Log("[프라이드] 특수공격2 실패! 플레이어 체력 35%로 감소");
-                        player.ForceSetHpToRate(0.35f);
-                    }
-                    break;
+                Debug.Log("[프라이드] 특수공격 성공! 프라이드 체력 30%로 감소");
+                currentHP = Mathf.RoundToInt(maxHP * 0.3f);
+            }
+            else
+            {
+                Debug.Log("[프라이드] 특수공격 실패! 플레이어 체력 35%로 감소");
+                player.ForceSetHpToRate(0.35f);
             }
 
-            // 체크 종료 및 강공격 예약
+            // 체크 종료, 다음 턴에 강공격 예약
             isAwaitingSpecialCheck = false;
             pendingCheck = SpecialState.None;
             forceNextStrong = true;

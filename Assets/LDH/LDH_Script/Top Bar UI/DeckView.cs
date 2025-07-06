@@ -51,17 +51,19 @@ namespace TopBarUI
         private void SettingCardView()
         {
             //컨트롤러에서 전체 카드 덱을 조회한다.
-            
+            int idx = 0;
             //마이너 아르카나
-            if(_cardController.DeckPile==null) return;
+            if(_cardController.Deck==null) return;
             var minorArcanaList = _cardController.Deck.GetAllCards();
+            
             foreach (var minor in minorArcanaList)
             {
                 CardVeiw card = _cardPool.PopPool() as CardVeiw;
+                card.transform.SetParent(_gridContainer, false);
+                card.transform.SetSiblingIndex(idx++);
                 card.SetData(minor);
-                card.transform.SetParent(_gridContainer);
-                card.transform.SetAsLastSibling();
             }
+
 
             //메이저 아르카나
             var majorArcanaList = _tarotDeck.GetMajorCards();
@@ -71,8 +73,9 @@ namespace TopBarUI
                 CardVeiw card = _cardPool.PopPool() as CardVeiw;
                 card.SetData(major);
                 card.transform.SetParent(_gridContainer);
-                card.transform.SetAsLastSibling();
+                card.transform.SetSiblingIndex(idx++);
             }
+            
         }
         
         

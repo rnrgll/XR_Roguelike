@@ -19,6 +19,11 @@ using UnityEngine;
 //    private int cycleIndex = 0;     // 0~4 순환
 //    private int damageThisTurn = 0; // 이번 턴 플레이어가 입힌 피해
 //
+//    protected override void Start()
+//    {
+//        base.Start();
+//    }
+//
 //    private void Awake()
 //    {
 //        if (Instance == null) Instance = this;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 using UI;
 using Managers;
 
@@ -18,6 +19,8 @@ public class BattleSceneManager : MonoBehaviour
     [SerializeField] private GameObject slothMonsterPrefab;
     [SerializeField] private GameObject lustMonsterPrefab;
     [SerializeField] private GameObject gluttonMonsterPrefab;
+
+    [SerializeField] private Slider hpBarPrefab;
 
     // —————————————————————
     // 등장 이력 저장용 static 리스트
@@ -53,17 +56,18 @@ public class BattleSceneManager : MonoBehaviour
             // 1. 적 생성
             SpawnMonstersForStage();
 
+
             // 2. 플레이어 등록 및 전투 시작
             TurnManager.Instance.RegisterPlayer(pc);
             Debug.Log("Player 등록 완료");
             yield return null; // 한 프레임
 
+            Debug.Log("Card Controller 대기중");
             yield return new WaitUntil(() => pc.GetCardController() != null);
             var cc = pc.GetCardController();
 
-            bool ready = false;
-            cc.OnReady += () => ready = true;
-            yield return new WaitUntil(() => ready);
+           
+            yield return new WaitUntil(() => cc.IsReady);
 
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
@@ -76,7 +80,19 @@ public class BattleSceneManager : MonoBehaviour
             TurnManager.Instance.StartBattle();
             Debug.Log(" 전투 시작됨");
 
-            // 3. UI 설정
+            // 3. HP 바 생성 및 연결
+            if (hpBarPrefab != null)
+            {
+                var canvas = FindObjectOfType<Canvas>();
+                var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
+                pc.SetHpBar(hpGo);
+            }
+            else
+            {
+                Debug.LogWarning("hpBarPrefab이 할당되지 않았습니다.");
+            }
+
+            // 4. UI 설정
             GameStatusUI.Instance.SetStage(GameStateManager.Instance.Wins + 1);
         }
     }
@@ -128,7 +144,7 @@ public class BattleSceneManager : MonoBehaviour
         var prefab = GetMonsterPrefab(id);
         if (prefab == null)
         {
-            Debug.LogWarning($"[{id}] 프리팹이 설정되지 않았느니라.");
+            Debug.LogWarning($"[{id}] 프리팹이 설정되지 않았습니다.");
             return;
         }
 
@@ -138,11 +154,26 @@ public class BattleSceneManager : MonoBehaviour
         {
             TurnManager.Instance.RegisterEnemy(enemy);
             Debug.Log($"[{id}] 몬스터 스폰 및 등록 완료");
+
+            StartCoroutine(InitializeMonsterUI(enemy));
         }
+            if (GameStatusUI.Instance != null)
+            {
+                GameStatusUI.Instance.SetTarget(enemy);
+            }
         else
         {
-            Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없느니라!");
+            Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");
         }
+        GameStatusUI.Instance.SetTarget(enemy);
+    }
+
+    private IEnumerator InitializeMonsterUI(EnemyBase enemy)
+    {
+        yield return null; // Start()가 실행될 때까지 한 프레임 대기
+
+        if (GameStatusUI.Instance != null)
+            GameStatusUI.Instance.Init(enemy);
     }
 
     private GameObject GetMonsterPrefab(MonsterID id)

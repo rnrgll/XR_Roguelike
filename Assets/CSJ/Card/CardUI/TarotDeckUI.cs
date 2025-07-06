@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class TarotDeckUI : UIRequire
     [SerializeField] private RectTransform cardParent;
 
     private MajorArcanaUI currentCardUI;
+
 
 
     /// <summary>
@@ -42,6 +44,7 @@ public class TarotDeckUI : UIRequire
 
     private void OnMajorCardClicked(MajorArcanaSO so)
     {
+        Debug.Log("클릭");
         // 클릭하면 SO의 Activate 실행
         so.Activate();
     }
@@ -56,10 +59,17 @@ public class TarotDeckUI : UIRequire
     protected override void Subscribe()
     {
         currentCardUI.OnClick += OnMajorCardClicked;
+        //Manager.UI.OnCardDeckToggleClicked += SetActive;
     }
 
     protected override void UnSubscribe()
     {
         currentCardUI.OnClick -= OnMajorCardClicked;
+        //Manager.UI.OnCardDeckToggleClicked -= SetActive;
+    }
+
+    public void SetActive(bool isActive)
+    {
+        gameObject.SetActive(isActive);
     }
 }

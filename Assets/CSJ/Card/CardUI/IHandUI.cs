@@ -17,17 +17,19 @@ public abstract class UIRequire : MonoBehaviour, IHandUI
 
         cardController = pc.GetCardController();
 
-        if (isActiveAndEnabled)
-            Subscribe();
+        Subscribe();
     }
 
-    protected void OnEnable()
+    protected void OnCreate()
     {
         if (cardController != null)
+        {
+            UnSubscribe();
             Subscribe();
+        }
     }
 
-    protected void OnDisable()
+    protected void OnDestroy()
     {
         if (cardController != null)
             UnSubscribe();

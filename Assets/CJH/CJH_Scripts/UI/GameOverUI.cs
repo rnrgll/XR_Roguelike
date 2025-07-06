@@ -1,6 +1,8 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -62,6 +64,8 @@ public class GameOverUI : MonoBehaviour
     private void ReturnToTitle()
     {
 
+        Manager.UI.SetUIActive(GlobalUI.TopBar,false);
+        panel.SetActive(false);
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 
     }

@@ -13,6 +13,11 @@ public class LustMonster : EnemyBase
     private int lustStack = 0;
     private const int stackMax = 10;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void Awake()
     {
         if (Instance == null)

@@ -78,7 +78,7 @@ public class TurnManager : Singleton<TurnManager>
             if (pc != null)
                 {
                     // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
-            var cardCtrl = pc.GetComponent<CardController>();
+                    var cardCtrl = pc.cardController;
                     if (cardCtrl != null)
                         {
                 cardCtrl.BattleInit();
@@ -143,6 +143,7 @@ public class TurnManager : Singleton<TurnManager>
             }
 
             // 2. 플레이어 턴
+            GetPlayerController().ApplyHeal();
             player.StartTurn();
             yield return new WaitUntil(() => player.IsTurnFinished());
 

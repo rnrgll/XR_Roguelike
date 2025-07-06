@@ -66,8 +66,6 @@ namespace Item
                 }
                 
             }
-            
-            Manager.turnManager.GetPlayerController().PrintAttackQueue();
         }
     }
 }

@@ -3050,6 +3050,7 @@ MonoBehaviour:
   BattleDeckCanvas: {fileID: 7289898200632928111}
   BackGround: {fileID: 2248941147369264286}
   CloseButton: {fileID: 582328406958742943}
+  tarotDeck: {fileID: 6531292368038936965}
 --- !u!1 &2863910512553246992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,7 +3822,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 60
   m_TargetDisplay: 0
 --- !u!114 &3829762515156032447
 MonoBehaviour:
@@ -4162,6 +4163,7 @@ MonoBehaviour:
   DeckButton: {fileID: 8184966813637340561}
   DeckCount: {fileID: 1311171474330439111}
   BattleDeckUI: {fileID: 4560529056785923125}
+  tarotDeck: {fileID: 6531292368038936965}
 --- !u!1 &3884048550612997804
 GameObject:
   m_ObjectHideFlags: 0

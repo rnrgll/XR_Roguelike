@@ -10,6 +10,11 @@ public class EnvyMonster : EnemyBase
     private int chargeDamageReceived = 0;
 
     private int patternIndex = 0;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
     private enum EnvyPattern
     {
         Basic,

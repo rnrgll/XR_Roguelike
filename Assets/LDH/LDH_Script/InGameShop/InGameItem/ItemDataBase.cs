@@ -46,7 +46,7 @@ namespace InGameShop
                 ItemDB.Add(inventoryItem);
             }
 
-            Debug.Log($"Item DB - 현재까지 불러온 아이템 수 : {ItemDB.Count}");
+            //Debug.Log($"Item DB - 현재까지 불러온 아이템 수 : {ItemDB.Count}");
         }
 
         public void LoadCardData()
@@ -58,7 +58,7 @@ namespace InGameShop
                 EnchantDB.Add(enchantItem.enchantType, enchantItem);
             }
 
-            Debug.Log($"Enchant DB - 로드 완료");
+            //Debug.Log($"Enchant DB - 로드 완료");
         }
 
         #endregion
@@ -128,11 +128,10 @@ namespace InGameShop
 
             // 1. 카드가 부족하면 count 조정
             count = Mathf.Min(count, enchantables.Count);
-
             // 2. 셔플
             Shuffle(enchantables); 
 
-            for (int i = 0; i < count && results.Count<count; i++)
+            for (int i = 0; results.Count<count; i++)
             {
                 var card = enchantables[i];
                 
