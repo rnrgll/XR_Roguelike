@@ -90,6 +90,9 @@ namespace Managers
                 DialogueType.Prologue => "Prologue.csv",
                 DialogueType.FirstInGameShop => "FirstInGameShop.csv",
                 DialogueType.InGameShop => "InGameShop.csv",
+                DialogueType.BeforeBoss => "BeforeBoss.csv",
+                DialogueType.AfterBoss => "AfterBoss.csv",
+                DialogueType.Ending => "Ending.csv",
             };
             
             LoadDialogueData(fileName);

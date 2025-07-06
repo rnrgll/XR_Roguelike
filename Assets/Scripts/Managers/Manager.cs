@@ -59,6 +59,12 @@ namespace Managers
                 manager.AddComponent<GameStateManager>();
                 manager.AddComponent<UIManager>();
                 manager.AddComponent<DataManager>();
+                manager.AddComponent<CardManager>();
+                
+                //플레이어 프리팹 생성
+                PlayerController playerPrefab = Resources.Load<PlayerController>("Prefabs/Player");
+                PlayerController player = GameObject.Instantiate(playerPrefab);
+                player.transform.SetParent(manager.transform);
 
                 //Map Manager는 프리팹으로 추가
             }

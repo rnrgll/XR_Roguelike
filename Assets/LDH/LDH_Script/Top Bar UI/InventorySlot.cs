@@ -70,11 +70,13 @@ namespace TopBarUI
             if (string.IsNullOrEmpty(this.itemId))
             {
                 _itemImage.sprite = null;
+                _itemImage.enabled = false;
             }
             else
             {
                 GameItem item = Manager.Data.GameItemDB.GetItemById(this.itemId);
                 _itemImage.sprite = item.sprite;
+                _itemImage.enabled = true;
             }
         }
         
