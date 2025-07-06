@@ -30,7 +30,14 @@ namespace Managers
         private bool LoadDialogueData(string fileName)
         {
             //1. CSV 테이블 생성
+#if UNITY_EDITOR
             CsvTable table = new CsvTable($"Data/Dialogue/{fileName}");
+#else
+             CsvTable table = new CsvTable($"Dialogue/{fileName}");
+#endif            
+            
+            
+            
             
             //2. Reader로 파일 읽기
             CsvReader.Read(table);

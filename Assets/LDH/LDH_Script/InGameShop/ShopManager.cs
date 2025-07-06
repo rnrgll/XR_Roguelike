@@ -56,7 +56,11 @@ namespace InGameShop
             if(Manager.Map.CurrentMap.CurrentNode.y == 1)
                 Manager.Dialogue.PlayDialogue(DialogueType.FirstInGameShop);
             else
+            {
+                Debug.Log(Manager.Map.CurrentMap.CurrentNode.y );
                 Manager.Dialogue.PlayDialogue(DialogueType.InGameShop);
+            }
+                
         }
         
 
