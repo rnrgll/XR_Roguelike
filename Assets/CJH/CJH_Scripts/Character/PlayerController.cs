@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
@@ -12,7 +13,9 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private CardController cardControllerPrefab;
     private CardController _cardController;
     public CardController cardController => _cardController;
-    [SerializeField] private TarotDeck tarotDeck;
+    [SerializeField] private TarotDeck tarotDeckPrefab;
+    private TarotDeck _tarotDeck;
+    public TarotDeck tarotDeck => _tarotDeck;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
 
@@ -32,7 +35,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private bool isAdditionalDamage;
 
     public CardController CardController => cardController;
-    public TarotDeck TarotDeck => tarotDeck;
+
 
 
     public Action OnTurnEnd;
@@ -72,7 +75,9 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         _cardController = Instantiate(cardControllerPrefab, transform);
         _cardController.name = "CardController";
         Debug.Log($"[PC] cardController 할당됨: {cardController.name}");
-        tarotDeck = GetComponent<TarotDeck>();
+        _tarotDeck = Instantiate(tarotDeckPrefab, transform);
+        _tarotDeck.name = "TarotDeck";
+        Debug.Log($"[PC] TarotDeck 할당됨: {_tarotDeck.name}");
 
 
         bool ready = false;
@@ -266,6 +271,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void StartTurn()
     {
         OnTurnStarted?.Invoke();
+        cardController.TurnInit();
         Debug.Log("플레이어 턴 시작!");
         turnEnded = false;
     }

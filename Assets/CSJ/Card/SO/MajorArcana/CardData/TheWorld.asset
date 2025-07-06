@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac247502bb34694c9da33636ee53de3, type: 3}
   m_Name: TheWorld
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: TheWorld
   sprite: {fileID: 0}
   uprightAbilitySO: {fileID: 11400000, guid: 2f11dd23ece077e45b7e0a3e34353319, type: 2}
   reversedAbilitySO: {fileID: 11400000, guid: 4c6e5f47635b3204f81846e1377154df, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac247502bb34694c9da33636ee53de3, type: 3}
   m_Name: TheTower
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: TheTower
   sprite: {fileID: 0}
   uprightAbilitySO: {fileID: 11400000, guid: a3842e7e22f31fe4cb6ce6d5c3ea57d8, type: 2}
   reversedAbilitySO: {fileID: 11400000, guid: 7f70d7e814aa9a843987f094e361ac81, type: 2}
