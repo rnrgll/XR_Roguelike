@@ -43,12 +43,15 @@ namespace Managers
             // 유틸
             public static RandomManager randomManager => RandomManager.Instance;        // 랜덤 매니저
 
+
+
+            public static GameObject manager;
             
             [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
             private static void Initialize()
             {
                 var prefab = Resources.Load<GameObject>("Prefabs/@Manager");
-                GameObject manager = GameObject.Instantiate(prefab);
+                manager = GameObject.Instantiate(prefab);
                 manager.gameObject.name = "@Manager";
                 GameObject.DontDestroyOnLoad(manager);
                         
@@ -60,11 +63,6 @@ namespace Managers
                 manager.AddComponent<UIManager>();
                 manager.AddComponent<DataManager>();
                 manager.AddComponent<CardManager>();
-                
-                //플레이어 프리팹 생성
-                PlayerController playerPrefab = Resources.Load<PlayerController>("Prefabs/Player");
-                PlayerController player = GameObject.Instantiate(playerPrefab);
-                player.transform.SetParent(manager.transform);
 
                 //Map Manager는 프리팹으로 추가
             }
