@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private TarotDeck tarotDeckPrefab;
     private TarotDeck _tarotDeck;
     public TarotDeck tarotDeck => _tarotDeck;
-    [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
 
 
@@ -255,10 +254,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             hpBar.value = (float)currentHP / maxHP;
         }
 
-        if (hpText != null)
-        {
-            hpText.text = $"{currentHP} / {maxHP}";
-        }
     }
 
     public void RestoreHP()
@@ -423,6 +418,17 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         }
         Debug.Log($"total {total} 증가");
 
+    }
+
+    /// <summary>
+    /// BattleSceneManager 등 외부에서
+    /// HP 바 슬라이더를 할당해 주기 위한 메서드
+    /// </summary>
+    public void SetHpBar(Slider slider)
+    {
+        hpBar = slider;
+        UpdateHpBar(); // 즉시 현재 HP로 초기화
+        Debug.Log("[PlayerController] HP Bar 할당됨: " + slider.name);
     }
 
     public CardController GetCardController()
