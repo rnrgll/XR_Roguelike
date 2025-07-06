@@ -2,6 +2,7 @@ using CardEnum;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class NumUpdateUI : UIRequire
@@ -16,10 +17,10 @@ public class NumUpdateUI : UIRequire
 
     public override void InitializeUI(PlayerController pc)
     {
+        DictionaryInit();
         Debug.Log("[NumUI] Init 호출");
         base.InitializeUI(pc);
-        DictionaryInit();
-        RefreshAllCounts();
+
     }
 
     protected override void Subscribe()
@@ -61,6 +62,9 @@ public class NumUpdateUI : UIRequire
 
     private void RefreshAllCounts()
     {
+        Debug.Log("[NumUI] RefreshAllCounts 시작");
+        Debug.Log($"[NumUI] controller.numbersList = {string.Join(",", cardController.numbersList)}");
+        Debug.Log($"[NumUI] controller.SuitsList   = {string.Join(",", cardController.SuitsList)}");
         foreach (var keyValue in numCounts)
         {
             int idx = GetNumIndex(keyValue.Key);

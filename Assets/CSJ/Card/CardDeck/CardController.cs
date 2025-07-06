@@ -242,14 +242,14 @@ public class CardController : MonoBehaviour
             BattleDeck.Add(card);
         }
         numbersList[0] = 0;
-        for (int i = 1; i < 15; i++)
+        foreach (var i in BattleDeck.GetCardList())
         {
-            numbersList[i] = 4;
-            for (int j = 0; j < 4; j++)
-            {
-                SuitsList[j]++;
-            }
+            SuitsList[(int)i.CardSuit]++;
+            numbersList[i.CardNum]++;
         }
+        Debug.Log("숫자 list 선언");
+
+
 
         foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
         {
@@ -261,6 +261,7 @@ public class CardController : MonoBehaviour
 
         BattleDeck.Shuffle();
         Draw();
+        Debug.Log("Draw");
     }
 
     public void TurnInit()
