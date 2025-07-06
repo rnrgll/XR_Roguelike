@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2adf683e75d54696b9de3542a1c629e6, type: 3}
-  m_Name: Bob
+  m_Name: Envy
   m_EditorClassIdentifier: 
-  speakerName: Bob
+  speakerName: "\uC5D4\uBE44"
+  textColor:
+    serializedVersion: 2
+    rgba: 4278190318
+  textBoxColor:
+    serializedVersion: 2
+    rgba: 4290044102
   portraits:
-  - key: Idle
-    sprite: {fileID: 21300000, guid: fe3c55c9d75084a60b01deec0e999bfb, type: 3}
-  - key: Smile
-    sprite: {fileID: 21300000, guid: 2a9685fada2de4a6da9509a4e982f235, type: 3}
+  - key: None
+    sprite: {fileID: 0}

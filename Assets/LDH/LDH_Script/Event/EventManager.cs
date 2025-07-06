@@ -32,6 +32,12 @@ public class EventManager : Singleton<EventManager>
 
         Manager.Data.EventDB.OnDataLoadEnd -= EventStart;
     }
-    
+
+
+    public void EventEnd()
+    {
+        Manager.Map.ShowMap();
+        Release();
+    }
     
 }

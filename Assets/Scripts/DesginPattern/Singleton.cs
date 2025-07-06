@@ -35,5 +35,15 @@ namespace DesignPattern
             DontDestroyOnLoad(_instance);
         }
         
+        
+        public static void Release()
+        {
+            if (_instance != null)
+            {
+                Destroy(_instance.gameObject);
+                _instance = null;
+            }
+        }
+        
     }
 }

@@ -106,7 +106,6 @@ namespace Event
         {
             int rowCnt = table.Table.GetLength(0);
             int columnCnt = table.Table.GetLength(1);
-
             
             for (int r = 1; r < rowCnt; r++)
             {
@@ -116,7 +115,8 @@ namespace Event
                     key,
                     table.Table[r,1],
                     (EffectType)(int.Parse(table.Table[r,2].Substring(0,2))),
-                    int.Parse(table.Table[r, 3])
+                    int.Parse(table.Table[r, 3]),
+                    table.Table[r, 4]
                 );
                 MainRewardDB.Add(key, mainReward);
             }
@@ -163,7 +163,6 @@ namespace Event
                             SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
                             SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
                         };
-                        
                             
                         subEffects.Add(subEffect);
                     }

@@ -39,7 +39,7 @@ namespace InGameShop
         public void LoadItemData()
         {
             //인벤토리 아이템 로드
-            InventoryItem[] inventoryItems = Resources.LoadAll<InventoryItem>("ScriptableObjects/GameItem");
+            InventoryItem[] inventoryItems = Resources.LoadAll<InventoryItem>(itemDataFolder);
             InventoryItemCount = inventoryItems.Length;
             foreach (InventoryItem inventoryItem in inventoryItems)
             {
@@ -52,7 +52,7 @@ namespace InGameShop
         public void LoadCardData()
         {
             //카드 아이템 로드
-            EnchantItem[] enchantItems = Resources.LoadAll<EnchantItem>("ScriptableObjects/GameItem");
+            EnchantItem[] enchantItems = Resources.LoadAll<EnchantItem>(itemDataFolder);
             foreach (EnchantItem enchantItem in enchantItems)
             {
                 EnchantDB.Add(enchantItem.enchantType, enchantItem);
@@ -148,7 +148,7 @@ namespace InGameShop
                 
                 //타겟 범위인 경우
                 EnchantItem enchantItem = ScriptableObject.Instantiate(origin);
-                Debug.Log($"{origin.enchantSo} / {enchantItem.enchantSo}");
+                Debug.Log($"{enchantItem.enchantSo}, {card.CardSuit}, {card.CardNum}");
                 enchantItem.SetData(card.CardSuit, card.CardNum);
                 
                 string cNum = card.CardNum < 10 ? $"0" + card.CardNum : card.CardNum.ToString();
@@ -262,7 +262,7 @@ namespace InGameShop
                 GameItem item = new InventoryItem()
                 {
                     id = table.Table[r, columnMap["id"]],
-                    name = table.Table[r, columnMap["name"]],
+                    itemName = table.Table[r, columnMap["name"]],
                     description = table.Table[r, columnMap["description"]],
                     price = int.Parse(table.Table[r, columnMap["price"]]),
                     sprite = Resources.Load<Sprite>(Path.Combine(itemSpriteFolder, table.Table[r, columnMap["image"]])),
@@ -288,7 +288,7 @@ namespace InGameShop
                 GameItem item = new EnchantItem()
                 {
                     id = table.Table[r, columnMap["id"]],
-                    name = table.Table[r, columnMap["name"]],
+                    itemName = table.Table[r, columnMap["name"]],
                     description = table.Table[r, columnMap["description"]],
                     price = int.Parse(table.Table[r, columnMap["price"]]),
                     sprite = Resources.Load<Sprite>(Path.Combine(cardSpriteFolder, table.Table[r, columnMap["image"]])),

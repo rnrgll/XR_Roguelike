@@ -15,12 +15,13 @@ MonoBehaviour:
   shopType: 2
   itemType: 0
   id: 202
-  name: "\uD584 \uD1A0\uC2A4\uD2B8"
+  itemName: 
   description: "\uCCB4\uB825 30% \uD68C\uBCF5"
   price: 50
-  sprite: {fileID: 21300000, guid: cfb96d84716574d8cb81a57bfa3cad41, type: 3}
+  sprite: {fileID: 21300000, guid: 5459c1313ba5a4518b543c450542190b, type: 3}
   weight: 1
   type: 0
+  isPotion: 0
   effectGroups:
   - chance: 1
     effects:
@@ -28,4 +29,3 @@ MonoBehaviour:
       percentValue: 30
       value: 0
       duration: 1
-  condition: 

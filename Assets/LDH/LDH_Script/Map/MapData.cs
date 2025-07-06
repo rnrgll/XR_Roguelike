@@ -13,6 +13,8 @@ namespace Map
         public readonly Node StartNode;
         public readonly List<List<Node>> AllPath;
 
+        public Vector2Int CurrentNode => Path[Path.Count - 1];
+        
         public MapData(List<List<Node>> map, List<List<Node>> allPath, Node startNode, Node bossNode)
         {
             this.Map = map;

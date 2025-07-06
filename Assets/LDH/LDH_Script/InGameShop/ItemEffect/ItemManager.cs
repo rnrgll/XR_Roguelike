@@ -16,7 +16,7 @@ namespace Item
         private void Awake()
         {
             _effectHandler = new ItemEffectHandler(Manager.turnManager.GetPlayerController());
-            SingletonInit();
+            _instance = this;
         }
 
         /// <summary>

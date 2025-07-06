@@ -36,5 +36,10 @@ namespace LDH.LDH_Script
             //List<string> items = Manager.Data.ItemDB.PickUniqeItemRandomByType(1);
             //Manager.GameState.AddItem(items[0]);
         }
+
+        public void EndStage()
+        {
+            TurnManager.Instance.ContinueAfterReward();
+        }
     }
 }

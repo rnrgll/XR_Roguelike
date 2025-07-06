@@ -13,7 +13,7 @@ namespace CustomUtility.UI
         public string fileName = "dialogueTestCSV.csv";
         public void Play()
         {
-            Manager.Dialogue.LoadDialogueData(fileName);
+            //Manager.Dialogue.LoadDialogueData(fileName);
             system.PlayDialogue(Manager.Dialogue.DialogueData.lines);
         }
     }

@@ -47,8 +47,8 @@ public class GameInitializer : MonoBehaviour
         }
 
         // 6) 씬 전환: 맵 씬 혹은 전투 씬
-        //    보통 맵 씬으로 가서 플레이어가 스테이지 선택 → BattleScene 로 넘어가게 됩니다.
-        SceneManager.LoadScene("MapScene");
+        //    프롤로그(인트로)씬으로 전환합니다.
+        SceneManager.LoadScene("Intro");
         // 만약 바로 전투 씬으로 간다면: SceneManager.LoadScene("BattleScene");
     }
 

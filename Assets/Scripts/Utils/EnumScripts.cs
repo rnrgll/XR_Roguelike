@@ -161,4 +161,17 @@ namespace Event
         ResourceLoss,
     }
 
+    namespace Dialogue
+    {
+        public enum DialogueType
+        {
+            Prologue,
+            BeforeBoss,
+            AfterBoss,
+            Ending,
+            FirstInGameShop,
+            InGameShop,
+
+        }
+    }
 }

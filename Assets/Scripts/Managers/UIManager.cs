@@ -22,7 +22,6 @@ namespace Managers
         #endregion
         
         
-        
         private void Awake()
         {
             SingletonInit();

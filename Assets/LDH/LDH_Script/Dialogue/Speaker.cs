@@ -14,6 +14,8 @@ namespace Dialogue
     public class Speaker : ScriptableObject
     {
         public string speakerName;
+        public Color32 textColor;
+        public Color32 textBoxColor;
         public List<SpeakerPortrait> portraits= new();
 
         public Sprite GetSprite(string key)

@@ -13,13 +13,12 @@ namespace Event
         public override void ApplyEffect()
         {
             base.ApplyEffect();
-            List<GameItem> cardItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
-
-            //todo:나중에 할꺼임
-            // foreach (string cardItem in cardItems)
-            // {
-            //     Manager.GameState.AddCardItem(cardItem);
-            // }
+            List<GameItem> enchantItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
+            
+            foreach (EnchantItem enchantItem in enchantItems)
+            {
+                Manager.GameState.AddCardItem(enchantItem);
+            }
         }
     }
 }

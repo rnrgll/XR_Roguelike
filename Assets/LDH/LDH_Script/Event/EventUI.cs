@@ -1,6 +1,7 @@
 using Managers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,9 @@ namespace Event
         [SerializeField] private TMP_Text eventText;
         [SerializeField] private Image eventImage;
         [SerializeField] private List<Button> eventOptions;
-
+        [SerializeField] private GameObject resultPanel;
+        [SerializeField] private TMP_Text rewardText;
+        
 
         private void OnDestroy()
         {
@@ -43,6 +46,7 @@ namespace Event
                 //버튼에 저장된 main reward id로 subeffect 리스트를 가져온다.
                 int mainRewardId = options[i].MainRewardId;
 
+                EventMainReward mainReward = Manager.Data.EventDB.GetMainRewardById(mainRewardId);
                 EventRewardEffect rewardEffect = Manager.Data.EventDB.GetRewardEffectByMainRewardId(mainRewardId);
                 
                 // List<SubEffect> subEffects = Manager.Data.EventDB.GetSubEffectsByMainRewardId(mainRewardId);
@@ -50,6 +54,8 @@ namespace Event
                 eventOptions[i].onClick.AddListener(() =>
                 {
                     rewardEffect.ApplyEffects();
+                    rewardText.text = string.Join("\n", mainReward.ResultText.Split(',').Select(s => s.Trim()));
+                    resultPanel.SetActive(true);
                 });
             }
         }

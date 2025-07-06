@@ -14,6 +14,10 @@ public class MapManager : Singleton<MapManager>
     [field: SerializeField] public MapView View { get; private set; }
     [field: SerializeField]  public MapTracker Tracker { get; private set; }
     [field: SerializeField] public Canvas MapCanvas { get; private set; }
+
+    private bool mapViewLock = false;
+    public bool MapViewLock => mapViewLock;
+    
     
     public void Awake()
     {
@@ -37,6 +41,11 @@ public class MapManager : Singleton<MapManager>
     public void ShowMap(ShowType type = ShowType.Select)
     {
         if (CurrentMap == null) return;
+
+        if (type == ShowType.Select)
+            mapViewLock = true;
+        else if (type == ShowType.View && MapViewLock)
+            return;
         
         //맵 캔버스 활성화 및 맵 뷰 생성
         MapCanvas.gameObject.SetActive(true);
@@ -53,6 +62,7 @@ public class MapManager : Singleton<MapManager>
     {
         if(CurrentMap == null) return;
 
+        mapViewLock = false;
         MapCanvas.gameObject.SetActive(false);
     }
     
