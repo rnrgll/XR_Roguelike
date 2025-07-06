@@ -4,28 +4,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeckUI : MonoBehaviour
+public class DeckUI : UIRequire
 {
     [SerializeField] Button DeckButton;
     [SerializeField] TextMeshProUGUI DeckCount;
     [SerializeField] BattleDeckUI BattleDeckUI;
-    private CardController cardController;
 
-
-    private void InitializeUI(CardController cc)
+    protected override void Subscribe()
     {
-        if (cardController != null)
-        {
-            cardController.OnChangedHands -= OnDrawCard;
-            DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);
-        }
-
-        cardController = cc;
         cardController.OnChangedHands += OnDrawCard;
         DeckButton.onClick.AddListener(BattleDeckUI.OpenPanel);
     }
 
-    private void OnDestroy()
+    protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= OnDrawCard;
         DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);

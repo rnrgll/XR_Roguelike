@@ -23,7 +23,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     private readonly List<string> _itemInventory = new();
     public IReadOnlyList<string> ItemInventory => _itemInventory;
     public int CurrentItemCount => _itemInventory.Count(id => !string.IsNullOrEmpty(id));
-    
+
 
     private const int maxItemInventorySize = 3;
     public int MaxItemInventorySize => maxItemInventorySize;
@@ -65,10 +65,10 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
     public void AddWin() => Wins++;
     public void AddGold(int amount)
     {
-        if(amount==0) return;
+        if (amount == 0) return;
         Gold = Mathf.Max(0, Gold + amount);
         OnGoldChanged?.Invoke(Gold);
-        Debug.Log($"골드 {amount}를 {(amount>=0?"획득":"감소")}!");
+        Debug.Log($"골드 {amount}를 {(amount >= 0 ? "획득" : "감소")}!");
     }
 
     public void AddExp(int amount) => Exp += amount;
@@ -78,7 +78,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
     public void AddItem(string itemID)
     {
-        
+
         int idx = _itemInventory.FindIndex(id => string.IsNullOrEmpty(id));
         if (idx != -1)
         {
@@ -99,7 +99,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         MinorArcana card = cardDeck.GetEnchantableCard().FirstOrDefault(card =>
             card.CardSuit == enchantItem.Suit && card.CardNum == enchantItem.CardNum);
         cardDeck.Enchant(card, enchantItem.enchantSo);
-        
+
         OnGetEnchantItem?.Invoke(enchantItem);
     }
     public void RemoveItem(string itemID)

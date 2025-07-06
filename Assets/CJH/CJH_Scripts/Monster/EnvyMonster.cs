@@ -120,18 +120,19 @@ public class EnvyMonster : EnemyBase
                 int dmg = Mathf.RoundToInt(playerMax * 1.0f);    // 100%
                 Debug.Log($"[엔비] 차지2 실패 → 플레이어 최대체력 100% → {dmg} 데미지 + 부상카드 3장 + 버프");
                 player.TakeDamage(dmg);
-                player.ApplyAttackBuff(2.0f, 1);
-                var card = CardManager.Instance.GetRandomHandCard();
-                if (card != null)
-                {
-                    player.GetComponent<CardController>()
-                          .ApplyDebuff(card, CardDebuff.Injury);
-                    player.GetComponent<CardController>()
-                          .ApplyDebuff(card, CardDebuff.Injury);
-                    player.GetComponent<CardController>()
-                          .ApplyDebuff(card, CardDebuff.Injury);
-                }
-
+                player.GetCardController().SetTurnBonusList(CardBonus.Mult, BonusType.Bonus, 2);
+                // var card = CardManager.Instance.GetRandomHandCard();
+                var cardController = player.GetCardController();
+                // if (card != null)
+                // {
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                // }
+                cardController.StatusEffectDic[StatusEffect.Injury].AddStatusEffect();
                 yield return null;
             }
         }

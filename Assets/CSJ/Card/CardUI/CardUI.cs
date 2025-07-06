@@ -15,8 +15,6 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
     public MinorArcana CardData { get; private set; }
     public Action<MinorArcana> OnClick = delegate { };
 
-
-
     public void Setup(MinorArcana card)
     {
         CardData = card;
@@ -48,6 +46,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
         _isSelected = on;
         border.SetActive(on);
     }
+
 
 
 }

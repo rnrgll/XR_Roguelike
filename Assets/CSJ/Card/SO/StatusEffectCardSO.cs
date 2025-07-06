@@ -9,6 +9,7 @@ public class StatusEffectCardSO : ScriptableObject
     [Header("카드 정보")]
     public string cardName;
     public Sprite sprite;
+    public StatusEffect statusEffect;
 
     [Header("MinorArcana 정보")]
     public MinorSuit suit = MinorSuit.statusEffect;
@@ -21,6 +22,7 @@ public class StatusEffectCardSO : ScriptableObject
     public CardDebuffSO debuff;
     protected CardController controller;
     protected PlayerController playerController;
+    private MinorArcana statusEffectcard;
 
     public void InitializeSO(PlayerController _playerController)
     {
@@ -31,7 +33,13 @@ public class StatusEffectCardSO : ScriptableObject
 
     public void AddStatusEffect()
     {
-        controller.AddStatusEffectCard(this, new MinorArcana(cardName, suit, cardNum));
+        statusEffectcard = new MinorArcana(cardName, suit, cardNum);
+        controller.AddStatusEffectCard(this);
+    }
+
+    public MinorArcana GetStatusEffectCard()
+    {
+        return statusEffectcard;
     }
 
 }

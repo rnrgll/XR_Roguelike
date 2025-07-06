@@ -2,21 +2,42 @@ using CardEnum;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-public class NumUpdateUI : MonoBehaviour
+public class NumUpdateUI : UIRequire
 {
     [Header("NumPanel")]
     [SerializeField] private RectTransform NumPanel;
     [Header("SuitPanel")]
     [SerializeField] private RectTransform SuitPanel;
 
-    [SerializeField] private CardController cardController;
-
     private Dictionary<string, TMP_Text> numCounts;
     private Dictionary<string, TMP_Text> suitCounts;
 
-    private void Awake()
+    public override void InitializeUI(PlayerController pc)
+    {
+        DictionaryInit();
+        Debug.Log("[NumUI] Init 호출");
+        base.InitializeUI(pc);
+
+    }
+
+    protected override void Subscribe()
+    {
+        Debug.Log("[NumUI] Subsctibe 호출");
+        cardController.OnCardDrawn += UpdateCountFor;
+        cardController.OnCardSwapped += OnSwapCard;
+        cardController.OnChangedHands += RefreshAllCounts;
+    }
+
+    protected override void UnSubscribe()
+    {
+        cardController.OnCardDrawn -= UpdateCountFor;
+        cardController.OnCardSwapped -= OnSwapCard;
+        cardController.OnChangedHands -= RefreshAllCounts;
+    }
+    private void DictionaryInit()
     {
         numCounts = new();
         foreach (Transform child in NumPanel)
@@ -38,22 +59,12 @@ public class NumUpdateUI : MonoBehaviour
             }
         }
     }
-    private void Start()
-    {
-        RefreshAllCounts();
-
-        cardController.OnCardDrawn += UpdateCountFor;
-        cardController.OnCardSwapped += OnSwapCard;
-    }
-
-    private void OnDestroy()
-    {
-        cardController.OnCardDrawn -= UpdateCountFor;
-        cardController.OnCardSwapped -= OnSwapCard;
-    }
 
     private void RefreshAllCounts()
     {
+        Debug.Log("[NumUI] RefreshAllCounts 시작");
+        Debug.Log($"[NumUI] controller.numbersList = {string.Join(",", cardController.numbersList)}");
+        Debug.Log($"[NumUI] controller.SuitsList   = {string.Join(",", cardController.SuitsList)}");
         foreach (var keyValue in numCounts)
         {
             int idx = GetNumIndex(keyValue.Key);

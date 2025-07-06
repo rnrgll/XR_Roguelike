@@ -42,6 +42,7 @@ public class CardController : MonoBehaviour
     public CardCombinationEnum cardComb { get; private set; }
     public int[] numbersList = new int[15];
     public int[] SuitsList = new int[4];
+    public Dictionary<CardCombinationEnum, float> ComboMultDic;
     #endregion
 
     #region  설정 모음 
@@ -49,6 +50,7 @@ public class CardController : MonoBehaviour
     public Dictionary<MinorArcana, bool> IsUsableDic = new();
     public Dictionary<MinorArcana, int> MultiPleCardDic = new();
     public CardSortEnum sortStand = CardSortEnum.Suit;
+    private CardController cardController;
 
     #endregion
 
@@ -79,40 +81,123 @@ public class CardController : MonoBehaviour
     public event Action<int> OnEnterSelectionMode;
     public event Action OnExitSelectionMode;
     public Action<CardController> OnInitCardController;
+    public Action OnReady;
     #endregion
 
     #region SO관련 내용 모음
     [SerializeField] private CardEnchantSO[] EnchantArr;
     [SerializeField] private CardDebuffSO[] DebuffArr;
-    public List<CardDebuff> DebuffList { set; private get; } = new();
+    public Dictionary<CardDebuff, CardDebuffSO> DebuffDic { get; private set; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
+    public Dictionary<StatusEffect, StatusEffectCardSO> StatusEffectDic { get; private set; } = new();
     [SerializeField] private DisposableCardSO[] DisposableArr;
-    public List<MinorArcana> disposableCardList { set; private get; } = new();
+    public List<MinorArcana> disposableCardList { get; private set; } = new();
     [SerializeField] private MajorArcanaSO[] majorArcanaArr;
     #endregion
 
 
 
     #region 각종 초기화용 함수들
-    private void Start()
+    private IEnumerator Start()
     {
+        Debug.Log("[CC] Start 함수 호출");
+        yield return CsvLoadCoroutine();
+        OnChangedHands.Invoke();
+        OnReady?.Invoke();
+        Debug.Log("[cc]Start 함수 종료");
+    }
 
-        StartCoroutine(
-            CardCsvDownLoader.Start(
-                ArcanaTableLink,
-                table =>
-                {
-                    _csvTable = table;
-                    Deck = new CardDeck(_csvTable);
-                    Init();
-
-                    OnChangedHands.Invoke();
-                }
-            )
+    private IEnumerator CsvLoadCoroutine()
+    {
+        yield return CardCsvDownLoader.Start(
+            ArcanaTableLink, table =>
+            {
+                _csvTable = table;
+                Deck = new CardDeck(_csvTable);
+                Init();
+            }
         );
     }
 
-    public void OnEnable()
+
+    public void OnDisable()
+    {
+        OnCardSelected -= AddSelect;
+        OnCardDeSelected -= RemoveSelect;
+        OnCardDrawn -= AdjustCountList;
+        // TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
+
+        Deck.OnCardDebuffed -= _onDebuffApplied;
+        Deck.OnCardDebuffCleared -= _onDebuffCleared;
+    }
+
+
+    public void Init()
+    {
+        DeckPile = new DeckPile<MinorArcana>();
+        Hand = new HandPile<MinorArcana>();
+        Graveyard = new GraveyardPile<MinorArcana>();
+        BattleDeck = new BattlePile<MinorArcana>();
+
+        foreach (var debuffSO in DebuffArr)
+        {
+            DebuffDic[debuffSO.DebuffType] = debuffSO;
+        }
+        foreach (var StatusEffectSO in StatusEffectArr)
+        {
+            StatusEffectDic[StatusEffectSO.statusEffect] = StatusEffectSO;
+        }
+
+
+        BattleBonusDic = new();
+        BattlePenaltyDic = new();
+        TurnPenaltyDic = new();
+        TurnBonusDic = new();
+
+        ComboMultDic = new Dictionary<CardCombinationEnum, float>()
+        {
+            {CardCombinationEnum.HighCard , 1 },
+            {CardCombinationEnum.OnePair ,2 },
+            {CardCombinationEnum.TwoPair ,3 },
+            {CardCombinationEnum.Triple, 4},
+            {CardCombinationEnum.Straight, 6},
+            {CardCombinationEnum.Flush, 8},
+            {CardCombinationEnum.FullHouse, 12},
+            {CardCombinationEnum.FourCard, 20},
+            {CardCombinationEnum.StraightFlush, 30},
+            {CardCombinationEnum.FiveCard, 50},
+            {CardCombinationEnum.FiveJoker, 1},
+        };
+
+        ResetDeck();
+
+        #region 미사용 코드
+        // CardDicInit();
+        // Hand = CardListDic[CardStatus.Hand];
+        // stat = new BattleStat();
+        // stat.Init();
+        // Deck.OnCardAdded += OnCardAddedDeck;
+        // Deck.OnCardRemoved += OnCardRemoveDeck;
+        #endregion
+    }
+
+    public void InitializeCC(PlayerController playerController)
+    {
+        cardController = this;
+        foreach (var so in EnchantArr)
+            so.InitializeSO(playerController);
+        foreach (var so in DebuffArr)
+            so.InitializeSO(playerController);
+        foreach (var so in DisposableArr)
+            so.InitializeSO(playerController);
+        foreach (var so in StatusEffectArr)
+            so.InitializeSO(playerController);
+        foreach (var so in majorArcanaArr)
+            so.InitializeSO(playerController);
+        SubscribeAll();
+    }
+
+    private void SubscribeAll()
     {
         OnCardSelected += AddSelect;
         OnCardDeSelected += RemoveSelect;
@@ -153,62 +238,6 @@ public class CardController : MonoBehaviour
         Deck.OnCardDebuffCleared += _onDebuffCleared;
     }
 
-    public void OnDisable()
-    {
-        OnCardSelected -= AddSelect;
-        OnCardDeSelected -= RemoveSelect;
-        OnCardDrawn -= AdjustCountList;
-        // TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
-
-        Deck.OnCardDebuffed -= _onDebuffApplied;
-        Deck.OnCardDebuffCleared -= _onDebuffCleared;
-    }
-
-
-    public void Init()
-    {
-        DeckPile = new DeckPile<MinorArcana>();
-        Hand = new HandPile<MinorArcana>();
-        Graveyard = new GraveyardPile<MinorArcana>();
-        BattleDeck = new BattlePile<MinorArcana>();
-
-        foreach (var debuffSO in DebuffArr)
-        {
-            DebuffList.Add(debuffSO.DebuffType);
-        }
-
-        BattleBonusDic = new();
-        BattlePenaltyDic = new();
-        TurnPenaltyDic = new();
-        TurnBonusDic = new();
-
-        ResetDeck();
-
-
-        #region 미사용 코드
-        // CardDicInit();
-        // Hand = CardListDic[CardStatus.Hand];
-        // stat = new BattleStat();
-        // stat.Init();
-        // Deck.OnCardAdded += OnCardAddedDeck;
-        // Deck.OnCardRemoved += OnCardRemoveDeck;
-        #endregion
-    }
-
-    public void InitializeSO(PlayerController playerController)
-    {
-        foreach (var so in EnchantArr)
-            so.InitializeSO(playerController);
-        foreach (var so in DebuffArr)
-            so.InitializeSO(playerController);
-        foreach (var so in DisposableArr)
-            so.InitializeSO(playerController);
-        foreach (var so in StatusEffectArr)
-            so.InitializeSO(playerController);
-        foreach (var so in majorArcanaArr)
-            so.InitializeSO(playerController);
-        //InitializeUI();
-    }
     public void BattleInit()
     {
         // TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
@@ -219,14 +248,14 @@ public class CardController : MonoBehaviour
             BattleDeck.Add(card);
         }
         numbersList[0] = 0;
-        for (int i = 1; i < 15; i++)
+        foreach (var i in BattleDeck.GetCardList())
         {
-            numbersList[i] = 4;
-            for (int j = 0; j < 4; j++)
-            {
-                SuitsList[j]++;
-            }
+            SuitsList[(int)i.CardSuit]++;
+            numbersList[i.CardNum]++;
         }
+        Debug.Log("숫자 list 선언");
+
+
 
         foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
         {
@@ -238,6 +267,7 @@ public class CardController : MonoBehaviour
 
         BattleDeck.Shuffle();
         Draw();
+        Debug.Log("Draw");
     }
 
     public void TurnInit()
@@ -259,10 +289,12 @@ public class CardController : MonoBehaviour
 
     public void ClearDeck()
     {
+        if (Hand == null) return;
         Hand.Clear();
         BattleDeck.Clear();
         Graveyard.Clear();
     }
+
     #endregion
 
     #region 반환용 함수 모음
@@ -300,7 +332,11 @@ public class CardController : MonoBehaviour
     }
     public CardDebuffSO GetDebuffSO(CardDebuff _debuff)
     {
-        return DebuffArr[DebuffList.LastIndexOf(_debuff)];
+        return DebuffDic[_debuff];
+    }
+    public StatusEffectCardSO GetStatusEffectSO(StatusEffect _statusEffect)
+    {
+        return StatusEffectDic[_statusEffect];
     }
 
     public float GetCardBonus(CardBonus bonus)
@@ -487,15 +523,16 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        int handCard = Hand.Count;
+        int handCount = Hand.Count;
         int discCount = Discard(cards);
         ClearSelect();
-        if (handCard < 8)
-        {
-            Draw(discCount);
-        }
-        else
-            Draw();
+        int afterCount = Hand.Count;
+        int targetCount = Mathf.Min(handCount, drawNum);
+
+
+        int toDraw = targetCount - afterCount;
+        if (toDraw > 0)
+            Draw(toDraw);
     }
 
     public void AdjustCountList(MinorArcana card)
@@ -509,12 +546,14 @@ public class CardController : MonoBehaviour
     #region 임시 카드 추가 함수
     /// <summary>
     /// 일회성 카드를 패에 추가한다.
+    /// 직접 호출하지 말고 DisposableCardSo에서 AddDisposCard로 호출
     /// </summary>
     /// <param name="_disposCard">
     /// Card의 Suit는 특수 카드의 경우 Special 이외에는 해당 문양으로 지정한다.
     /// </param>
-    public void AddDisposableCard(DisposableCardSO disposableCardSO, MinorArcana _disposCard)
+    public void AddDisposableCard(DisposableCardSO disposableCardSO)
     {
+        MinorArcana _disposCard = disposableCardSO.GetDisposCard();
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
         disposableCardSO.OnSubscribe(_disposCard);
@@ -526,11 +565,12 @@ public class CardController : MonoBehaviour
     /// </summary>
     /// <param name="_statusCard">
     /// Card의 Suit는 StatusEffect로 지정한다. 숫자는 0으로 지정한다.
-    /// new MinorArcana로 생성해서 전달한다.
+    /// 직접 호출하지 말고 StatusEffectCardSo에서 AddStatusEffect로 호출
     /// </param>
     /// <param name="IsUsable">사용가능 여부를 인자로 받는다.</param>
-    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo, MinorArcana card)
+    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo)
     {
+        MinorArcana card = _statusCardInfo.GetStatusEffectCard();
         Hand.Add(card);
         IsUsableDic.Add(card, _statusCardInfo.IsUsable);
         OnChangedHands?.Invoke();

@@ -3,21 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HandNumUI : MonoBehaviour
+public class HandNumUI : UIRequire
 {
     [SerializeField] TextMeshProUGUI textArea;
-    private CardController cardController;
 
-    private void InitializeUI(CardController cc)
+    protected override void Subscribe()
     {
-        if (cardController != null)
-            cardController.OnChangedHands -= RefreshCount;
-
-        cardController = cc;
         cardController.OnChangedHands += RefreshCount;
     }
 
-    private void OnDisable()
+    protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= RefreshCount;
     }
