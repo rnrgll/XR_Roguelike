@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc35aef66c4b33e44bd373eab5d07140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardController: {fileID: 0}
+  cardControllerPrefab: {fileID: 3860805868157528225, guid: 6b21ec85c0ee71040b909c50c885a9e8, type: 3}
+  tarotDeck: {fileID: 0}
   hpText: {fileID: 0}
   maxHP: 1000
   hpBar: {fileID: 0}

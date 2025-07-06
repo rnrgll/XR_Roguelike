@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
-
+    
 
     private IEnumerator Start()
     {
