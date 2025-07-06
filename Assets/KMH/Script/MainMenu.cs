@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private GameInitializer gameInitializer;
     public void OnClickStart()
     {
         SceneManager.LoadScene("Intro");
+        gameInitializer.InitializeGame();
+
     }
 
     public void OnClickShop()

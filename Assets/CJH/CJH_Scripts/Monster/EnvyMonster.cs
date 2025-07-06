@@ -1,3 +1,4 @@
+using CardEnum;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -96,7 +97,14 @@ public class EnvyMonster : EnemyBase
                 int dmg = Mathf.RoundToInt(playerMax * 0.6f);   // 60%
                 Debug.Log($"[엔비] 차지1 실패 → 플레이어 최대체력 60% → {dmg} 데미지 + 부상카드 1장");
                 player.TakeDamage(dmg);
-                // CardManager.Instance.AddInjuryCardToHand(1);
+                var card = CardManager.Instance.GetRandomHandCard();
+                if (card != null)
+                {
+                    player.GetComponent<CardController>()
+                          .ApplyDebuff(card, CardDebuff.Injury);
+                }
+
+                yield return null;
             }
         }
         else // chargeLevel == 2
@@ -112,8 +120,21 @@ public class EnvyMonster : EnemyBase
                 int dmg = Mathf.RoundToInt(playerMax * 1.0f);    // 100%
                 Debug.Log($"[엔비] 차지2 실패 → 플레이어 최대체력 100% → {dmg} 데미지 + 부상카드 3장 + 버프");
                 player.TakeDamage(dmg);
-                player.GetCardController().SetTurnBonusList(CardEnum.CardBonus.Mult, CardEnum.BonusType.Bonus, 2.0f);
-                // CardManager.Instance.AddInjuryCardToHand(3);
+                player.GetCardController().SetTurnBonusList(CardBonus.Mult, BonusType.Bonus, 2);
+                // var card = CardManager.Instance.GetRandomHandCard();
+                var cardController = player.GetCardController();
+                // if (card != null)
+                // {
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                //     player.GetComponent<CardController>()
+                //           .ApplyDebuff(card, CardDebuff.Injury);
+                // }
+                player.GetCardController().AddStatusEffectCard(cardController.DebuffList[(int)CardDebuff.Injury], MinorArcana card);
+
+                yield return null;
             }
         }
 

@@ -1,12 +1,10 @@
 using DesignPattern;
-using System;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.GraphicsBuffer;
-
 
 public class TurnManager : Singleton<TurnManager>
 {
@@ -16,9 +14,15 @@ public class TurnManager : Singleton<TurnManager>
 
     private bool battleStarted = false;
     private bool isGameEnded = false;
-    public bool isFinal = false;
 
-    private void Awake() => SingletonInit();
+    // 보스 전투(최종 전투) 여부
+    public bool isFinal { get; private set; } = false;
+
+    private void Awake()
+    {
+        SingletonInit();
+        isFinal = false;  // 초기화
+    }
 
     public void RegisterPlayer(IPlayerActor p) => player = p;
 
@@ -31,8 +35,13 @@ public class TurnManager : Singleton<TurnManager>
 
             // 첫 등록된 EnemyBase를 기본 타겟으로 설정
             if (currentEnemy == null && e is EnemyBase monster)
-            {
                 currentEnemy = monster;
+
+            // 보스 몬스터가 등록되면 최종 전투 플래그 켜기
+            if (e is EnemyBase boss && boss.Type == EnemyType.Boss)
+            {
+                isFinal = true;
+                Debug.Log("[디버그] 보스 몬스터 등록 → 최종 전투(isFinal)로 설정");
             }
         }
     }
@@ -61,13 +70,31 @@ public class TurnManager : Singleton<TurnManager>
 
     public void StartBattle()
     {
-        if (battleStarted) return;
+        
+    if (battleStarted) return;
         battleStarted = true;
+            // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
+        var pc = player as PlayerController;
+            if (pc != null)
+                {
+                    // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
+            var cardCtrl = pc.GetComponent<CardController>();
+                    if (cardCtrl != null)
+                        {
+                cardCtrl.BattleInit();
+                Debug.Log("[TurnManager] CardController.BattleInit() 호출됨");
+                        }
+                   else
+                        {
+                Debug.LogWarning("[TurnManager] CardController 컴포넌트를 찾을 수 없음");
+                        }
+                }
         StartCoroutine(WaitForRegistrationAndStart());
     }
 
     private IEnumerator WaitForRegistrationAndStart()
     {
+        // 플레이어와 적이 모두 등록될 때까지 대기
         yield return new WaitUntil(() => player != null && enemies.Count > 0);
         yield return StartCoroutine(BattleLoop());
     }
@@ -80,30 +107,36 @@ public class TurnManager : Singleton<TurnManager>
         isGameEnded = true;
         GameOverUI.Instance.Show();
     }
+
     private IEnumerator BattleLoop()
     {
-        PlayerController pc = player as PlayerController;
+        var pc = player as PlayerController;
+
         while (true)
         {
-            // 플레이어 사망 및 게임 종료
-            if (isGameEnded) yield break;
+            // 0. 게임 종료 상태 검사
+            if (isGameEnded)
+                yield break;
 
-            // 1. 몬스터 사망
+            // 1. 몬스터 사망 및 전투 종료 처리
             if (currentEnemy == null || currentEnemy.IsDead)
             {
                 Debug.Log("전투 승리!");
                 GameStateManager.Instance.AddWin();
 
-                if (currentEnemy != null && currentEnemy.Type == EnemyType.Boss)
+                if (isFinal)
                 {
+                    // 보스(최종 전투) 승리 시
                     GameStateManager.Instance.SetBossDefeated();
+                    Debug.Log("[디버그] 최종 전투 종료 → GameClearUI 표시");
                     GameClearUI.Instance.Show();
                     isGameEnded = true;
                 }
                 else
                 {
-                    pc.RestoreHP();
-                    RewardPopupUI.Instance.Show();
+                    // 일반 몬스터 처치 시 → 즉시 맵으로 복귀
+                    Debug.Log("[디버그] 일반 전투 종료 → 맵 씬으로 복귀");
+                    Manager.Map.ShowMap();
                 }
 
                 yield break;
@@ -125,11 +158,26 @@ public class TurnManager : Singleton<TurnManager>
         }
     }
 
+    // (보상 후 맵으로 돌아갈 때 호출되는 메서드가 필요하다면 사용)
     public void ContinueAfterReward()
     {
-        Debug.Log("보상 선택 완료 → 다음 노드로 이동 or 씬 전환");
-        SceneManager.LoadScene("MapScene");
+        Debug.Log("보상 선택 완료 → 맵 씬으로 복귀");
+        Manager.Map.ShowMap();
     }
 
 
+    /// <summary>
+    /// TurnManager의 모든 상태를 초기화합니다.
+    /// </summary>
+    public void ResetState()
+    {
+        player = null;
+        enemies.Clear();
+        currentEnemy = null;
+        battleStarted = false;
+        isGameEnded = false;
+        isFinal = false;
+
+        Debug.Log("[TurnManager] 상태 초기화 완료");
+    }
 }

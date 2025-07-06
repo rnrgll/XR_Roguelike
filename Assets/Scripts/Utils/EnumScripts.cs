@@ -11,7 +11,7 @@ namespace CardEnum
     // TODO : 추후 기획에 맞춰 조정
     public enum CardEnchant { none, Bonus, Mult, Wild, Glass, Steel, Gold, Lucky }
 
-    public enum CardDebuff { none, Charm, Corruption, Rust }
+    public enum CardDebuff { none, Charm, Corruption, Rust, Injury }
     public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
 
     public enum CardBonus { Score, Mult, Ratio }

@@ -12,12 +12,18 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private CardController cardControllerPrefab;
     private CardController _cardController;
     public CardController cardController => _cardController;
+    [SerializeField] private TarotDeck tarotDeck;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
+
+
     public int MaxHP => maxHP;
     private int currentHP;
+    private int flatAttackBonus = 0;
+    private int attackBuffTurns = 0;
     private float additionalDamage;
     private float ratio;
+    private float attackMultiplier = 1f;
     public bool IsDead => currentHP <= 0;
     private bool turnEnded;
     private bool isNextTurnSkip = false;
@@ -25,10 +31,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private bool isInvincible;
     private bool isAdditionalDamage;
 
+    public CardController CardController => cardController;
+    public TarotDeck TarotDeck => tarotDeck;
 
-    // private float attackMultiplier = 1f;
-    private int flatAttackBonus = 0;
-    private int attackBuffTurns = 0;
+
     public Action OnTurnEnd;
     public Action OnTurnStarted;
     public Action<int> OnPlayerDamaged;
@@ -43,7 +49,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
-
 
 
     private IEnumerator Start()
@@ -67,6 +72,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         _cardController = Instantiate(cardControllerPrefab, transform);
         _cardController.name = "CardController";
         Debug.Log($"[PC] cardController 할당됨: {cardController.name}");
+        tarotDeck = GetComponent<TarotDeck>();
+
 
         bool ready = false;
         cardController.OnReady += () => ready = true;
@@ -74,6 +81,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
         cardController.OnSubmit += OnAttackTriggered;
         Debug.Log("[PC] OnSubmit에 OnAttackTriggered 연결 완료");
+
+        var pc = FindObjectOfType<PlayerController>();
+        TurnManager.Instance.RegisterPlayer(pc);
+        GameStateManager.Instance.RegisterPlayerController(pc);
 
         InitializeCard();
     }
@@ -412,4 +423,45 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         return cardController;
     }
+
+    /// <summary>
+    /// 게임 시작 혹은 전투 시작 시
+    /// 플레이어의 모든 상태를 기본값으로 되돌립니다.
+    /// </summary>
+    public void ResetState()
+    {
+        // 1. 체력 초기화
+        currentHP = maxHP;
+        UpdateHpBar();
+
+        // 2. 버프·디버프 상태 초기화
+        attackMultiplier = 1f;
+        flatAttackBonus = 0;
+        attackBuffTurns = 0;
+        healBonusQueue.Clear();
+        attackBonusQueue.Clear();
+        isInvincible = false;
+        isTurnSkip = false;
+        isNextTurnSkip = false;
+        isAdditionalDamage = false;
+        ratio = 1f;
+        additionalDamage = 0f;
+
+        // 3. 카드 컨트롤러(덱·핸드) 초기화
+        if (cardController != null)
+        {
+            cardController.BattleInit();
+            Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
+        }
+
+        // 4. 턴 플래그 초기화
+        turnEnded = false;
+
+        Debug.Log("[PlayerController] 상태 초기화 완료");
+    }
+
 }

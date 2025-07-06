@@ -87,10 +87,10 @@ public class CardController : MonoBehaviour
     #region SO관련 내용 모음
     [SerializeField] private CardEnchantSO[] EnchantArr;
     [SerializeField] private CardDebuffSO[] DebuffArr;
-    public List<CardDebuff> DebuffList { set; private get; } = new();
+    public Dictionary<CardDebuff, CardDebuffSO> DebuffDic { get; private set; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
     [SerializeField] private DisposableCardSO[] DisposableArr;
-    public List<MinorArcana> disposableCardList { set; private get; } = new();
+    public List<MinorArcana> disposableCardList { get; private set; } = new();
     [SerializeField] private MajorArcanaSO[] majorArcanaArr;
     #endregion
 
@@ -140,7 +140,7 @@ public class CardController : MonoBehaviour
 
         foreach (var debuffSO in DebuffArr)
         {
-            DebuffList.Add(debuffSO.DebuffType);
+            DebuffDic[debuffSO.DebuffType] = debuffSO;
         }
 
         BattleBonusDic = new();
@@ -326,7 +326,7 @@ public class CardController : MonoBehaviour
     }
     public CardDebuffSO GetDebuffSO(CardDebuff _debuff)
     {
-        return DebuffArr[DebuffList.LastIndexOf(_debuff)];
+        return DebuffDic[_debuff];
     }
 
     public float GetCardBonus(CardBonus bonus)
