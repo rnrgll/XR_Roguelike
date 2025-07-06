@@ -13,6 +13,7 @@ public class BattleSceneManager : MonoBehaviour
     [SerializeField] private GameObject lasMonsterPrefab;
     [SerializeField] private GameObject envyMonsterPrefab;
     [SerializeField] private GameObject prideMonsterPrefab;
+    [SerializeField] private GameObject CardHandUIPrefab;
     [SerializeField] private GameObject gridMonsterPrefab;
     [SerializeField] private GameObject slothMonsterPrefab;
     [SerializeField] private GameObject lustMonsterPrefab;
@@ -57,6 +58,21 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("Player 등록 완료");
             yield return null; // 한 프레임
 
+            yield return new WaitUntil(() => pc.GetCardController() != null);
+            var cc = pc.GetCardController();
+
+            bool ready = false;
+            cc.OnReady += () => ready = true;
+            yield return new WaitUntil(() => ready);
+
+            Debug.Log("[BattleManager] CardHandUI init");
+            var go = Instantiate(CardHandUIPrefab, transform);
+            go.GetComponent<BattleUI>().InitScene(pc);
+            cc.BattleInit();
+
+
+            Debug.Log("[BattleManager] cardHand 생성");
+
             TurnManager.Instance.StartBattle();
             Debug.Log(" 전투 시작됨");
 
@@ -65,11 +81,11 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
-             /// <summary>
-             /// 스테이지별 몬스터 스폰 로직
-             /// 첫 번째 조우(승리 수 0)에서는 Las, Greed, Pride만 스폰
-             /// 이후 스테이지는 원하는 대로 변경 가능
-             /// </summary>
+    /// <summary>
+    /// 스테이지별 몬스터 스폰 로직
+    /// 첫 번째 조우(승리 수 0)에서는 Las, Greed, Pride만 스폰
+    /// 이후 스테이지는 원하는 대로 변경 가능
+    /// </summary>
     private void SpawnMonstersForStage()
     {
         int wins = GameStateManager.Instance.Wins;

@@ -9,7 +9,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
-    [SerializeField] private CardController cardController;
+    [SerializeField] private CardController cardControllerPrefab;
+    private CardController _cardController;
+    public CardController cardController => _cardController;
     [SerializeField] private TarotDeck tarotDeck;
     [SerializeField] private Text hpText;
     [SerializeField] private int maxHP = 100;
@@ -41,22 +43,13 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     [Header("HP UI 연동")]
     [SerializeField] private Slider hpBar; // <- 인스펙터에서 슬라이더 연결
-    public float GetAttackMultiplier() => attackMultiplier;
+    // public float GetAttackMultiplier() => attackMultiplier;
     public int GetFlatAttackBonus() => ApplyFlatAttackBuff();
 
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
 
-
-    private void Awake()
-    {
-        // Inspector 에 할당 안 되어 있으면 자동으로 GetComponent 시도
-        if (cardController == null)
-            cardController = GetComponent<CardController>();
-        if (tarotDeck == null)
-            tarotDeck = GetComponent<TarotDeck>();
-    }
 
     private IEnumerator Start()
     {
@@ -76,8 +69,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         Debug.Log("[PC] CardManager 준비 완료");
 
         Debug.Log("[PC] cardController 대기 전");
-        yield return new WaitUntil(() => cardController != null);
+        _cardController = Instantiate(cardControllerPrefab, transform);
+        _cardController.name = "CardController";
         Debug.Log($"[PC] cardController 할당됨: {cardController.name}");
+        tarotDeck = GetComponent<TarotDeck>();
+
+
+        bool ready = false;
+        cardController.OnReady += () => ready = true;
+        yield return new WaitUntil(() => ready);
 
         cardController.OnSubmit += OnAttackTriggered;
         Debug.Log("[PC] OnSubmit에 OnAttackTriggered 연결 완료");
@@ -91,8 +91,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private void InitializeCard()
     {
-        cardController.InitializeSO(this);
-        //cardController.InitializeUI(this);
+        cardController.InitializeCC(this);
     }
 
     private void OnDestroy()
@@ -128,8 +127,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         // 4. 공격 수행
         if (target != null)
         {
-            int damage = BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target);
-            OnMonsterDamaged(damage);
+            int damage = BattleManager.Instance.ExecuteCombinationAttack(combo, comboCardNums, target, this);
+            OnMonsterDamaged?.Invoke(damage);
         }
         else
         {
@@ -171,12 +170,13 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     }
 
 
-    public void ApplyAttackBuff(float multiplier, int turns)
-    {
-        attackMultiplier = multiplier;
-        attackBuffTurns = turns;
-        Debug.Log($"[플레이어] 공격력 {multiplier}배 버프 적용, {turns}턴 지속");
-    }
+    // 일단 사용하지 않아 삭제합니다. 추후 필요하면 복구하면 되겠습니다.
+    // public void ApplyAttackBuff(float multiplier, int turns)
+    // {
+    //     attackMultiplier = multiplier;
+    //     attackBuffTurns = turns;
+    //     Debug.Log($"[플레이어] 공격력 {multiplier}배 버프 적용, {turns}턴 지속");
+    // }
 
     public int ApplyFlatAttackBuff()
     {
@@ -209,22 +209,33 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         //     }
         // }
     }
-
+    /// <summary>
+    /// 몬스터가 주는 데미지에 배수를 적용한다.
+    /// </summary>
     public void ApplyBonusRatioToMonster(int dmg)
     {
         isAdditionalDamage = true;
         additionalDamage = dmg * (ratio - 1);
     }
-
+    /// <summary>
+    /// 몬스터 데미지 배수를 설정한다
+    /// </summary>
     public void SetRatio(float _ratio)
     {
         ratio = _ratio;
     }
+
+    /// <summary>
+    /// 다음 턴 스킵을 설정한다.
+    /// </summary>
     public void SetTurnSkip()
     {
         isNextTurnSkip = true;
     }
 
+    /// <summary>
+    /// 플레이어의 최대 체력에 비례하여 설정한다.
+    /// </summary>
     public void ForceSetHpToRate(float rate)
     {
         currentHP = Mathf.RoundToInt(maxHP * rate);
@@ -265,15 +276,15 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         turnEnded = true;
         isInvincible = false;
 
-        if (attackBuffTurns > 0)
-        {
-            attackBuffTurns--;
-            if (attackBuffTurns <= 0)
-            {
-                attackMultiplier = 1f;
-                Debug.Log("[플레이어] 공격력 버프 해제");
-            }
-        }
+        // if (attackBuffTurns > 0)
+        // {
+        //     attackBuffTurns--;
+        //     if (attackBuffTurns <= 0)
+        //     {
+        //         attackMultiplier = 1f;
+        //         Debug.Log("[플레이어] 공격력 버프 해제");
+        //     }
+        // }
         OnTurnEnd?.Invoke();
     }
 

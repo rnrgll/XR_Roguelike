@@ -2,25 +2,26 @@ using CardEnum;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CombinationUI : MonoBehaviour
+public class CombinationUI : UIRequire
 {
-    private CardController cardController;
     [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private TextMeshProUGUI sumText;
 
-    private void InitializeUI(CardController cc)
+    public override void InitializeUI(PlayerController pc)
     {
-        if (cardController != null)
-            cardController.OnSelectionChanged -= RefreshUI;
-
-        cardController = cc;
+        base.InitializeUI(pc);
         RefreshUI();
+    }
+
+    protected override void Subscribe()
+    {
         cardController.OnSelectionChanged += RefreshUI;
     }
 
-    private void OnDisable()
+    protected override void UnSubscribe()
     {
         cardController.OnSelectionChanged -= RefreshUI;
     }
@@ -34,7 +35,7 @@ public class CombinationUI : MonoBehaviour
             return;
         }
         comboText.text = _comb.ToString();
-        sumText.text = cardController.sumofNums.ToString();
+        sumText.text = $"{cardController.sumofNums.ToString()} * {cardController.ComboMultDic[_comb].ToString()}";
     }
 
     private void RefreshUI()

@@ -12,6 +12,7 @@ namespace CardEnum
     public enum CardEnchant { none, Bonus, Mult, Wild, Glass, Steel, Gold, Lucky }
 
     public enum CardDebuff { none, Charm, Corruption, Rust, Injury }
+    public enum StatusEffect { Injury, Mucus }
     public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
 
     public enum CardBonus { Score, Mult, Ratio }
@@ -93,14 +94,14 @@ namespace Item
         Lobby = 1,
         InGame = 2,
     }
-    
+
     public enum InventoryItemType
     {
         Recovery,
         Enforce,
         Special
     }
-    
+
     public enum EffectType
     {
         None,
@@ -135,7 +136,7 @@ namespace UI
         Item,
         Setting,
     }
-    
+
 }
 
 
@@ -152,12 +153,12 @@ namespace Event
 
     public enum SubEffectType
     {
-        NoEffect= 0,
+        NoEffect = 0,
         AttackBoost = 20,
         ResourceGain,
         ObtainItem,
         ObtainEnhancedCard,
         ResourceLoss,
     }
-    
+
 }

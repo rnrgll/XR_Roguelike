@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 
-public class BattleDeckUI : MonoBehaviour
+public class BattleDeckUI : UIRequire
 {
     [SerializeField] private HandUIController handUI;
     [SerializeField] private RectTransform CupsHorizon;
@@ -13,10 +13,11 @@ public class BattleDeckUI : MonoBehaviour
     [SerializeField] private RectTransform WandsHorizon;
 
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private CardController cardController;
+
     [SerializeField] private GameObject BattleDeckCanvas;
     [SerializeField] private Button BackGround;
     [SerializeField] private Button CloseButton;
+
 
     private List<GameObject> spawnedCards = new List<GameObject>();
     private bool isSetted = false;
@@ -24,16 +25,16 @@ public class BattleDeckUI : MonoBehaviour
     private void Awake()
     {
         BattleDeckCanvas.SetActive(false);
+        handUI.OnCardSetted += isSet;
     }
 
-    private void OnEnable()
+    protected override void Subscribe()
     {
-        handUI.OnCardSetted += isSet;
         BackGround.onClick.AddListener(ClosePanel);
         CloseButton.onClick.AddListener(ClosePanel);
     }
 
-    private void OnDisable()
+    protected override void UnSubscribe()
     {
         BackGround.onClick.RemoveListener(ClosePanel);
         CloseButton.onClick.RemoveListener(ClosePanel);
@@ -45,6 +46,7 @@ public class BattleDeckUI : MonoBehaviour
         BattleDeckCanvas.SetActive(true);
         RefreshPanel();
     }
+
     private void ClosePanel()
     {
         BattleDeckCanvas.SetActive(false);

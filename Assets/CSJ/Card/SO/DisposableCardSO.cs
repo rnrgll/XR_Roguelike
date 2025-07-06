@@ -33,8 +33,7 @@ public class DisposableCardSO : ScriptableObject
     public void AddDisposableCard()
     {
         disposableCard = new MinorArcana(cardName, suit, cardNum);
-        TurnManager.Instance.GetPlayerController().GetCardController().
-        AddDisposableCard(this, disposableCard);
+        controller.AddDisposableCard(this);
     }
 
     public virtual void OnCardPlayed(MinorArcana card) { }
@@ -73,6 +72,11 @@ public class DisposableCardSO : ScriptableObject
     public void RemoveCard()
     {
         playerController.GetCardController().RemoveDisposableCard(disposableCard);
+    }
+
+    public MinorArcana GetDisposCard()
+    {
+        return disposableCard;
     }
 
 
