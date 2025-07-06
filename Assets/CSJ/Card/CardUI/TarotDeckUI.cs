@@ -59,13 +59,13 @@ public class TarotDeckUI : UIRequire
     protected override void Subscribe()
     {
         currentCardUI.OnClick += OnMajorCardClicked;
-        //Manager.UI.OnCardDeckToggleClicked += SetActive;
+        Manager.UI.OnToggleClicked += SetActive;
     }
 
     protected override void UnSubscribe()
     {
         currentCardUI.OnClick -= OnMajorCardClicked;
-        //Manager.UI.OnCardDeckToggleClicked -= SetActive;
+        Manager.UI.OnToggleClicked -= SetActive;
     }
 
     public void SetActive(bool isActive)
