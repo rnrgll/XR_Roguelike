@@ -13,14 +13,9 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     [SerializeField] private CardController cardControllerPrefab;
     private CardController _cardController;
     public CardController cardController => _cardController;
-<<<<<<< Updated upstream
     [SerializeField] private TarotDeck tarotDeckPrefab;
     private TarotDeck _tarotDeck;
     public TarotDeck tarotDeck => _tarotDeck;
-    [SerializeField] private Text hpText;
-=======
-    [SerializeField] private TarotDeck tarotDeck;
->>>>>>> Stashed changes
     [SerializeField] private int maxHP = 100;
 
 

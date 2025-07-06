@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7924cfac485e19940a34e40befb2e039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 500
-  type: 0
+  maxHP: 1000
+  type: 1
   basicRatio: 0.05
   heavyRatio: 0.15
   specialRatio: 0.1
