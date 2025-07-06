@@ -67,8 +67,8 @@ public class PrideLuciferMonster : EnemyBase
             yield break;
         }
 
-        // 기본 공격 (3의 배수가 아닐 때는 스킵)
-        if (turn % 3 == 0)
+        // 기본 공격 (3번째 턴이 아닐 때 스킵)
+        if (turn % 3 != 0)
         {
             int dmg = Mathf.RoundToInt(playerMax * 0.1f);  // 플레이어 최대체력의 10%
             Debug.Log("[프라이드] 기본 공격! 플레이어 최대체력 10% → " + dmg);

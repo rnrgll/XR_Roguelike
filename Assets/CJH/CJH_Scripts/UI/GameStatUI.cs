@@ -6,9 +6,9 @@ public class GameStatusUI : MonoBehaviour
 {
     public static GameStatusUI Instance;
 
-    [Header("몬스터 정보")]
-    public TextMeshProUGUI monsterHPText;
-    public TextMeshProUGUI accumulatedDamageText;
+    //[Header("몬스터 정보")]
+    //public TextMeshProUGUI monsterHPText;
+    //public TextMeshProUGUI accumulatedDamageText;
 
     private int accumulatedDamage = 0;
     private int maxMonsterHP = 1000;
@@ -27,20 +27,20 @@ public class GameStatusUI : MonoBehaviour
     {
         maxMonsterHP = monsterMaxHP;
         accumulatedDamage = 0;
-        UpdateMonsterStatus();
+        //UpdateMonsterStatus();
     }
 
     public void AddDamage(int damage)
     {
         accumulatedDamage += damage;
-        UpdateMonsterStatus();
+        //UpdateMonsterStatus();
     }
 
-    private void UpdateMonsterStatus()
-    {
-        monsterHPText.text = $"HP: {accumulatedDamage} / {maxMonsterHP}";
-        accumulatedDamageText.text = $"누적 피해: {accumulatedDamage}";
-    }
+   //private void UpdateMonsterStatus()
+   //{
+   //    monsterHPText.text = $"HP: {accumulatedDamage} / {maxMonsterHP}";
+   //    accumulatedDamageText.text = $"누적 피해: {accumulatedDamage}";
+   //}
 
 
     public void SetStage(int stage)
