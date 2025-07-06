@@ -332,22 +332,26 @@ public class CardController : MonoBehaviour
     public float GetCardBonus(CardBonus bonus)
     {
         float value = 0;
-        foreach (var i in TurnBonusDic[bonus])
-        {
-            value += i;
-        }
-        foreach (var i in BattleBonusDic[bonus])
-        {
-            value += i;
-        }
-        foreach (var i in TurnPenaltyDic[bonus])
-        {
-            value -= i;
-        }
-        foreach (var i in TurnPenaltyDic[bonus])
-        {
-            value -= i;
-        }
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (BattleBonusDic.ContainsKey(bonus))
+            foreach (var i in BattleBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnPenaltyDic[bonus])
+            {
+                value -= i;
+            }
+        if (BattlePenaltyDic.ContainsKey(bonus))
+            foreach (var i in BattlePenaltyDic[bonus])
+            {
+                value -= i;
+            }
         return value;
     }
 

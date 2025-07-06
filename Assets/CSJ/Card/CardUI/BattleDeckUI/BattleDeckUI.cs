@@ -88,7 +88,6 @@ public class BattleDeckUI : UIRequire
             var ui = go.GetComponent<MiniCardUI>();
             ui.Setup(card);
             ui.MarkUsed(UsedCard.Contains(card));
-
             spawnedCards.Add(go);
         }
     }
