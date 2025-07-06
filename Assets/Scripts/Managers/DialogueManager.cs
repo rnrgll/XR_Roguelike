@@ -65,9 +65,8 @@ namespace Managers
                     speakerName = table.Table[r, columnMap["speakerName"]],
                     position =  table.Table[r, columnMap["position"]],
                     portraitKey = table.Table[r, columnMap["portraitKey"]],
-                    dialogueText = table.Table[r, columnMap["dialogueText"]],
+                    dialogueText = table.Table[r, columnMap["dialogueText"]].Replace("\\n", "\n"),
                 };
-                
                 lines.Add(line);
             }
 

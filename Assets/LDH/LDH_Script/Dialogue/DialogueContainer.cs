@@ -97,7 +97,7 @@ namespace Dialogue
 
         private IEnumerator TypeText(string text, float typingSpeed)
         {
-            text = text.Replace("\\n", "\n");
+            
             dialogueText.text = "";
             string current = "";
             for (int i = 0; i < text.Length; i++)

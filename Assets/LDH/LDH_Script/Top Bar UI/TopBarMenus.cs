@@ -36,6 +36,8 @@ namespace TopBarUI
 
         private void OnMapToggleChanged(bool isOn)
         {
+            if (Manager.Map.MapViewLock)
+                return;
             Manager.UI.SetUIActive(GlobalUI.Map, isOn);
         }
 
