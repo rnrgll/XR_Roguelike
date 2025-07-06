@@ -152,10 +152,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1195877377}
+  playerPrefab: {fileID: 0}
   lasMonsterPrefab: {fileID: 8418062639792227227, guid: de0361b5d2215b34ea09d68e54585421, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
   prideMonsterPrefab: {fileID: 0}
   CardHandUIPrefab: {fileID: 8305541565112924176, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+  gridMonsterPrefab: {fileID: 0}
+  slothMonsterPrefab: {fileID: 0}
+  lustMonsterPrefab: {fileID: 0}
+  gluttonMonsterPrefab: {fileID: 0}
 --- !u!4 &15986806
 Transform:
   m_ObjectHideFlags: 0
@@ -419,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7639cc4101cbb488543964c7756235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StatusEffectArr: []
 --- !u!4 &316884214
 Transform:
   m_ObjectHideFlags: 0
@@ -1418,9 +1424,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterHPText: {fileID: 0}
   accumulatedDamageText: {fileID: 0}
-  comboText: {fileID: 0}
-  multiplierText: {fileID: 0}
-  stageLabel: {fileID: 0}
 --- !u!114 &1276296884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2300,6 +2303,10 @@ PrefabInstance:
       objectReference: {fileID: 1273428557}
     - target: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
       propertyPath: cardController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
+      propertyPath: cardControllerPrefab
       value: 
       objectReference: {fileID: 3860805868157528225, guid: 6b21ec85c0ee71040b909c50c885a9e8, type: 3}
     m_RemovedComponents: []

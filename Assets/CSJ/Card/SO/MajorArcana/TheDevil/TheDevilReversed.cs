@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tarot/Abilities/TheDevil/Reversed")]
+[CreateAssetMenu(fileName = "TheDevilReversed", menuName = "Tarot/Abilities/TheDevil/Reversed")]
 public class TheDevilReversedAbility : ScriptableObject, IArcanaAbility
 {
     private PlayerController playerController;
@@ -24,7 +24,7 @@ public class TheDevilReversedAbility : ScriptableObject, IArcanaAbility
                 playerController.ChangeMaxHp(-(nowGold / 10 + 1));
             }
             MinorArcana contractCard = new MinorArcana("Contract", CardEnum.MinorSuit.Special, 0);
-            playerController.GetCardController().AddDisposableCard(contractSO, contractCard);
+            playerController.GetCardController().AddDisposableCard(contractSO);
         }
         // TODO : 추후 제대로 구현
     }

@@ -132,8 +132,7 @@ public class EnvyMonster : EnemyBase
                 //     player.GetComponent<CardController>()
                 //           .ApplyDebuff(card, CardDebuff.Injury);
                 // }
-                player.GetCardController().AddStatusEffectCard(cardController.DebuffList[(int)CardDebuff.Injury], MinorArcana card);
-
+                cardController.StatusEffectDic[StatusEffect.Injury].AddStatusEffect();
                 yield return null;
             }
         }

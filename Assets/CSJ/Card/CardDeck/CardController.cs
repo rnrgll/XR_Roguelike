@@ -89,6 +89,7 @@ public class CardController : MonoBehaviour
     [SerializeField] private CardDebuffSO[] DebuffArr;
     public Dictionary<CardDebuff, CardDebuffSO> DebuffDic { get; private set; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
+    public Dictionary<StatusEffect, StatusEffectCardSO> StatusEffectDic { get; private set; } = new();
     [SerializeField] private DisposableCardSO[] DisposableArr;
     public List<MinorArcana> disposableCardList { get; private set; } = new();
     [SerializeField] private MajorArcanaSO[] majorArcanaArr;
@@ -142,6 +143,11 @@ public class CardController : MonoBehaviour
         {
             DebuffDic[debuffSO.DebuffType] = debuffSO;
         }
+        foreach (var StatusEffectSO in StatusEffectArr)
+        {
+            StatusEffectDic[StatusEffectSO.statusEffect] = StatusEffectSO;
+        }
+
 
         BattleBonusDic = new();
         BattlePenaltyDic = new();
@@ -327,6 +333,10 @@ public class CardController : MonoBehaviour
     public CardDebuffSO GetDebuffSO(CardDebuff _debuff)
     {
         return DebuffDic[_debuff];
+    }
+    public StatusEffectCardSO GetStatusEffectSO(StatusEffect _statusEffect)
+    {
+        return StatusEffectDic[_statusEffect];
     }
 
     public float GetCardBonus(CardBonus bonus)
@@ -536,12 +546,14 @@ public class CardController : MonoBehaviour
     #region 임시 카드 추가 함수
     /// <summary>
     /// 일회성 카드를 패에 추가한다.
+    /// 직접 호출하지 말고 DisposableCardSo에서 AddDisposCard로 호출
     /// </summary>
     /// <param name="_disposCard">
     /// Card의 Suit는 특수 카드의 경우 Special 이외에는 해당 문양으로 지정한다.
     /// </param>
-    public void AddDisposableCard(DisposableCardSO disposableCardSO, MinorArcana _disposCard)
+    public void AddDisposableCard(DisposableCardSO disposableCardSO)
     {
+        MinorArcana _disposCard = disposableCardSO.GetDisposCard();
         Hand.Add(_disposCard);
         disposableCardList.Add(_disposCard);
         disposableCardSO.OnSubscribe(_disposCard);
@@ -553,11 +565,12 @@ public class CardController : MonoBehaviour
     /// </summary>
     /// <param name="_statusCard">
     /// Card의 Suit는 StatusEffect로 지정한다. 숫자는 0으로 지정한다.
-    /// new MinorArcana로 생성해서 전달한다.
+    /// 직접 호출하지 말고 StatusEffectCardSo에서 AddStatusEffect로 호출
     /// </param>
     /// <param name="IsUsable">사용가능 여부를 인자로 받는다.</param>
-    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo, MinorArcana card)
+    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo)
     {
+        MinorArcana card = _statusCardInfo.GetStatusEffectCard();
         Hand.Add(card);
         IsUsableDic.Add(card, _statusCardInfo.IsUsable);
         OnChangedHands?.Invoke();
