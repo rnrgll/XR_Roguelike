@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LDH/LDH_Scene/EventScene.unity
     guid: 8771a0de5bdb342fd83b5741f41aee07
+  - enabled: 1
+    path: Assets/CJH/CJH_Scene/BattleScene.unity
+    guid: a786f33dbe6419547bdbde05b538dd8c
+  - enabled: 1
+    path: Assets/CJH/CJH_Scene/BossBattleScene.unity
+    guid: 8eb207d42cf207e4ba02ad154b73ec32
   m_configObjects: {}
