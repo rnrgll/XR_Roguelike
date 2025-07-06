@@ -23,7 +23,10 @@ public abstract class UIRequire : MonoBehaviour, IHandUI
     protected void OnCreate()
     {
         if (cardController != null)
+        {
+            UnSubscribe();
             Subscribe();
+        }
     }
 
     protected void OnDestroy()
