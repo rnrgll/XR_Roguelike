@@ -57,7 +57,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         
         
         //골드 //todo:골드 초기화 값 수정 필요
-        AddGold(1000);
+        Gold = 1000;
     }
     public void RegisterPlayerController(PlayerController pc)
     {
@@ -106,12 +106,17 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
         OnGetEnchantItem?.Invoke(enchantItem);
     }
-    public void RemoveItem(string itemID)
+    public void RemoveItem(string itemID, int slotIdx)
     {
-        int idx = _itemInventory.FindIndex(id => id == itemID);
-        if (idx != -1)
+        if (slotIdx < 0 || slotIdx >= _itemInventory.Count)
         {
-            _itemInventory[idx] = string.Empty;
+            Debug.LogWarning("잘못된 인덱스입니다.");
+            return;
+        }
+
+        if (_itemInventory[slotIdx] == itemID)
+        {
+            _itemInventory[slotIdx] = string.Empty;
             OnItemChanged?.Invoke(itemID);
         }
     }

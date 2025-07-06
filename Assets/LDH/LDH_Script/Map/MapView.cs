@@ -20,9 +20,9 @@ namespace Map
         public Color32 backgroundColor = Color.white;
        
         [Header("Colors")] 
-        public static Color32 visitedColor = Color.white; //방문 or 도달 가능한 노드 색상
+        public static Color32 visitedColor =  new Color32(0x23, 0x3B, 0x54, 0xFF);//방문 or 도달 가능한 노드 색상
         public static Color32 lockedColor = Color.gray; // 잠긴 노드 색상
-        public static Color32 lineVisitedColor = Color.white; // 방문 or 도달 가능한 경로 색상
+        public static Color32 lineVisitedColor =  new Color32(0x23, 0x3B, 0x54, 0xFF); // 방문 or 도달 가능한 경로 색상
         public static Color32 lineLockedColor = Color.gray; // 잠긴 경로 색상
 
         
@@ -84,7 +84,7 @@ namespace Map
 
             SetLineColors();
 
-            CreateMapBackground();
+            //CreateMapBackground();
         }
         #endregion
 

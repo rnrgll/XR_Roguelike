@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private Queue<Buff> attackBonusQueue = new();
 
 
-    private IEnumerator Start()
+    public IEnumerator StartSetting()
     {
         Debug.Log("[PC] Start 코루틴 진입");
         currentHP = maxHP;

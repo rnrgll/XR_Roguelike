@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterHPText: {fileID: 0}
-  accumulatedDamageText: {fileID: 0}
+  monsterHpSlider: {fileID: 0}
 --- !u!114 &1260563644
 MonoBehaviour:
   m_ObjectHideFlags: 0

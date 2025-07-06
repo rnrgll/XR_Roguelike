@@ -53,11 +53,11 @@ namespace InGameShop
             
             
             //상점 진입시 다이얼로그
-            if(Manager.Map.CurrentMap.CurrentNode.y == 1)
+            if(Manager.Map.CurrentMap.CurrentNode.x == 1)
                 Manager.Dialogue.PlayDialogue(DialogueType.FirstInGameShop);
             else
             {
-                Debug.Log(Manager.Map.CurrentMap.CurrentNode.y );
+                Debug.Log(Manager.Map.CurrentMap.CurrentNode.x );
                 Manager.Dialogue.PlayDialogue(DialogueType.InGameShop);
             }
                 

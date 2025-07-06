@@ -13,7 +13,7 @@ namespace Managers
         #region Global UI Object
 
         public GameObject TopBarUI { get; private set; }
-        public Action<bool> OnCardDeckToggleClicked => TopBarUI.GetComponent<TopBarMenus>().OnCardDeckToggleClicked;
+        public Action<bool> OnToggleClicked => TopBarUI.GetComponent<TopBarMenus>().OnToggleClicked;
         public GameObject MapUI { get; private set; }
         
         public GameObject DeckUI { get; private set; }
