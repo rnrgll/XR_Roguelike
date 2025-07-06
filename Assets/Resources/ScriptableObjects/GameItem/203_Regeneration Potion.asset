@@ -15,7 +15,7 @@ MonoBehaviour:
   shopType: 2
   itemType: 0
   id: 203
-  itemName: 
+  itemName: "\uC7AC\uC0DD \uD3EC\uC158"
   description: "3\uD134 \uB3D9\uC548 \uB9E4 \uD134 \uCCB4\uB825 20%\uC529 \uD68C\uBCF5"
   price: 30
   sprite: {fileID: 21300000, guid: 359011bd35660408d96f42e11d3e8d6a, type: 3}

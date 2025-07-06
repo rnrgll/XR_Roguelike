@@ -45,6 +45,9 @@ namespace TopBarUI
             _slotButton.onClick.AddListener(UseItem);
             AddEventTrigger(EventTriggerType.PointerEnter, (e) => ActiveItemInfo(true)); //이벤트 트리거 등록
             AddEventTrigger(EventTriggerType.PointerExit, (e) => ActiveItemInfo(false)); //이벤트 트리거 등록
+            
+            if(Manager.GameState.ItemInventory.Count==3)
+                UpdateSlot(Manager.GameState.ItemInventory[slotIndex]);
         }
 
         private void OnDisable()

@@ -15,7 +15,7 @@ MonoBehaviour:
   shopType: 2
   itemType: 1
   id: 5102
-  name: "\uC640\uC77C\uB4DC \uCE74\uB4DC"
+  itemName: "\uC640\uC77C\uB4DC \uCE74\uB4DC"
   description: "\uD574\uB2F9 \uCE74\uB4DC\uB294 \uBAA8\uB4E0 \uBB38\uC591\uC73C\uB85C
     \uCDE8\uAE09"
   price: 140

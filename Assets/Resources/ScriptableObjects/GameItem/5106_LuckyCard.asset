@@ -15,7 +15,7 @@ MonoBehaviour:
   shopType: 2
   itemType: 1
   id: 5106
-  name: "\uD589\uC6B4 \uCE74\uB4DC"
+  itemName: "\uD589\uC6B4 \uCE74\uB4DC"
   description: "20% \uD655\uB960\uB85C \uBC30\uC218 60 \uC99D\uAC00/ 10% \uD655\uB960\uB85C
     \uC7AC\uD654 50 \uD68D\uB4DD"
   price: 180

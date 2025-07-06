@@ -24,10 +24,7 @@ namespace Test
             // int randIdx = Manager.randomManager.RandInt(0, testItemIDList.Count);
             // string randItem = testItemIDList[randIdx];
             // Manager.GameState.AddItem(randItem);
-            Manager.GameState.AddItem("207");
-            Manager.GameState.AddItem("208");
-            Manager.GameState.AddItem("209");
-            
+
             // _tarotDeck.AddMajorCards(_startCard);
         }
 

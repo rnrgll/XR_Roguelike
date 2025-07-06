@@ -1,3 +1,4 @@
+using LDH.LDH_Script;
 using Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ public class GameInitializer : MonoBehaviour
         // 4) UI 상단바 활성화
         Manager.UI.TopBarUI.SetActive(true);
         Debug.Log("[Init] TopBarUI 활성화 완료");
-
+       
         // 5) PlayerController 초기화 (HP, 카드 등)
         var pc = FindObjectOfType<PlayerController>();
         if (pc != null)
@@ -45,10 +46,12 @@ public class GameInitializer : MonoBehaviour
         {
             Debug.LogWarning("[Init] PlayerController를 찾을 수 없습니다");
         }
+    
 
         // 6) 씬 전환: 맵 씬 혹은 전투 씬
         //    프롤로그(인트로)씬으로 전환합니다.
         SceneManager.LoadScene("Intro");
+        
     }
 
 }
