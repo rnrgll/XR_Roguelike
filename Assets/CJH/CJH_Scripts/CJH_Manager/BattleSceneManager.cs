@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 using UI;
 using Managers;
 
@@ -18,6 +19,8 @@ public class BattleSceneManager : MonoBehaviour
     [SerializeField] private GameObject slothMonsterPrefab;
     [SerializeField] private GameObject lustMonsterPrefab;
     [SerializeField] private GameObject gluttonMonsterPrefab;
+
+    [SerializeField] private Slider hpBarPrefab;
 
     // —————————————————————
     // 등장 이력 저장용 static 리스트
@@ -76,7 +79,19 @@ public class BattleSceneManager : MonoBehaviour
             TurnManager.Instance.StartBattle();
             Debug.Log(" 전투 시작됨");
 
-            // 3. UI 설정
+            // 3. HP 바 생성 및 연결
+            if (hpBarPrefab != null)
+            {
+                var canvas = FindObjectOfType<Canvas>();
+                var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
+                pc.SetHpBar(hpGo);
+            }
+            else
+            {
+                Debug.LogWarning("hpBarPrefab이 할당되지 않았습니다.");
+            }
+
+            // 4. UI 설정
             GameStatusUI.Instance.SetStage(GameStateManager.Instance.Wins + 1);
         }
     }

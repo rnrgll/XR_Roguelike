@@ -49,7 +49,6 @@ public class GameInitializer : MonoBehaviour
         // 6) 씬 전환: 맵 씬 혹은 전투 씬
         //    프롤로그(인트로)씬으로 전환합니다.
         SceneManager.LoadScene("Intro");
-        // 만약 바로 전투 씬으로 간다면: SceneManager.LoadScene("BattleScene");
     }
 
 }
