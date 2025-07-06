@@ -154,12 +154,26 @@ public class BattleSceneManager : MonoBehaviour
         {
             TurnManager.Instance.RegisterEnemy(enemy);
             Debug.Log($"[{id}] 몬스터 스폰 및 등록 완료");
+
+            StartCoroutine(InitializeMonsterUI(enemy));
         }
+            if (GameStatusUI.Instance != null)
+            {
+                GameStatusUI.Instance.SetTarget(enemy);
+            }
         else
         {
             Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");
         }
         GameStatusUI.Instance.SetTarget(enemy);
+    }
+
+    private IEnumerator InitializeMonsterUI(EnemyBase enemy)
+    {
+        yield return null; // Start()가 실행될 때까지 한 프레임 대기
+
+        if (GameStatusUI.Instance != null)
+            GameStatusUI.Instance.Init(enemy);
     }
 
     private GameObject GetMonsterPrefab(MonsterID id)

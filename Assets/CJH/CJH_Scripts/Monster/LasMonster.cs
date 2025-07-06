@@ -26,6 +26,12 @@ public class LasMonster : EnemyBase
     // ——————————————————————————
     // 4) 매 턴 실행 로직
     // ——————————————————————————
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     public override void TakeTurn()
     {
         // 4-1) 분노 첫 진입

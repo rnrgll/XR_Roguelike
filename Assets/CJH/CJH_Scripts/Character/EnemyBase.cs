@@ -16,6 +16,10 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
     {
         currentHP = maxHP;
         TurnManager.Instance.RegisterEnemy(this);
+
+        // 씬 내에 UI가 준비되어 있다면, 바로 초기화
+        if (GameStatusUI.Instance != null)
+            GameStatusUI.Instance.SetTarget(this);
     }
 
     public virtual void ApplyDamage(int damage)
