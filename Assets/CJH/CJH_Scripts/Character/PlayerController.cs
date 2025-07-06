@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
-    
+
 
     private IEnumerator Start()
     {
@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             isTurnSkip = false;
             EndTurn();
         }
+        isInvincible = false;
         // 1) 카드 조합 계산
         int comboCardNums = cardController.sumofNums;
         var combo = cardController.cardComb;
@@ -275,7 +276,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         Debug.Log("플레이어 턴 종료!");
         turnEnded = true;
-        isInvincible = false;
 
         // if (attackBuffTurns > 0)
         // {

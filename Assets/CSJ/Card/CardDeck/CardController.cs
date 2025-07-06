@@ -264,6 +264,7 @@ public class CardController : MonoBehaviour
     {
         TurnBonusDic.Clear();
         TurnPenaltyDic.Clear();
+        Debug.Log(Hand.Count);
         Draw();
     }
     #endregion
@@ -307,7 +308,7 @@ public class CardController : MonoBehaviour
         }
         OnSubmit?.Invoke(SelectedCard);
 
-        Discard(SelectedCard);
+        exchangeHand(SelectedCard);
     }
 
     public List<MinorArcana> GetHand()
@@ -364,6 +365,7 @@ public class CardController : MonoBehaviour
     // 현재는 8장 고정이므로 Draw를 8장 뽑는다.
     public void Draw(int n)
     {
+        Debug.Log(StackTraceUtility.ExtractStackTrace());
         if (BattleDeck.Count == 0) DeckRefill();
         for (int i = 0; i < n; i++)
         {
@@ -534,16 +536,21 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        int handCount = Hand.Count;
+        Debug.Log("[exchangeHand] 호출");
+        int beforeCount = Hand.Count;
         int discCount = Discard(cards);
         ClearSelect();
         int afterCount = Hand.Count;
-        int targetCount = Mathf.Min(handCount, drawNum);
+        int targetCount = Mathf.Min(beforeCount, drawNum);
 
 
         int toDraw = targetCount - afterCount;
         if (toDraw > 0)
+        {
+            Debug.Log($"[exchangeHand] before={beforeCount}, removed={discCount}, after={afterCount}, toDraw={toDraw}");
             Draw(toDraw);
+        }
+
     }
 
     public void AdjustCountList(MinorArcana card)
