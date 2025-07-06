@@ -61,12 +61,12 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("Player 등록 완료");
             yield return null; // 한 프레임
 
+            Debug.Log("Card Controller 대기중");
             yield return new WaitUntil(() => pc.GetCardController() != null);
             var cc = pc.GetCardController();
 
-            bool ready = false;
-            cc.OnReady += () => ready = true;
-            yield return new WaitUntil(() => ready);
+           
+            yield return new WaitUntil(() => cc.IsReady);
 
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
