@@ -26,6 +26,6 @@ MonoBehaviour:
   - chance: 1
     effects:
     - effectType: 1
-      percentValue: 20
+      percentValue: 0.2
       value: 0
       duration: 3

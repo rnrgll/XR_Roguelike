@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         if (hpBar != null)
         {
-            hpBar.value = (float)currentHP / maxHP;
+            hpBar.value = currentHP;
         }
 
     }
@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     /// 힐 버프 큐에 저장된 회복 효과를 적용합니다.
     /// 회복 후 남은 턴 수가 있을 경우 다시 큐에 넣습니다.
     /// </summary>
-    private void ApplyHeal()
+    public void ApplyHeal()
     {
         int count = healBonusQueue.Count;
         for (int i = 0; i < count; i++)
@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void ChangeHp(int amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
+        UpdateHpBar();
         if (IsDead)
         {
             Debug.Log("플레이어가 사망했습니다.");
@@ -393,6 +394,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void ChangeHpByPercent(float percentValue)
     {
         currentHP = Mathf.Clamp(currentHP + (int)(percentValue * maxHP), 0, maxHP);
+        UpdateHpBar();
         if (IsDead)
         {
             Debug.Log("플레이어가 사망했습니다.");
