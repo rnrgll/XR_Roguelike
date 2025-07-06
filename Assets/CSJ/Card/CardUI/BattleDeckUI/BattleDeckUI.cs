@@ -17,6 +17,7 @@ public class BattleDeckUI : UIRequire
     [SerializeField] private GameObject BattleDeckCanvas;
     [SerializeField] private Button BackGround;
     [SerializeField] private Button CloseButton;
+    [SerializeField] private TarotDeckUI tarotDeck;
 
 
     private List<GameObject> spawnedCards = new List<GameObject>();
@@ -50,6 +51,7 @@ public class BattleDeckUI : UIRequire
     private void ClosePanel()
     {
         BattleDeckCanvas.SetActive(false);
+        tarotDeck.SetActive(true);
     }
 
     public void RefreshPanel()
