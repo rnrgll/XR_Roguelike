@@ -237,12 +237,22 @@ public class CardController : MonoBehaviour
             BattleDeck.Add(card);
         }
         numbersList[0] = 0;
+        for (int i = 1; i < 15; i++)
+        {
+            numbersList[i] = 0;
+        }
+        for (int j = 0; j < 4; j++)
+        {
+            SuitsList[j] = 0;
+        }
+
         foreach (var i in BattleDeck.GetCardList())
         {
             SuitsList[(int)i.CardSuit]++;
             numbersList[i.CardNum]++;
         }
         Debug.Log("숫자 list 선언");
+        Debug.Log(SuitsList[0]);
 
 
 
