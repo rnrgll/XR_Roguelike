@@ -4,6 +4,7 @@ using Managers;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Map
@@ -34,6 +35,7 @@ namespace Map
         
         public void VisitNode(MapNode mapNode)
         {
+            EventSystem.current.enabled = false;
             Manager.Map.CurrentMap.Path.Add(mapNode.Node.point);
             Manager.Map.View.SetAttainableNodes();
             Manager.Map.View.SetLineColors();
