@@ -19,7 +19,6 @@ namespace TopBarUI
         public void SetData(MinorArcana minor)
         {
             //마이너 아르카나 이미지
-            
             string cNum = minor.CardNum < 10 ? $"0{minor.CardNum}" : minor.CardNum.ToString();
             string cName = $"ArcanaTest/{minor.CardSuit}{cNum}";
             var sprite = Resources.Load<Sprite>(cName);
