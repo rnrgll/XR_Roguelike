@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public void TakeDamage(int dmg)
     {
+        Debug.Log(isInvincible);
         if (isInvincible) return;
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
@@ -185,7 +186,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             Buff attackBuff = attackBonusQueue.Dequeue();
             flatAttackBonus += attackBuff.value;
             attackBuff.remainTurn--;
-            if (attackBuffTurns > 0)
+            if (attackBuff.remainTurn > 0)
             {
                 attackBonusQueue.Enqueue(attackBuff);
             }
@@ -288,6 +289,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void SetInvincible()
     {
         isInvincible = true;
+        Debug.Log(isInvincible);
     }
 
 

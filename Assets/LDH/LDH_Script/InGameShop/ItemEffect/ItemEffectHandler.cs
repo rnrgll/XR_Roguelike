@@ -145,6 +145,7 @@ namespace Item
         private void DiscardHand()
         {
             Debug.Log("[아이템 효과] 남은 핸드를 전부 버립니다.");
+            Debug.Log(_card.Hand.GetCardList().Count);
             _card.Discard(_card.Hand.GetCardList()); //손패에 있는 카드 전부 버리기
             _player.OnTurnEnd -= DiscardHand; //등록한거 삭제
         }
