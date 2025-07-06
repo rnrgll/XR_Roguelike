@@ -1,3 +1,4 @@
+using Event.Dialogue;
 using Item;
 using Managers;
 using System;
@@ -49,6 +50,13 @@ namespace InGameShop
 
             //아이템 리롤
             Reroll();
+            
+            
+            //상점 진입시 다이얼로그
+            if(Manager.Map.CurrentMap.CurrentNode.y == 1)
+                Manager.Dialogue.PlayDialogue(DialogueType.FirstInGameShop);
+            else
+                Manager.Dialogue.PlayDialogue(DialogueType.InGameShop);
         }
         
 

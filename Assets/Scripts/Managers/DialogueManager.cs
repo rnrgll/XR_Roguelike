@@ -89,6 +89,8 @@ namespace Managers
             string fileName = dialogueType switch
             {
                 DialogueType.Prologue => "Prologue.csv",
+                DialogueType.FirstInGameShop => "FirstInGameShop.csv",
+                DialogueType.InGameShop => "InGameShop.csv",
             };
             
             LoadDialogueData(fileName);

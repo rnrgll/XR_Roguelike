@@ -15,15 +15,8 @@ public class Prologue : MonoBehaviour
         //다이얼로그는 additive로 처리
         Manager.Dialogue.PlayDialogue(DialogueType.Prologue);
         
-        
-        
         //다이얼로그가 끝나면 맵 선택이 이루어진다.
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
