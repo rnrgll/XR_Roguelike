@@ -9,6 +9,7 @@ public class TarotDeck : MonoBehaviour
     [SerializeField] List<MajorArcanaSO> majorCardCandidates;
     List<MajorArcanaSO> deckMajorCards = new();
     MajorArcanaSO curCard;
+    [SerializeField] MajorArcanaSO TheFool;
     private int prevIndex;
 
     public List<MajorArcanaSO> GetMajorCardCandidates()
@@ -29,6 +30,8 @@ public class TarotDeck : MonoBehaviour
 
     public MajorArcanaSO Draw()
     {
+        if (deckMajorCards.Count == 0)
+            AddMajorCards(TheFool);
         prevIndex = deckMajorCards.IndexOf(curCard);
         int CardNum;
 

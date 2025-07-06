@@ -51,6 +51,7 @@ public class CardController : MonoBehaviour
     public Dictionary<MinorArcana, int> MultiPleCardDic = new();
     public CardSortEnum sortStand = CardSortEnum.Suit;
     private CardController cardController;
+    public bool IsReady { get; private set; } = false;
 
     #endregion
 
@@ -92,7 +93,7 @@ public class CardController : MonoBehaviour
     public Dictionary<StatusEffect, StatusEffectCardSO> StatusEffectDic { get; private set; } = new();
     [SerializeField] private DisposableCardSO[] DisposableArr;
     public List<MinorArcana> disposableCardList { get; private set; } = new();
-    [SerializeField] private MajorArcanaSO[] majorArcanaArr;
+    [SerializeField] public MajorArcanaSO[] majorArcanaArr;
     #endregion
 
 
@@ -104,6 +105,7 @@ public class CardController : MonoBehaviour
         yield return CsvLoadCoroutine();
         OnChangedHands.Invoke();
         OnReady?.Invoke();
+        IsReady = true;
         Debug.Log("[cc]Start 함수 종료");
     }
 
@@ -118,19 +120,6 @@ public class CardController : MonoBehaviour
             }
         );
     }
-
-
-    public void OnDisable()
-    {
-        OnCardSelected -= AddSelect;
-        OnCardDeSelected -= RemoveSelect;
-        OnCardDrawn -= AdjustCountList;
-        // TurnManager.Instance.GetPlayerController().OnTurnStarted -= TurnInit;
-
-        Deck.OnCardDebuffed -= _onDebuffApplied;
-        Deck.OnCardDebuffCleared -= _onDebuffCleared;
-    }
-
 
     public void Init()
     {
@@ -270,6 +259,7 @@ public class CardController : MonoBehaviour
         Debug.Log("Draw");
     }
 
+    // TODO: 추후 계약카드 드로우 감소 적용
     public void TurnInit()
     {
         TurnBonusDic.Clear();
@@ -317,7 +307,7 @@ public class CardController : MonoBehaviour
         }
         OnSubmit?.Invoke(SelectedCard);
 
-        exchangeHand(SelectedCard);
+        Discard(SelectedCard);
     }
 
     public List<MinorArcana> GetHand()
@@ -628,6 +618,8 @@ public class CardController : MonoBehaviour
         OnSelectionChanged?.Invoke(cardComb);
     }
 
+    // TODO : 추후 턴종료 버리기 구현
+    // 실제 쓰이는 일은 없을것?
     public void TurnEndDiscard()
     {
         int handsCount = Hand.Count;
