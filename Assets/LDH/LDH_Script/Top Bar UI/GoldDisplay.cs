@@ -11,6 +11,7 @@ namespace TopBarUI
         private void OnEnable()
         {
             GameStateManager.Instance.OnGoldChanged.AddListener(UpdateUI);
+            UpdateUI(GameStateManager.Instance.Gold);
         }
 
         private void OnDisable()

@@ -54,6 +54,10 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
 
         for (int i = 0; i < MaxItemInventorySize; i++)
             _itemInventory.Add(String.Empty);
+        
+        
+        //골드 //todo:골드 초기화 값 수정 필요
+        AddGold(1000);
     }
     public void RegisterPlayerController(PlayerController pc)
     {
