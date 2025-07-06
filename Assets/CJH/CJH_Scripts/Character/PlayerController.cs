@@ -116,17 +116,11 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         int comboCardNums = cardController.sumofNums;
         var combo = cardController.cardComb;
 
-        // 2. 공격할 적의 타입 지정 (원한다면 이 부분을 매개변수화 가능)
-        var tm = Managers.Manager.turnManager;
-        Debug.Log($"[디버그] 사용할 TurnManager = {tm}");
-
-        tm.SetCurrentEnemyByType(EnemyType.Boss);
-
         // 3. 타겟 찾기
         var target = TurnManager.Instance
             .GetEnemies()
             .OfType<EnemyBase>()
-            .FirstOrDefault(e => e.Type == EnemyType.Boss && !e.IsDead);
+            .FirstOrDefault(e => !e.IsDead);
 
         // 4. 공격 수행
         if (target != null)

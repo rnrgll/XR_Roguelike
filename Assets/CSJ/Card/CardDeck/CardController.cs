@@ -34,10 +34,10 @@ public class CardController : MonoBehaviour
     public List<int> _selectedNums;
     public CardDeck Deck { get; private set; }
     public int sumofNums { get; private set; }
-    public Dictionary<CardBonus, float> TurnBonusDic;
-    public Dictionary<CardBonus, float> BattleBonusDic;
-    public Dictionary<CardBonus, float> TurnPenaltyDic;
-    public Dictionary<CardBonus, float> BattlePenaltyDic;
+    public Dictionary<CardBonus, List<float>> TurnBonusDic;
+    public Dictionary<CardBonus, List<float>> BattleBonusDic;
+    public Dictionary<CardBonus, List<float>> TurnPenaltyDic;
+    public Dictionary<CardBonus, List<float>> BattlePenaltyDic;
     public List<MinorArcana> SelectedCard { get; private set; } = new();
     public CardCombinationEnum cardComb { get; private set; }
     public int[] numbersList = new int[15];
@@ -248,10 +248,10 @@ public class CardController : MonoBehaviour
 
         foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
         {
-            BattleBonusDic[type] = 0;
-            BattlePenaltyDic[type] = 0;
-            TurnPenaltyDic[type] = 0;
-            TurnBonusDic[type] = 0;
+            BattleBonusDic[type] = new();
+            BattlePenaltyDic[type] = new();
+            TurnPenaltyDic[type] = new();
+            TurnBonusDic[type] = new();
         }
 
         BattleDeck.Shuffle();
@@ -331,7 +331,28 @@ public class CardController : MonoBehaviour
 
     public float GetCardBonus(CardBonus bonus)
     {
-        return TurnBonusDic[bonus] + BattleBonusDic[bonus] - TurnPenaltyDic[bonus] - BattlePenaltyDic[bonus];
+        float value = 0;
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (BattleBonusDic.ContainsKey(bonus))
+            foreach (var i in BattleBonusDic[bonus])
+            {
+                value += i;
+            }
+        if (TurnBonusDic.ContainsKey(bonus))
+            foreach (var i in TurnPenaltyDic[bonus])
+            {
+                value -= i;
+            }
+        if (BattlePenaltyDic.ContainsKey(bonus))
+            foreach (var i in BattlePenaltyDic[bonus])
+            {
+                value -= i;
+            }
+        return value;
     }
 
     #endregion
@@ -704,17 +725,17 @@ public class CardController : MonoBehaviour
     public void SetBattleBonusList(CardBonus cardBonus, BonusType type, float Amount)
     {
         if (type == BonusType.Bonus)
-            BattleBonusDic[cardBonus] += Amount;
+            BattleBonusDic[cardBonus].Add(Amount);
         else
-            BattlePenaltyDic[cardBonus] += Amount;
+            BattlePenaltyDic[cardBonus].Add(Amount);
     }
 
     public void SetTurnBonusList(CardBonus cardBonus, BonusType type, float Amount)
     {
         if (type == BonusType.Bonus)
-            TurnBonusDic[cardBonus] += Amount;
+            TurnBonusDic[cardBonus].Add(Amount);
         else
-            TurnPenaltyDic[cardBonus] += Amount;
+            TurnPenaltyDic[cardBonus].Add(Amount);
     }
     #endregion
 
