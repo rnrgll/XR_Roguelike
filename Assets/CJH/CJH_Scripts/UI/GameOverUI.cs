@@ -65,6 +65,7 @@ public class GameOverUI : MonoBehaviour
     {
 
         Manager.UI.SetUIActive(GlobalUI.TopBar,false);
+        panel.SetActive(false);
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 
     }
