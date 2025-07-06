@@ -25,6 +25,12 @@ public class GridMonster : EnemyBase
     // ——————————————————
     // 3) 진입
     // ——————————————————
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void Awake()
     {
         if (Instance == null) Instance = this;

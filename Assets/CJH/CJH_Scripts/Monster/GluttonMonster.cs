@@ -14,6 +14,11 @@ public class GluttonMonster : EnemyBase
 
     private int consecutiveBasic = 0;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
