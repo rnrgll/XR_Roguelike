@@ -79,10 +79,16 @@ namespace InGameShop
 
     }
 
-    public enum ButtonState
+    public enum ButtonActiveState
     {
         Active,
         Deactive,
+    }
+    
+    public enum ButtonState
+    {
+        Idle,       // 둥실둥실 애니메이션 중
+        PoppedUp    // 팝업 위치로 이동 중
     }
 
 }
@@ -113,6 +119,7 @@ namespace Item
         Invincible,
         GainJoker,
     }
+    
 }
 
 
@@ -136,6 +143,8 @@ namespace UI
         Item,
         Setting,
     }
+    
+   
 
 }
 
