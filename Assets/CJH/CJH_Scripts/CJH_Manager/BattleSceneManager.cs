@@ -56,6 +56,7 @@ public class BattleSceneManager : MonoBehaviour
             // 1. 적 생성
             SpawnMonstersForStage();
 
+
             // 2. 플레이어 등록 및 전투 시작
             TurnManager.Instance.RegisterPlayer(pc);
             Debug.Log("Player 등록 완료");
@@ -143,7 +144,7 @@ public class BattleSceneManager : MonoBehaviour
         var prefab = GetMonsterPrefab(id);
         if (prefab == null)
         {
-            Debug.LogWarning($"[{id}] 프리팹이 설정되지 않았느니라.");
+            Debug.LogWarning($"[{id}] 프리팹이 설정되지 않았습니다.");
             return;
         }
 
@@ -156,8 +157,9 @@ public class BattleSceneManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없느니라!");
+            Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");
         }
+        GameStatusUI.Instance.SetTarget(enemy);
     }
 
     private GameObject GetMonsterPrefab(MonsterID id)

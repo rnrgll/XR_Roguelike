@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, IEnemyActor
 {
-    [SerializeField] protected int maxHP = 500;
-    protected int currentHP;
+    [SerializeField] public int maxHP = 1000;
+    public int currentHP;
 
     [SerializeField] protected EnemyType type;
     public EnemyType Type => type;
