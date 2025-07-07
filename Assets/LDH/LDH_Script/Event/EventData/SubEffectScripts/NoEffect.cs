@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Event
@@ -6,9 +7,9 @@ namespace Event
     {
         public NoEffect(SubEffectType subEffectType = SubEffectType.NoEffect, int value = 0, int? durationTurns = null) : base(subEffectType, value, durationTurns) { }
 
-        public override void ApplyEffect()
+        public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect();
+            base.ApplyEffect(onComplete);
             Debug.Log("아무런 효과가 없음");
         }
     }

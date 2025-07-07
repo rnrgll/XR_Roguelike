@@ -1,6 +1,7 @@
 using InGameShop;
 using Item;
 using Managers;
+using System;
 using System.Collections.Generic;
 
 namespace Event
@@ -10,11 +11,11 @@ namespace Event
         public ObtainCardEffect(int value) : base(SubEffectType.ObtainEnhancedCard, value)
         { }
 
-        public override void ApplyEffect()
+        public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect();
+            base.ApplyEffect(onComplete);
             List<GameItem> enchantItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
-            
+
             foreach (EnchantItem enchantItem in enchantItems)
             {
                 Manager.GameState.AddCardItem(enchantItem);

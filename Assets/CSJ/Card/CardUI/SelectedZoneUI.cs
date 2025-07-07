@@ -7,13 +7,12 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HandUIController : UIRequire
+public class SelectedZoneUI : UIRequire
 {
-    [SerializeField] private RectTransform handContainer;
+    [SerializeField] private RectTransform SelectedZone;
     [SerializeField] private GameObject cardPrefab;
     private List<GameObject> spawnedCards = new List<GameObject>();
-    public Action OnCardSetted;
-    public Action<MinorArcana> RefreshAction;
+    private List<MinorArcana> _selectedCards = new List<MinorArcana>();
 
     public override void InitializeUI(PlayerController pc)
     {
@@ -23,64 +22,57 @@ public class HandUIController : UIRequire
 
     protected override void Subscribe()
     {
-        RefreshAction = _ => RefreshHand();
         cardController.OnChangedHands += RefreshHand;
         cardController.OnSelectionChanged += SyncUI;
-        cardController.OnCardSelected += RefreshAction;
-        cardController.OnCardDeSelected += RefreshAction;
+        cardController.OnCardDeSelected += AddCard;
     }
 
     protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= RefreshHand;
         cardController.OnSelectionChanged -= SyncUI;
-        cardController.OnCardSelected -= RefreshAction;
-        cardController.OnCardDeSelected -= RefreshAction;
+        cardController.OnCardDeSelected -= AddCard;
     }
 
     public void RefreshHand()
     {
         if (cardController == null) return;
+        Debug.Log("selectedZone");
         foreach (var go in spawnedCards)
         {
             Destroy(go);
         }
         spawnedCards.Clear();
 
-        cardController.SortByStand();
-        var hand = cardController.GetHand();
-        foreach (var card in hand)
+        var selectedCard = new List<MinorArcana>(_selectedCards);
+        foreach (var card in selectedCard)
         {
-            if (cardController.SelectedCard.Contains(card)) continue;
-            var go = Instantiate(cardPrefab, handContainer);
+
+            var go = Instantiate(cardPrefab, SelectedZone);
             var ui = go.GetComponent<CardUI>();
             ui.Setup(card);
 
-
             ui.OnClick += c =>
             {
-
-                if (cardController.IsUsableDic.TryGetValue(c, out var usable) &&
-                !usable) return;
-
-                if (cardController.SelectedCard.Count >= 5) return;
-
-                bool now = ui.ToggleSelect();
-                if (now) CardSelected(c);
-                else CardDeSelected(c);
+                Debug.Log("cardDeselect");
+                ui.ToggleSelect();
+                CardDeSelected(c);
             };
             spawnedCards.Add(go);
         }
-        OnCardSetted?.Invoke();
     }
 
-    private void CardSelected(MinorArcana card)
-    {
-        cardController.OnCardSelected?.Invoke(card);
-    }
     private void CardDeSelected(MinorArcana card)
     {
+        _selectedCards.Remove(card);
+        RefreshHand();
         cardController.OnCardDeSelected?.Invoke(card);
+    }
+
+    private void AddCard(MinorArcana card)
+    {
+        _selectedCards.Add(card);
+        RefreshHand();
     }
 
     private void SyncUI(CardCombinationEnum _)
