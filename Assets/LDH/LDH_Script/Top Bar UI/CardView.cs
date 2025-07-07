@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace TopBarUI
 {
-    public class CardVeiw : PooledObject
+    public class CardView : PooledObject
     {
         [SerializeField] private Image cardImg;
         [SerializeField] private Image enchantImg;
@@ -36,9 +36,10 @@ namespace TopBarUI
                 Debug.Log($"인챈트 효과 있음 : {minor.Enchant.enchantInfo}");
                 enchantImg.enabled = true;
                 //todo:인챈트에 따른 이미지 적용하기
-                enchantImg.sprite = (Manager.Data.GameItemDB.EnchantDB[minor.Enchant.enchantInfo] as EnchantItem)
-                    .enchantSprite;
-                enchantEffect = minor.Enchant.enchantInfo.ToString();
+                EnchantItem enchantItemInfo =
+                    Manager.Data.GameItemDB.EnchantDB[minor.Enchant.enchantInfo] as EnchantItem;
+                enchantImg.sprite = enchantItemInfo.enchantSprite;
+                enchantEffect = enchantItemInfo.description;
             }
             
             // 효과 텍스트

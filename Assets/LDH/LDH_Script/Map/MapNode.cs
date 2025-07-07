@@ -103,6 +103,15 @@ namespace Map
 
         #region Event / Animation
 
+        public void ResetScale()
+        {
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.transform.DOScale(initialScale, scaleChangeDuration);
+            }
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
            

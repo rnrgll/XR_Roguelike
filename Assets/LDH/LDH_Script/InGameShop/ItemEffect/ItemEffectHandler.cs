@@ -150,8 +150,8 @@ namespace Item
         private void DiscardHand()
         {
             Debug.Log("[아이템 효과] 남은 핸드를 전부 버립니다.");
-            Debug.Log(_card.Hand.GetCardList().Count);
-            List<MinorArcana> currentHand = new(_card.Hand.GetCardList());
+            List<MinorArcana> currentHand = new(_card.GetHand());
+            Debug.Log(currentHand.Count);
             List<MinorArcana> discardList = new();
             foreach (var card in previousHand)
             {
