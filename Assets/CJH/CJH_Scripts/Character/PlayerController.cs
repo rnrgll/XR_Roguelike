@@ -10,17 +10,23 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
+    [Header("플레이어 스프라이트 렌더러")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [Header("카드·타로 프리팹")]
     [SerializeField] private CardController cardControllerPrefab;
     private CardController _cardController;
     public CardController cardController => _cardController;
     [SerializeField] private TarotDeck tarotDeckPrefab;
     private TarotDeck _tarotDeck;
     public TarotDeck tarotDeck => _tarotDeck;
+
+    [Header("HP 설정")]
     [SerializeField] private int maxHP = 100;
-
-
     public int MaxHP => maxHP;
     private int currentHP;
+
+
     private int flatAttackBonus = 0;
     private int attackBuffTurns = 0;
     private float additionalDamage;
@@ -51,6 +57,26 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     // 버프 관리
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
+
+
+    private void Awake()
+    {
+        // SpriteRenderer 자동 할당
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        // 전투 전 항상 보이게
+        SetSpriteVisible(false);
+    }
+
+    /// <summary>
+    /// 스프라이트 보이기/숨기기
+    /// </summary>
+    /// <param name="visible">true면 보이기, false면 숨기기</param>
+    public void SetSpriteVisible(bool visible)
+    {
+            spriteRenderer.enabled = visible;
+    }
 
 
     public IEnumerator StartSetting()
@@ -456,16 +482,19 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         ratio = 1f;
         additionalDamage = 0f;
 
-        // // 3. 카드 컨트롤러(덱·핸드) 초기화
-        // if (cardController != null)
-        // {
-        //     cardController.BattleInit();
-        //     Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
-        // }
+         // 3. 카드 컨트롤러(덱·핸드) 초기화
+         if (cardController != null)
+         {
+             cardController.BattleInit();
+             Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
+         }
+         else
+         {
+             Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
+         }
+
+
+        SetSpriteVisible(true);
 
         // 4. 턴 플래그 초기화
         turnEnded = false;

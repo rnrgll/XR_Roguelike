@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
-  playerPrefab: {fileID: 2581133722352793528, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
+  playerPrefab: {fileID: 5419887369812186415, guid: 22eb80b3a078cbb4bafdf6d17085bdba, type: 3}
   lasMonsterPrefab: {fileID: 7277799118892318029, guid: 2f6cf6c99bef64c4195978dfbe898200, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
   prideMonsterPrefab: {fileID: 7371526151415248810, guid: f4a2221c117a959488574e47a6075b22, type: 3}
