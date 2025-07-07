@@ -67,6 +67,7 @@ namespace Dialogue
         private void UpdateUI(string speakerName, Sprite portraitSprite, Color32 textColor, Color32 textBoxColor)
         {
             nameText.text = speakerName;
+            nameText.color = textColor;
             if (portraitSprite == null ||  portraitSprite.texture == null )
                 portrait.gameObject.SetActive(false);
             else
@@ -76,7 +77,6 @@ namespace Dialogue
             }
             
             dialogueText.text = "";
-
             dialogueText.color = textColor;
             dialogueBox.color = textBoxColor;
         }
