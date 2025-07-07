@@ -4,6 +4,7 @@ using Item;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace InGameShop
@@ -34,14 +35,19 @@ namespace InGameShop
         private Vector3 _originWorldScale;
         private Quaternion _originWorldRot;
 
-        
+        //버튼 애니메이션 관련
+        private ButtonState _currentState;
+        private Tween _floatTween;
+        private EventSystem _eventSystem;
         
         private void Awake() => Init();
 
         private void OnEnable()
         {
             _itemButton.onClick.AddListener(MoveToPopUp);
-            
+            _currentState = ButtonState.Idle;
+            StartFloating();
+
         }
 
         private void OnDisable()
@@ -63,6 +69,11 @@ namespace InGameShop
             _priceText = _priceLabel.GetComponentInChildren<TMP_Text>();
             _itemImage = _itemButton.GetComponent<Image>();
 
+            
+            //이벤트 시스템 캐싱
+            _eventSystem = EventSystem.current;
+            if (_eventSystem == null)
+                Debug.LogError("EventSystem이 씬에 없습니다!");
         }
 
 
@@ -115,6 +126,15 @@ namespace InGameShop
         #region Pop Up 관련 버튼 이동
         public void MoveToPopUp()
         {
+            if (_currentState != ButtonState.Idle) return;
+            
+            //버튼 상태 변경, 애니메이션 중지
+            _currentState = ButtonState.PoppedUp;
+            StopFloating();
+            
+            //클릭 이벤트 다 막기
+            _eventSystem.enabled = false;
+            
             //canvas sorting order 변경
             _canvas.sortingOrder = (int)SortOrder.PopUp + 1;
             
@@ -143,12 +163,17 @@ namespace InGameShop
 
                 //Return Button onclick 이벤트 구독처리
                 _returnButton.onClick.AddListener(ReturnToOrigin);
+                
+                //클릭이벤트 다시 활성화
+                _eventSystem.enabled = true;
             });
 
         }
 
         public void ReturnToOrigin()
         {
+            _eventSystem.enabled = false;
+            
             // canvas sorting order 원래대로
             _canvas.sortingOrder = (int)SortOrder.Item;
               
@@ -173,9 +198,39 @@ namespace InGameShop
                 //price label 활성화
                 _priceLabel.SetActive(true);
                 
+                _eventSystem.enabled = true;
+                
+                //버튼 상태 변경
+                _currentState = ButtonState.Idle;
+                //애니메이션 시작
+                StartFloating();
+                
             });
 
         }
+        #endregion
+
+
+        #region Button 애니메이션
+
+        private void StartFloating()
+        {
+            float startDelay = UnityEngine.Random.Range(0f, 1f); // 랜덤 딜레이
+            
+            _floatTween = _buttonRec
+                .DOAnchorPosY(_buttonRec.anchoredPosition.y + 10f, 1f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(startDelay);
+        }
+        
+        private void StopFloating()
+        {
+            
+            _floatTween?.Kill();
+            _floatTween = null;
+        }
+
         #endregion
     }
 }

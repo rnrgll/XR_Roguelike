@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637b54dd886942142adf3fd53a0fe0a1, type: 3}
   m_Name: Joker
   m_EditorClassIdentifier: 
-  cardName: 
-  sprite: {fileID: 21300000, guid: 417c144e7115c8141ba1763acc1483fb, type: 3}
+  cardName: Joker
+  sprite: {fileID: 21300000, guid: 9a50bad3fd38a0648b7f57b46a0238d7, type: 3}
+  DisposableCard: 0
   suit: 30
   cardNum: 14

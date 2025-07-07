@@ -6,14 +6,24 @@ using UnityEngine;
 public class TarotDeckUI : UIRequire
 {
     private TarotDeck tarotDeck;
+    [Header("카드 앞면 UI")]
     [SerializeField] private MajorArcanaUI cardUIPrefab;
 
 
     [Header("카드를 표시할 부모 트랜스폼")]
     [SerializeField] private RectTransform cardParent;
+    [Header("카드 뒷면 스프라이트")]
+    [SerializeField] private Sprite cardBackSprite;
 
     private MajorArcanaUI currentCardUI;
+    private bool isUsed = false;
 
+    public override void InitializeUI(PlayerController pc)
+    {
+        tarotDeck = pc.tarotDeck;
+        DrawAndShow();
+        base.InitializeUI(pc);
+    }
 
 
     /// <summary>
@@ -30,6 +40,7 @@ public class TarotDeckUI : UIRequire
 
         // 2) 덱에서 뽑기
         var so = tarotDeck.Draw();
+        isUsed = false;
 
         // 3) UI 인스턴스화
         currentCardUI = Instantiate(cardUIPrefab, cardParent);
@@ -40,36 +51,49 @@ public class TarotDeckUI : UIRequire
         // 5) 카드 방향(Upright/Reversed) 반영
         currentCardUI.SetCardPosition();
 
+        currentCardUI.OnClick -= OnMajorCardClicked;
+        currentCardUI.OnClick += OnMajorCardClicked;
+
     }
 
     private void OnMajorCardClicked(MajorArcanaSO so)
     {
+        if (isUsed) return;
+        isUsed = true;
+
+
         Debug.Log("클릭");
         // 클릭하면 SO의 Activate 실행
         so.Activate();
+
+        currentCardUI.OnClick -= OnMajorCardClicked;
+
+        currentCardUI.SetCardImage(cardBackSprite);
     }
 
-    public override void InitializeUI(PlayerController pc)
-    {
-        tarotDeck = pc.tarotDeck;
-        DrawAndShow();
-        base.InitializeUI(pc);
-    }
 
     protected override void Subscribe()
     {
         currentCardUI.OnClick += OnMajorCardClicked;
         Manager.UI.topBarMenus.OnToggleClicked += SetActive;
+        playerController.OnTurnStarted += OnTurnStarted;
     }
 
     protected override void UnSubscribe()
     {
         currentCardUI.OnClick -= OnMajorCardClicked;
         Manager.UI.topBarMenus.OnToggleClicked -= SetActive;
+        if (playerController != null)
+            playerController.OnTurnStarted -= OnTurnStarted;
     }
 
     public void SetActive(bool isActive)
     {
         gameObject.SetActive(isActive);
+    }
+
+    private void OnTurnStarted()
+    {
+        DrawAndShow();
     }
 }

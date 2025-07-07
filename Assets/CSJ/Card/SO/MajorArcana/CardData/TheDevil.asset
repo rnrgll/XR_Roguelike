@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TheDevil
   m_EditorClassIdentifier: 
   cardName: TheDevil
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 645a02d4a51f4834894a0710c7a8fb78, type: 3}
   uprightAbilitySO: {fileID: 11400000, guid: 1ea298366d2c03a488cd433ea720a037, type: 2}
   reversedAbilitySO: {fileID: 11400000, guid: 4085f594d5ab1eb4fa778ec97153d735, type: 2}

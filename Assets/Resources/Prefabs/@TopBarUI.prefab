@@ -168,7 +168,7 @@ MonoBehaviour:
   _mapToggle: {fileID: 7912718289347679807}
   _cardDeckToggle: {fileID: 1292470309530547130}
   _settingToggle: {fileID: 246286001217596012}
-  tg: {fileID: 0}
+  tg: {fileID: 6309653766046411999}
 --- !u!114 &6309653766046411999
 MonoBehaviour:
   m_ObjectHideFlags: 0
