@@ -36,6 +36,16 @@ public class GridMonster : EnemyBase
         if (Instance == null) Instance = this;
     }
 
+    public void InitForBattle()
+    {
+        base.InitForBattle();
+        mainArcanaCount = 0;
+        isPreparingSpecial = false;
+        damageDuringPrepare = 0;
+        isGroggy = false;
+        nextIsHeavy = false;
+    }
+
     // 플레이어가 메인 아르카나를 사용할 때 외부에서 호출해 주거라
     public void OnPlayerUsedMajorArcana()
     {
