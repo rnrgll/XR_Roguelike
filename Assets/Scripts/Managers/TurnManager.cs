@@ -93,13 +93,17 @@ public class TurnManager : Singleton<TurnManager>
     if (battleStarted) return;
         battleStarted = true;
 
+
+        BackgroundManager.Instance.ShowNextBackground();
+
         // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
         var pc = player as PlayerController;
-            if (pc != null)
+        pc.SetSpriteVisible(true);
+        Debug.Log("[TurnManager] 전투 시작, 플레이어 스프라이트 켬");
+        if (pc != null)
                 {
                     // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
                     var cardCtrl = pc.cardController;
-                    pc.ResetState();    // 체력·버프·턴 플래그 전부 초기화
             if (cardCtrl != null)
                         {
                 cardCtrl.BattleInit();
