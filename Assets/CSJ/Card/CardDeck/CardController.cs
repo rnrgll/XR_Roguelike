@@ -647,6 +647,7 @@ public class CardController : MonoBehaviour
     #region 이벤트 관련 함수들
     public void AddSelect(MinorArcana card)
     {
+        Debug.Log("AddSelect");
         SelectedCard.Add(card);
         CardCombCal();
     }

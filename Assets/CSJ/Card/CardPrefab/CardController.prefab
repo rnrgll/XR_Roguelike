@@ -64,6 +64,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd0db3a26db458c4cb5f67c27625ddb3, type: 2}
   StatusEffectArr:
   - {fileID: 11400000, guid: fa74c93f3be2cd647977f65618eb20a0, type: 2}
+  - {fileID: 11400000, guid: e4180df95eea42245986545d24d054df, type: 2}
+  - {fileID: 11400000, guid: 0dffccae87ffef5419d33f9de538e2a7, type: 2}
   DisposableArr:
   - {fileID: 11400000, guid: 30275cd6c15666f498ce2a6824c79355, type: 2}
   - {fileID: 11400000, guid: 58feab81a66d5bb4cbe8715b55928101, type: 2}
@@ -73,9 +75,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e25b213ff308e449a0f01e3ccb9b837, type: 2}
   - {fileID: 11400000, guid: 4b2097dcf92beae43b4de159b15a121f, type: 2}
   - {fileID: 11400000, guid: 4a217ead521a4b9479f2dfbf14cb58d1, type: 2}
-  HandUIArr:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

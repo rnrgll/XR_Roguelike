@@ -31,6 +31,7 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log($"CardUI 클릭! Data: {CardData.CardSuit} {CardData.CardNum}");
         OnClick(CardData);
     }
 
