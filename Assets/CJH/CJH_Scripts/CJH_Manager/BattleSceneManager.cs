@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; 
 using UI;
 using Managers;
 
@@ -66,12 +66,13 @@ public class BattleSceneManager : MonoBehaviour
             yield return new WaitUntil(() => pc.GetCardController() != null);
             var cc = pc.GetCardController();
 
-
+           
             yield return new WaitUntil(() => cc.IsReady);
 
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
             go.GetComponent<BattleUI>().InitScene(pc);
+            cc.BattleInit();
 
 
             Debug.Log("[BattleManager] cardHand 생성");
@@ -156,10 +157,10 @@ public class BattleSceneManager : MonoBehaviour
 
             StartCoroutine(InitializeMonsterUI(enemy));
         }
-        if (GameStatusUI.Instance != null)
-        {
-            GameStatusUI.Instance.SetTarget(enemy);
-        }
+            if (GameStatusUI.Instance != null)
+            {
+                GameStatusUI.Instance.SetTarget(enemy);
+            }
         else
         {
             Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");

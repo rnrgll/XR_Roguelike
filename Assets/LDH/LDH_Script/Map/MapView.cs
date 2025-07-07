@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Managers;
-using System.Collections;
 using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -138,7 +137,7 @@ namespace Map
             SetMapLength();
             
             //맵 스트롤 위치 초기화
-            StartCoroutine(ScrollReset());
+            ScrollReset();
         }
         
         
@@ -374,10 +373,8 @@ namespace Map
             
         }
 
-        private IEnumerator ScrollReset()
+        private void ScrollReset()
         {
-            yield return null;
-            Canvas.ForceUpdateCanvases();
             scrollRect.normalizedPosition = Vector2.zero;
         }
 

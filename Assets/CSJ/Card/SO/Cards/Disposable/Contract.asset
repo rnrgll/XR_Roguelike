@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9de4971d884a54087752c57e9d9a8d, type: 3}
   m_Name: Contract
   m_EditorClassIdentifier: 
-  cardName: Contract
+  cardName: 
   sprite: {fileID: 0}
-  DisposableCard: 1
   suit: 99
   cardNum: 0
+  disposableCardSO: {fileID: 0}

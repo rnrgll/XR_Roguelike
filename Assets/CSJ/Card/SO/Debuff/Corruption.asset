@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   description: "\uBD80\uD328 \uC0C1\uD0DC\uC774\uC0C1"
-  rustDebuff: {fileID: 11400000, guid: 7b34298909bc2f24193b70027b4d299d, type: 2}
+  rust: {fileID: 11400000, guid: 7b34298909bc2f24193b70027b4d299d, type: 2}

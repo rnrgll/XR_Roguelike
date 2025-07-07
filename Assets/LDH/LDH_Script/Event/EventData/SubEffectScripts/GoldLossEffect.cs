@@ -1,17 +1,15 @@
 using Managers;
-using System;
 
 namespace Event
 {
     public class GoldLossEffect : SubEffect
     {
         public GoldLossEffect(int value) : base(SubEffectType.ResourceGain, value) { }
-        public override void ApplyEffect(Action onComplete)
+        public override void ApplyEffect()
         {
-            base.ApplyEffect(null);
+            base.ApplyEffect();
             
             Manager.GameState.AddGold(-Value);
-            onComplete?.Invoke();
         }
     }
 }

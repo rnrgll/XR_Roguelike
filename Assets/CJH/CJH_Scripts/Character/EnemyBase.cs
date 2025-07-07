@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, IEnemyActor
 {
-    public int maxHP = 1000;
+    [SerializeField] public int maxHP = 1000;
     public int currentHP;
 
     [SerializeField] protected EnemyType type;
@@ -12,13 +12,9 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
 
     public bool IsDead => currentHP <= 0;
 
-    private void Awake()
-    {
-        currentHP = maxHP;  // 스폰 직후 현재체력을 최대치로 셋팅 
-    }
-
     protected virtual void Start()
     {
+        currentHP = maxHP;
         TurnManager.Instance.RegisterEnemy(this);
 
         // 씬 내에 UI가 준비되어 있다면, 바로 초기화

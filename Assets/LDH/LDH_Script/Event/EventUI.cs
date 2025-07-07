@@ -63,12 +63,9 @@ namespace Event
                 {
                     rewardConfirmButton.onClick.AddListener(() =>
                     {
-                        rewardEffect.ApplyEffects(() =>
-                        {
-                            resultPanel.SetActive(false);
-                            Manager.Map.ShowMap();
-                        });
-                       
+                        rewardEffect.ApplyEffects();
+                        resultPanel.SetActive(false);
+                        Manager.Map.ShowMap();
                     });
                     rewardText.text = string.Join("\n", mainReward.ResultText.Split(',').Select(s => s.Trim()));
                     resultPanel.SetActive(true);

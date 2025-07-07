@@ -39,11 +39,11 @@ namespace InGameShop
         {
             if (currentGold < _rerollPrice)
             {
-                _condition.SetButtonState(ButtonActiveState.Deactive, () => _alarmPopUp.SetActive(true) );
+                _condition.SetButtonState(ButtonState.Deactive, () => _alarmPopUp.SetActive(true) );
             }
             else
             {
-                _condition.SetButtonState(ButtonActiveState.Active, ()=> Reroll());
+                _condition.SetButtonState(ButtonState.Active, ()=> Reroll());
             }
             
         }

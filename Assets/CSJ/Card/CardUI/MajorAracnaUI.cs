@@ -18,16 +18,13 @@ public class MajorArcanaUI : MonoBehaviour, IPointerClickHandler
     {
         CardData = card;
         string cName = $"MajorArcana/{card.cardName}";
+        Debug.Log(cName);
         var sprite = Resources.Load<Sprite>(cName);
+        Debug.Log(sprite);
         if (sprite != null)
         {
             CardImage.sprite = sprite;
         }
-    }
-
-    public void SetCardImage(Sprite sprite)
-    {
-        CardImage.sprite = sprite;
     }
 
     public void OnPointerClick(PointerEventData eventData)
