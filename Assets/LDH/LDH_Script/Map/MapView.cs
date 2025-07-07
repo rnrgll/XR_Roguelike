@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Managers;
 using System.Linq;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine.UI.Extensions;
 
 namespace Map
