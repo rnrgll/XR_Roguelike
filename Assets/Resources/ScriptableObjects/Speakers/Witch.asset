@@ -21,12 +21,12 @@ MonoBehaviour:
     rgba: 4280093453
   portraits:
   - key: Normal
-    sprite: {fileID: 21300000, guid: fa81749307c64486191d5e2b4002e63a, type: 3}
+    sprite: {fileID: 21300000, guid: da353d8b5ba6c4bf8b32d6ca8fbaafa8, type: 3}
   - key: Sad
-    sprite: {fileID: 21300000, guid: fa81749307c64486191d5e2b4002e63a, type: 3}
+    sprite: {fileID: 21300000, guid: 6c8092c9e72fb451bbe081b12ef997c4, type: 3}
   - key: Panic
-    sprite: {fileID: 21300000, guid: fa81749307c64486191d5e2b4002e63a, type: 3}
+    sprite: {fileID: 21300000, guid: 6c8092c9e72fb451bbe081b12ef997c4, type: 3}
   - key: Hit
-    sprite: {fileID: 21300000, guid: fa81749307c64486191d5e2b4002e63a, type: 3}
+    sprite: {fileID: 21300000, guid: 6c8092c9e72fb451bbe081b12ef997c4, type: 3}
   - key: None
     sprite: {fileID: 0}

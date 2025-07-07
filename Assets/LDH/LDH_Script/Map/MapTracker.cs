@@ -35,13 +35,19 @@ namespace Map
         
         public void VisitNode(MapNode mapNode)
         {
-            EventSystem.current.enabled = false;
+            EventSystem eventSystem = EventSystem.current;
+            eventSystem.enabled = false;
             Manager.Map.CurrentMap.Path.Add(mapNode.Node.point);
             Manager.Map.View.SetAttainableNodes();
             Manager.Map.View.SetLineColors();
             mapNode.ShowVisitedCircle();
             
-            DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode));
+            DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() =>
+            {
+                eventSystem.enabled = true;
+                mapNode.ResetScale();
+                EnterNode(mapNode);
+            });
             
         }
 

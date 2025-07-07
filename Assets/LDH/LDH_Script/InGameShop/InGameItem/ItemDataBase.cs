@@ -18,10 +18,6 @@ namespace InGameShop
 
         private string itemDataFolder = "ScriptableObjects/GameItem";
 
-        private string itemSpriteFolder = "TestSprites"; //todo : 수정 필요
-        private string cardSpriteFolder = "ArcanaTest"; //todo: 수정 필요
-
-
         public ItemDataBase()
         {
             //todo: itemDB 초기화 및 데이터 셋팅 수정 필요
@@ -129,11 +125,17 @@ namespace InGameShop
             // 1. 카드가 부족하면 count 조정
             count = Mathf.Min(count, enchantables.Count);
             // 2. 셔플
-            Shuffle(enchantables); 
+            Shuffle(enchantables);
 
+            for (int i = 0; i < enchantables.Count; i++)
+            {
+                Debug.Log($"인챈트 가능한 카드 {i} : {enchantables[i].CardNum} {enchantables[i].CardSuit}");
+            }
+            
             for (int i = 0; results.Count<count; i++)
             {
                 var card = enchantables[i];
+                
                 
                 
                 // 3. 랜덤한 EnchantType 선택 (1~7 사이)
@@ -149,9 +151,10 @@ namespace InGameShop
                 EnchantItem enchantItem = ScriptableObject.Instantiate(origin);
                 Debug.Log($"{enchantItem.enchantSo}, {card.CardSuit}, {card.CardNum}");
                 enchantItem.SetData(card.CardSuit, card.CardNum);
-                
-                string cNum = card.CardNum < 10 ? $"0" + card.CardNum : card.CardNum.ToString();
-                string cName = $"ArcanaTest/{card.CardSuit}{cNum}";
+
+
+                string cNum = card.CardNum.ToString();
+                string cName = $"MinorArcana/{card.CardSuit}/{card.CardSuit}_{cNum}";
                 var sprite = Resources.Load<Sprite>(cName);
                 enchantItem.sprite = sprite;
                 
@@ -219,83 +222,83 @@ namespace InGameShop
 
         #region CSV Load(사용x)
 
-        public bool LoadItemData(ItemType type, string fileName, char splitSymol = ',')
-        {
+        // public bool LoadItemData(ItemType type, string fileName, char splitSymol = ',')
+        // {
+        //
+        //     // //<아이템 형>
+        //     // //1. CSV 테이블 생성
+        //     // CsvTable table = new CsvTable($"Data/Item/{fileName}");
+        //     //
+        //     // //2. Reader로 파일 읽기
+        //     // CsvReader.Read(table);
+        //     //
+        //     // //3. 아이템 데이터 파싱
+        //     // switch (type)
+        //     // {
+        //     //     case ItemType.Item:
+        //     //         ParseItemData(table);
+        //     //         break;
+        //     //     case ItemType.Card:
+        //     //         ParseCardItemData(table);
+        //     //         break;
+        //     // }
+        //     //
+        //
+        //     return true;
+        // }
+        //
 
-            // //<아이템 형>
-            // //1. CSV 테이블 생성
-            // CsvTable table = new CsvTable($"Data/Item/{fileName}");
-            //
-            // //2. Reader로 파일 읽기
-            // CsvReader.Read(table);
-            //
-            // //3. 아이템 데이터 파싱
-            // switch (type)
-            // {
-            //     case ItemType.Item:
-            //         ParseItemData(table);
-            //         break;
-            //     case ItemType.Card:
-            //         ParseCardItemData(table);
-            //         break;
-            // }
-            //
-
-            return true;
-        }
-
-
-        public void ParseItemData(CsvTable table)
-        {
-            int rowCnt = table.Table.GetLength(0);
-            int columnCnt = table.Table.GetLength(1);
-
-            InventoryItemCount = rowCnt - 1; //아이템 개수 저장
-
-            Dictionary<string, int> columnMap = new();
-            for (int c = 0; c < columnCnt; c++)
-                columnMap[table.Table[0, c]] = c;
-
-            for (int r = 1; r < rowCnt; r++)
-            {
-                GameItem item = new InventoryItem()
-                {
-                    id = table.Table[r, columnMap["id"]],
-                    itemName = table.Table[r, columnMap["name"]],
-                    description = table.Table[r, columnMap["description"]],
-                    price = int.Parse(table.Table[r, columnMap["price"]]),
-                    sprite = Resources.Load<Sprite>(Path.Combine(itemSpriteFolder, table.Table[r, columnMap["image"]])),
-                    weight = float.Parse(table.Table[r, columnMap["weight"]]),
-                };
-                ItemDB.Add(item);
-            }
-        }
-
-        public void ParseCardItemData(CsvTable table)
-        {
-            int rowCnt = table.Table.GetLength(0);
-            int columnCnt = table.Table.GetLength(1);
-
-            //CardItemTotalCount = rowCnt - 1; //아이템 개수 저장
-
-            Dictionary<string, int> columnMap = new();
-            for (int c = 0; c < columnCnt; c++)
-                columnMap[table.Table[0, c]] = c;
-
-            for (int r = 1; r < rowCnt; r++)
-            {
-                GameItem item = new EnchantItem()
-                {
-                    id = table.Table[r, columnMap["id"]],
-                    itemName = table.Table[r, columnMap["name"]],
-                    description = table.Table[r, columnMap["description"]],
-                    price = int.Parse(table.Table[r, columnMap["price"]]),
-                    sprite = Resources.Load<Sprite>(Path.Combine(cardSpriteFolder, table.Table[r, columnMap["image"]])),
-                    weight = float.Parse(table.Table[r, columnMap["weight"]]),
-                };
-                ItemDB.Add(item);
-            }
-        }
+        // public void ParseItemData(CsvTable table)
+        // {
+        //     int rowCnt = table.Table.GetLength(0);
+        //     int columnCnt = table.Table.GetLength(1);
+        //
+        //     InventoryItemCount = rowCnt - 1; //아이템 개수 저장
+        //
+        //     Dictionary<string, int> columnMap = new();
+        //     for (int c = 0; c < columnCnt; c++)
+        //         columnMap[table.Table[0, c]] = c;
+        //
+        //     for (int r = 1; r < rowCnt; r++)
+        //     {
+        //         GameItem item = new InventoryItem()
+        //         {
+        //             id = table.Table[r, columnMap["id"]],
+        //             itemName = table.Table[r, columnMap["name"]],
+        //             description = table.Table[r, columnMap["description"]],
+        //             price = int.Parse(table.Table[r, columnMap["price"]]),
+        //             sprite = Resources.Load<Sprite>(Path.Combine(itemSpriteFolder, table.Table[r, columnMap["image"]])),
+        //             weight = float.Parse(table.Table[r, columnMap["weight"]]),
+        //         };
+        //         ItemDB.Add(item);
+        //     }
+        // }
+        //
+        // public void ParseCardItemData(CsvTable table)
+        // {
+        //     int rowCnt = table.Table.GetLength(0);
+        //     int columnCnt = table.Table.GetLength(1);
+        //
+        //     //CardItemTotalCount = rowCnt - 1; //아이템 개수 저장
+        //
+        //     Dictionary<string, int> columnMap = new();
+        //     for (int c = 0; c < columnCnt; c++)
+        //         columnMap[table.Table[0, c]] = c;
+        //
+        //     for (int r = 1; r < rowCnt; r++)
+        //     {
+        //         GameItem item = new EnchantItem()
+        //         {
+        //             id = table.Table[r, columnMap["id"]],
+        //             itemName = table.Table[r, columnMap["name"]],
+        //             description = table.Table[r, columnMap["description"]],
+        //             price = int.Parse(table.Table[r, columnMap["price"]]),
+        //             sprite = Resources.Load<Sprite>(Path.Combine(cardSpriteFolder, table.Table[r, columnMap["image"]])),
+        //             weight = float.Parse(table.Table[r, columnMap["weight"]]),
+        //         };
+        //         ItemDB.Add(item);
+        //     }
+        // }
 
         #endregion
     }

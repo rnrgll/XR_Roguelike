@@ -27,6 +27,7 @@ namespace InGameShop
         {
             _suit = suit;
             _cardNum = cardNum;
+            itemName = $"{itemName} - {suit} {cardNum}";
         }
     
     }

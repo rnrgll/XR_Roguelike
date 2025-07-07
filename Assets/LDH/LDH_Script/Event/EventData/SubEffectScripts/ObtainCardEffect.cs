@@ -15,12 +15,12 @@ namespace Event
         {
             base.ApplyEffect(null);
             List<GameItem> enchantItems = Manager.Data.GameItemDB.PickUniqeItemRandomByType(Value, ItemType.Card);
-            
+
             foreach (EnchantItem enchantItem in enchantItems)
             {
                 Manager.GameState.AddCardItem(enchantItem);
             }
-            
+
             onComplete?.Invoke();
         }
     }

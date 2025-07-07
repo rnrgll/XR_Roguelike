@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CardEnum;
+using System.Linq;
 
 // 마이너 아르카나를 보관하는 카드덱 클래스이다.
 // 덱을 통해 카드의 인챈트 기능이나 카드의 추가 등을 다룬다.
@@ -110,37 +111,20 @@ public class CardDeck
     {
         List<MinorArcana> EnchantedCardList = GetEnchantedCard();
         List<MinorArcana> EnchantableCard = new();
-        for (int suit = 0; suit < 4; suit++)
+        foreach (var cardArr in Deck)
         {
-            for (int num = 0; num < 14; num++)
+            foreach (var card in cardArr.Value)
             {
-                if (EnchantedCardList.Contains(Deck[(MinorSuit)suit][num])) continue;
-                EnchantableCard.Add(Deck[(MinorSuit)suit][num]);
+                if (!EnchantedCardList.Contains(card))
+                    EnchantableCard.Add(card);
             }
         }
         return EnchantableCard;
     }
 
-    private List<int> GetEnchantedCardNum()
-    {
-        ICollection<MinorArcana> keys = EnchantDic.Keys;
-        List<int> keynum = new();
-        foreach (var key in keys)
-        {
-            keynum.Add((int)key.CardSuit * 14 + key.CardNum);
-        }
-        return keynum;
-    }
-
     public List<MinorArcana> GetEnchantedCard()
     {
-        List<int> keyNum = GetEnchantedCardNum();
-        List<MinorArcana> EnchantedCardList = new();
-        foreach (int _num in keyNum)
-        {
-            EnchantedCardList.Add(Deck[(MinorSuit)(_num / 14)][_num % 14]);
-        }
-        return EnchantedCardList;
+        return EnchantDic.Keys.ToList();
     }
 
     public void Enchant(MinorArcana _card, CardEnchantSO _enchant)
