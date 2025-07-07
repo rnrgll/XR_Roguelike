@@ -33,12 +33,8 @@ public class StatusEffectCardSO : ScriptableObject
 
     public void AddStatusEffect()
     {
-        controller.AddStatusEffectCard(this, statusEffectcard);
-    }
-
-    public MinorArcana CreateCard()
-    {
-        return statusEffectcard = new MinorArcana(cardName, suit, cardNum);
+        statusEffectcard = new MinorArcana(cardName, suit, cardNum);
+        controller.AddStatusEffectCard(this);
     }
 
     public MinorArcana GetStatusEffectCard()

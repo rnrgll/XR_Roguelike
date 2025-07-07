@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using CardEnum;
 
 [CreateAssetMenu(fileName = "TheFoolUpright", menuName = "Tarot/Abilities/TheFool/Upright")]
 public class TheFoolUprightAbility : ScriptableObject, IArcanaAbility
 {
+    [SerializeField] JokerCard joker;
     private PlayerController playerController;
     private Action<MinorArcana> ToSubscribe;
     public void Excute(ArcanaContext ctx)
     {
         playerController = ctx.player;
-        playerController.GetCardController().ApplayDisposableCard(DisposableCardName.Joker);
+        joker.AddDisposableCard();
         OnSubscribe();
     }
 
@@ -25,6 +25,7 @@ public class TheFoolUprightAbility : ScriptableObject, IArcanaAbility
 
     public void OnUnSubscribe()
     {
+        joker.RemoveCard();
         playerController.OnTurnEnd -= OnUnSubscribe;
         playerController.GetCardController().OnCardSubmited -= ToSubscribe;
     }

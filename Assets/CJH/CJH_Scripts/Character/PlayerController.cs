@@ -140,8 +140,8 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             isTurnSkip = true;
         }
 
-        // // 5. 턴 종료
-        // EndTurn();
+        // 5. 턴 종료
+        EndTurn();
     }
 
     public void TakeDamage(int dmg)
@@ -456,16 +456,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         ratio = 1f;
         additionalDamage = 0f;
 
-        // // 3. 카드 컨트롤러(덱·핸드) 초기화
-        // if (cardController != null)
-        // {
-        //     cardController.BattleInit();
-        //     Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
-        // }
+        // 3. 카드 컨트롤러(덱·핸드) 초기화
+        if (cardController != null)
+        {
+            cardController.BattleInit();
+            Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
+        }
 
         // 4. 턴 플래그 초기화
         turnEnded = false;

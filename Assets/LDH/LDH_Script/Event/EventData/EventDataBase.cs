@@ -28,6 +28,7 @@ namespace Event
         private int EventTable_OptionColumn = 'E' - 'A'; //이벤트 테이블의 option 데이터 시작 열 인덱스
         private List<int> usableEventList = new() {2, 4, 5, 8, 11, 23, 25, 30, 33, 34 };  //현재 기획에서 지정한 사용 가능한 이벤트. 여기 있는 이벤트 내에서만 랜덤으로 이벤트를 선별.
         
+        
         #endregion
 
         //이벤트 관련
@@ -221,8 +222,6 @@ namespace Event
         {
             int roll = Manager.randomManager.RandInt(0, usableEventList.Count);
             int eventID = usableEventList[roll];
-            
-            Debug.Log($"{eventID}, : {EventDB[eventID].EventName}");
             return EventDB[eventID];
         }
 

@@ -29,11 +29,11 @@ namespace InGameShop
             
             if (GameStateManager.Instance.Gold < item.price)
             {
-                _condition.SetButtonState(ButtonActiveState.Deactive, () => _goldAlarmPopUp.SetActive(true) );
+                _condition.SetButtonState(ButtonState.Deactive, () => _goldAlarmPopUp.SetActive(true) );
             }
             else
             {
-                _condition.SetButtonState(ButtonActiveState.Active, ()=>
+                _condition.SetButtonState(ButtonState.Active, ()=>
                 {
                     Purchase(slotIndex, (item is InventoryItem? ItemType.Item: ItemType.Card));
                     

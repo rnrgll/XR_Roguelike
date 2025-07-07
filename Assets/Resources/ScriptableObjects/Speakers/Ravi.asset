@@ -21,18 +21,18 @@ MonoBehaviour:
     rgba: 4294615039
   portraits:
   - key: Normal
-    sprite: {fileID: 21300000, guid: 5440a0f3b9a0c4d228bc51c653164ef1, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Smile
-    sprite: {fileID: 21300000, guid: 1b869c87be22f496bbc3426caca6b1c7, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Sad
-    sprite: {fileID: 21300000, guid: bb64b90fede424264980957cf740d8d8, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Angry
-    sprite: {fileID: 21300000, guid: 933bbf70efbe74e8b99b589f4139d389, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Panic
-    sprite: {fileID: 21300000, guid: 933bbf70efbe74e8b99b589f4139d389, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Happy
-    sprite: {fileID: 21300000, guid: 1b869c87be22f496bbc3426caca6b1c7, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: Shock
-    sprite: {fileID: 21300000, guid: 933bbf70efbe74e8b99b589f4139d389, type: 3}
+    sprite: {fileID: 21300000, guid: cf6c6b42738f64c36a1b1813b32660b6, type: 3}
   - key: None
     sprite: {fileID: 0}

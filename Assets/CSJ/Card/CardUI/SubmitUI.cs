@@ -11,7 +11,6 @@ public class SubmitUI : UIRequire
     [SerializeField] private Button DiscardButton;
     [SerializeField] private Button SuitSortButton;
     [SerializeField] private Button NumSortButton;
-    [SerializeField] private Button TurnEndButton;
     private Action<CardCombinationEnum> _onSelectionChanged;
 
     protected override void Subscribe()
@@ -20,7 +19,6 @@ public class SubmitUI : UIRequire
         DiscardButton.onClick.AddListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.AddListener(OnSuitSortButtonClicked);
         NumSortButton.onClick.AddListener(OnNumSortButtonClicked);
-        TurnEndButton.onClick.AddListener(OnTurnEndButtonClicked);
 
         _onSelectionChanged = _ => UpdateButtons();
         cardController.OnSelectionChanged += _onSelectionChanged;
@@ -33,7 +31,6 @@ public class SubmitUI : UIRequire
         DiscardButton.onClick.RemoveListener(OnDiscardButtonClicked);
         SuitSortButton.onClick.RemoveListener(OnSuitSortButtonClicked);
         NumSortButton.onClick.RemoveListener(OnNumSortButtonClicked);
-        TurnEndButton.onClick.RemoveListener(OnTurnEndButtonClicked);
 
         cardController.OnSelectionChanged -= _onSelectionChanged;
         _onSelectionChanged = null;
@@ -64,10 +61,5 @@ public class SubmitUI : UIRequire
     private void OnNumSortButtonClicked()
     {
         cardController.ChangeStandByNum();
-    }
-
-    private void OnTurnEndButtonClicked()
-    {
-        playerController.EndTurn();
     }
 }

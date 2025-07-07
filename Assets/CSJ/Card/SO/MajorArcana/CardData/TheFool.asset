@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TheFool
   m_EditorClassIdentifier: 
   cardName: TheFool
-  sprite: {fileID: 21300000, guid: 80b5b5977c54ff240b1b10ad82009ecb, type: 3}
+  sprite: {fileID: 0}
   uprightAbilitySO: {fileID: 11400000, guid: 25110a487030f204181f78e1f0b79432, type: 2}
   reversedAbilitySO: {fileID: 11400000, guid: b02020d37a5dab54786c0643a0fa650d, type: 2}
