@@ -20,9 +20,9 @@ namespace TopBarUI
         {
             //마이너 아르카나 이미지
             string cNum = minor.CardNum < 10 ? $"0{minor.CardNum}" : minor.CardNum.ToString();
-            string cName = $"ArcanaTest/{minor.CardSuit}{cNum}";
+            string cName = $"MinorArcana/{minor.CardSuit}/{minor.CardSuit}_{cNum}";
             var sprite = Resources.Load<Sprite>(cName);
-
+            
             cardName = $"{cName} {minor.CardName}";
             cardImg.sprite = sprite;
             

@@ -1,5 +1,6 @@
 using InGameShop;
 using Managers;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +19,10 @@ namespace Event
             DurationTurns = durationTurns;
         }
 
-        public virtual void ApplyEffect()
+        public virtual void ApplyEffect(Action onComplete)
         {
             Debug.Log($"효과 적용 : {SubEffectType.ToString()}, {Value}, {DurationTurns ?? 0}턴");
-            
+            onComplete?.Invoke();
         }
     }
 }

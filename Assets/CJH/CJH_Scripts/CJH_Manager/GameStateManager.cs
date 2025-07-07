@@ -57,10 +57,7 @@ public class GameStateManager : DesignPattern.Singleton<GameStateManager>
         
         
         //골드 //todo:골드 초기화 값 수정 필요
-        AddGold(1000);
-        AddItem("211");
-        AddItem("213");
-        AddItem("211");
+        Gold = 1000;
     }
     public void RegisterPlayerController(PlayerController pc)
     {

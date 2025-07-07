@@ -26,6 +26,25 @@ public class GameStatusUI : MonoBehaviour
         // null이 아닐경우 오브젝트를 제거
         else Destroy(gameObject);
 
+
+        /// <summary>
+        /// null이면 자동 참조
+        /// </summary>
+        if (monsterHPText == null)
+        {
+            monsterHPText = GetComponentInChildren<TextMeshProUGUI>(true);
+            if (monsterHPText == null)
+                Debug.LogWarning("GameStatusUI: monsterHPText를 찾지 못했습니다!");
+        }
+
+        if (monsterHpSlider == null)
+        {
+            monsterHpSlider = GetComponentInChildren<Slider>(true);
+            if (monsterHpSlider == null)
+                Debug.LogWarning("GameStatusUI: monsterHpSlider를 찾지 못했습니다!");
+        }
+    
+
     }
 
     /// <summary>
@@ -51,6 +70,15 @@ public class GameStatusUI : MonoBehaviour
     public void SetTarget(EnemyBase monster)
     {
         target = monster;
+
+        if (monsterHpSlider != null)
+        {
+            monsterHpSlider.maxValue = monster.maxHP;
+            monsterHpSlider.value = monster.currentHP;
+            Debug.Log($"[GameStatusUI][SetTarget] maxValue={monsterHpSlider.maxValue}, value={monsterHpSlider.value}");
+        }
+
+
         UpdateMonsterStatus();
     }
 
@@ -59,6 +87,9 @@ public class GameStatusUI : MonoBehaviour
     /// </summary>
     public void AddDamage(int damage)
     {
+        if (target == null) return;
+
+        // UI 갱신
         UpdateMonsterStatus();
     }
 
@@ -67,12 +98,12 @@ public class GameStatusUI : MonoBehaviour
     {
         if (target == null) return;
 
-        // 텍스트
-        monsterHPText.text = $"HP: {target.currentHP} / {target.maxHP}";
-
-        // 슬라이더
+        monsterHPText.text = $"HP: {target.currentHP}/{target.maxHP}";
         if (monsterHpSlider != null)
+        {
             monsterHpSlider.value = target.currentHP;
+            Debug.Log($"[Debug][UpdateMonsterStatus] Slider.value = {monsterHpSlider.value}");
+        }
     }
 
 

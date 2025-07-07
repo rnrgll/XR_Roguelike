@@ -11,13 +11,15 @@ namespace TopBarUI
     public class InventoryItemPopUp : MonoBehaviour
     {
         [SerializeField] private Image _itemImage;
+        [SerializeField] private TMP_Text _itemName;
         [SerializeField] private TMP_Text _itemDescription;
 
         public void SetData(string itemID)
         {
             var item = Manager.Data.GameItemDB.GetItemById(itemID);
             _itemImage.sprite = item.sprite;
-            _itemDescription.text = $"{item.itemName}\n{item.description}";
+            _itemName.text = item.itemName;
+            _itemDescription.text = item.description;
         }
         
         
