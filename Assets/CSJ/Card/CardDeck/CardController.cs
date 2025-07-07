@@ -312,6 +312,7 @@ public class CardController : MonoBehaviour
             Debug.LogError("SelectedCard is null!");
             return;
         }
+        var toPlay = SelectedCard.ToList();
         //penaltyAmount = 0;
         foreach (var card in SelectedCard)
         {
@@ -319,7 +320,10 @@ public class CardController : MonoBehaviour
         }
         OnSubmit?.Invoke(SelectedCard);
 
-        Discard(SelectedCard);
+        Discard(toPlay);
+
+        ClearSelect();
+        OnChangedHands?.Invoke();
     }
 
     public List<MinorArcana> GetHand()
