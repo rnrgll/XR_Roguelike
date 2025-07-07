@@ -49,6 +49,7 @@ public class BattleSceneManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+
         // 1프레임 기다려 PlayerController가 등장하도록 함
         yield return null;
         var pc = FindObjectOfType<PlayerController>();
