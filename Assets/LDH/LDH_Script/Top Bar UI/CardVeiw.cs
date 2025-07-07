@@ -2,7 +2,6 @@ using CardEnum;
 using DesignPattern;
 using InGameShop;
 using Managers;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +18,11 @@ namespace TopBarUI
         public void SetData(MinorArcana minor)
         {
             //마이너 아르카나 이미지
-            string cNum = minor.CardNum < 10 ? $"0{minor.CardNum}" : minor.CardNum.ToString();
+            string cNum = minor.CardNum.ToString();
             string cName = $"MinorArcana/{minor.CardSuit}/{minor.CardSuit}_{cNum}";
             var sprite = Resources.Load<Sprite>(cName);
+            
+            Debug.Log(cName);
             
             cardName = $"{cName} {minor.CardName}";
             cardImg.sprite = sprite;
