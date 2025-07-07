@@ -8,9 +8,10 @@ namespace Event
         public GoldLossEffect(int value) : base(SubEffectType.ResourceGain, value) { }
         public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect(onComplete);
+            base.ApplyEffect(null);
 
             Manager.GameState.AddGold(-Value);
+            onComplete?.Invoke();
         }
     }
 }

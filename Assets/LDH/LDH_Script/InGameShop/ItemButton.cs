@@ -39,7 +39,8 @@ namespace InGameShop
         private ButtonState _currentState;
         private Tween _floatTween;
         private EventSystem _eventSystem;
-        
+        private Vector2 _initialAnchorPos; 
+
         private void Awake() => Init();
 
         private void OnEnable()
@@ -64,6 +65,9 @@ namespace InGameShop
             _originWorldPos = _itemButton.transform.position;
             _originWorldScale = _itemButton.transform.lossyScale;
             _originWorldRot = _itemButton.transform.rotation;
+
+            _initialAnchorPos = _buttonRec.anchoredPosition;
+            
             
             //ui 관련 참조 설정
             _priceText = _priceLabel.GetComponentInChildren<TMP_Text>();
@@ -228,7 +232,9 @@ namespace InGameShop
         {
             
             _floatTween?.Kill();
-            _floatTween = null;
+            _floatTween = null;    
+            _buttonRec.anchoredPosition = _initialAnchorPos;
+
         }
 
         #endregion

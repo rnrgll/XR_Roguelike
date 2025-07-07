@@ -8,10 +8,12 @@ namespace Event
 
         public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect(onComplete);
+            base.ApplyEffect(null);
             //todo: player attack bost 적용 테스트 필요 
             var player = TurnManager.Instance.GetPlayerController();
             player.AddAttackBuff(Value, DurationTurns ?? 1);
+
+            onComplete?.Invoke();
         }
     }
 }

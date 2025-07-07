@@ -9,8 +9,9 @@ namespace Event
 
         public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect(onComplete);
+            base.ApplyEffect(null);
             Manager.GameState.AddGold(Value);
+            onComplete?.Invoke();
         }
     }
 }

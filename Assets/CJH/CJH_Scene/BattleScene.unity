@@ -455,7 +455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &669698179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,7 +1071,7 @@ MonoBehaviour:
   lasMonsterPrefab: {fileID: 7277799118892318029, guid: 2f6cf6c99bef64c4195978dfbe898200, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
   prideMonsterPrefab: {fileID: 7371526151415248810, guid: f4a2221c117a959488574e47a6075b22, type: 3}
-  CardHandUIPrefab: {fileID: 8305541565112924176, guid: 8130df111f0f02447b5878560f5745ea, type: 3}
+  CardHandUIPrefab: {fileID: 6866246693877190136, guid: e2f1c85e07f42814484af939671757d8, type: 3}
   gridMonsterPrefab: {fileID: 4687722528682794725, guid: e95818363beca384c8c00a4c599719d1, type: 3}
   slothMonsterPrefab: {fileID: 4897905090395734529, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
   lustMonsterPrefab: {fileID: 7956204582641407731, guid: 087a83514630adc4fb5a7e421b29a7ca, type: 3}
@@ -1501,63 +1501,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d30fb883b81a1041b2f3bd3e5188a2b, type: 3}
---- !u!1001 &3775309594297737372
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4897905090395734529, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_Name
-      value: Sloth
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6601855111830225642, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1569,4 +1512,3 @@ SceneRoots:
   - {fileID: 194429753}
   - {fileID: 1843105035}
   - {fileID: 669698182}
-  - {fileID: 3775309594297737372}

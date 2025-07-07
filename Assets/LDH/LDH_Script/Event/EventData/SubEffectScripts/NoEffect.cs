@@ -9,8 +9,9 @@ namespace Event
 
         public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect(onComplete);
+            base.ApplyEffect(null);
             Debug.Log("아무런 효과가 없음");
+            onComplete?.Invoke();
         }
     }
 }
