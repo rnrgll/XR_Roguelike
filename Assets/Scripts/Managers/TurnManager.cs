@@ -184,7 +184,7 @@ public class TurnManager : Singleton<TurnManager>
     public void ContinueAfterReward()
     {
         Debug.Log("보상 선택 완료 → 맵 씬으로 복귀");
-        Manager.Map.ShowMap();
+        Manager.UI.ShowSelectableMap();
     }
 
 
