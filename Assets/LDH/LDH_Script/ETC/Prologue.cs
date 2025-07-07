@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Prologue : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         //맵 배경에 보이게
         Manager.Map.ShowMap();

@@ -1,5 +1,7 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,7 +32,8 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickOption()
     {
-        optionCanvas.SetActive(true);
+       // optionCanvas.SetActive(true);
+       Manager.UI.SetUIActive(GlobalUI.Setting,true);
     }
 
     public void OnClickQuit()

@@ -17,8 +17,7 @@ namespace TopBarUI
         [SerializeField] private Toggle _cardDeckToggle;
         [SerializeField] private Toggle _settingToggle;
         [SerializeField] private ToggleGroup tg;
-        public Toggle CardDeckToggle => _cardDeckToggle;
-        public Action<bool> OnToggleClicked;
+        //public Action<bool> OnToggleClicked;
 
         // Start is called before the first frame update
         void Start()
@@ -45,19 +44,20 @@ namespace TopBarUI
                 return;
             }
             Manager.UI.SetUIActive(GlobalUI.Map, isOn);
-            OnToggleClicked?.Invoke(tg.AnyTogglesOn());
+            //OnToggleClicked?.Invoke(tg.AnyTogglesOn());
 
         }
 
         private void OnDeckToggleChanged(bool isOn)
         {
             Manager.UI.SetUIActive(GlobalUI.Deck, isOn);
-            OnToggleClicked?.Invoke(tg.AnyTogglesOn());
+            //OnToggleClicked?.Invoke(tg.AnyTogglesOn());
         }
 
         private void OnSettingToggleChanged(bool isOn)
         {
-            //Manager.UI.SetUIActive(GlobalUI.Setting, isOn);
+            Manager.UI.SetUIActive(GlobalUI.Setting, isOn);
+            //OnToggleClicked?.Invoke(tg.AnyTogglesOn());
 
         }
 
