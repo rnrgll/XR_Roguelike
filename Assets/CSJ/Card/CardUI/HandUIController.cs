@@ -16,13 +16,12 @@ public class HandUIController : UIRequire
 
     public override void InitializeUI(PlayerController pc)
     {
-        cardController = pc.GetCardController();
+        base.InitializeUI(pc);
         RefreshHand();
     }
 
     protected override void Subscribe()
     {
-        UnSubscribe();
         cardController.OnChangedHands += RefreshHand;
         cardController.OnSelectionChanged += SyncUI;
     }
@@ -36,7 +35,6 @@ public class HandUIController : UIRequire
     public void RefreshHand()
     {
         if (cardController == null) return;
-
         foreach (var go in spawnedCards)
         {
             Destroy(go);
@@ -45,7 +43,6 @@ public class HandUIController : UIRequire
 
         cardController.SortByStand();
         var hand = cardController.GetHand();
-        Debug.Log(hand.Count);
         foreach (var card in hand)
         {
             var go = Instantiate(cardPrefab, handContainer);

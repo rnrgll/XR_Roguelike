@@ -43,7 +43,6 @@ public class HandPile<T> : IReadPile<T>, IAddRemovePile<T>, ISwappablePile<T>, I
 
     public bool Remove(T card) => _cards.Remove(card);
 
-
     public void Swap(T outCard, T inCard)
     {
         int idx = _cards.IndexOf(outCard);

@@ -13,6 +13,7 @@ namespace CardEnum
 
     public enum CardDebuff { none, Charm, Corruption, Rust, Injury }
     public enum StatusEffect { Injury, Mucus }
+    public enum DisposableCardName { Joker, Contract }
     public enum CardStatus { DeckList, BattleDeck, Hand, Graveyard }
 
     public enum CardBonus { Score, Mult, Ratio }
