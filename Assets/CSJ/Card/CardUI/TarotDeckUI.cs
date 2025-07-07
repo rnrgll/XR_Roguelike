@@ -1,4 +1,5 @@
 using Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,21 +76,26 @@ public class TarotDeckUI : UIRequire
     protected override void Subscribe()
     {
         currentCardUI.OnClick += OnMajorCardClicked;
-        Manager.UI.topBarMenus.OnToggleClicked += SetActive;
+        Manager.UI.OnGlobalUIActive += SetActive;
         playerController.OnTurnStarted += OnTurnStarted;
     }
 
     protected override void UnSubscribe()
     {
         currentCardUI.OnClick -= OnMajorCardClicked;
-        Manager.UI.topBarMenus.OnToggleClicked -= SetActive;
+        //Manager.UI.OnGlobalUIActive -= SetActive;  //on disable에서 구독해제하면 다시 major deck이 활성화되지 않아서 수정
         if (playerController != null)
             playerController.OnTurnStarted -= OnTurnStarted;
     }
 
+    private void OnDestroy()
+    {
+        Manager.UI.OnGlobalUIActive -= SetActive;
+    }
+
     public void SetActive(bool isActive)
     {
-        gameObject.SetActive(isActive);
+        gameObject.SetActive(!isActive);
     }
 
     private void OnTurnStarted()

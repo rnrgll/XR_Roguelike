@@ -46,6 +46,7 @@ public class BattleSceneManager : MonoBehaviour
 
     };
 
+
     private IEnumerator Start()
     {
 
@@ -145,9 +146,10 @@ public class BattleSceneManager : MonoBehaviour
         var prefab = GetMonsterPrefab(id);
         var go = Instantiate(prefab);
         var enemy = go.GetComponent<EnemyBase>();
+
+        enemy.InitForBattle();
         if (enemy != null)
         {
-            enemy.InitForBattle();
             TurnManager.Instance.RegisterEnemy(enemy);
             Debug.Log($"[{id}] 몬스터 스폰 및 등록 완료");
 
@@ -186,5 +188,4 @@ public class BattleSceneManager : MonoBehaviour
             _ => null
         };
     }
-
 }

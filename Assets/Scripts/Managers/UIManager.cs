@@ -15,12 +15,14 @@ namespace Managers
         public GameObject TopBarUI { get; private set; }
         public TopBarMenus topBarMenus;
         public GameObject MapUI { get; private set; }
-
         public GameObject DeckUI { get; private set; }
+        public GameObject SettingUI { get; private set; }
         public GameObject ItemUI { get; private set; }
 
         public RemoveItemPanel ItemRemoveUI { get; private set; }
 
+        public Action<bool> OnGlobalUIActive;
+        
 
         #endregion
 
@@ -55,6 +57,11 @@ namespace Managers
             var deckPrefab = Resources.Load<GameObject>("Prefabs/@DeckUI");
             DeckUI = GameObject.Instantiate(deckPrefab, container.transform);
             DeckUI.SetActive(false);
+            
+            // Setting Canvas
+            var settingPrefab = Resources.Load<GameObject>("Prefabs/@Setting");
+            SettingUI = Instantiate(settingPrefab, container.transform);
+            SettingUI.SetActive(false);
 
             // 4) Item Canvas
             var itemPrefab = Resources.Load<GameObject>("Prefabs/@ItemUI");
@@ -87,6 +94,9 @@ namespace Managers
                 case GlobalUI.Deck:
                     DeckUI?.SetActive(isActive);
                     break;
+                case GlobalUI.Setting:
+                    SettingUI?.SetActive(isActive);
+                    break;
                 case GlobalUI.Item:
                     ItemUI?.SetActive(isActive);
                     break;
@@ -94,6 +104,17 @@ namespace Managers
                     ItemRemoveUI?.gameObject.SetActive(isActive);
                     break;
             }
+
+            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
+            OnGlobalUIActive?.Invoke(isGloblalUIOn);
+        }
+
+        public void ShowSelectableMap()
+        {
+            Manager.Map.ShowMap(ShowType.Select);
+            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
+            Debug.Log(isGloblalUIOn);
+            OnGlobalUIActive?.Invoke(isGloblalUIOn);
         }
     }
 }
