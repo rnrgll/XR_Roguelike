@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -23,8 +24,9 @@ public class BattleDeckUI : UIRequire
     private List<GameObject> spawnedCards = new List<GameObject>();
     private bool isSetted = false;
 
-    private void Awake()
+    public override void InitializeUI(PlayerController pc)
     {
+        base.InitializeUI(pc);
         BattleDeckCanvas.SetActive(false);
         handUI.OnCardSetted += isSet;
     }
@@ -65,7 +67,7 @@ public class BattleDeckUI : UIRequire
 
         cardController.SortByStand();
         var Deck = cardController.DeckPile.GetCardList();
-        List<MinorArcana> UsedCard = cardController.Hand.GetCardList();
+        var UsedCard = new List<MinorArcana>(cardController.Hand.GetCardList());
         UsedCard.AddRange(cardController.Graveyard.GetCardList());
 
         foreach (var card in Deck)

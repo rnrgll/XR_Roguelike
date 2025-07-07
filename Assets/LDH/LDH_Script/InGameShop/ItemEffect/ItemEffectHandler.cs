@@ -76,15 +76,15 @@ namespace Item
             else if (effect.value != 0)
             {
                 _player.ChangeHp(effect.value);
-                _player.AddHealBuff(effect.value, effect.duration-1);
+                _player.AddHealBuff(effect.value, effect.duration - 1);
             }
 
             else
             {
                 _player.ChangeHpByPercent(effect.percentValue);
-                _player.AddHealBuff(effect.percentValue, effect.duration-1);
+                _player.AddHealBuff(effect.percentValue, effect.duration - 1);
             }
-                
+
         }
 
         private void ApplyHPReduce(ItemEffect effect)

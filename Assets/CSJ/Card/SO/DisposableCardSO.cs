@@ -10,6 +10,7 @@ public class DisposableCardSO : ScriptableObject
     [Header("카드 정보")]
     public string cardName;
     public Sprite sprite;
+    public DisposableCardName DisposableCard;
 
     [Header("MinorArcana 정보")]
     public MinorSuit suit = MinorSuit.Special;
@@ -32,8 +33,12 @@ public class DisposableCardSO : ScriptableObject
 
     public void AddDisposableCard()
     {
-        disposableCard = new MinorArcana(cardName, suit, cardNum);
-        controller.AddDisposableCard(this);
+        controller.ApplayDisposableCard(DisposableCard);
+    }
+
+    public MinorArcana CreateCard()
+    {
+        return disposableCard = new MinorArcana(cardName, suit, cardNum);
     }
 
     public virtual void OnCardPlayed(MinorArcana card) { }
