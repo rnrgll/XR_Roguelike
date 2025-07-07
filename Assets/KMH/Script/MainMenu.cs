@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour
 
     public void RetrunToMainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void BackToGame()

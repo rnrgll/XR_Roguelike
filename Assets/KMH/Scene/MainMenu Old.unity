@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInitializer: {fileID: 1984542998}
+  optionCanvas: {fileID: 0}
 --- !u!1 &80462896
 GameObject:
   m_ObjectHideFlags: 0
