@@ -46,6 +46,7 @@ public class BattleSceneManager : MonoBehaviour
 
     };
 
+
     private IEnumerator Start()
     {
         // 1프레임 기다려 PlayerController가 등장하도록 함
@@ -144,9 +145,10 @@ public class BattleSceneManager : MonoBehaviour
         var prefab = GetMonsterPrefab(id);
         var go = Instantiate(prefab);
         var enemy = go.GetComponent<EnemyBase>();
+
+        enemy.InitForBattle();
         if (enemy != null)
         {
-            enemy.InitForBattle();
             TurnManager.Instance.RegisterEnemy(enemy);
             Debug.Log($"[{id}] 몬스터 스폰 및 등록 완료");
 
