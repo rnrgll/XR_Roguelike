@@ -125,11 +125,17 @@ namespace InGameShop
             // 1. 카드가 부족하면 count 조정
             count = Mathf.Min(count, enchantables.Count);
             // 2. 셔플
-            Shuffle(enchantables); 
+            Shuffle(enchantables);
 
+            for (int i = 0; i < enchantables.Count; i++)
+            {
+                Debug.Log($"인챈트 가능한 카드 {i} : {enchantables[i].CardNum} {enchantables[i].CardSuit}");
+            }
+            
             for (int i = 0; results.Count<count; i++)
             {
                 var card = enchantables[i];
+                
                 
                 
                 // 3. 랜덤한 EnchantType 선택 (1~7 사이)
