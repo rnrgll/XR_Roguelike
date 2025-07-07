@@ -29,6 +29,8 @@ namespace Map
         private const float circleFillDuration = 0.8f;
         private float mouseDownTime;
 
+        private float bossNodeFactor = 2.5f; //boss node의 scale 증가값
+
         
         private void OnDestroy()
         {
@@ -49,7 +51,7 @@ namespace Map
             IsLocked = false;
             
             if (image != null) image.sprite = template.sprite;
-            if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
+            if (node.nodeType == NodeType.Boss) transform.localScale *= bossNodeFactor;
             if (image != null) initialScale = image.transform.localScale.x;
 
             if (visitedImage != null)
