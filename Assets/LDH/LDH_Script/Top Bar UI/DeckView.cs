@@ -10,7 +10,7 @@ namespace TopBarUI
 {
     public class DeckView : MonoBehaviour
     {
-        [SerializeField] private CardVeiw _cardPrefab;
+        [SerializeField] private CardView _cardPrefab;
         [SerializeField] private Transform _gridContainer;
         [SerializeField] private ScrollRect _scrollRect;
 
@@ -36,7 +36,7 @@ namespace TopBarUI
         {
             foreach (Transform child in _gridContainer)
             {
-                var card = child.GetComponent<CardVeiw>() as PooledObject;
+                var card = child.GetComponent<CardView>() as PooledObject;
                 card.ReturnPool();
             }
             ResetScroll();
@@ -58,7 +58,7 @@ namespace TopBarUI
 
             foreach (var minor in minorArcanaList)
             {
-                CardVeiw card = _cardPool.PopPool() as CardVeiw;
+                CardView card = _cardPool.PopPool() as CardView;
                 card.transform.SetParent(_gridContainer, false);
                 card.transform.SetSiblingIndex(idx++);
                 card.SetData(minor);
@@ -70,7 +70,7 @@ namespace TopBarUI
             if (majorArcanaList == null) return;
             foreach (var major in majorArcanaList)
             {
-                CardVeiw card = _cardPool.PopPool() as CardVeiw;
+                CardView card = _cardPool.PopPool() as CardView;
                 card.SetData(major);
                 card.transform.SetParent(_gridContainer);
                 card.transform.SetSiblingIndex(idx++);
