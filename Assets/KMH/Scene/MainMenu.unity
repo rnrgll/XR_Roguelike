@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInitializer: {fileID: 1984542998}
+  optionCanvas: {fileID: 813775726}
 --- !u!1 &80462896
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,6 +850,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &813775726 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4622559966405344802, guid: 30fbf0e1fedcc49fcb7776869b7c8e81, type: 3}
+  m_PrefabInstance: {fileID: 2581757583739957488}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1194365647
 GameObject:
   m_ObjectHideFlags: 0
