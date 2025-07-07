@@ -12,9 +12,24 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
 
     public bool IsDead => currentHP <= 0;
 
+
     private void Awake()
     {
         currentHP = maxHP;  // 스폰 직후 현재체력을 최대치로 셋팅 
+    }
+
+    /// <summary>
+    /// 전투 시작 전 체력·상태를 초기화한다.
+    /// </summary>
+    public void InitForBattle()
+    {
+        ResetStatus();
+        // 추가 상태(버프·디버프 등) 초기화 시 여기에 작성하거라
+    }
+
+    private void ResetStatus()
+    {
+        currentHP = maxHP;
     }
 
     protected virtual void Start()
@@ -39,4 +54,12 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
     }
 
     public abstract void TakeTurn();
+
+    protected virtual void OnDestroy()
+    {
+        // 몬스터가 죽으면 등록 해제
+        if (TurnManager.HasInstance)
+            TurnManager.Instance.UnregisterEnemy(this);
+    }
+
 }

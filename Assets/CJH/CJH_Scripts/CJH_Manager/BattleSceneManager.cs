@@ -61,6 +61,7 @@ public class BattleSceneManager : MonoBehaviour
             TurnManager.Instance.RegisterPlayer(pc);
             Debug.Log("Player 등록 완료");
             yield return null; // 한 프레임
+            pc.ResetState();    // 체력·버프·턴 플래그 전부 초기화
 
             Debug.Log("Card Controller 대기중");
             yield return new WaitUntil(() => pc.GetCardController() != null);
@@ -141,16 +142,11 @@ public class BattleSceneManager : MonoBehaviour
     private void SpawnSingleMonster(MonsterID id)
     {
         var prefab = GetMonsterPrefab(id);
-        if (prefab == null)
-        {
-            Debug.LogWarning($"[{id}] 프리팹이 설정되지 않았습니다.");
-            return;
-        }
-
         var go = Instantiate(prefab);
         var enemy = go.GetComponent<EnemyBase>();
         if (enemy != null)
         {
+            enemy.InitForBattle();
             TurnManager.Instance.RegisterEnemy(enemy);
             Debug.Log($"[{id}] 몬스터 스폰 및 등록 완료");
 
@@ -183,6 +179,9 @@ public class BattleSceneManager : MonoBehaviour
             MonsterID.Grid => gridMonsterPrefab,
             MonsterID.Envy => envyMonsterPrefab,
             MonsterID.Pride => prideMonsterPrefab,
+            MonsterID.Sloth => slothMonsterPrefab,
+            MonsterID.Lust => lustMonsterPrefab,
+            MonsterID.Glutton => gluttonMonsterPrefab,
             _ => null
         };
     }
