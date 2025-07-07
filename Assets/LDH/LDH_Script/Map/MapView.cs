@@ -21,9 +21,9 @@ namespace Map
        
         [Header("Colors")] 
         public static Color32 visitedColor =  new Color32(0x23, 0x3B, 0x54, 0xFF);//방문 or 도달 가능한 노드 색상
-        public static Color32 lockedColor = Color.gray; // 잠긴 노드 색상
+        public static Color32 lockedColor = new Color32(160, 160, 160, 255);
         public static Color32 lineVisitedColor =  new Color32(0x23, 0x3B, 0x54, 0xFF); // 방문 or 도달 가능한 경로 색상
-        public static Color32 lineLockedColor = Color.gray; // 잠긴 경로 색상
+        public static Color32 lineLockedColor =new Color32(160, 160, 160, 255); // 잠긴 경로 색상
 
         
         [Header("Line Settings")] 

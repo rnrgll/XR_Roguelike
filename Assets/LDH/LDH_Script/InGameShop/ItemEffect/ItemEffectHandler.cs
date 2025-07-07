@@ -1,6 +1,7 @@
 using CardEnum;
 using InGameShop;
 using Managers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Item
@@ -14,7 +15,9 @@ namespace Item
 
         private PlayerController _player;
         private CardController _card => _player.GetCardController();
-
+        private List<MinorArcana> previousHand = new();
+        
+        
         public void ApplyEffect(ItemEffect effect)
         {
             _player ??= Manager.turnManager.GetPlayerController();
@@ -48,6 +51,8 @@ namespace Item
                     ApplyDrawCard(effect);
                     break;
                 case EffectType.DiscardHand:
+                    previousHand = new List<MinorArcana>(_card.Hand.GetCardList());
+                    Debug.Log(previousHand.Count);
                     _player.OnTurnEnd += DiscardHand;
                     break;
                 case EffectType.Invincible:
@@ -121,6 +126,7 @@ namespace Item
             int jockerIndex = _card.BattleDeck.GetCardList()
                 .FindIndex(minor => minor.CardNum == 14);
 
+            Debug.Log($"jockerIndex in battle deck : {jockerIndex}");
             //조커 카드 미보유시 아이템 효과 적용 실패
             if (jockerIndex == -1)
             {
@@ -131,7 +137,6 @@ namespace Item
             //조커 카드 보유시 battle deck에서 해당 카드를 빼서
             //핸드에 넣어주어야 함
             MinorArcana jockerCard = _card.BattleDeck.GetCard(jockerIndex);
-            _card.BattleDeck.Remove(jockerCard);
             _card.Draw(jockerCard);
 
         }
@@ -145,8 +150,18 @@ namespace Item
         private void DiscardHand()
         {
             Debug.Log("[아이템 효과] 남은 핸드를 전부 버립니다.");
-            Debug.Log(_card.Hand.GetCardList().Count);
-            _card.Discard(_card.Hand.GetCardList()); //손패에 있는 카드 전부 버리기
+            List<MinorArcana> currentHand = new(_card.GetHand());
+            Debug.Log(currentHand.Count);
+            List<MinorArcana> discardList = new();
+            foreach (var card in previousHand)
+            {
+                if(currentHand.Contains(card))
+                    discardList.Add(card);
+            }
+            Debug.Log(discardList.Count);
+            _card.Discard(discardList); //손패에 있는 카드 전부 버리기
+            
+            previousHand.Clear();
             _player.OnTurnEnd -= DiscardHand; //등록한거 삭제
         }
 

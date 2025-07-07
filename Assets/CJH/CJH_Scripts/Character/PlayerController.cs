@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public void TakeDamage(int dmg)
     {
-        Debug.Log(isInvincible);
         if (isInvincible) return;
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
