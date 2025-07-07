@@ -11,6 +11,7 @@ public class TurnManager : Singleton<TurnManager>
     private IPlayerActor player;
     private List<IEnemyActor> enemies = new();
     private EnemyBase currentEnemy;
+    public static bool HasInstance => Instance != null;
 
     private bool battleStarted = false;
     private bool isGameEnded = false;
@@ -22,28 +23,46 @@ public class TurnManager : Singleton<TurnManager>
     {
         SingletonInit();
         isFinal = false;  // 초기화
+        foreach (var e in enemies.OfType<EnemyBase>())
+            e.InitForBattle();
     }
 
     public void RegisterPlayer(IPlayerActor p) => player = p;
 
     public void RegisterEnemy(IEnemyActor e)
     {
-        if (!enemies.Contains(e))
+        // 이미 파괴되었거나, 중복 등록이거나, null 참조라면 무시하거라
+        if ((UnityEngine.Object)e == null || enemies.Contains(e))
+            return;
+
+        enemies.Add(e);
+        UpdateEnemyNames();
+
+        // 첫 번째 등록 몬스터를 기본 타겟으로
+        if (currentEnemy == null && e is EnemyBase mb)
+            currentEnemy = mb;
+
+        // 보스 등록 시 최종 전투 플래그 켜기
+        if (e is EnemyBase boss && boss.Type == EnemyType.Boss)
         {
-            enemies.Add(e);
-            Debug.Log($"[디버그] 등록된 적들: {string.Join(", ", enemies.Select(en => ((MonoBehaviour)en).name))}");
-
-            // 첫 등록된 EnemyBase를 기본 타겟으로 설정
-            if (currentEnemy == null && e is EnemyBase monster)
-                currentEnemy = monster;
-
-            // 보스 몬스터가 등록되면 최종 전투 플래그 켜기
-            if (e is EnemyBase boss && boss.Type == EnemyType.Boss)
-            {
-                isFinal = true;
-                Debug.Log("[디버그] 보스 몬스터 등록 → 최종 전투(isFinal)로 설정");
-            }
+            isFinal = true;
+            Debug.Log("[디버그] 보스 몬스터 등록 → 최종 전투(isFinal)로 설정");
         }
+    }
+
+    public void UnregisterEnemy(IEnemyActor e)
+    {
+        if (enemies.Remove(e))
+            UpdateEnemyNames();
+    }
+
+    private void UpdateEnemyNames()
+    {
+        // 파괴된 참조를 제거
+        enemies.RemoveAll(enemy => (UnityEngine.Object)enemy == null);
+
+        var names = enemies
+            .Select(en => ((MonoBehaviour)en).name);
     }
 
     public List<IEnemyActor> GetEnemies() => enemies;
@@ -73,13 +92,15 @@ public class TurnManager : Singleton<TurnManager>
         
     if (battleStarted) return;
         battleStarted = true;
-            // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
+
+        // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
         var pc = player as PlayerController;
             if (pc != null)
                 {
                     // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
                     var cardCtrl = pc.cardController;
-                    if (cardCtrl != null)
+                    pc.ResetState();    // 체력·버프·턴 플래그 전부 초기화
+            if (cardCtrl != null)
                         {
                 cardCtrl.BattleInit();
                 Debug.Log("[TurnManager] CardController.BattleInit() 호출됨");
