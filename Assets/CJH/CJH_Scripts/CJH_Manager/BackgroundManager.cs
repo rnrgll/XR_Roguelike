@@ -1,45 +1,36 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DesignPattern;
+using DesignPattern;  // Singleton<T> 정의된 네임스페이스
 
 public class BackgroundManager : Singleton<BackgroundManager>
 {
-    [Header("배경")]
-    [SerializeField] private Sprite bgStage1;
-    [SerializeField] private Sprite bgStage2;
-    [SerializeField] private Sprite bgStage3;
+    [Header("배경으로 사용할 프리팹들")]
+    [Tooltip("씬에 배치할 배경 Prefab 등럭")]
+    [SerializeField] private List<GameObject> backgroundPrefabs;
 
-    [Header("UI Image")]
-    [SerializeField] private Image backgroundImage;
+    [Header("배경을 담을 부모 Transform")]
+    [Tooltip("빈 GameObject를 만들어 할당하면, 그 자식으로 배경이 생성됩니다.")]
+    [SerializeField] private Transform backgroundContainer;
 
-    private Queue<Sprite> bgQueue;
+    private Queue<GameObject> bgQueue;
+    private GameObject currentBackground;
 
     private void Awake()
     {
-        // Singleton<T> 내부 Awake 대신 이곳에서 초기화
+        // Singleton 초기화
         SingletonInit();
 
-        // 필수 할당 검사
-        if (backgroundImage == null)
-            Debug.LogError("[BackgroundManager] backgroundImage가 할당되지 않았습니다.");
-
+        // 배경 순서 셔플 후 Queue에 담기
         InitBackgroundQueue();
     }
 
-    /// <summary>
-    /// 배경 목록을 셔플하여 Queue에 담는다.
-    /// </summary>
     private void InitBackgroundQueue()
     {
-        var list = new List<Sprite> { bgStage1, bgStage2, bgStage3 };
+        var list = new List<GameObject>(backgroundPrefabs);
         Shuffle(list);
-        bgQueue = new Queue<Sprite>(list);
+        bgQueue = new Queue<GameObject>(list);
     }
 
-    /// <summary>
-    /// Fisher–Yates 셔플
-    /// </summary>
     private void Shuffle<T>(List<T> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
@@ -50,24 +41,29 @@ public class BackgroundManager : Singleton<BackgroundManager>
     }
 
     /// <summary>
-    /// 다음 배경을 꺼내어 Image에 할당한다.
-    /// 호출할 때마다 중복 없이 3번까지 지원.
+    /// 남은 배경이 있으면 하나 꺼내어 Instantiate하고, 
+    /// 기존 배경이 있다면 파괴한다.
     /// </summary>
     public void ShowNextBackground()
     {
-        if (backgroundImage == null)
+        if (bgQueue == null || bgQueue.Count == 0)
         {
-
             return;
         }
 
-        if (bgQueue.Count == 0)
-        {
+        // 이전 배경 제거
+        if (currentBackground != null)
+            Destroy(currentBackground);
 
-            return;
-        }
+        // 다음 배경 생성
+        var prefab = bgQueue.Dequeue();
+        currentBackground = Instantiate(prefab, backgroundContainer);
 
-        var nextBg = bgQueue.Dequeue();
-        backgroundImage.sprite = nextBg;
+        // 위치·회전·스케일 초기화 (필요시)
+        currentBackground.transform.localPosition = Vector3.zero;
+        currentBackground.transform.localRotation = Quaternion.identity;
+        currentBackground.transform.localScale = Vector3.one;
+
+        Debug.Log($"[BackgroundManager] 배경 교체 → {prefab.name}");
     }
 }
