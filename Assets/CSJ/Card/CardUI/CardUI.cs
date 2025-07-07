@@ -18,8 +18,8 @@ public class CardUI : MonoBehaviour, IPointerClickHandler
     public void Setup(MinorArcana card)
     {
         CardData = card;
-        string cNum = card.CardNum < 10 ? $"0" + card.CardNum : card.CardNum.ToString();
-        string cName = $"ArcanaTest/{card.CardSuit}{cNum}";
+        string cNum = card.CardNum.ToString();
+        string cName = $"MinorArcana/{card.CardSuit}/{card.CardSuit}_{cNum}";
         var sprite = Resources.Load<Sprite>(cName);
         if (sprite != null)
         {

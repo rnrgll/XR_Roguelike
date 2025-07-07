@@ -35,7 +35,6 @@ public class HandUIController : UIRequire
     public void RefreshHand()
     {
         if (cardController == null) return;
-
         foreach (var go in spawnedCards)
         {
             Destroy(go);
@@ -44,7 +43,6 @@ public class HandUIController : UIRequire
 
         cardController.SortByStand();
         var hand = cardController.GetHand();
-
         foreach (var card in hand)
         {
             var go = Instantiate(cardPrefab, handContainer);

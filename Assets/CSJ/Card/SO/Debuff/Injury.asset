@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289a3ffb66a6b0444ace4448c5487c14, type: 3}
   m_Name: Injury
   m_EditorClassIdentifier: 
-  _type: 0
+  _type: 4
   description: 

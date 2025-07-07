@@ -10,6 +10,9 @@ namespace InGameShop
     {
         [Header("UI")] 
         [SerializeField] private TMP_Text _itemInfo;
+
+        [SerializeField] private TMP_Text _itemName;
+        
         [SerializeField] private TMP_Text _itemPrice;
         [SerializeField] private PurchaseButton _purchaseButton;
         
@@ -30,11 +33,9 @@ namespace InGameShop
 
         private void UpdateUI(GameItem itemData)
         {
-            _itemInfo.text = $"{itemData.itemName}\n{itemData.description}";
-
+            _itemInfo.text = itemData.description;
+            _itemName.text = itemData.itemName;
             _itemPrice.text = itemData.price.ToString();
-           
-            
             
         }
 

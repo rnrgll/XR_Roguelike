@@ -91,8 +91,10 @@ public class CardController : MonoBehaviour
     public Dictionary<CardDebuff, CardDebuffSO> DebuffDic { get; private set; } = new();
     [SerializeField] private StatusEffectCardSO[] StatusEffectArr;
     public Dictionary<StatusEffect, StatusEffectCardSO> StatusEffectDic { get; private set; } = new();
+    public Dictionary<MinorArcana, StatusEffectCardSO> statusEffectCardDic { get; private set; } = new();
     [SerializeField] private DisposableCardSO[] DisposableArr;
-    public List<MinorArcana> disposableCardList { get; private set; } = new();
+    public Dictionary<DisposableCardName, DisposableCardSO> disposableDic { get; private set; } = new();
+    public Dictionary<MinorArcana, DisposableCardSO> disposableCardDic { get; private set; } = new();
     [SerializeField] public MajorArcanaSO[] majorArcanaArr;
     #endregion
 
@@ -135,6 +137,10 @@ public class CardController : MonoBehaviour
         foreach (var StatusEffectSO in StatusEffectArr)
         {
             StatusEffectDic[StatusEffectSO.statusEffect] = StatusEffectSO;
+        }
+        foreach (var DisposableCardSO in DisposableArr)
+        {
+            disposableDic[DisposableCardSO.DisposableCard] = DisposableCardSO;
         }
 
 
@@ -231,18 +237,25 @@ public class CardController : MonoBehaviour
     {
         // TurnManager.Instance.GetPlayerController().OnTurnStarted += TurnInit;
         ClearDeck();
-        disposableCardList = new();
         foreach (var card in DeckPile.Cards)
         {
             BattleDeck.Add(card);
         }
         numbersList[0] = 0;
+        for (int i = 1; i < 15; i++)
+        {
+            numbersList[i] = 0;
+        }
+        for (int j = 0; j < 4; j++)
+        {
+            SuitsList[j] = 0;
+        }
+
         foreach (var i in BattleDeck.GetCardList())
         {
             SuitsList[(int)i.CardSuit]++;
             numbersList[i.CardNum]++;
         }
-        Debug.Log("숫자 list 선언");
 
 
 
@@ -256,7 +269,6 @@ public class CardController : MonoBehaviour
 
         BattleDeck.Shuffle();
         Draw();
-        Debug.Log("Draw");
     }
 
     // TODO: 추후 계약카드 드로우 감소 적용
@@ -264,7 +276,6 @@ public class CardController : MonoBehaviour
     {
         TurnBonusDic.Clear();
         TurnPenaltyDic.Clear();
-        Debug.Log(Hand.Count);
         Draw();
     }
     #endregion
@@ -301,6 +312,7 @@ public class CardController : MonoBehaviour
             Debug.LogError("SelectedCard is null!");
             return;
         }
+        var toPlay = SelectedCard.ToList();
         //penaltyAmount = 0;
         foreach (var card in SelectedCard)
         {
@@ -308,7 +320,10 @@ public class CardController : MonoBehaviour
         }
         OnSubmit?.Invoke(SelectedCard);
 
-        exchangeHand(SelectedCard);
+        Discard(toPlay);
+
+        ClearSelect();
+        OnChangedHands?.Invoke();
     }
 
     public List<MinorArcana> GetHand()
@@ -365,7 +380,6 @@ public class CardController : MonoBehaviour
     // 현재는 8장 고정이므로 Draw를 8장 뽑는다.
     public void Draw(int n)
     {
-        Debug.Log(StackTraceUtility.ExtractStackTrace());
         if (BattleDeck.Count == 0) DeckRefill();
         for (int i = 0; i < n; i++)
         {
@@ -427,7 +441,7 @@ public class CardController : MonoBehaviour
         {
             if (!Hand.GetCardList().Contains(_card)) continue;
 
-            if (disposableCardList.Contains(_card))
+            if (disposableCardDic.ContainsKey(_card))
             {
                 RemoveDisposableCard(_card);
                 _num++;
@@ -443,8 +457,8 @@ public class CardController : MonoBehaviour
             OnCardDiscarded?.Invoke(_card);
             _num++;
         }
-        OnChangedHands?.Invoke();
         ClearSelect();
+        OnChangedHands?.Invoke();
         return _num;
     }
 
@@ -536,7 +550,6 @@ public class CardController : MonoBehaviour
 
     public void exchangeHand(List<MinorArcana> cards)
     {
-        Debug.Log("[exchangeHand] 호출");
         int beforeCount = Hand.Count;
         int discCount = Discard(cards);
         ClearSelect();
@@ -547,10 +560,9 @@ public class CardController : MonoBehaviour
         int toDraw = targetCount - afterCount;
         if (toDraw > 0)
         {
-            Debug.Log($"[exchangeHand] before={beforeCount}, removed={discCount}, after={afterCount}, toDraw={toDraw}");
             Draw(toDraw);
         }
-
+        OnChangedHands?.Invoke();
     }
 
     public void AdjustCountList(MinorArcana card)
@@ -569,13 +581,19 @@ public class CardController : MonoBehaviour
     /// <param name="_disposCard">
     /// Card의 Suit는 특수 카드의 경우 Special 이외에는 해당 문양으로 지정한다.
     /// </param>
-    public void AddDisposableCard(DisposableCardSO disposableCardSO)
+    private void AddDisposableCard(DisposableCardSO disposableCardSO, MinorArcana _disposCard)
     {
-        MinorArcana _disposCard = disposableCardSO.GetDisposCard();
         Hand.Add(_disposCard);
-        disposableCardList.Add(_disposCard);
+        disposableCardDic[_disposCard] = disposableCardSO;
         disposableCardSO.OnSubscribe(_disposCard);
         OnChangedHands?.Invoke();
+    }
+
+    public void ApplayDisposableCard(DisposableCardName disposableCard)
+    {
+        var so = disposableDic[disposableCard];
+        var card = so.CreateCard();
+        AddDisposableCard(so, card);
     }
 
     /// <summary>
@@ -586,12 +604,24 @@ public class CardController : MonoBehaviour
     /// 직접 호출하지 말고 StatusEffectCardSo에서 AddStatusEffect로 호출
     /// </param>
     /// <param name="IsUsable">사용가능 여부를 인자로 받는다.</param>
-    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo)
+    public void AddStatusEffectCard(StatusEffectCardSO _statusCardInfo, MinorArcana _statusEffectCard)
     {
-        MinorArcana card = _statusCardInfo.GetStatusEffectCard();
-        Hand.Add(card);
-        IsUsableDic.Add(card, _statusCardInfo.IsUsable);
+        Hand.Add(_statusEffectCard);
+        IsUsableDic.Add(_statusEffectCard, _statusCardInfo.IsUsable);
+        statusEffectCardDic[_statusEffectCard] = _statusCardInfo;
         OnChangedHands?.Invoke();
+    }
+
+    public void ApplyStatusEffect(StatusEffect type)
+    {
+        if (StatusEffectDic.TryGetValue(type, out var so))
+        {
+            var card = so.CreateCard();
+            AddStatusEffectCard(so, card);
+            Debug.Log($"[{so}] 상태이상 부여");
+        }
+        else
+            Debug.LogError($"[{type}  so 없음]");
     }
 
     public void RemoveStatusEffectCard(MinorArcana statusEffectcard)
@@ -599,6 +629,7 @@ public class CardController : MonoBehaviour
         Hand.Remove(statusEffectcard);
         if (SelectedCard.Contains(statusEffectcard))
             SelectedCard.Remove(statusEffectcard);
+        statusEffectCardDic.Remove(statusEffectcard);
         OnRemoveStatusEffectCard?.Invoke(statusEffectcard);
     }
 
@@ -607,7 +638,7 @@ public class CardController : MonoBehaviour
         Hand.Remove(disposablecard);
         if (SelectedCard.Contains(disposablecard))
             SelectedCard.Remove(disposablecard);
-        disposableCardList.Remove(disposablecard);
+        disposableCardDic.Remove(disposablecard);
     }
 
 

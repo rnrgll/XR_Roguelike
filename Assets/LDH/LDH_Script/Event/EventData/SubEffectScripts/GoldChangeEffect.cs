@@ -1,4 +1,5 @@
 using Managers;
+using System;
 
 namespace Event
 {
@@ -6,10 +7,11 @@ namespace Event
     {
         public GoldGainEffect(int value) : base(SubEffectType.ResourceGain, value) { }
 
-        public override void ApplyEffect()
+        public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect();
+            base.ApplyEffect(null);
             Manager.GameState.AddGold(Value);
+            onComplete?.Invoke();
         }
     }
 }

@@ -10,26 +10,27 @@ public interface IHandUI
 public abstract class UIRequire : MonoBehaviour, IHandUI
 {
     protected CardController cardController;
+    protected PlayerController playerController;
     public virtual void InitializeUI(PlayerController pc)
     {
         if (cardController != null)
             UnSubscribe();
 
+        playerController = pc;
         cardController = pc.GetCardController();
 
         Subscribe();
     }
 
-    protected void OnCreate()
+    protected void OnEnable()
     {
         if (cardController != null)
         {
-            UnSubscribe();
             Subscribe();
         }
     }
 
-    protected void OnDestroy()
+    protected void OnDisable()
     {
         if (cardController != null)
             UnSubscribe();
