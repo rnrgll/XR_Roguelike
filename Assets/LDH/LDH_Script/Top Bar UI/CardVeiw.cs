@@ -22,8 +22,6 @@ namespace TopBarUI
             string cName = $"MinorArcana/{minor.CardSuit}/{minor.CardSuit}_{cNum}";
             var sprite = Resources.Load<Sprite>(cName);
             
-            Debug.Log(cName);
-            
             cardName = $"{cName} {minor.CardName}";
             cardImg.sprite = sprite;
             
