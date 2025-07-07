@@ -1,6 +1,7 @@
 using InGameShop;
 using Item;
 using Managers;
+using System;
 using System.Collections.Generic;
 using UI;
 
@@ -14,9 +15,9 @@ namespace Event
             this.isPotion = isPotion;
         }
 
-        public override void ApplyEffect()
+        public override void ApplyEffect(Action onComplete)
         {
-            base.ApplyEffect();
+            base.ApplyEffect(null);
             
             //인벤토리 포화상태 체크
             int emptySlotCnt = Manager.GameState.MaxItemInventorySize - Manager.GameState.CurrentItemCount;
@@ -27,12 +28,14 @@ namespace Event
                     () =>
                     {
                         GetItems();
+                        onComplete?.Invoke();
                     });
                 Manager.UI.SetUIActive(GlobalUI.ItemRemove,true);
             }
             else
             {
                 GetItems();
+                onComplete?.Invoke();
             }
 
         }

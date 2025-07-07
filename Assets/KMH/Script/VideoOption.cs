@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class VideoOption : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown; // Dropdown 옵션 값 넣기 위해 변수 선언
-    public TMP_Dropdown fullScreenDropdown; // Dropdown 옵션 값 넣기 위해 변수 선언
+    public Toggle fullScreenToggle; // 토글 버튼으로 스크린 모드 설정
+    public TMP_Dropdown testDD;
 
     List<Resolution> resolutions = new List<Resolution>();
     private FullScreenMode currentFullScreenMode;
@@ -46,12 +47,12 @@ public class VideoOption : MonoBehaviour
 
         //현재 전체 화면 상태 설정
         bool isFullScreen = Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen || Screen.fullScreenMode == FullScreenMode.FullScreenWindow;
+        fullScreenToggle.isOn = isFullScreen;
         currentFullScreenMode = isFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
 
-        resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
-        fullScreenDropdown.onValueChanged.AddListener(ChangeFullScreenMode);
+        fullScreenToggle.onValueChanged.AddListener(ChangeFullScreenMode);
     }
-    public void ChangeResolution(int index)
+    void ChangeResolution(int index)
     {
         Resolution selected = resolutions[index];
         Screen.SetResolution(
@@ -60,21 +61,11 @@ public class VideoOption : MonoBehaviour
             currentFullScreenMode,
             selected.refreshRateRatio
             );
-        Debug.Log(index);
     }
 
-    public void ChangeFullScreenMode(int index)
+    void ChangeFullScreenMode(bool isFullScreen)
     {
-        if (index == 0)
-        {
-            currentFullScreenMode = FullScreenMode.FullScreenWindow;
-            Debug.Log("전체화면");
-        }
-        else
-        {
-            currentFullScreenMode = FullScreenMode.Windowed;
-            Debug.Log("창모드");
-        }
+        currentFullScreenMode = isFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
 
         //현재 선택된 해상도 다시 적용
         ChangeResolution(resolutionDropdown.value);
@@ -83,6 +74,6 @@ public class VideoOption : MonoBehaviour
     void OnDestroy()
     {
         resolutionDropdown.onValueChanged.RemoveListener(ChangeResolution);
-        fullScreenDropdown.onValueChanged.RemoveListener(ChangeFullScreenMode);
+        fullScreenToggle.onValueChanged.RemoveListener(ChangeFullScreenMode);
     }
 }

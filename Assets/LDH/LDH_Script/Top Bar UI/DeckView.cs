@@ -13,8 +13,8 @@ namespace TopBarUI
         [SerializeField] private CardView _cardPrefab;
         [SerializeField] private Transform _gridContainer;
         [SerializeField] private ScrollRect _scrollRect;
-        
-        
+
+
         [SerializeField] private CardController _cardController;
         [SerializeField] private TarotDeck _tarotDeck;
         private ObjectPool _cardPool;
@@ -28,7 +28,7 @@ namespace TopBarUI
         {
             _cardController ??= FindObjectOfType<CardController>();
             _tarotDeck ??= FindObjectOfType<TarotDeck>();
-            if(_cardController!=null && _tarotDeck != null)
+            if (_cardController != null && _tarotDeck != null)
                 SettingCardView();
         }
 
@@ -45,17 +45,17 @@ namespace TopBarUI
         private void ResetScroll()
         {
             _scrollRect.normalizedPosition = new Vector2(0, 1);
-            
+
         }
-        
+
         private void SettingCardView()
         {
             //컨트롤러에서 전체 카드 덱을 조회한다.
             int idx = 0;
             //마이너 아르카나
-            if(_cardController.Deck==null) return;
-            var minorArcanaList = _cardController.Deck.GetAllCards();
-            
+            if (_cardController.Deck == null) return;
+            var minorArcanaList = new List<MinorArcana>(_cardController.DeckPile.GetCardList());
+
             foreach (var minor in minorArcanaList)
             {
                 CardView card = _cardPool.PopPool() as CardView;
@@ -66,7 +66,7 @@ namespace TopBarUI
 
 
             //메이저 아르카나
-            var majorArcanaList = _tarotDeck.GetMajorCards();
+            var majorArcanaList = new List<MajorArcanaSO>(_tarotDeck.GetMajorCards());
             if (majorArcanaList == null) return;
             foreach (var major in majorArcanaList)
             {
@@ -75,9 +75,9 @@ namespace TopBarUI
                 card.transform.SetParent(_gridContainer);
                 card.transform.SetSiblingIndex(idx++);
             }
-            
+
         }
-        
-        
+
+
     }
 }
