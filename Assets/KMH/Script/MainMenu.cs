@@ -4,13 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
+
 {
     [SerializeField] private GameInitializer gameInitializer;
+    [SerializeField] private GameObject optionCanvas;
+
+    //AudioManager audioManager;
+
+    private void Awake()
+    {
+        // audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     public void OnClickStart()
     {
         SceneManager.LoadScene("Intro");
         gameInitializer.InitializeGame();
-
+        
     }
 
     public void OnClickShop()
@@ -20,7 +30,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickOption()
     {
-        SceneManager.LoadScene("Option");
+        optionCanvas.SetActive(true);
     }
 
     public void OnClickQuit()
@@ -37,4 +47,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void BackToGame()
+    {
+        
+    }
+   
 }

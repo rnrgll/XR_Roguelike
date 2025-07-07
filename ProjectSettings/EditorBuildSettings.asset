@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/KMH/Scene/MainMenu.unity
+    path: Assets/KMH/Scene/MainMenu Old.unity
     guid: 8a3382433e1711c40a0a6c6f4b4eea46
   - enabled: 1
     path: Assets/KMH/Scene/Intro.unity
