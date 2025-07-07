@@ -35,7 +35,7 @@ public class CombinationUI : UIRequire
             return;
         }
         comboText.text = _comb.ToString();
-        sumText.text = $"{cardController.sumofNums.ToString()} * {cardController.ComboMultDic[_comb].ToString()}";
+        sumText.text = $"{cardController.sumofNums} * {cardController.ComboMultDic[_comb]}";
     }
 
     private void RefreshUI()
