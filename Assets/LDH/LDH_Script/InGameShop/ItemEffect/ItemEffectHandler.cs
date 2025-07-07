@@ -137,7 +137,6 @@ namespace Item
             //조커 카드 보유시 battle deck에서 해당 카드를 빼서
             //핸드에 넣어주어야 함
             MinorArcana jockerCard = _card.BattleDeck.GetCard(jockerIndex);
-            _card.BattleDeck.Remove(jockerCard);
             _card.Draw(jockerCard);
 
         }
