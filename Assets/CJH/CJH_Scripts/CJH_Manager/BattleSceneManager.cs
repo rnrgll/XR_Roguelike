@@ -187,5 +187,4 @@ public class BattleSceneManager : MonoBehaviour
             _ => null
         };
     }
-
 }

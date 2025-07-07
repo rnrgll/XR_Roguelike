@@ -473,7 +473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC900\uBE44\uC911"
+  m_text: "\uC900\uBE44 \uC911"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2dc85c8263ec14ef0b0ed0702acc265b, type: 2}
   m_sharedMaterial: {fileID: -6905264543329020171, guid: 2dc85c8263ec14ef0b0ed0702acc265b, type: 2}
