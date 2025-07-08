@@ -209,6 +209,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         MajorArcanaSO major = player.tarotDeck.RandomMajorArcana();
         player.tarotDeck.AddMajorCards(major);
+        Manager.GameState.AddGold(200);
 
     }
 }

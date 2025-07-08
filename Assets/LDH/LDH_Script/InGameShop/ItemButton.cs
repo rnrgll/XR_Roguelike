@@ -194,9 +194,9 @@ namespace InGameShop
             
             //복귀 애니메이션
             Sequence seq = DOTween.Sequence();
-            seq.Join(_buttonRec.DOMove(_originWorldPos, _duration)).SetEase(_easeType)
-                .Join(_buttonRec.DORotateQuaternion(_originWorldRot, _duration)).SetEase(_easeType)
-                .Join(_buttonRec.DOScale(_originWorldScale, _duration)).SetEase(_easeType);
+            seq.Join(_buttonRec.DOMove(_originWorldPos, 0.1f)).SetEase(_easeType)
+                .Join(_buttonRec.DORotateQuaternion(_originWorldRot, 0.1f)).SetEase(_easeType)
+                .Join(_buttonRec.DOScale(_originWorldScale, 0.1f)).SetEase(_easeType);
             
             seq.OnComplete(() =>
             {

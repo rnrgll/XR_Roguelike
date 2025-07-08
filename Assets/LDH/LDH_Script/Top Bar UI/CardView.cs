@@ -52,7 +52,6 @@ namespace TopBarUI
                 EnchantItem enchantItemInfo =
                     Manager.Data.GameItemDB.EnchantDB[minor.Enchant.enchantInfo] as EnchantItem;
                 enchantImg.sprite = enchantItemInfo.enchantSprite;
-                enchantImg.color = EnchantFrameColor.GetColor(enchantItemInfo.enchantType);
                 enchantEffect = enchantItemInfo.description;
             }
             
