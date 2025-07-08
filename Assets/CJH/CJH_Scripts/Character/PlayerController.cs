@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     public void SetSpriteVisible(bool visible)
     {
         spriteRenderer.enabled = visible;
+        Debug.Log(spriteRenderer.enabled);
     }
 
 
@@ -497,9 +498,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         {
             Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
         }
-
-
-        SetSpriteVisible(true);
+        
 
         // 4. 턴 플래그 초기화
         turnEnded = false;
