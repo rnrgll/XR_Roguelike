@@ -153,17 +153,17 @@ namespace Event
                     bool hasDurtaion = int.TryParse(table.Table[r, c + 2], out int duration);
                     if (hasType)
                     {
-                        // SubEffect subEffect = (SubEffectType)type switch
-                        // {
-                        //     SubEffectType.NoEffect => new NoEffect(),
-                        //     SubEffectType.AttackBoost => new AttackBoostEffect(value, duration),
-                        //     SubEffectType.ResourceGain => new GoldGainEffect(value),
-                        //     SubEffectType.ResourceLoss => new GoldLossEffect(value),
-                        //     SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
-                        //     SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
-                        // };
+                         SubEffect subEffect = (SubEffectType)type switch
+                         {
+                             SubEffectType.NoEffect => new NoEffect(),
+                             SubEffectType.AttackBoost => new AttackBoostEffect(value, duration),
+                             SubEffectType.ResourceGain => new GoldGainEffect(value),
+                             SubEffectType.ResourceLoss => new GoldLossEffect(value),
+                             SubEffectType.ObtainItem => new ObtainItemEffect(value,int.Parse(table.Table[r,columnCnt-2])==1),
+                             SubEffectType.ObtainEnhancedCard => new ObtainCardEffect(value),
+                         };
 
-                        //subEffects.Add(subEffect);
+                        subEffects.Add(subEffect);
                     }
                     else
                     {

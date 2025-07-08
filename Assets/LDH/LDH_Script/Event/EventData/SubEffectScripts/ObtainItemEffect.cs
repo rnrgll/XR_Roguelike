@@ -4,6 +4,7 @@ using Managers;
 using System;
 using System.Collections.Generic;
 using UI;
+using UnityEngine;
 
 namespace Event
 {
@@ -21,6 +22,8 @@ namespace Event
             
             //인벤토리 포화상태 체크
             int emptySlotCnt = Manager.GameState.MaxItemInventorySize - Manager.GameState.CurrentItemCount;
+            Debug.Log($"MaxSize: {Manager.GameState.MaxItemInventorySize}, CurrentCount: {Manager.GameState.CurrentItemCount}, Request: {Value}, emptyslot : {emptySlotCnt}");
+
             if (emptySlotCnt < Value)
             {
                 //인벤토리 비우기

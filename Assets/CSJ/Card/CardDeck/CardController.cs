@@ -47,6 +47,8 @@ public class CardController : MonoBehaviour
 
     #region  설정 모음 
     public int drawNum = 8;
+    public int DiscardCount;
+    public int DiscardSetting = 3;
     public Dictionary<MinorArcana, bool> IsUsableDic = new();
     public Dictionary<MinorArcana, int> MultiPleCardDic = new();
     public CardSortEnum sortStand = CardSortEnum.Suit;
@@ -266,7 +268,7 @@ public class CardController : MonoBehaviour
             TurnPenaltyDic[type] = new();
             TurnBonusDic[type] = new();
         }
-
+        DiscardCount = DiscardSetting;
         BattleDeck.Shuffle();
         Draw();
     }
@@ -647,7 +649,6 @@ public class CardController : MonoBehaviour
     #region 이벤트 관련 함수들
     public void AddSelect(MinorArcana card)
     {
-        Debug.Log("AddSelect");
         SelectedCard.Add(card);
         CardCombCal();
     }
@@ -679,21 +680,28 @@ public class CardController : MonoBehaviour
     }
 
     // TODO : 추후 턴종료 버리기 구현
-    // 실제 쓰이는 일은 없을것?
-    public void TurnEndDiscard()
+    public IEnumerator TurnEndDiscard()
     {
         int handsCount = Hand.Count;
         if (MultiPleCardDic.Count != 0)
         {
             foreach (var KeyValue in MultiPleCardDic)
             {
-                handsCount += KeyValue.Value;
+                handsCount += KeyValue.Value - 1;
             }
         }
-        // while (handsCount <= 8)
-        // {
-        //     Discard();
-        // }
+
+        int toDiscard = handsCount - drawNum;
+        Debug.Log($"Hand {handsCount} Discard {toDiscard}");
+        if (toDiscard > 0)
+        {
+            yield return StartCoroutine(HandleSelect(toDiscard));
+        }
+        else
+        {
+            ExitSelection();
+        }
+        // pseudocode : Discard(drawNum - handsCount);
     }
 
     public void EnterSelection(int DrawNum)
@@ -704,6 +712,19 @@ public class CardController : MonoBehaviour
     public void ExitSelection()
     {
         OnExitSelectionMode?.Invoke();
+    }
+
+    public IEnumerator HandleSelect(int SelectNum)
+    {
+        EnterSelection(drawNum);
+
+        ClearSelect();
+
+        yield return new WaitUntil(() => SelectedCard.Count == SelectNum);
+
+        ExitSelection();
+
+        Discard(SelectedCard.ToList());
     }
 
     #endregion

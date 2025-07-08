@@ -49,6 +49,7 @@ public class BattleSceneManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+
         // 1프레임 기다려 PlayerController가 등장하도록 함
         yield return null;
         var pc = FindObjectOfType<PlayerController>();
@@ -74,6 +75,7 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
             go.GetComponent<BattleUI>().InitScene(pc);
+            cc.BattleInit();
 
 
             Debug.Log("[BattleManager] cardHand 생성");
@@ -86,6 +88,15 @@ public class BattleSceneManager : MonoBehaviour
             {
                 var canvas = FindObjectOfType<Canvas>();
                 var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
+                
+                //hp bar anchor, position 수정
+                var rt = hpGo.GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0, 1);   // 좌측 상단
+                rt.anchorMax = new Vector2(0, 1);
+                rt.pivot = new Vector2(0, 1);       // 좌측 상단 기준
+                rt.anchoredPosition = new Vector2(40, -150); // 아래로 150px
+                
+                
                 pc.SetHpBar(hpGo);
             }
             else
