@@ -3,6 +3,7 @@ using Item;
 using Managers;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Event
 {
@@ -18,6 +19,7 @@ namespace Event
 
             foreach (EnchantItem enchantItem in enchantItems)
             {
+                Debug.Log($"{enchantItem.enchantType} {enchantItem.Suit} {enchantItem.CardNum} 획득");
                 Manager.GameState.AddCardItem(enchantItem);
             }
 

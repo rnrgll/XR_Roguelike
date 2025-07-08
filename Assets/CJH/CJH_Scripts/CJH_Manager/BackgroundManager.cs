@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DesignPattern;  // Singleton<T> 정의된 네임스페이스
+using UnityEngine.SceneManagement;
 
 public class BackgroundManager : Singleton<BackgroundManager>
 {
@@ -20,8 +21,21 @@ public class BackgroundManager : Singleton<BackgroundManager>
         // Singleton 초기화
         SingletonInit();
 
+        // 모든 씬에서 BackgroundManager가 살아 있게
+        DontDestroyOnLoad(gameObject);       
+
         // 배경 순서 셔플 후 Queue에 담기
         InitBackgroundQueue();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void InitBackgroundQueue()
@@ -30,6 +44,24 @@ public class BackgroundManager : Singleton<BackgroundManager>
         Shuffle(list);
         bgQueue = new Queue<GameObject>(list);
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "BattleScene")
+        {
+            // 활성화하고 다음 배경 보여주기
+            gameObject.SetActive(true);
+            ShowNextBackground();
+        }
+        else
+        {
+            // 그 외 씬에선 숨기고, 남은 배경도 클리어
+            gameObject.SetActive(false);
+            if (currentBackground != null)
+                Destroy(currentBackground);
+        }
+    }
+
 
     private void Shuffle<T>(List<T> list)
     {

@@ -13,6 +13,31 @@ public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
         var controller = ctx.player.GetCardController();
         controller.Draw(DrawNum);
         // TODO : UI와 연계
-        controller.StartCoroutine(controller.HandleSelect(DrawNum));
+        HandleSelect(controller);
+    }
+
+    public IEnumerator HandleSelect(CardController cardController)
+    {
+        cardController.EnterSelection(DrawNum);
+
+        cardController.ClearSelect();
+
+        bool done = false;
+        Action<CardCombinationEnum> selectionWatcher = _ =>
+        {
+            if (cardController.SelectedCard.Count == 5)
+                done = true;
+        };
+        cardController.OnSelectionChanged += selectionWatcher;
+
+        while (!done)
+            yield return null;
+
+        cardController.OnSelectionChanged -= selectionWatcher;
+        cardController.ExitSelection();
+
+        cardController.Discard(cardController.SelectedCard);
+
+        cardController.OnChangedHands?.Invoke();
     }
 }

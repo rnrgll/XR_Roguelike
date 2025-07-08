@@ -55,11 +55,11 @@ public abstract class CardDebuffSO : ScriptableObject
         DrawDic[card] = draw;
         controller.OnCardDrawn += draw;
 
-        DiscardDic[card] = discard;
+        PlayDic[card] = discard;
         controller.OnCardDiscarded += discard;
 
         TurnEndDic[card] = turnEnd;
-        playerController.OnTurnEnd += turnEnd;
+        TurnManager.Instance.GetPlayerController().OnTurnEnd += turnEnd;
 
     }
     /// <summary>
@@ -78,11 +78,11 @@ public abstract class CardDebuffSO : ScriptableObject
         }
         if (DiscardDic.TryGetValue(card, out var discard))
         {
-            controller.OnCardDiscarded -= discard;
+            controller.OnCardSubmited -= discard;
         }
         if (TurnEndDic.TryGetValue(card, out var turnEnd))
         {
-            playerController.OnTurnEnd -= turnEnd;
+            TurnManager.Instance.GetPlayerController().OnTurnEnd -= turnEnd;
         }
     }
     /// <summary>

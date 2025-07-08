@@ -8,7 +8,7 @@ public class LasMonster : EnemyBase
     // 1) 공격 배율 상수 선언
     // ——————————————————
     private const float BasicRate = 0.25f;  // 기본 25%
-    private const float StrongRate = 0.40f;  // 강공격 40%
+    private const float StrongRate = 0.040f;  // 강공격 40%
 
     // ——————————————————————————
     // 2) 분노 및 특수공격 상태 변수

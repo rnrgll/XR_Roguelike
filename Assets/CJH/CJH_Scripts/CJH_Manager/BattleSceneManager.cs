@@ -170,7 +170,19 @@ public class BattleSceneManager : MonoBehaviour
         {
             Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");
         }
+
+        // 3) 슬로스의 OnClear 이벤트 구독 (클리어 시 전투 종료)
+        if (enemy is SlothMonster sloth)
+        {
+            sloth.OnClear += () =>
+            {
+                Debug.Log("[BattleSceneManager] Sloth 클리어됨 → 전투 종료 처리");
+                TurnManager.Instance.ContinueAfterReward();
+            };
+        }
         GameStatusUI.Instance.SetTarget(enemy);
+
+
     }
 
     private IEnumerator InitializeMonsterUI(EnemyBase enemy)

@@ -34,8 +34,18 @@ namespace TopBarUI
 
         private void OnDisable()
         {
-            foreach (Transform child in _gridContainer)
+            Transform[] children = new Transform[_gridContainer.childCount];
+            for (int i = 0; i < _gridContainer.childCount; i++)
+                children[i] = _gridContainer.GetChild(i);
+            
+            foreach (Transform child in children)
             {
+                if (child == null) continue; // 혹시라도 이미 삭제된 경우 방지
+                
+                CardView cardView = child.GetComponent<CardView>();
+                cardView.DebugLog();
+                child.GetComponent<CardView>().ResetData();
+                
                 var card = child.GetComponent<CardView>() as PooledObject;
                 card.ReturnPool();
             }
@@ -58,6 +68,7 @@ namespace TopBarUI
 
             foreach (var minor in minorArcanaList)
             {
+                //Debug.Log($"{minor.CardSuit} {minor.CardNum} 카드 보여줄 차례");
                 CardView card = _cardPool.PopPool() as CardView;
                 card.transform.SetParent(_gridContainer, false);
                 card.transform.SetSiblingIndex(idx++);
@@ -75,6 +86,9 @@ namespace TopBarUI
                 card.transform.SetParent(_gridContainer);
                 card.transform.SetSiblingIndex(idx++);
             }
+            
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_gridContainer as RectTransform);
+
 
         }
 

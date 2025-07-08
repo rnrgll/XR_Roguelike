@@ -29,4 +29,5 @@ public class TheFoolReversedAbility : ScriptableObject, IArcanaAbility
         playerController.GetCardController().OnCardSubmited -= ToSubscribe;
     }
 
+
 }

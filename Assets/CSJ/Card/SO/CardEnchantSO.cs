@@ -60,11 +60,11 @@ public abstract class CardEnchantSO : ScriptableObject
         DrawDic[card] = draw;
         controller.OnCardDrawn += draw;
 
-        DiscardDic[card] = discard;
+        PlayDic[card] = discard;
         controller.OnCardDiscarded += discard;
 
         TurnEndDic[card] = turnEnd;
-        playerController.OnTurnEnd += turnEnd;
+        TurnManager.Instance.GetPlayerController().OnTurnEnd += turnEnd;
     }
     /// <summary>
     /// 디버프 중인 카드가 패에서 벗어날 때 호출
@@ -82,11 +82,7 @@ public abstract class CardEnchantSO : ScriptableObject
         }
         if (DiscardDic.TryGetValue(card, out var discard))
         {
-            controller.OnCardDiscarded -= discard;
-        }
-        if (TurnEndDic.TryGetValue(card, out var turnEnd))
-        {
-            playerController.OnTurnEnd -= turnEnd;
+            controller.OnCardSubmited -= discard;
         }
     }
 

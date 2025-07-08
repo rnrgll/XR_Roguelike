@@ -2,6 +2,7 @@ using Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Event
 {
@@ -17,6 +18,7 @@ namespace Event
             int subEffectCount = SubEffectList.Count;
             if (subEffectCount == 0)
             {
+                Debug.Log("subeffect 리스트 없음");
                 onComplete?.Invoke();
                 return;
             }
