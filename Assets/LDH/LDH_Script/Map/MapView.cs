@@ -234,25 +234,34 @@ namespace Map
             if(uiLinePrefab == null) return;
             
             UILineRenderer line = Instantiate(uiLinePrefab);
-            line.transform.SetParent(mapParent.transform);
+            line.transform.SetParent(mapParent.transform, false);
             line.transform.SetAsFirstSibling();
             
             RectTransform fromRect = from.transform as RectTransform;
             RectTransform toRect = to.transform as RectTransform;
+
+            Vector2 fromPos = fromRect.anchoredPosition;
+            Vector2 toPos = toRect.anchoredPosition;
+
+            Vector2 direction = (toPos - fromPos).normalized;
+            Vector2 fromPoint = fromPos + direction * offsetFromNodes;
+            Vector2 toPoint = toPos - direction * offsetFromNodes;
             
             //from => to 방향 벡터를 구하고 거기에 offest을 곱해서 살짝 떨어진 위치를 구하기
-            Vector2 fromPoint = fromRect.anchoredPosition
-                                + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
-                                * offsetFromNodes;
-            //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
-            Vector2 toPoint = toRect.anchoredPosition
-                              + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
-                              * offsetFromNodes;
-            
+            // Vector2 fromPoint = fromRect.anchoredPosition
+            //                     + (toRect.anchoredPosition - fromRect.anchoredPosition).normalized
+            //                     * offsetFromNodes;
+            // //마찬가지로 to => from 방향벡터 구하고 offset 곱해서 거리 보정
+            // Vector2 toPoint = toRect.anchoredPosition
+            //                   + (fromRect.anchoredPosition - toRect.anchoredPosition).normalized
+            //                   * offsetFromNodes;
+            //
             //line 그리기
-            line.transform.position = from.transform.position +
-                                      (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
-                                      offsetFromNodes;
+
+            line.GetComponent<RectTransform>().anchoredPosition = fromPoint;
+            // line.transform.position = from.transform.position +
+            //                           (Vector3)(toRect.anchoredPosition - fromRect.anchoredPosition).normalized *
+            //                           offsetFromNodes;
 
             List<Vector2> pointList = new ();
             for (int i = 0; i < linePointsCount; i++)
