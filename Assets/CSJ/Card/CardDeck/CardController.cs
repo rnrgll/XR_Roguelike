@@ -439,7 +439,8 @@ public class CardController : MonoBehaviour
     public int Discard(List<MinorArcana> cards)
     {
         int _num = 0;
-        foreach (MinorArcana _card in cards)
+        var cardsList = cards.ToList();
+        foreach (MinorArcana _card in cardsList)
         {
             if (!Hand.GetCardList().Contains(_card)) continue;
 

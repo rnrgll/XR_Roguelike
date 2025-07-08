@@ -26,6 +26,7 @@ public abstract class UIRequire : MonoBehaviour, IHandUI
     {
         if (cardController != null)
         {
+            UnSubscribe();
             Subscribe();
         }
     }

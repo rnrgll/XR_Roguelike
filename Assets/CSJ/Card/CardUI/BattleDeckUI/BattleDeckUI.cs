@@ -28,7 +28,7 @@ public class BattleDeckUI : UIRequire
     {
         base.InitializeUI(pc);
         BattleDeckCanvas.SetActive(false);
-        //handUI.OnCardSetted += isSet;
+        handUI.OnCardSetted += isSet;
     }
 
     protected override void Subscribe()
@@ -48,6 +48,7 @@ public class BattleDeckUI : UIRequire
         if (!isSetted) return;
         BattleDeckCanvas.SetActive(true);
         RefreshPanel();
+        tarotDeck.SetActive(false);
     }
 
     private void ClosePanel()
@@ -96,9 +97,9 @@ public class BattleDeckUI : UIRequire
         }
     }
 
-    // public void isSet()
-    // {
-    //     isSetted = true;
-    //     handUI.OnCardSetted -= isSet;
-    // }
+    public void isSet()
+    {
+        isSetted = true;
+        handUI.OnCardSetted -= isSet;
+    }
 }

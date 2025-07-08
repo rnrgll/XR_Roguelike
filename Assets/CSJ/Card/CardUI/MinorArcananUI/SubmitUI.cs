@@ -24,12 +24,13 @@ public class SubmitUI : UIRequire
         TurnEndButton.onClick.AddListener(OnTurnEndButtonClicked);
 
         _onSelectionChanged = _ => UpdateButtons();
-        cardController.OnSelectionChanged += _onSelectionChanged;
-        UpdateButtons();
-
         _onUnactive = _ => UnactiveButton();
+        cardController.OnSelectionChanged += _onSelectionChanged;
         cardController.OnEnterSelectionMode += _onUnactive;
         cardController.OnExitSelectionMode += ActiveButton;
+
+        UpdateButtons();
+
     }
 
     protected override void UnSubscribe()
@@ -41,15 +42,15 @@ public class SubmitUI : UIRequire
         TurnEndButton.onClick.RemoveListener(OnTurnEndButtonClicked);
 
         cardController.OnSelectionChanged -= _onSelectionChanged;
-        _onSelectionChanged = null;
-
         cardController.OnEnterSelectionMode -= _onUnactive;
-        cardController.OnExitSelectionMode -= UnactiveButton;
+        cardController.OnExitSelectionMode -= ActiveButton;
+        _onSelectionChanged = null;
         _onUnactive = null;
     }
 
     private void UpdateButtons()
     {
+        if (attackButton == null) return;
         int selectedCount = cardController.SelectedCard.Count;
 
         attackButton.interactable = selectedCount >= 5;
@@ -82,6 +83,10 @@ public class SubmitUI : UIRequire
         SuitSortButton.interactable = false;
         NumSortButton.interactable = false;
         TurnEndButton.interactable = false;
+    }
+    private void OnDestroy()
+    {
+        UnSubscribe();
     }
 
     private void OnAttackButtonClicked()
