@@ -6,13 +6,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventManager : Singleton<EventManager>
+public class EventManager : MonoBehaviour
 {
+    public static EventManager Instance { get; private set; }
+    
     [SerializeField] private EventUI _model;
     [SerializeField] private RectTransform _contentRect; // 애니메이션 대상
     public GameEvent currentEvent;
 
-    private void Awake() => SingletonInit();
+    private void Awake()
+    {
+        // 이미 인스턴스가 있으면 이건 중복이므로 파괴
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        // DontDestroyOnLoad 안 씀 — 씬 전용 오브젝트로 유지
+    }
+
     private void Start()
     {
         if (!Manager.Data.EventDB.IsReady)
@@ -35,7 +49,7 @@ public class EventManager : Singleton<EventManager>
     {
         currentEvent = Manager.Data.EventDB.GetRandomEvent();
         _model.UpdateUI(currentEvent);
-        Debug.Log(currentEvent.EventImage);
+        Debug.Log($"{currentEvent.EventName} {currentEvent.EventID}");
 
         Manager.Data.EventDB.OnDataLoadEnd -= EventStart;
     }
@@ -44,7 +58,6 @@ public class EventManager : Singleton<EventManager>
     public void EventEnd()
     {
         Manager.Map.ShowMap();
-        Release();
     }
     
     

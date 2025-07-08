@@ -37,6 +37,10 @@ namespace Event
                 string line2 = gameEvent.EventName.Substring(index);            // 괄호 포함 이후
                 eventTitle.text  = line1 + "\n" + line2;
             }
+            else
+            {
+                eventTitle.text = gameEvent.EventName;
+            }
             
             eventText.text = gameEvent.EventText;
             eventImage.sprite = gameEvent.EventImage;
@@ -61,10 +65,15 @@ namespace Event
                 // Debug.Log(subEffects==null);
                 eventOptions[i].onClick.AddListener(() =>
                 {
+                    Debug.Log($"[Option {i}] 클릭 → Result 패널 활성화");
+                    
                     rewardConfirmButton.onClick.AddListener(() =>
                     {
+                        Debug.Log($"[Option {i}] 보상 확인 버튼 클릭");
+                        
                         rewardEffect.ApplyEffects(() =>
                         {
+                            Debug.Log($"[Option {i}] 효과 적용 완료");
                             resultPanel.SetActive(false);
                             Manager.Map.ShowMap();
                         });
