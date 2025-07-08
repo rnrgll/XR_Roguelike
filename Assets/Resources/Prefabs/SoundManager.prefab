@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ffc994908461341aa67f87b9105f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
-  bgm: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 535a07a239700a941aae34ee65999d61, type: 2}
+  bgm: {fileID: 8523824783978640383}
   bglist:
   - {fileID: 8300000, guid: 08d8bd02f5e78eb47b6fd2bf261c4cbf, type: 3}
   - {fileID: 8300000, guid: 08d8bd02f5e78eb47b6fd2bf261c4cbf, type: 3}
   - {fileID: 8300000, guid: 08d8bd02f5e78eb47b6fd2bf261c4cbf, type: 3}
+  bgmValue: 0
 --- !u!82 &8523824783978640383
 AudioSource:
   m_ObjectHideFlags: 0
