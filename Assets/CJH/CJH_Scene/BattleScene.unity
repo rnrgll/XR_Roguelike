@@ -1307,7 +1307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77120f95f057e541a719718095e7795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
   playerPrefab: {fileID: 0}
   lasMonsterPrefab: {fileID: 7277799118892318029, guid: 2f6cf6c99bef64c4195978dfbe898200, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
@@ -1317,7 +1316,7 @@ MonoBehaviour:
   slothMonsterPrefab: {fileID: 4897905090395734529, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
   lustMonsterPrefab: {fileID: 7956204582641407731, guid: 087a83514630adc4fb5a7e421b29a7ca, type: 3}
   gluttonMonsterPrefab: {fileID: 9028957719207471513, guid: 54a5481b9cf74e24db3f72ac5114a24b, type: 3}
-  hpBarPrefab: {fileID: 8966824381822459748, guid: 8039376f719400642abf6dffa4288b44, type: 3}
+  hpBarPrefab: {fileID: 7030208783644895418, guid: 8039376f719400642abf6dffa4288b44, type: 3}
 --- !u!4 &1843105035
 Transform:
   m_ObjectHideFlags: 0
