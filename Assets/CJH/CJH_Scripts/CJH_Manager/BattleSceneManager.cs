@@ -87,6 +87,10 @@ public class BattleSceneManager : MonoBehaviour
             {
                 var canvas = FindObjectOfType<Canvas>();
                 var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
+                
+                
+                
+                
                 pc.SetHpBar(hpGo);
             }
             else
