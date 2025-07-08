@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e5baff7048b5046a8f9eb41e4f9cc1, type: 3}
   m_Name: TheTowerReversed
   m_EditorClassIdentifier: 
-  DrawNum: 8
+  DrawNum: 5

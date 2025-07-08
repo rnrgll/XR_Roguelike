@@ -150,12 +150,36 @@ public static class CardCombination
 
         #region return region
         // 조합이 높은 순부터 체크한다.
-
         if (IsComb[CardCombinationEnum.FiveJoker])
             return CardCombinationEnum.FiveJoker;
 
+        int numCount = 0;
+        foreach (int _num in numbers)
+        {
+            if (_num >= 1)
+            {
+                numCount++;
+                break;
+            }
+        }
+        if (numCount == 0)
+        {
+            switch (JokerCount)
+            {
+                case 1:
+                    return CardCombinationEnum.HighCard;
+                case 2:
+                    return CardCombinationEnum.OnePair;
+                case 3:
+                    return CardCombinationEnum.Triple;
+                case 4:
+                    return CardCombinationEnum.FourCard;
+            }
+        }
+
         if (IsComb[CardCombinationEnum.FiveCard])
             return CardCombinationEnum.FiveCard;
+
         if (JokerCount >= 4)
         {
             int X1 = 0;
@@ -165,7 +189,6 @@ public static class CardCombination
                 if (_num == 0) continue;
                 cardNums.Clear();
                 InsertCardNum(1, X1, cardNums);
-                break;
             }
             return CardCombinationEnum.FiveCard;
         }
@@ -178,16 +201,12 @@ public static class CardCombination
         if (JokerCount >= 3)
         {
             int x2 = 0;
-            int Count2 = 0;
             foreach (int _num in numbers)
             {
                 x2++;
                 if (_num == 0) continue;
-                Count2++;
-                if (Count2 < 2) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x2, cardNums);
-                break;
             }
             return CardCombinationEnum.FourCard;
         }
@@ -218,16 +237,12 @@ public static class CardCombination
         if (JokerCount >= 2)
         {
             int x3 = 0;
-            int Count3 = 0;
             foreach (int _num in numbers)
             {
                 x3++;
                 if (_num == 0) continue;
-                Count3++;
-                if (Count3 < 3) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x3, cardNums);
-                break;
             }
             return CardCombinationEnum.Triple;
         }
@@ -240,16 +255,12 @@ public static class CardCombination
         if (JokerCount >= 1)
         {
             int x4 = 0;
-            int Count4 = 0;
             foreach (int _num in numbers)
             {
                 x4++;
                 if (_num == 0) continue;
-                Count4++;
-                if (Count4 < 4) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x4, cardNums);
-                break;
             }
             return CardCombinationEnum.OnePair;
         }

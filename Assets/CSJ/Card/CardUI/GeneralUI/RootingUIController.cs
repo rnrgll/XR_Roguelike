@@ -13,16 +13,18 @@ public class RootingUIController : UIRequire
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] Image image;
     [SerializeField] Button CloseBtn;
-    
-    
+
+
     //todo : 수정 필요(도현)
     [SerializeField] private Button turnEndButton;
     [SerializeField] private GameObject _majorArcanaCanvas;
-    
-    
+
+    public Action ClickEnd;
+
+
     public void SetActive(bool isActive)
     {
-        if(isActive)
+        if (isActive)
             _majorArcanaCanvas?.SetActive(false);
         RootingUI.SetActive(isActive);
     }
@@ -35,7 +37,7 @@ public class RootingUIController : UIRequire
     {
         SetActive(false);
         Manager.UI.ShowSelectableMap();
-        
+        ClickEnd?.Invoke();
     }
 
     public void SetText(MajorArcanaSO major)

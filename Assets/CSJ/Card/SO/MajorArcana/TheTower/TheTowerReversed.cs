@@ -7,7 +7,7 @@ using CardEnum;
 [CreateAssetMenu(fileName = "TheTowerReversed", menuName = "Tarot/Abilities/TheTower/Reversed")]
 public class TheTowerReversedAbility : ScriptableObject, IArcanaAbility
 {
-    [SerializeField] int DrawNum = 8;
+    [SerializeField] int DrawNum = 5;
     public void Excute(ArcanaContext ctx)
     {
         var controller = ctx.player.GetCardController();

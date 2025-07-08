@@ -85,6 +85,7 @@ public class TarotDeckUI : UIRequire
         playerController.OnTurnStarted += OnTurnStarted;
         playerController.OnTurnEnd += OnTurnEnded;
 
+
     }
 
     protected override void UnSubscribe()
