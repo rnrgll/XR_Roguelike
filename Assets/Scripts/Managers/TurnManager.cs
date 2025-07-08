@@ -93,7 +93,6 @@ public class TurnManager : Singleton<TurnManager>
     if (battleStarted) return;
         battleStarted = true;
 
-
         BackgroundManager.Instance.ShowNextBackground();
 
         // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화

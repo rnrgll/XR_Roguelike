@@ -15,6 +15,17 @@ public class EnvyMonster : EnemyBase
     {
         base.Start();
     }
+
+    public override void InitForBattle()
+    {
+        base.InitForBattle();
+        isCharging = false;
+        chargeLevel = 0;
+        chargeDamageReceived = 0;
+        patternIndex = 0;
+        Debug.Log("[엔비] 전투 초기화 완료");
+    }
+
     private enum EnvyPattern
     {
         Basic,
@@ -33,6 +44,8 @@ public class EnvyMonster : EnemyBase
     {
         StartCoroutine(TurnRoutine());
     }
+
+
 
     private IEnumerator TurnRoutine()
     {
@@ -158,4 +171,5 @@ public class EnvyMonster : EnemyBase
             Debug.Log($"[엔비] 차지 중 피해 누적: {chargeDamageReceived}");
         }
     }
+
 }

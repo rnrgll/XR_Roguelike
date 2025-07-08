@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
     /// <summary>
     /// 전투 시작 전 체력·상태를 초기화한다.
     /// </summary>
-    public void InitForBattle()
+    public virtual void InitForBattle()
     {
         ResetStatus();
         // 추가 상태(버프·디버프 등) 초기화 시 여기에 작성하거라
