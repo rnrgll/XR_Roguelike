@@ -654,7 +654,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &917527137
@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6028076149467024148, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
-  playerPrefab: {fileID: 5419887369812186415, guid: 22eb80b3a078cbb4bafdf6d17085bdba, type: 3}
+  playerPrefab: {fileID: 2581133722352793528, guid: 64a2921e7c924cd44a8cdd76736023a7, type: 3}
   lasMonsterPrefab: {fileID: 7277799118892318029, guid: 2f6cf6c99bef64c4195978dfbe898200, type: 3}
   envyMonsterPrefab: {fileID: 6404548411380890797, guid: d52a4c540b5f0cd4693667bd32c38bd1, type: 3}
   prideMonsterPrefab: {fileID: 7371526151415248810, guid: f4a2221c117a959488574e47a6075b22, type: 3}
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   slothMonsterPrefab: {fileID: 4897905090395734529, guid: d09d7c4bae415bf49aca1584b6830509, type: 3}
   lustMonsterPrefab: {fileID: 7956204582641407731, guid: 087a83514630adc4fb5a7e421b29a7ca, type: 3}
   gluttonMonsterPrefab: {fileID: 9028957719207471513, guid: 54a5481b9cf74e24db3f72ac5114a24b, type: 3}
-  hpBarPrefab: {fileID: 8966824381822459748, guid: 8039376f719400642abf6dffa4288b44, type: 3}
+  hpBarPrefab: {fileID: 7030208783644895418, guid: 8039376f719400642abf6dffa4288b44, type: 3}
 --- !u!4 &1843105035
 Transform:
   m_ObjectHideFlags: 0
@@ -1280,7 +1280,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1950319199
@@ -1560,7 +1560,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2088836781

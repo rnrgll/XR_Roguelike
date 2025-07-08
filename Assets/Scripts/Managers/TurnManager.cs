@@ -161,7 +161,8 @@ public class TurnManager : Singleton<TurnManager>
                 {
                     // 일반 몬스터 처치 시 → 즉시 맵으로 복귀
                     Debug.Log("[디버그] 일반 전투 종료 → 맵 씬으로 복귀");
-                    Manager.Map.ShowMap();
+                    // Manager.Map.ShowMap();
+                    Manager.UI.ShowSelectableMap(); //메이저 아르카나 덱 비활성화를 위함
                 }
 
                 yield break;
