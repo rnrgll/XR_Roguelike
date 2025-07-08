@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Contract
   m_EditorClassIdentifier: 
   cardName: Contract
-  sprite: {fileID: 21300000, guid: 98fe489fe0a803a43bfa5ac803f0783c, type: 3}
+  sprite: {fileID: 0}
   DisposableCard: 1
   suit: 99
   cardNum: 0
-  UseMoreSpace: 0

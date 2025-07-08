@@ -22,6 +22,6 @@ MonoBehaviour:
   weight: 1
   enchantType: 1
   enchantSo: {fileID: 11400000, guid: de944e8bb6000814490366ed29f644cb, type: 2}
-  enchantSprite: {fileID: -282216307, guid: a07a51cb26f7843789e5bcd2733d095e, type: 3}
+  enchantSprite: {fileID: 21300000, guid: e9055d472a2cd4a7da98eba64a2ec539, type: 2}
   minTargetNum: 1
   maxTargetNum: 14

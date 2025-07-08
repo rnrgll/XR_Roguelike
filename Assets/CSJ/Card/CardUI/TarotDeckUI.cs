@@ -18,7 +18,6 @@ public class TarotDeckUI : UIRequire
 
     private MajorArcanaUI currentCardUI;
     private bool isUsed = false;
-    private bool isInteractable = true;
 
     public override void InitializeUI(PlayerController pc)
     {
@@ -62,8 +61,6 @@ public class TarotDeckUI : UIRequire
     {
         if (isUsed) return;
         isUsed = true;
-        if (!isInteractable) return;
-
 
 
         Debug.Log("클릭");
@@ -81,17 +78,14 @@ public class TarotDeckUI : UIRequire
         currentCardUI.OnClick += OnMajorCardClicked;
         Manager.UI.OnGlobalUIActive += SetActive;
         playerController.OnTurnStarted += OnTurnStarted;
-        playerController.OnTurnEnd += OnTurnEnded;
     }
 
     protected override void UnSubscribe()
     {
         currentCardUI.OnClick -= OnMajorCardClicked;
+        //Manager.UI.OnGlobalUIActive -= SetActive;  //on disable에서 구독해제하면 다시 major deck이 활성화되지 않아서 수정
         if (playerController != null)
-        {
             playerController.OnTurnStarted -= OnTurnStarted;
-            playerController.OnTurnEnd -= OnTurnEnded;
-        }
     }
 
     private void OnDestroy()
@@ -106,11 +100,6 @@ public class TarotDeckUI : UIRequire
 
     private void OnTurnStarted()
     {
-        isInteractable = true;
         DrawAndShow();
-    }
-    private void OnTurnEnded()
-    {
-        isInteractable = false;
     }
 }

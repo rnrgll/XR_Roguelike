@@ -75,7 +75,6 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
             go.GetComponent<BattleUI>().InitScene(pc);
-            cc.BattleInit();
 
 
             Debug.Log("[BattleManager] cardHand 생성");
@@ -88,15 +87,6 @@ public class BattleSceneManager : MonoBehaviour
             {
                 var canvas = FindObjectOfType<Canvas>();
                 var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
-                
-                //hp bar anchor, position 수정
-                var rt = hpGo.GetComponent<RectTransform>();
-                rt.anchorMin = new Vector2(0, 1);   // 좌측 상단
-                rt.anchorMax = new Vector2(0, 1);
-                rt.pivot = new Vector2(0, 1);       // 좌측 상단 기준
-                rt.anchoredPosition = new Vector2(40, -150); // 아래로 150px
-                
-                
                 pc.SetHpBar(hpGo);
             }
             else
@@ -173,7 +163,19 @@ public class BattleSceneManager : MonoBehaviour
         {
             Debug.LogError($"[{id}] 프리팹에 EnemyBase가 없습니다!");
         }
+
+        // 3) 슬로스의 OnClear 이벤트 구독 (클리어 시 전투 종료)
+        if (enemy is SlothMonster sloth)
+        {
+            sloth.OnClear += () =>
+            {
+                Debug.Log("[BattleSceneManager] Sloth 클리어됨 → 전투 종료 처리");
+                TurnManager.Instance.ContinueAfterReward();
+            };
+        }
         GameStatusUI.Instance.SetTarget(enemy);
+
+
     }
 
     private IEnumerator InitializeMonsterUI(EnemyBase enemy)

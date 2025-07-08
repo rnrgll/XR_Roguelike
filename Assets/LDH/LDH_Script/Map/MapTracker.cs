@@ -44,7 +44,7 @@ namespace Map
             
             DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() =>
             {
-                //eventSystem.enabled = true;
+                eventSystem.enabled = true;
                 mapNode.ResetScale();
                 EnterNode(mapNode);
             });

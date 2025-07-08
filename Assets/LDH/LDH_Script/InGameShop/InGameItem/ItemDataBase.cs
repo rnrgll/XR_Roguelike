@@ -129,7 +129,7 @@ namespace InGameShop
 
             for (int i = 0; i < enchantables.Count; i++)
             {
-                //Debug.Log($"인챈트 가능한 카드 {i} : {enchantables[i].CardNum} {enchantables[i].CardSuit}");
+                Debug.Log($"인챈트 가능한 카드 {i} : {enchantables[i].CardNum} {enchantables[i].CardSuit}");
             }
             
             for (int i = 0; results.Count<count; i++)

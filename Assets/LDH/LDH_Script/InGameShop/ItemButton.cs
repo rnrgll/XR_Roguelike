@@ -2,9 +2,7 @@ using CustomUtility.UI;
 using DG.Tweening;
 using Item;
 using Managers;
-using System.Collections;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -42,10 +40,7 @@ namespace InGameShop
         private Tween _floatTween;
         private EventSystem _eventSystem;
         private Vector2 _initialAnchorPos; 
-        private Coroutine _floatingCoroutine;
 
-        
-        
         private void Awake() => Init();
 
         private void OnEnable()
@@ -102,12 +97,12 @@ namespace InGameShop
             }
             else if(item is EnchantItem enchantItem)
             {
+                //여기서 버튼 아래에 이미지를 생성해서 이미지 설정하고 stretch 하고 싶음
                 Image enchantImage = new GameObject("EnchantImage", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image)).GetComponent<Image>();
                 enchantImage.transform.SetParent(_itemButton.transform, false); // false → 로컬 기준 유지
                 UILayout.Stretch(enchantImage.GetComponent<RectTransform>());
 
                 enchantImage.sprite = enchantItem.enchantSprite;
-                enchantImage.color = EnchantFrameColor.GetColor(enchantItem.enchantType);
                 enchantImage.preserveAspect = true;
 
             }
@@ -222,60 +217,24 @@ namespace InGameShop
 
         #region Button 애니메이션
 
-        // private void StartFloating()
-        // {
-        //     float startDelay = UnityEngine.Random.Range(0f, 1f); // 랜덤 딜레이
-        //     
-        //     _floatTween = _buttonRec
-        //         .DOAnchorPosY(_buttonRec.anchoredPosition.y + 10f, 1f)
-        //         .SetEase(Ease.InOutSine)
-        //         .SetLoops(-1, LoopType.Yoyo)
-        //         .SetDelay(startDelay);
-        // }
-        //
-        // private void StopFloating()
-        // {
-        //     
-        //     _floatTween?.Complete();
-        //     _floatTween?.Kill();
-        //     _floatTween = null;    
-        //     _buttonRec.anchoredPosition = _initialAnchorPos;
-        //
-        // }
-        
         private void StartFloating()
         {
+            float startDelay = UnityEngine.Random.Range(0f, 1f); // 랜덤 딜레이
             
-            if (!gameObject.activeInHierarchy)
-                return;
-            
-            _floatingCoroutine = StartCoroutine(DelayedStartFloating());
-        }
-        
-
-        private IEnumerator DelayedStartFloating()
-        {
-            float delay = UnityEngine.Random.Range(0f, 1f);
-            yield return new WaitForSeconds(delay);
-
             _floatTween = _buttonRec
-                .DOAnchorPosY(_initialAnchorPos.y + 10f, 1f)
+                .DOAnchorPosY(_buttonRec.anchoredPosition.y + 10f, 1f)
                 .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo);
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(startDelay);
         }
         
         private void StopFloating()
         {
-            if (_floatingCoroutine != null)
-            {
-                StopCoroutine(_floatingCoroutine);
-                _floatingCoroutine = null;
-            }
-
-            _floatTween?.Kill(true);
-            _floatTween = null;
-
+            
+            _floatTween?.Kill();
+            _floatTween = null;    
             _buttonRec.anchoredPosition = _initialAnchorPos;
+
         }
 
         #endregion

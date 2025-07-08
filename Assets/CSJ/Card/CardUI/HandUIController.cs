@@ -10,10 +10,8 @@ public class HandUIController : UIRequire
 {
     [SerializeField] private RectTransform handContainer;
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private GameObject DiscardAlert;
     private List<GameObject> spawnedCards = new List<GameObject>();
     public event Action OnCardSetted;
-    public Action<int> OnDiscardAlert;
 
     public override void InitializeUI(PlayerController pc)
     {
@@ -23,19 +21,14 @@ public class HandUIController : UIRequire
 
     protected override void Subscribe()
     {
-        OnDiscardAlert = _ => StartDiscardSelection();
         cardController.OnChangedHands += RefreshHand;
         cardController.OnSelectionChanged += SyncUI;
-        cardController.OnEnterSelectionMode += OnDiscardAlert;
-        cardController.OnExitSelectionMode += EndDiscardSelection;
     }
 
     protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= RefreshHand;
         cardController.OnSelectionChanged -= SyncUI;
-        cardController.OnEnterSelectionMode -= OnDiscardAlert;
-        cardController.OnExitSelectionMode -= EndDiscardSelection;
     }
 
     public void RefreshHand()
@@ -97,15 +90,6 @@ public class HandUIController : UIRequire
             bool shouldBeSelected = cardController.SelectedCard.Contains(ui.CardData);
             ui.SyncSelected(shouldBeSelected);
         }
-    }
-    private void StartDiscardSelection()
-    {
-        DiscardAlert.SetActive(true);
-    }
-
-    private void EndDiscardSelection()
-    {
-        DiscardAlert.SetActive(false);
     }
 }
 
