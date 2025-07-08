@@ -3,6 +3,7 @@ using DG.Tweening;
 using Item;
 using Managers;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -97,12 +98,12 @@ namespace InGameShop
             }
             else if(item is EnchantItem enchantItem)
             {
-                //여기서 버튼 아래에 이미지를 생성해서 이미지 설정하고 stretch 하고 싶음
                 Image enchantImage = new GameObject("EnchantImage", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image)).GetComponent<Image>();
                 enchantImage.transform.SetParent(_itemButton.transform, false); // false → 로컬 기준 유지
                 UILayout.Stretch(enchantImage.GetComponent<RectTransform>());
 
                 enchantImage.sprite = enchantItem.enchantSprite;
+                enchantImage.color = EnchantFrameColor.GetColor(enchantItem.enchantType);
                 enchantImage.preserveAspect = true;
 
             }
