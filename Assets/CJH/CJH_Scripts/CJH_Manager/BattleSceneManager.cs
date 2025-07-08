@@ -94,7 +94,11 @@ public class BattleSceneManager : MonoBehaviour
                 var canvas = FindObjectOfType<Canvas>();
                 var hpGo = Instantiate(hpBarPrefab, canvas.transform, false);
                 
-                
+                var rt = hpGo.GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0, 1);   // 좌측 상단
+                rt.anchorMax = new Vector2(0, 1);
+                rt.pivot = new Vector2(0, 1);       // 좌측 상단 기준
+                rt.anchoredPosition = new Vector2(40, -150); // 아래로 150px
                 
                 
                 pc.SetHpBar(hpGo);
