@@ -57,7 +57,7 @@ namespace TopBarUI
             }
             
             // 효과 텍스트
-            string cardEffect = $"데미지 +{minor.CardNum}";
+            string cardEffect = $"데미지 +{(minor.CardNum==14?0: minor.CardNum)}";
             effectText.text = $"{cardEffect}{(string.IsNullOrEmpty(enchantEffect) ? string.Empty : $"\n{enchantEffect}")}";
 
         }

@@ -13,6 +13,7 @@ public class SubmitUI : UIRequire
     [SerializeField] private Button NumSortButton;
     [SerializeField] private Button TurnEndButton;
     private Action<CardCombinationEnum> _onSelectionChanged;
+    private Action<int> _onUnactive;
 
     protected override void Subscribe()
     {
@@ -25,6 +26,10 @@ public class SubmitUI : UIRequire
         _onSelectionChanged = _ => UpdateButtons();
         cardController.OnSelectionChanged += _onSelectionChanged;
         UpdateButtons();
+
+        _onUnactive = _ => UnactiveButton();
+        cardController.OnEnterSelectionMode += _onUnactive;
+        cardController.OnExitSelectionMode += ActiveButton;
     }
 
     protected override void UnSubscribe()
@@ -37,6 +42,10 @@ public class SubmitUI : UIRequire
 
         cardController.OnSelectionChanged -= _onSelectionChanged;
         _onSelectionChanged = null;
+
+        cardController.OnEnterSelectionMode -= _onUnactive;
+        cardController.OnExitSelectionMode -= UnactiveButton;
+        _onUnactive = null;
     }
 
     private void UpdateButtons()
@@ -44,7 +53,35 @@ public class SubmitUI : UIRequire
         int selectedCount = cardController.SelectedCard.Count;
 
         attackButton.interactable = selectedCount >= 5;
-        DiscardButton.interactable = selectedCount >= 1;
+        if (cardController.DiscardCount < 1)
+            DiscardButton.interactable = false;
+        else
+            DiscardButton.interactable = selectedCount >= 1;
+    }
+
+    private void ActiveButton()
+    {
+        cardController.OnSelectionChanged += _onSelectionChanged;
+
+        attackButton.interactable = true;
+        SuitSortButton.interactable = true;
+        NumSortButton.interactable = true;
+        TurnEndButton.interactable = true;
+        if (cardController.DiscardCount < 1)
+            DiscardButton.interactable = false;
+        else
+            DiscardButton.interactable = true;
+    }
+
+    private void UnactiveButton()
+    {
+        cardController.OnSelectionChanged -= _onSelectionChanged;
+
+        attackButton.interactable = false;
+        DiscardButton.interactable = false;
+        SuitSortButton.interactable = false;
+        NumSortButton.interactable = false;
+        TurnEndButton.interactable = false;
     }
 
     private void OnAttackButtonClicked()
@@ -54,6 +91,7 @@ public class SubmitUI : UIRequire
 
     private void OnDiscardButtonClicked()
     {
+        cardController.DiscardCount--;
         cardController.exchangeHand(cardController.SelectedCard);
     }
 
@@ -68,6 +106,6 @@ public class SubmitUI : UIRequire
 
     private void OnTurnEndButtonClicked()
     {
-        playerController.EndTurn();
+        playerController.StartCoroutine(playerController.EndTurn());
     }
 }

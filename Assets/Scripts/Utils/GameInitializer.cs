@@ -1,4 +1,3 @@
-using LDH.LDH_Script;
 using Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,6 +76,7 @@ public class GameInitializer : MonoBehaviour
         }
         PlayerController player = GameObject.Instantiate(playerPrefab);
         player.transform.SetParent(Manager.manager.transform);
+        player.SetSpriteVisible(false);
 
         yield return player.StartSetting();
 

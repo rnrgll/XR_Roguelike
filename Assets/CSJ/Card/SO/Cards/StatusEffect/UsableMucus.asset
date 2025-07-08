@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UsableMucus
   m_EditorClassIdentifier: 
   cardName: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 471c373b6909293479b19d4a9cf5400d, type: 3}
   statusEffect: 1
   suit: 50
   cardNum: 0
