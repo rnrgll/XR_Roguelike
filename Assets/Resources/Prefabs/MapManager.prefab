@@ -71,7 +71,7 @@ MonoBehaviour:
     rgba: 4294967295
   uiLinePrefab: {fileID: 4000391269635208699, guid: aa98db00b55c443d88a6783d6f2aa529, type: 3}
   linePointsCount: 10
-  offsetFromNodes: 0
+  offsetFromNodes: 10
   scrollRect: {fileID: 0}
   widthPadding: 800
   heightPadding: 400

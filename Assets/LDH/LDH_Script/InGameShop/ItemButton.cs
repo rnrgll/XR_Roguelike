@@ -259,7 +259,7 @@ namespace InGameShop
             yield return new WaitForSeconds(delay);
 
             _floatTween = _buttonRec
-                .DOAnchorPosY(_initialAnchorPos.y + 10f, 1f)
+                .DOAnchorPosY(_initialAnchorPos.y + 5f, 1f)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(-1, LoopType.Yoyo);
         }

@@ -106,7 +106,7 @@ namespace Managers
             }
 
             bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
-            OnGlobalUIActive?.Invoke(isGloblalUIOn);
+            OnGlobalUIActive?.Invoke(!isGloblalUIOn);
         }
 
         public void ShowSelectableMap()
@@ -114,7 +114,7 @@ namespace Managers
             Manager.Map.ShowMap(ShowType.Select);
             bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
             Debug.Log(isGloblalUIOn);
-            OnGlobalUIActive?.Invoke(isGloblalUIOn);
+            OnGlobalUIActive?.Invoke(!isGloblalUIOn);
         }
     }
 }

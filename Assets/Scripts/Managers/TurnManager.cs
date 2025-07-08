@@ -98,7 +98,7 @@ public class TurnManager : Singleton<TurnManager>
 
         // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
         var pc = player as PlayerController;
-        pc.SetSpriteVisible(true);
+        //pc.SetSpriteVisible(true);
         Debug.Log("[TurnManager] 전투 시작, 플레이어 스프라이트 켬");
         if (pc != null)
                 {
