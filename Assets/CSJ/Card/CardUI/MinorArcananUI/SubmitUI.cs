@@ -84,10 +84,6 @@ public class SubmitUI : UIRequire
         NumSortButton.interactable = false;
         TurnEndButton.interactable = false;
     }
-    private void OnDestroy()
-    {
-        UnSubscribe();
-    }
 
     private void OnAttackButtonClicked()
     {
@@ -111,6 +107,14 @@ public class SubmitUI : UIRequire
 
     private void OnTurnEndButtonClicked()
     {
+        UnactiveButton();
+        playerController.OnTurnStarted += OnTurnStart;
         playerController.StartCoroutine(playerController.EndTurn());
+    }
+
+    private void OnTurnStart()
+    {
+        ActiveButton();
+        playerController.OnTurnStarted -= OnTurnStart;
     }
 }
