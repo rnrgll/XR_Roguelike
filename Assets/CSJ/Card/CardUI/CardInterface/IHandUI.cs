@@ -41,4 +41,9 @@ public abstract class UIRequire : MonoBehaviour, IHandUI
 
     protected abstract void UnSubscribe();
 
+    protected virtual void OnDestroy()
+    {
+        UnSubscribe();
+    }
+
 }
