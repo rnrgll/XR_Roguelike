@@ -17,10 +17,20 @@ public class TarotDeck : MonoBehaviour
         return majorCardCandidates;
     }
 
+    public MajorArcanaSO RandomMajorArcana()
+    {
+        var MajorArcana = majorCardCandidates[RandomManager.Instance.RandInt(0, majorCardCandidates.Count)];
+        return MajorArcana;
+    }
+
     public void AddMajorCards(MajorArcanaSO majorCard)
     {
         deckMajorCards.Add(majorCard);
         majorCardCandidates.Remove(majorCard);
+    }
+    public void AddMajorCards()
+    {
+        AddMajorCards(RandomMajorArcana());
     }
 
     public List<MajorArcanaSO> GetMajorCards()

@@ -25,7 +25,6 @@ public class HandNumUI : UIRequire
 
     private void RefreshCount()
     {
-        Debug.Log(cardController.DiscardCount);
         int count = cardController.Hand.Count;
         textArea.text = $"{count} / {cardController.drawNum}\nDisCard : {cardController.DiscardCount}";
     }

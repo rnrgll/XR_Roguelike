@@ -27,12 +27,15 @@ public class BattleManager : MonoBehaviour
         float ratio = 1 + cc.GetCardBonus(CardBonus.Ratio);
         int finalDamage = Mathf.RoundToInt((baseDamage * multiplier + bonus) * ratio);
 
+        if (combo == CardCombinationEnum.FiveJoker)
+            finalDamage = 99999;
+
         // 기본 데미지 적용
         target.ApplyDamage(finalDamage);
 
         GameStatusUI.Instance.AddDamage(finalDamage);
         Debug.Log($"[{combo}] → {target.name}에게 {finalDamage}의 피해!");
-        
+
 
 
         return finalDamage;
