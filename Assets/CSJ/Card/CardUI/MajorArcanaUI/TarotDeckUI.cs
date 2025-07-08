@@ -65,6 +65,8 @@ public class TarotDeckUI : UIRequire
         if (!isInteractable) return;
 
 
+        if (!isInteractable) return;
+
 
         Debug.Log("클릭");
         // 클릭하면 SO의 Activate 실행
