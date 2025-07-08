@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
     public EnemyType Type => type;
 
     public bool IsDead => currentHP <= 0;
+    public Action OnMonsterDied;
 
 
     private void Awake()
@@ -50,6 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyActor
         if (IsDead)
         {
             Debug.Log($"[{this.GetType().Name}] 사망 처리됨");
+            OnMonsterDied?.Invoke();
         }
     }
 

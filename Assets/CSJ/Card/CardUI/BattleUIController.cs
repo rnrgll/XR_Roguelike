@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleUI : MonoBehaviour
 {
     [SerializeField] private UIRequire[] UIArr;
+    [SerializeField] private RootingUIController RootingScene;
 
     public void InitScene(PlayerController pc)
     {
@@ -12,5 +13,11 @@ public class BattleUI : MonoBehaviour
         {
             ui.InitializeUI(pc);
         }
+    }
+
+    public void PrintRootUI(MajorArcanaSO majorArcana)
+    {
+        RootingScene.SetActive(true);
+        RootingScene.SetText(majorArcana);
     }
 }
