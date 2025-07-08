@@ -61,7 +61,7 @@ public class SubmitUI : UIRequire
 
     private void ActiveButton()
     {
-        cardController.OnSelectionChanged -= _onSelectionChanged;
+        cardController.OnSelectionChanged += _onSelectionChanged;
 
         attackButton.interactable = true;
         SuitSortButton.interactable = true;
@@ -75,7 +75,7 @@ public class SubmitUI : UIRequire
 
     private void UnactiveButton()
     {
-        cardController.OnSelectionChanged += _onSelectionChanged;
+        cardController.OnSelectionChanged -= _onSelectionChanged;
 
         attackButton.interactable = false;
         DiscardButton.interactable = false;
