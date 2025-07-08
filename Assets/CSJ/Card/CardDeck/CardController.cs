@@ -144,8 +144,8 @@ public class CardController : MonoBehaviour
         {
             disposableDic[DisposableCardSO.DisposableCard] = DisposableCardSO;
         }
-        
-        
+
+
         BattleBonusDic = new();
         BattlePenaltyDic = new();
         TurnPenaltyDic = new();
@@ -158,8 +158,8 @@ public class CardController : MonoBehaviour
             TurnPenaltyDic[type] = new();
             TurnBonusDic[type] = new();
         }
-        
-        
+
+
 
         ComboMultDic = new Dictionary<CardCombinationEnum, float>()
         {
@@ -268,13 +268,7 @@ public class CardController : MonoBehaviour
             SuitsList[(int)i.CardSuit]++;
             numbersList[i.CardNum]++;
         }
-        
-        TurnBonusDic.Clear();
-        TurnPenaltyDic.Clear();
-        BattlePenaltyDic.Clear();
-        BattleBonusDic.Clear();
-        
-        
+
         DiscardCount = DiscardSetting;
         BattleDeck.Shuffle();
         Draw();
@@ -283,8 +277,6 @@ public class CardController : MonoBehaviour
     // TODO: 추후 계약카드 드로우 감소 적용
     public void TurnInit()
     {
-        TurnBonusDic.Clear();
-        TurnPenaltyDic.Clear();
         Draw();
     }
     #endregion
