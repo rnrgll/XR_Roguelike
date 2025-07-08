@@ -18,6 +18,7 @@ public class TarotDeckUI : UIRequire
 
     private MajorArcanaUI currentCardUI;
     private bool isUsed = false;
+    private bool isInteractable = true;
 
     public override void InitializeUI(PlayerController pc)
     {
@@ -61,6 +62,8 @@ public class TarotDeckUI : UIRequire
     {
         if (isUsed) return;
         isUsed = true;
+
+        if (!isInteractable) return;
 
 
         Debug.Log("클릭");
