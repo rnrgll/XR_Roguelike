@@ -268,6 +268,15 @@ public class CardController : MonoBehaviour
             SuitsList[(int)i.CardSuit]++;
             numbersList[i.CardNum]++;
         }
+        foreach (var kv in TurnBonusDic)
+            kv.Value.Clear();
+        foreach (var kv in BattleBonusDic)
+            kv.Value.Clear();
+        foreach (var kv in TurnPenaltyDic)
+            kv.Value.Clear();
+        foreach (var kv in BattlePenaltyDic)
+            kv.Value.Clear();
+
 
         DiscardCount = DiscardSetting;
         BattleDeck.Shuffle();
@@ -277,6 +286,10 @@ public class CardController : MonoBehaviour
     // TODO: 추후 계약카드 드로우 감소 적용
     public void TurnInit()
     {
+        foreach (var kv in TurnBonusDic)
+            kv.Value.Clear();
+        foreach (var kv in TurnPenaltyDic)
+            kv.Value.Clear();
         Draw();
     }
     #endregion
