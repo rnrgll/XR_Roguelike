@@ -8,6 +8,6 @@ public class TheTowerUprightAbility : ScriptableObject, IArcanaAbility
     public void Excute(ArcanaContext ctx)
     {
         var cardController = ctx.player.GetCardController();
-        cardController.exchangeHand(cardController.Hand.GetCardList());
+        cardController.exchangeHand(new List<MinorArcana>(cardController.Hand.GetCardList()));
     }
 }

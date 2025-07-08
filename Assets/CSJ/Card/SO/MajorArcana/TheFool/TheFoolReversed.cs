@@ -9,6 +9,7 @@ public class TheFoolReversedAbility : ScriptableObject, IArcanaAbility
 {
     private PlayerController playerController;
     private Action<MinorArcana> ToSubscribe;
+
     public void Excute(ArcanaContext ctx)
     {
         playerController = ctx.player;

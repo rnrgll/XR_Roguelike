@@ -18,14 +18,12 @@ public class DeckUI : UIRequire
     {
         cardController.OnChangedHands += OnDrawCard;
         MajorActive = () => tarotDeck.SetActive(false);
-        DeckButton.onClick.AddListener(MajorActive);
         DeckButton.onClick.AddListener(BattleDeckUI.OpenPanel);
     }
 
     protected override void UnSubscribe()
     {
         cardController.OnChangedHands -= OnDrawCard;
-        DeckButton.onClick.RemoveListener(MajorActive);
         DeckButton.onClick.RemoveListener(BattleDeckUI.OpenPanel);
     }
 
