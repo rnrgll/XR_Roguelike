@@ -76,7 +76,7 @@ public class GameInitializer : MonoBehaviour
         }
         PlayerController player = GameObject.Instantiate(playerPrefab);
         player.transform.SetParent(Manager.manager.transform);
-        player.SetSpriteVisible(false);
+        //player.SetSpriteVisible(false);
 
         yield return player.StartSetting();
 

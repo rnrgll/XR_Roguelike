@@ -66,13 +66,13 @@ namespace Map
                     //todo : 인게임 상점 씬으로 전환
                     SceneManager.LoadScene("InGameShop");
                     ItemManager.Instance.SetInventorySlotState(true);
-                    pc.SetSpriteVisible(false);
+                    //pc.SetSpriteVisible(false);
                     break;
                 case NodeType.Event:
                     //todo : 이벤트 씬으로 전환
                     SceneManager.LoadScene("EventScene");
                     ItemManager.Instance.SetInventorySlotState(true);
-                    pc.SetSpriteVisible(false);
+                    //pc.SetSpriteVisible(false);
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환

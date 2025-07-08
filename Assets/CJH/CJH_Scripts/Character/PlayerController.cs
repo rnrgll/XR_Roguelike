@@ -70,18 +70,18 @@ public class PlayerController : MonoBehaviour, IPlayerActor
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         // 전투 전 항상 보이게
-        SetSpriteVisible(false);
+        //SetSpriteVisible(false);
     }
 
     /// <summary>
     /// 스프라이트 보이기/숨기기
     /// </summary>
     /// <param name="visible">true면 보이기, false면 숨기기</param>
-    public void SetSpriteVisible(bool visible)
-    {
-        spriteRenderer.enabled = visible;
-        Debug.Log(spriteRenderer.enabled);
-    }
+    // public void SetSpriteVisible(bool visible)
+    // {
+    //     spriteRenderer.enabled = visible;
+    //     Debug.Log(spriteRenderer.enabled);
+    // }
 
 
     public IEnumerator StartSetting()
