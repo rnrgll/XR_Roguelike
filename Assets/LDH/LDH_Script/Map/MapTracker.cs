@@ -53,22 +53,26 @@ namespace Map
 
         public void EnterNode(MapNode mapNode)
         {
+            var pc = TurnManager.Instance.GetPlayerController();
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.Battle:
                     //todo : 배틀 씬으로 전환 및 설정
                     SceneManager.LoadScene("BattleScene");
                     ItemManager.Instance.SetInventorySlotState(false);
+
                     break;
                 case NodeType.Shop:
                     //todo : 인게임 상점 씬으로 전환
                     SceneManager.LoadScene("InGameShop");
                     ItemManager.Instance.SetInventorySlotState(true);
+                    pc.SetSpriteVisible(false);
                     break;
                 case NodeType.Event:
                     //todo : 이벤트 씬으로 전환
                     SceneManager.LoadScene("EventScene");
                     ItemManager.Instance.SetInventorySlotState(true);
+                    pc.SetSpriteVisible(false);
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환
