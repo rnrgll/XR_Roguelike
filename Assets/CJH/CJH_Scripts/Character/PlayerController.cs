@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     /// <param name="visible">true면 보이기, false면 숨기기</param>
     public void SetSpriteVisible(bool visible)
     {
-            spriteRenderer.enabled = visible;
+        spriteRenderer.enabled = visible;
     }
 
 
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         {
             Debug.Log("턴 스킵이 활성화되어 있습니다.");
             isTurnSkip = false;
-            EndTurn();
+            StartCoroutine(EndTurn());
         }
         isInvincible = false;
         // 1) 카드 조합 계산
@@ -296,10 +296,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         turnEnded = false;
     }
 
-    public void EndTurn()
+    public IEnumerator EndTurn()
     {
         Debug.Log("플레이어 턴 종료!");
-        turnEnded = true;
+        yield return StartCoroutine(cardController.TurnEndDiscard());
 
         // if (attackBuffTurns > 0)
         // {
@@ -310,6 +310,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         //         Debug.Log("[플레이어] 공격력 버프 해제");
         //     }
         // }
+        turnEnded = true;
         OnTurnEnd?.Invoke();
     }
 
@@ -486,16 +487,16 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         ratio = 1f;
         additionalDamage = 0f;
 
-         // 3. 카드 컨트롤러(덱·핸드) 초기화
-         if (cardController != null)
-         {
-             cardController.BattleInit();
-             Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
-         }
-         else
-         {
-             Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
-         }
+        // 3. 카드 컨트롤러(덱·핸드) 초기화
+        if (cardController != null)
+        {
+            cardController.BattleInit();
+            Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
+        }
 
 
         SetSpriteVisible(true);

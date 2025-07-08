@@ -21,7 +21,7 @@ public class DisposableCardSO : ScriptableObject
     protected CardController controller;
     protected PlayerController playerController;
     protected Dictionary<MinorArcana, Action<MinorArcana>> PlayDic = new();
-    protected Dictionary<MinorArcana, Action<MinorArcana>> DrawDic = new();
+    protected Dictionary<MinorArcana, Action> TurnEndDic = new();
     protected Dictionary<MinorArcana, Action<MinorArcana>> DiscardDic = new();
 
 
@@ -38,7 +38,7 @@ public class DisposableCardSO : ScriptableObject
 
     public MinorArcana CreateCard()
     {
-        return disposableCard = new MinorArcana(cardName, suit, cardNum);
+        return disposableCard = new MinorArcana(cardName, suit, cardNum, sprite);
     }
 
     public virtual void OnCardPlayed(MinorArcana card) { }
@@ -55,11 +55,19 @@ public class DisposableCardSO : ScriptableObject
             if (c == card)
                 OnUnSubscribe(c);
         };
+        Action turnEnd = () =>
+        {
+            RemoveCard();
+        };
+
         PlayDic[card] = play;
         controller.OnCardSubmited += play;
 
-        PlayDic[card] = discard;
+        DiscardDic[card] = discard;
         controller.OnCardDiscarded += discard;
+
+        TurnEndDic[card] = turnEnd;
+        playerController.OnTurnEnd += turnEnd;
 
     }
 
@@ -71,7 +79,11 @@ public class DisposableCardSO : ScriptableObject
         }
         if (DiscardDic.TryGetValue(card, out var discard))
         {
-            playerController.GetCardController().OnCardSubmited -= discard;
+            playerController.GetCardController().OnCardDiscarded -= discard;
+        }
+        if (TurnEndDic.TryGetValue(card, out var turnEnd))
+        {
+            playerController.OnTurnEnd -= turnEnd;
         }
     }
     public void RemoveCard()

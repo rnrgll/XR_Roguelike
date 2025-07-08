@@ -75,6 +75,7 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
             go.GetComponent<BattleUI>().InitScene(pc);
+            cc.BattleInit();
 
 
             Debug.Log("[BattleManager] cardHand 생성");
