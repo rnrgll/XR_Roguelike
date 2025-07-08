@@ -22,7 +22,7 @@ public class TurnManager : Singleton<TurnManager>
     private void Awake()
     {
         SingletonInit();
-        isFinal = false;  // 초기화
+        isFinal = false; // 초기화
         foreach (var e in enemies.OfType<EnemyBase>())
             e.InitForBattle();
     }
@@ -89,27 +89,33 @@ public class TurnManager : Singleton<TurnManager>
 
     public void StartBattle()
     {
-        
-    if (battleStarted) return;
+        Debug.Log("[turnmanager] start battle 시작");
+        if (battleStarted)
+        {
+            Debug.Log(battleStarted);
+            return;
+        }
         battleStarted = true;
 
         // ▶ 배틀 시작 직전에 카드 컨트롤러 초기화
         var pc = player as PlayerController;
-            if (pc != null)
-                {
-                    // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
-                    var cardCtrl = pc.cardController;
-                    pc.ResetState();    // 체력·버프·턴 플래그 전부 초기화
+        if (pc != null)
+        {
+            Debug.Log("[turn manager] pc null로 초기화를 진행ㅎ나다.");
+            // PlayerController 에 CardController 컴포넌트가 붙어 있다고 가정
+            var cardCtrl = pc.cardController;
+            pc.ResetState(); // 체력·버프·턴 플래그 전부 초기화
             if (cardCtrl != null)
-                        {
+            {
                 cardCtrl.BattleInit();
                 Debug.Log("[TurnManager] CardController.BattleInit() 호출됨");
-                        }
-                   else
-                        {
+            }
+            else
+            {
                 Debug.LogWarning("[TurnManager] CardController 컴포넌트를 찾을 수 없음");
-                        }
-                }
+            }
+        }
+
         StartCoroutine(WaitForRegistrationAndStart());
     }
 
@@ -157,7 +163,8 @@ public class TurnManager : Singleton<TurnManager>
                 {
                     // 일반 몬스터 처치 시 → 즉시 맵으로 복귀
                     Debug.Log("[디버그] 일반 전투 종료 → 맵 씬으로 복귀");
-                    Manager.Map.ShowMap();
+                    Debug.Log($"남은 hand {pc.cardController.Hand.GetCardList().Count}");
+                    Manager.UI.ShowSelectableMap();
                 }
 
                 yield break;
@@ -168,6 +175,9 @@ public class TurnManager : Singleton<TurnManager>
             player.StartTurn();
             yield return new WaitUntil(() => player.IsTurnFinished());
 
+
+            Debug.Log("[turn manager] 플레이어 턴 종료");
+
             // 3. 적 턴
             foreach (var enemy in enemies)
             {
@@ -177,6 +187,8 @@ public class TurnManager : Singleton<TurnManager>
                     yield return new WaitForSeconds(0.5f);
                 }
             }
+
+            Debug.Log("[turn manager] 몬스터 턴 종료");
         }
     }
 
