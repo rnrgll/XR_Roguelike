@@ -70,7 +70,7 @@ namespace TopBarUI
             {
                 //Debug.Log($"{minor.CardSuit} {minor.CardNum} 카드 보여줄 차례");
                 CardView card = _cardPool.PopPool() as CardView;
-                card.transform.SetParent(_gridContainer, false);
+                card.transform.SetParent(_gridContainer);
                 card.transform.SetSiblingIndex(idx++);
                 card.SetData(minor);
             }
@@ -87,7 +87,7 @@ namespace TopBarUI
                 card.transform.SetSiblingIndex(idx++);
             }
             
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_gridContainer as RectTransform);
+            //LayoutRebuilder.ForceRebuildLayoutImmediate(_gridContainer as RectTransform);
 
 
         }
