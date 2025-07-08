@@ -43,7 +43,7 @@ public class GameStatusUI : MonoBehaviour
             if (monsterHpSlider == null)
                 Debug.LogWarning("GameStatusUI: monsterHpSlider를 찾지 못했습니다!");
         }
-    
+
 
     }
 
@@ -78,7 +78,6 @@ public class GameStatusUI : MonoBehaviour
             Debug.Log($"[GameStatusUI][SetTarget] maxValue={monsterHpSlider.maxValue}, value={monsterHpSlider.value}");
         }
 
-
         UpdateMonsterStatus();
     }
 
@@ -92,6 +91,8 @@ public class GameStatusUI : MonoBehaviour
         // UI 갱신
         UpdateMonsterStatus();
     }
+
+
 
 
     private void UpdateMonsterStatus()

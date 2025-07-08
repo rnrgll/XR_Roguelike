@@ -36,6 +36,10 @@ public class CombinationUI : UIRequire
         }
         comboText.text = _comb.ToString();
         sumText.text = $"{cardController.sumofNums} * {cardController.ComboMultDic[_comb]}";
+        if (_comb == CardCombinationEnum.FiveJoker)
+        {
+            sumText.text = $"99999";
+        }
     }
 
     private void RefreshUI()

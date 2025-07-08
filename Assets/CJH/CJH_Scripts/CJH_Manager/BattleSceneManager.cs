@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UI;
 using Managers;
 
+
 public class BattleSceneManager : MonoBehaviour
 {
 
-    [SerializeField] private PlayerController player;
+    private PlayerController player;
     [SerializeField] private GameObject playerPrefab;
 
     [SerializeField] private GameObject lasMonsterPrefab;
@@ -47,12 +48,14 @@ public class BattleSceneManager : MonoBehaviour
     };
 
 
+
     private IEnumerator Start()
     {
 
         // 1프레임 기다려 PlayerController가 등장하도록 함
         yield return null;
         var pc = FindObjectOfType<PlayerController>();
+        player = pc;
         if (pc != null)
         {
             // 1. 적 생성
@@ -74,7 +77,9 @@ public class BattleSceneManager : MonoBehaviour
 
             Debug.Log("[BattleManager] CardHandUI init");
             var go = Instantiate(CardHandUIPrefab, transform);
-            go.GetComponent<BattleUI>().InitScene(pc);
+            BattleUI battleUI = go.GetComponent<BattleUI>();
+            battleUI.InitScene(pc);
+            pc.tarotDeck.OnMajorAdded += battleUI.PrintRootUI;
             cc.BattleInit();
 
 
@@ -168,6 +173,7 @@ public class BattleSceneManager : MonoBehaviour
         if (GameStatusUI.Instance != null)
         {
             GameStatusUI.Instance.SetTarget(enemy);
+            enemy.OnMonsterDied += MonsterDie;
         }
         else
         {
@@ -197,5 +203,12 @@ public class BattleSceneManager : MonoBehaviour
             MonsterID.Glutton => gluttonMonsterPrefab,
             _ => null
         };
+    }
+
+    private void MonsterDie()
+    {
+        MajorArcanaSO major = player.tarotDeck.RandomMajorArcana();
+        player.tarotDeck.AddMajorCards(major);
+
     }
 }

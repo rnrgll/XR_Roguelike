@@ -82,6 +82,7 @@ public class TarotDeckUI : UIRequire
         Manager.UI.OnGlobalUIActive += SetActive;
         playerController.OnTurnStarted += OnTurnStarted;
         playerController.OnTurnEnd += OnTurnEnded;
+
     }
 
     protected override void UnSubscribe()
@@ -112,5 +113,10 @@ public class TarotDeckUI : UIRequire
     private void OnTurnEnded()
     {
         isInteractable = false;
+    }
+
+    private void OnBattleEnded()
+    {
+        Destroy(this);
     }
 }
