@@ -58,19 +58,13 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     private Queue<Buff> healBonusQueue = new();
     private Queue<Buff> attackBonusQueue = new();
 
-    private SpriteRenderer[] _renderers;
 
 
     private void Awake()
     {
 
-        _renderers = GetComponentsInChildren<SpriteRenderer>();
-        // SpriteRenderer 자동 할당
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+   
 
-        // 전투 전 항상 보이게
-        //SetSpriteVisible(false);
     }
 
     /// <summary>

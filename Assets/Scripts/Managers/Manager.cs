@@ -42,8 +42,7 @@ namespace Managers
             
             // 유틸
             public static RandomManager randomManager => RandomManager.Instance;        // 랜덤 매니저
-
-
+            
 
             public static GameObject manager;
             
