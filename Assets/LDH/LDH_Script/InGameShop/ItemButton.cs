@@ -2,6 +2,7 @@ using CustomUtility.UI;
 using DG.Tweening;
 using Item;
 using Managers;
+using System.Collections;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -41,7 +42,10 @@ namespace InGameShop
         private Tween _floatTween;
         private EventSystem _eventSystem;
         private Vector2 _initialAnchorPos; 
+        private Coroutine _floatingCoroutine;
 
+        
+        
         private void Awake() => Init();
 
         private void OnEnable()
@@ -218,24 +222,60 @@ namespace InGameShop
 
         #region Button 애니메이션
 
+        // private void StartFloating()
+        // {
+        //     float startDelay = UnityEngine.Random.Range(0f, 1f); // 랜덤 딜레이
+        //     
+        //     _floatTween = _buttonRec
+        //         .DOAnchorPosY(_buttonRec.anchoredPosition.y + 10f, 1f)
+        //         .SetEase(Ease.InOutSine)
+        //         .SetLoops(-1, LoopType.Yoyo)
+        //         .SetDelay(startDelay);
+        // }
+        //
+        // private void StopFloating()
+        // {
+        //     
+        //     _floatTween?.Complete();
+        //     _floatTween?.Kill();
+        //     _floatTween = null;    
+        //     _buttonRec.anchoredPosition = _initialAnchorPos;
+        //
+        // }
+        
         private void StartFloating()
         {
-            float startDelay = UnityEngine.Random.Range(0f, 1f); // 랜덤 딜레이
             
+            if (!gameObject.activeInHierarchy)
+                return;
+            
+            _floatingCoroutine = StartCoroutine(DelayedStartFloating());
+        }
+        
+
+        private IEnumerator DelayedStartFloating()
+        {
+            float delay = UnityEngine.Random.Range(0f, 1f);
+            yield return new WaitForSeconds(delay);
+
             _floatTween = _buttonRec
-                .DOAnchorPosY(_buttonRec.anchoredPosition.y + 10f, 1f)
+                .DOAnchorPosY(_initialAnchorPos.y + 10f, 1f)
                 .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetDelay(startDelay);
+                .SetLoops(-1, LoopType.Yoyo);
         }
         
         private void StopFloating()
         {
-            
-            _floatTween?.Kill();
-            _floatTween = null;    
-            _buttonRec.anchoredPosition = _initialAnchorPos;
+            if (_floatingCoroutine != null)
+            {
+                StopCoroutine(_floatingCoroutine);
+                _floatingCoroutine = null;
+            }
 
+            _floatTween?.Kill(true);
+            _floatTween = null;
+
+            _buttonRec.anchoredPosition = _initialAnchorPos;
         }
 
         #endregion
