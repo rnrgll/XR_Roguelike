@@ -144,12 +144,22 @@ public class CardController : MonoBehaviour
         {
             disposableDic[DisposableCardSO.DisposableCard] = DisposableCardSO;
         }
-
-
+        
+        
         BattleBonusDic = new();
         BattlePenaltyDic = new();
         TurnPenaltyDic = new();
         TurnBonusDic = new();
+
+        foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
+        {
+            BattleBonusDic[type] = new();
+            BattlePenaltyDic[type] = new();
+            TurnPenaltyDic[type] = new();
+            TurnBonusDic[type] = new();
+        }
+        
+        
 
         ComboMultDic = new Dictionary<CardCombinationEnum, float>()
         {
@@ -258,16 +268,13 @@ public class CardController : MonoBehaviour
             SuitsList[(int)i.CardSuit]++;
             numbersList[i.CardNum]++;
         }
-
-
-
-        foreach (CardBonus type in Enum.GetValues(typeof(CardBonus)))
-        {
-            BattleBonusDic[type] = new();
-            BattlePenaltyDic[type] = new();
-            TurnPenaltyDic[type] = new();
-            TurnBonusDic[type] = new();
-        }
+        
+        TurnBonusDic.Clear();
+        TurnPenaltyDic.Clear();
+        BattlePenaltyDic.Clear();
+        BattleBonusDic.Clear();
+        
+        
         DiscardCount = DiscardSetting;
         BattleDeck.Shuffle();
         Draw();
