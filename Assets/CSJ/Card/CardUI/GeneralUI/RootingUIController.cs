@@ -22,6 +22,7 @@ public class RootingUIController : UIRequire
     
     public void SetActive(bool isActive)
     {
+        Debug.Log(_majorArcanaCanvas==null);
         if(isActive)
             _majorArcanaCanvas?.SetActive(false);
         RootingUI.SetActive(isActive);
