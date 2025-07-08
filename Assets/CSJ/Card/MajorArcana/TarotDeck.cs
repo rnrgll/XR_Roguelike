@@ -1,5 +1,6 @@
 using CardEnum;
 using Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class TarotDeck : MonoBehaviour
     MajorArcanaSO curCard;
     [SerializeField] MajorArcanaSO TheFool;
     private int prevIndex;
+    public Action<MajorArcanaSO> OnMajorAdded;
 
     public List<MajorArcanaSO> GetMajorCardCandidates()
     {
@@ -27,11 +29,15 @@ public class TarotDeck : MonoBehaviour
     {
         deckMajorCards.Add(majorCard);
         majorCardCandidates.Remove(majorCard);
+        OnMajorAdded?.Invoke(majorCard);
     }
+
+
     public void AddMajorCards()
     {
         AddMajorCards(RandomMajorArcana());
     }
+
 
     public List<MajorArcanaSO> GetMajorCards()
     {
