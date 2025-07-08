@@ -87,7 +87,7 @@ namespace TopBarUI
                 card.transform.SetSiblingIndex(idx++);
             }
             
-            //LayoutRebuilder.ForceRebuildLayoutImmediate(_gridContainer as RectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_gridContainer as RectTransform);
 
 
         }
