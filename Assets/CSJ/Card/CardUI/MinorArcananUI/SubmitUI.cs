@@ -27,7 +27,6 @@ public class SubmitUI : UIRequire
         _onUnactive = _ => UnactiveButton();
         cardController.OnSelectionChanged += _onSelectionChanged;
         cardController.OnEnterSelectionMode += _onUnactive;
-        cardController.OnExitSelectionMode += ActiveButton;
 
         UpdateButtons();
 
@@ -43,7 +42,6 @@ public class SubmitUI : UIRequire
 
         cardController.OnSelectionChanged -= _onSelectionChanged;
         cardController.OnEnterSelectionMode -= _onUnactive;
-        cardController.OnExitSelectionMode -= ActiveButton;
         _onSelectionChanged = null;
         _onUnactive = null;
     }
@@ -108,6 +106,7 @@ public class SubmitUI : UIRequire
     private void OnTurnEndButtonClicked()
     {
         UnactiveButton();
+        cardController.OnExitSelectionMode -= ActiveButton;
         playerController.OnTurnStarted += OnTurnStart;
         playerController.StartCoroutine(playerController.EndTurn());
     }
@@ -116,5 +115,6 @@ public class SubmitUI : UIRequire
     {
         ActiveButton();
         playerController.OnTurnStarted -= OnTurnStart;
+        cardController.OnExitSelectionMode += ActiveButton;
     }
 }
