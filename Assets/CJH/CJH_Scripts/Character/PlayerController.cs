@@ -504,7 +504,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
          }
 
 
-        SetSpriteVisible(true);
 
         // 4. 턴 플래그 초기화
         turnEnded = false;

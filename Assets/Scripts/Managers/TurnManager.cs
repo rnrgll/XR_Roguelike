@@ -58,8 +58,11 @@ public class TurnManager : Singleton<TurnManager>
         if (battleStarted) return;
         battleStarted = true;
 
-        // 배경 교체
-        BackgroundManager.Instance.ShowNextBackground();
+        //  배경 매니저를 확실히 켜고, 다음 배경 보여주기
+        var bgm = BackgroundManager.Instance;
+        bgm.gameObject.SetActive(true);
+        bgm.ShowNextBackground();
+
 
         // 플레이어 보이기
         var pc = GetPlayerController();
@@ -128,6 +131,9 @@ public class TurnManager : Singleton<TurnManager>
 
     public void ContinueAfterReward()
     {
+
+        //  전투 배경 숨기기
+        BackgroundManager.Instance.gameObject.SetActive(false);
         // 플레이어 숨기기
         var pc = GetPlayerController();
         if (pc != null)
