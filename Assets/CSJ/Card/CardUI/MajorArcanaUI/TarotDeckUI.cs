@@ -105,7 +105,7 @@ public class TarotDeckUI : UIRequire
 
     public void SetActive(bool isActive)
     {
-        gameObject.SetActive(!isActive);
+        gameObject.SetActive(isActive);
     }
 
     private void OnTurnStarted()

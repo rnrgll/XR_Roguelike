@@ -156,12 +156,41 @@ public static class CardCombination
 
         if (IsComb[CardCombinationEnum.FiveCard])
             return CardCombinationEnum.FiveCard;
+        if (JokerCount >= 4)
+        {
+            int X1 = 0;
+            foreach (int _num in numbers)
+            {
+                X1++;
+                if (_num == 0) continue;
+                cardNums.Clear();
+                InsertCardNum(1, X1, cardNums);
+                break;
+            }
+            return CardCombinationEnum.FiveCard;
+        }
 
         if (IsComb[CardCombinationEnum.Straight] && IsComb[CardCombinationEnum.Flush])
             return CardCombinationEnum.StraightFlush;
 
         if (IsComb[CardCombinationEnum.FourCard])
             return CardCombinationEnum.FourCard;
+        if (JokerCount >= 3)
+        {
+            int x2 = 0;
+            int Count2 = 0;
+            foreach (int _num in numbers)
+            {
+                x2++;
+                if (_num == 0) continue;
+                Count2++;
+                if (Count2 < 2) break;
+                cardNums.Clear();
+                InsertCardNum(1, x2, cardNums);
+                break;
+            }
+            return CardCombinationEnum.FourCard;
+        }
 
         if (IsComb[CardCombinationEnum.FullHouse])
             return CardCombinationEnum.FullHouse;
@@ -186,12 +215,44 @@ public static class CardCombination
 
         if (IsComb[CardCombinationEnum.Triple])
             return CardCombinationEnum.Triple;
+        if (JokerCount >= 2)
+        {
+            int x3 = 0;
+            int Count3 = 0;
+            foreach (int _num in numbers)
+            {
+                x3++;
+                if (_num == 0) continue;
+                Count3++;
+                if (Count3 < 3) break;
+                cardNums.Clear();
+                InsertCardNum(1, x3, cardNums);
+                break;
+            }
+            return CardCombinationEnum.Triple;
+        }
 
         if (IsComb[CardCombinationEnum.TwoPair])
             return CardCombinationEnum.TwoPair;
 
         if (IsComb[CardCombinationEnum.OnePair])
             return CardCombinationEnum.OnePair;
+        if (JokerCount >= 1)
+        {
+            int x4 = 0;
+            int Count4 = 0;
+            foreach (int _num in numbers)
+            {
+                x4++;
+                if (_num == 0) continue;
+                Count4++;
+                if (Count4 < 4) break;
+                cardNums.Clear();
+                InsertCardNum(1, x4, cardNums);
+                break;
+            }
+            return CardCombinationEnum.OnePair;
+        }
 
         // 여기까지 족보가 없다면 하이카드 체크
 
@@ -203,24 +264,6 @@ public static class CardCombination
             if (_num == 0) continue;
             cardNums.Clear();
             InsertCardNum(1, x, cardNums);
-        }
-
-        // 마지막으로 조커만 있는지 체크
-        if (cardNums.Count == 0)
-        {
-            JokerCount -= 1;
-        }
-        // 조커의 개수에 따라 족보 계산
-        switch (JokerCount)
-        {
-            case 1:
-                return CardCombinationEnum.OnePair;
-            case 2:
-                return CardCombinationEnum.Triple;
-            case 3:
-                return CardCombinationEnum.FourCard;
-            case 4:
-                return CardCombinationEnum.FiveCard;
         }
         return CardCombinationEnum.HighCard;
         #endregion
