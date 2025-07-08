@@ -2596,7 +2596,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC544\uC774\uD15C\uCC3D\uC774 \uBAA8\uB450 \uCC44\uC6CC\uC838\uC788\uC5B4
     \uC0C8\uB85C \uC544\uC774\uD15C\uC744 \uC5BB\uC744 \uACBD\uC6B0 \n3\uAC1C\uB9CC
-    \uB0A8\uAE30\uB3C4 \uB098\uBA38\uC9C0\uB294 \uBC84\uB824\uC57C\uD569\uB2C8\uB2E4.\n\uADF8\uB798\uB3C4
+    \uB0A8\uAE30\uACE0 \uB098\uBA38\uC9C0\uB294 \uBC84\uB824\uC57C\uD569\uB2C8\uB2E4.\n\uADF8\uB798\uB3C4
     \uAD6C\uB9E4\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2dc85c8263ec14ef0b0ed0702acc265b, type: 2}
@@ -5031,8 +5031,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 15}
-  m_SizeDelta: {x: 502.9285, y: 770.8446}
+  m_AnchoredPosition: {x: -21, y: -19}
+  m_SizeDelta: {x: 543.377, y: 832.8403}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2068248907
 CanvasRenderer:
@@ -5062,7 +5062,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89a4af95f78c44a89ba14b3b5ee71a46, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5440a0f3b9a0c4d228bc51c653164ef1, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5404,7 +5404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4964920173848014824, guid: dbf0895b0ee8a486e9edbbe5c87507e5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -40
+      value: -40.000244
       objectReference: {fileID: 0}
     - target: {fileID: 4964920173848014824, guid: dbf0895b0ee8a486e9edbbe5c87507e5, type: 3}
       propertyPath: m_AnchoredPosition.y

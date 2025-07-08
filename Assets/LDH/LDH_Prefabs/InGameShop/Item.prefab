@@ -145,6 +145,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5874058712843081613, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239403548456971799, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8499132586263571240, guid: 8d4ef9d8df74f43038e500c22fa35aa3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -191,6 +199,10 @@ PrefabInstance:
     - target: {fileID: 7239251034564577952, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
       propertyPath: m_Name
       value: Item Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242964900424637079, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
+      propertyPath: m_OverridePixelPerfect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7898167504520606754, guid: 3e658f8c3a1fd4334bf88ad514cc929a, type: 3}
       propertyPath: m_Color.b
