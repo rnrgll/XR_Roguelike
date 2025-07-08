@@ -99,8 +99,9 @@ public class TarotDeckUI : UIRequire
 
     protected override void OnDestroy()
     {
-        base.OnDestroy();
         Manager.UI.OnGlobalUIActive -= SetActive;
+        base.OnDestroy();
+
     }
 
     public void SetActive(bool isActive)

@@ -184,7 +184,7 @@ public static class CardCombination
                 x2++;
                 if (_num == 0) continue;
                 Count2++;
-                if (Count2 < 2) break;
+                if (Count2 < 2) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x2, cardNums);
                 break;
@@ -224,7 +224,7 @@ public static class CardCombination
                 x3++;
                 if (_num == 0) continue;
                 Count3++;
-                if (Count3 < 3) break;
+                if (Count3 < 3) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x3, cardNums);
                 break;
@@ -246,7 +246,7 @@ public static class CardCombination
                 x4++;
                 if (_num == 0) continue;
                 Count4++;
-                if (Count4 < 4) break;
+                if (Count4 < 4) continue;
                 cardNums.Clear();
                 InsertCardNum(1, x4, cardNums);
                 break;
