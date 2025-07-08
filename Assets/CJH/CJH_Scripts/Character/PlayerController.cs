@@ -7,12 +7,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.IK;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IPlayerActor
 {
     [Header("플레이어 스프라이트 렌더러")]
-    [SerializeField] private SpriteRenderer[] spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("카드·타로 프리팹")]
     [SerializeField] private CardController cardControllerPrefab;
@@ -64,27 +63,24 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     private void Awake()
     {
-        // SpriteRenderer 배열 자동 할당
-        if (spriteRenderer == null || spriteRenderer.Length == 0)
-            spriteRenderer = GetComponentsInChildren<SpriteRenderer>(true);
 
-        // 기본은 숨김
+        _renderers = GetComponentsInChildren<SpriteRenderer>();
+        // SpriteRenderer 자동 할당
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        // 전투 전 항상 보이게
         SetSpriteVisible(false);
-        currentHP = maxHP;
-        UpdateHpBar();
     }
 
-
-
-
     /// <summary>
-    /// 전투 시작/종료 시 TurnManager에서 호출하여
-    /// 모든 SpriteRenderer를 켜거나 끕니다.
+    /// 스프라이트 보이기/숨기기
     /// </summary>
+    /// <param name="visible">true면 보이기, false면 숨기기</param>
     public void SetSpriteVisible(bool visible)
     {
-        foreach (var sr in spriteRenderer)
-            sr.enabled = visible;
+        spriteRenderer.enabled = visible;
+        Debug.Log(spriteRenderer.enabled);
     }
 
 
@@ -137,7 +133,6 @@ public class PlayerController : MonoBehaviour, IPlayerActor
     {
         if (cardController != null)
             cardController.OnSubmit -= OnAttackTriggered;
-
     }
     private void OnAttackTriggered(List<MinorArcana> cards)
     {
@@ -146,7 +141,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         {
             Debug.Log("턴 스킵이 활성화되어 있습니다.");
             isTurnSkip = false;
-            EndTurn();
+            StartCoroutine(EndTurn());
         }
         isInvincible = false;
         // 1) 카드 조합 계산
@@ -302,10 +297,10 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         turnEnded = false;
     }
 
-    public void EndTurn()
+    public IEnumerator EndTurn()
     {
         Debug.Log("플레이어 턴 종료!");
-        turnEnded = true;
+        yield return StartCoroutine(cardController.TurnEndDiscard());
 
         // if (attackBuffTurns > 0)
         // {
@@ -316,6 +311,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         //         Debug.Log("[플레이어] 공격력 버프 해제");
         //     }
         // }
+        turnEnded = true;
         OnTurnEnd?.Invoke();
     }
 
@@ -492,18 +488,17 @@ public class PlayerController : MonoBehaviour, IPlayerActor
         ratio = 1f;
         additionalDamage = 0f;
 
-         // 3. 카드 컨트롤러(덱·핸드) 초기화
-         if (cardController != null)
-         {
-             cardController.BattleInit();
-             Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
-         }
-         else
-         {
-             Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
-         }
-
-
+        // 3. 카드 컨트롤러(덱·핸드) 초기화
+        if (cardController != null)
+        {
+            cardController.BattleInit();
+            Debug.Log("[PlayerController] CardController.BattleInit() 호출됨");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerController] cardController가 할당되지 않음");
+        }
+        
 
         // 4. 턴 플래그 초기화
         turnEnded = false;

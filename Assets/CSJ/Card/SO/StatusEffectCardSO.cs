@@ -38,7 +38,7 @@ public class StatusEffectCardSO : ScriptableObject
 
     public MinorArcana CreateCard()
     {
-        return statusEffectcard = new MinorArcana(cardName, suit, cardNum);
+        return statusEffectcard = new MinorArcana(cardName, suit, cardNum, sprite);
     }
 
     public MinorArcana GetStatusEffectCard()

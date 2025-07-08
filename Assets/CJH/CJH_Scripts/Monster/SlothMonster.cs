@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SlothMonster : EnemyBase
@@ -18,8 +18,6 @@ public class SlothMonster : EnemyBase
     // —————————————————————————
     private int cycleIndex = 0;     // 0~4 순환
     private int damageThisTurn = 0; // 이번 턴 플레이어가 입힌 피해
-
-    public event Action OnClear;
 
     protected override void Start()
     {
@@ -54,13 +52,6 @@ public class SlothMonster : EnemyBase
         if (successCount >= clearSuccessThreshold)
         {
             Debug.Log($"[슬로스] {clearSuccessThreshold}회 성공 → 클리어!");
-
-            // 1-1) 클리어 이벤트 호출
-            OnClear?.Invoke();
-
-            // 1-2) 몬스터 제거 (OnDestroy → TurnManager.UnregisterEnemy)
-            Destroy(gameObject);
-
             yield break;
         }
 
@@ -69,7 +60,6 @@ public class SlothMonster : EnemyBase
         {
             successCount++;
             Debug.Log($"[슬로스] 요구 데미지 달성! ({successCount}/{clearSuccessThreshold})");
-            
         }
     //   else
     //   {
