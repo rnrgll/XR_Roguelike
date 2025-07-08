@@ -33,7 +33,12 @@ public class HandUIController : UIRequire
 
     public void RefreshHand()
     {
-        if (cardController == null) return;
+        if (cardController == null)
+        {
+            Debug.Log("[HandUI] cardController null");
+            return;
+        }
+
         foreach (var go in spawnedCards)
         {
             Destroy(go);
