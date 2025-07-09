@@ -5,7 +5,6 @@ using UnityEngine;
 public class BattleUI : MonoBehaviour
 {
     [SerializeField] private UIRequire[] UIArr;
-    [SerializeField] private GameObject go;
     [SerializeField] private RootingUIController RootingScene;
 
     public void InitScene(PlayerController pc)
@@ -20,11 +19,6 @@ public class BattleUI : MonoBehaviour
     {
         RootingScene.SetActive(true);
         RootingScene.SetText(majorArcana);
-        RootingScene.ClickEnd += BattleEnd;
     }
 
-    private void BattleEnd()
-    {
-
-    }
 }
