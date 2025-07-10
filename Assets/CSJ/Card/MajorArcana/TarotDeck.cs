@@ -1,0 +1,72 @@
+using CardEnum;
+using Managers;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TarotDeck : MonoBehaviour
+{
+    [SerializeField] List<MajorArcanaSO> majorCardCandidates;
+    List<MajorArcanaSO> deckMajorCards = new();
+    MajorArcanaSO curCard;
+    [SerializeField] MajorArcanaSO TheFool;
+    private int prevIndex;
+    public Action<MajorArcanaSO> OnMajorAdded;
+
+    public List<MajorArcanaSO> GetMajorCardCandidates()
+    {
+        return majorCardCandidates;
+    }
+
+    public MajorArcanaSO RandomMajorArcana()
+    {
+        var MajorArcana = majorCardCandidates[RandomManager.Instance.RandInt(0, majorCardCandidates.Count)];
+        return MajorArcana;
+    }
+
+    public void AddMajorCards(MajorArcanaSO majorCard)
+    {
+        deckMajorCards.Add(majorCard);
+        majorCardCandidates.Remove(majorCard);
+        OnMajorAdded?.Invoke(majorCard);
+    }
+
+
+    public void AddMajorCards()
+    {
+        AddMajorCards(RandomMajorArcana());
+    }
+
+
+    public List<MajorArcanaSO> GetMajorCards()
+    {
+        return deckMajorCards;
+    }
+
+    public MajorArcanaSO Draw()
+    {
+        if (deckMajorCards.Count == 0)
+            AddMajorCards(TheFool);
+        prevIndex = deckMajorCards.IndexOf(curCard);
+        int CardNum;
+
+        do
+        {
+            CardNum = Manager.randomManager.RandInt(0, deckMajorCards.Count);
+        } while (deckMajorCards.Count > 1 && CardNum == prevIndex);
+
+        curCard = deckMajorCards[CardNum];
+        bool IsChanged = curCard.CardRotation();
+        if (deckMajorCards.Count <= 1 && !IsChanged)
+        {
+            curCard.Rotate();
+        }
+        return curCard;
+    }
+
+    public void Activate()
+    {
+        curCard.Activate();
+    }
+}

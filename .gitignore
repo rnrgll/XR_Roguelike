@@ -95,3 +95,5 @@ crashlytics-build.properties
 # External assets 
 /Assets/Imports
 
+/.vscode
+/Assets/CSJ/Card/CardSprite

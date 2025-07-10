@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6971e36602aa6d44eb4b6c13ac807992, type: 3}
+  m_Name: InjuryCard
+  m_EditorClassIdentifier: 
+  cardName: Injury
+  sprite: {fileID: 21300000, guid: 11818c53d31eb9e4dbc4f923c83c51dc, type: 3}
+  statusEffect: 0
+  suit: 50
+  cardNum: 0
+  IsUsable: 0
+  debuff: {fileID: 11400000, guid: cd0db3a26db458c4cb5f67c27625ddb3, type: 2}

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e314451e579f4763b9fa678cea647592, type: 3}
+  m_Name: 5106_LuckyCard
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 1
+  id: 5106
+  itemName: "\uD589\uC6B4 \uCE74\uB4DC"
+  description: "20% \uD655\uB960\uB85C \uBC30\uC218 60 \uC99D\uAC00/ 10% \uD655\uB960\uB85C
+    \uC7AC\uD654 50 \uD68D\uB4DD"
+  price: 180
+  sprite: {fileID: 21300000, guid: 43ecf814d2ea62b42baf57cd2bc240b9, type: 3}
+  weight: 1
+  enchantType: 7
+  enchantSo: {fileID: 11400000, guid: cedc10324df38e642ab86eca391f3262, type: 2}
+  enchantSprite: {fileID: 21300000, guid: 232575d9950b1af49a487b3aa97f9fc8, type: 3}
+  minTargetNum: 1
+  maxTargetNum: 14

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae2286b35704d939eb94f605ba66ad9, type: 3}
+  m_Name: MapConfig
+  m_EditorClassIdentifier: 
+  NodeTemplates:
+  - {fileID: 11400000, guid: 4828171f85efa4523a85b8eeb2cc06c9, type: 2}
+  - {fileID: 11400000, guid: 648d273142d50440b9f58fde077feacb, type: 2}
+  - {fileID: 11400000, guid: 7570847a963ff4b4784c3ab22d2fad78, type: 2}
+  - {fileID: 11400000, guid: d38280013f428484c8c445a2c1405f39, type: 2}
+  randomNodes: 010000000200000003000000
+  xDist: 30
+  yGap: 350
+  placementRandomness: 50
+  floors: 9
+  mapWidth: 5
+  paths: 4
+  BattleNodeWeight: 0
+  ShopNodeWeight: 2.5
+  EventNodeWeight: 4

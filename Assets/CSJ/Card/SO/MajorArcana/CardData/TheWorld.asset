@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac247502bb34694c9da33636ee53de3, type: 3}
+  m_Name: TheWorld
+  m_EditorClassIdentifier: 
+  cardName: TheWorld
+  sprite: {fileID: 21300000, guid: e62992ac8c3f6f14589d2b9f91c59fc7, type: 3}
+  uprightAbilitySO: {fileID: 11400000, guid: 2f11dd23ece077e45b7e0a3e34353319, type: 2}
+  reversedAbilitySO: {fileID: 11400000, guid: 4c6e5f47635b3204f81846e1377154df, type: 2}

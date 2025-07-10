@@ -1,5 +1,7 @@
 # XR_Roguelike
 ## 프로젝트 소개
+- 게임 이름 : Magical Arcana
+- 장르 : 2D 로그라이크
 
 
 ## 팀 소개

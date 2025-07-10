@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9072016544044963396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7206898132781194380}
+  - component: {fileID: 1962420546608418037}
+  - component: {fileID: 5939981633375130217}
+  - component: {fileID: 5785903751494116985}
+  - component: {fileID: 1151548767457730250}
+  m_Layer: 0
+  m_Name: MapManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7206898132781194380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1962420546608418037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11d9674433864386ba4a63dc70bd7a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapGenerator: {fileID: 1151548767457730250}
+  config: {fileID: 11400000, guid: c525debbe4534405bab26e748860119f, type: 2}
+  <View>k__BackingField: {fileID: 5939981633375130217}
+  <Tracker>k__BackingField: {fileID: 5785903751494116985}
+  <MapCanvas>k__BackingField: {fileID: 0}
+--- !u!114 &5939981633375130217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b8be7b78afb481a9a9a72a481ab78c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapNodePrefab: {fileID: 8015936964045777502, guid: 45e8a87d7d62c4c31854d26bee0707fa, type: 3}
+  background: {fileID: 21300000, guid: b5713cb05a32f4f51b15d459ec09763c, type: 3}
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  uiLinePrefab: {fileID: 4000391269635208699, guid: aa98db00b55c443d88a6783d6f2aa529, type: 3}
+  linePointsCount: 10
+  offsetFromNodes: 20
+  scrollRect: {fileID: 0}
+  widthPadding: 800
+  heightPadding: 400
+  backgroundPadding: {x: 0, y: 0}
+  backgroundPPUMultiplier: 1
+  closeButton: {fileID: 0}
+--- !u!114 &5785903751494116985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c0bd041afe4eeba45667863c624b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterNodeDelay: 1
+--- !u!114 &1151548767457730250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072016544044963396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55883edc3f14e36a845c81060999539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

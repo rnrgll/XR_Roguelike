@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e314451e579f4763b9fa678cea647592, type: 3}
+  m_Name: 5101_MultCard
+  m_EditorClassIdentifier: 
+  shopType: 2
+  itemType: 1
+  id: 5101
+  itemName: "\uBC30\uC218 \uCE74\uB4DC"
+  description: "\uCE74\uB4DC \uC0AC\uC6A9 \uC2DC \uBC30\uC218 \uC99D\uAC00"
+  price: 100
+  sprite: {fileID: 21300000, guid: 4c2c6788a4bc2664d91112f52fdef70e, type: 3}
+  weight: 1
+  enchantType: 2
+  enchantSo: {fileID: 11400000, guid: fc1cfdecbdb448c43b69b062c306fd86, type: 2}
+  enchantSprite: {fileID: 21300000, guid: deee43b00cbfa9f4b98ac39fa1f60091, type: 3}
+  minTargetNum: 1
+  maxTargetNum: 14
