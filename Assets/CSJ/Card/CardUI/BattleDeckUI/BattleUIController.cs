@@ -1,12 +1,13 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class BattleUI : MonoBehaviour
 {
     [SerializeField] private UIRequire[] UIArr;
-    [SerializeField] private GameObject go;
-    [SerializeField] private RootingUIController RootingScene;
+    // [SerializeField] private RootingUIController RootingScene;
 
     public void InitScene(PlayerController pc)
     {
@@ -18,13 +19,8 @@ public class BattleUI : MonoBehaviour
 
     public void PrintRootUI(MajorArcanaSO majorArcana)
     {
-        RootingScene.SetActive(true);
-        RootingScene.SetText(majorArcana);
-        RootingScene.ClickEnd += BattleEnd;
+        Manager.UI.RootingUI.GetComponent<RootingUIController>().SetText(majorArcana);
+        Manager.UI.SetUIActive(GlobalUI.Rooting, true);
     }
 
-    private void BattleEnd()
-    {
-
-    }
 }

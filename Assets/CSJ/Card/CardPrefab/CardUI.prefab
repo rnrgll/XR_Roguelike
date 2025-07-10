@@ -525,9 +525,9 @@ GameObject:
   - component: {fileID: 2670864591790137296}
   - component: {fileID: 7333790254172184818}
   - component: {fileID: 7934622523914198121}
-  - component: {fileID: 2101479506789218097}
   - component: {fileID: -4807447249404963595}
   - component: {fileID: 8458001486715678885}
+  - component: {fileID: 6146340043920537500}
   m_Layer: 5
   m_Name: CardUI
   m_TagString: Untagged
@@ -603,32 +603,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2101479506789218097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946283185403926165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 463784bc2b3bfee4ba41659663baee05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CardImage: {fileID: 7934622523914198121}
-  border: {fileID: 8707716370084625029}
-  EnchantLayers:
-  - {fileID: 6980506923788252261}
-  - {fileID: 3435019738170011656}
-  - {fileID: 5248258538223384718}
-  - {fileID: 1056597206344043469}
-  - {fileID: 525432556471471410}
-  - {fileID: 1780115966037513411}
-  - {fileID: 3609083061286996013}
-  DebuffLayers:
-  - {fileID: 8423288336324063038}
-  - {fileID: 6206738713101355709}
-  - {fileID: 2931487293622453244}
 --- !u!114 &-4807447249404963595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +638,32 @@ MonoBehaviour:
   m_EffectColor: {r: 0.16981131, g: 0.01201495, b: 0.01201495, a: 0.90588236}
   m_EffectDistance: {x: -5, y: -5}
   m_UseGraphicAlpha: 0
+--- !u!114 &6146340043920537500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4946283185403926165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463784bc2b3bfee4ba41659663baee05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CardImage: {fileID: 7934622523914198121}
+  border: {fileID: 8707716370084625029}
+  EnchantLayers:
+  - {fileID: 6980506923788252261}
+  - {fileID: 3435019738170011656}
+  - {fileID: 5248258538223384718}
+  - {fileID: 1056597206344043469}
+  - {fileID: 525432556471471410}
+  - {fileID: 1780115966037513411}
+  - {fileID: 3609083061286996013}
+  DebuffLayers:
+  - {fileID: 8423288336324063038}
+  - {fileID: 6206738713101355709}
+  - {fileID: 2931487293622453244}
 --- !u!1 &5760887553159099365
 GameObject:
   m_ObjectHideFlags: 0

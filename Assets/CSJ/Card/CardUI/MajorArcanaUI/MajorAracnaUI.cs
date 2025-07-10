@@ -39,8 +39,8 @@ public class MajorArcanaUI : MonoBehaviour, IPointerClickHandler
     {
         if (CardData.cardPos == CardEnum.MajorPosition.Upright)
         {
-            CardImage.rectTransform.Rotate(new Vector3(0, 0, 180));
+            CardImage.rectTransform.Rotate(new Vector3(0, 0, 0));
         }
-        else CardImage.rectTransform.Rotate(new Vector3(0, 0, 0));
+        else CardImage.rectTransform.Rotate(new Vector3(0, 0, 180));
     }
 }

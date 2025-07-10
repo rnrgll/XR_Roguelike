@@ -211,5 +211,7 @@ public class BattleSceneManager : MonoBehaviour
         player.tarotDeck.AddMajorCards(major);
         Manager.GameState.AddGold(200);
 
+        player.OnBattleEnd?.Invoke();
+
     }
 }

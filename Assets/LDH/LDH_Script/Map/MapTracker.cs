@@ -76,7 +76,7 @@ namespace Map
                     break;
                 case NodeType.Boss:
                     //todo : boss battle 로 전환
-                    SceneManager.LoadScene("BossBattleScene");
+                    SceneManager.LoadScene("TempBoss");
                     ItemManager.Instance.SetInventorySlotState(false);
                     //pc.SetSpriteVisible(true);
                     break;

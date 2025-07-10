@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour, IPlayerActor
 
     public Action OnTurnEnd;
     public Action OnTurnStarted;
+    public Action OnBattleEnd;
     public Action<int> OnPlayerDamaged;
     public Action<int> OnMonsterDamaged;
     public Action<PlayerController> OnPlayerInit;

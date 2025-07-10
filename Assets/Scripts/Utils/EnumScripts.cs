@@ -134,6 +134,7 @@ namespace UI
         Item,
         Setting,
         ItemRemove,
+        Rooting,
     }
 
     //Global UI 랑 enum 값 맞춰주기
