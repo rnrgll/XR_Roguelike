@@ -28,6 +28,8 @@ public class SubmitUI : UIRequire
         cardController.OnSelectionChanged += _onSelectionChanged;
         cardController.OnEnterSelectionMode += _onUnactive;
 
+        playerController.OnBattleEnd += OnBattleEnd;
+
         UpdateButtons();
 
     }
@@ -61,6 +63,8 @@ public class SubmitUI : UIRequire
     private void ActiveButton()
     {
         cardController.OnSelectionChanged += _onSelectionChanged;
+        if (attackButton == null)
+            return;
 
         attackButton.interactable = true;
         SuitSortButton.interactable = true;
@@ -116,5 +120,11 @@ public class SubmitUI : UIRequire
         ActiveButton();
         playerController.OnTurnStarted -= OnTurnStart;
         cardController.OnExitSelectionMode += ActiveButton;
+    }
+
+    private void OnBattleEnd()
+    {
+        UnactiveButton();
+        cardController.OnExitSelectionMode -= ActiveButton;
     }
 }

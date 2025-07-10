@@ -26,4 +26,4 @@ MonoBehaviour:
   paths: 4
   BattleNodeWeight: 0
   ShopNodeWeight: 2.5
-  EventNodeWeight: 10
+  EventNodeWeight: 4

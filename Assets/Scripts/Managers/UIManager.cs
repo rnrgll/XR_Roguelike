@@ -19,9 +19,12 @@ namespace Managers
         public GameObject SettingUI { get; private set; }
         public GameObject ItemUI { get; private set; }
 
+        public GameObject RootingUI { get; private set; }
         public RemoveItemPanel ItemRemoveUI { get; private set; }
 
         public Action<bool> OnGlobalUIActive;
+        
+        
         
 
         #endregion
@@ -72,6 +75,11 @@ namespace Managers
             var itemRemovePrefab = Resources.Load<GameObject>("Prefabs/@ItemRemoveUI");
             ItemRemoveUI = Instantiate(itemRemovePrefab, container.transform).GetComponent<RemoveItemPanel>();
             ItemRemoveUI.gameObject.SetActive(false);
+            
+            // 6) Rooting Canvas
+            var rootingPrefab = Resources.Load<GameObject>("Prefabs/@RootingUI");
+            RootingUI = Instantiate(rootingPrefab, container.transform);
+            RootingUI.gameObject.SetActive(false);
 
         }
 
@@ -103,16 +111,19 @@ namespace Managers
                 case GlobalUI.ItemRemove:
                     ItemRemoveUI?.gameObject.SetActive(isActive);
                     break;
+                case GlobalUI.Rooting:
+                    RootingUI?.gameObject.SetActive(isActive);
+                    break;
             }
 
-            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
+            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf || RootingUI.activeSelf;
             OnGlobalUIActive?.Invoke(!isGloblalUIOn);
         }
 
         public void ShowSelectableMap()
         {
             Manager.Map.ShowMap(ShowType.Select);
-            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf;
+            bool isGloblalUIOn = MapUI.activeSelf || SettingUI.activeSelf || DeckUI.activeSelf || RootingUI.activeSelf;
             Debug.Log(isGloblalUIOn);
             OnGlobalUIActive?.Invoke(!isGloblalUIOn);
         }

@@ -90,12 +90,16 @@ public class TarotDeckUI : UIRequire
 
     protected override void UnSubscribe()
     {
+        Manager.UI.OnGlobalUIActive -= SetActive;
+        
         currentCardUI.OnClick -= OnMajorCardClicked;
         if (playerController != null)
         {
             playerController.OnTurnStarted -= OnTurnStarted;
             playerController.OnTurnEnd -= OnTurnEnded;
         }
+        
+        
     }
 
     protected override void OnDestroy()
